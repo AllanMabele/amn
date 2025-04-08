@@ -75,30 +75,31 @@ main {
   margin: 80px auto 0;
   padding: 20px;
 }
-/* Grid Container - Updated for Vertical Layout */
+
+/* Grid Container - 2 Column Layout */
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr; /* Single column layout */
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  grid-template-rows: repeat(4, auto); /* Four rows */
   gap: var(--gap);
   padding: var(--gap);
   background-color: var(--white);
   border-radius: 8px;
   box-shadow: var(--shadow);
   margin-bottom: var(--gap);
-  max-width: 800px; /* Added max-width for better readability */
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%; /* Take full available width */
 }
 
 .company {
   background-color: var(--white);
   border-radius: 8px;
-  padding: 20px; /* Increased padding for better spacing */
+  padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  border: 1px solid #eee; /* Subtle border for separation */
+  border: 1px solid #eee;
   display: flex;
   flex-direction: column;
+  min-height: 200px; /* Set minimum height for consistency */
 }
 
 .company:hover {
@@ -106,10 +107,10 @@ main {
   color: var(--white);
   border-color: var(--green);
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Bring hovered item above others */
 }
 
-/* Company content styling for better vertical layout */
 .company h3 {
   margin: 0 0 10px 0;
   font-size: 1.4rem;
@@ -138,7 +139,17 @@ main {
   color: var(--white);
 }
 
-/* Projects Section */
+/* Responsive adjustments - switches to single column on smaller screens */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto; /* Let rows size automatically */
+  }
+  
+  .company {
+    min-height: auto; /* Remove fixed height on mobile */
+  }
+}/* Projects Section */
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
