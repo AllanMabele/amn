@@ -1,0 +1,173 @@
+/* Color Variables */
+:root {
+  --primary-blue: #007bff;
+  --primary-white: #ffffff;
+  --primary-green: #28a745;
+  --primary-black: #212529;
+  --light-blue: #e8f4fc;
+  --light-gray: #f5f7fa;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --gap: 20px;
+}
+
+/* Forex Hero Section */
+.forex-hero {
+  text-align: center;
+  padding: 40px var(--gap);
+  background-color: var(--light-gray);
+  margin-bottom: 30px;
+  color: var(--primary-black);
+}
+
+.forex-hero img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: var(--gap);
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary-white);
+}
+
+/* Course Grid Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+  padding: var(--gap);
+  background-color: var(--primary-white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: var(--gap);
+}
+
+/* Course Sections */
+.course-section {
+  margin-bottom: var(--gap);
+  padding: var(--gap);
+  background-color: var(--primary-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+}
+
+.course-section h2 {
+  color: var(--primary-black);
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: 10px;
+  margin-bottom: var(--gap);
+}
+
+.course-section h3 {
+  color: var(--primary-blue);
+  margin-top: 25px;
+}
+
+.course-section ul {
+  padding-left: 20px;
+}
+
+.course-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+/* Course Details */
+.course-details {
+  background-color: var(--light-gray);
+  padding: var(--gap);
+  border-left: 4px solid var(--primary-blue);
+  margin: 30px 0;
+}
+
+.course-details h4 {
+  color: var(--primary-black);
+  margin-top: 0;
+}
+
+/* Course Highlights */
+.course-highlights {
+  background-color: var(--primary-blue);
+  color: var(--primary-white);
+  padding: var(--gap);
+  border-radius: 8px;
+  margin: var(--gap) 0;
+}
+
+.course-highlights h2 {
+  color: var(--primary-white);
+  text-align: center;
+  margin-bottom: var(--gap);
+}
+
+.highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+/* Subscribe Section */
+.subscribe-section {
+  text-align: center;
+  padding: var(--gap);
+  background-color: var(--primary-white);
+  border-radius: 8px;
+  margin: var(--gap) 0;
+}
+
+.subscribe-section h2 {
+  color: var(--primary-black);
+}
+
+.subscribe-section p {
+  color: var(--primary-black);
+}
+
+/* Subscribe Button */
+.subscribe-btn {
+  display: inline-block;
+  background-color: var(--primary-green);
+  color: var(--primary-white);
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: var(--gap) 0;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.subscribe-btn:hover {
+  background-color: #218838;
+  color: var(--primary-white);
+}
+
+.contact-link {
+  color: var(--primary-black);
+}
+
+.contact-link a {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+.contact-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grid-container,
+  .highlight-grid {
+      grid-template-columns: 1fr;
+  }
+  
+  .forex-hero img {
+      width: 100%;
+      height: auto;
+  }
+  
+  .course-section {
+      padding: 15px;
+  }
+}
