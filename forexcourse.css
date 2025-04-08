@@ -10,6 +10,67 @@
   --gap: 20px;
 }
 
+
+/* Header Styles */
+.nav-header {
+  background-color: #28a745; /* Green background */
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between; /* Logo left, nav right */
+  align-items: center;
+  position: fixed; /* Stays at top when scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensures header stays above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  height: 40px;
+  border-bottom-width: 1px;
+   border-bottom-style: solid;
+   border-bottom-color: white;
+   margin-bottom: 12px;
+  
+}
+
+/* Logo Styles */
+.logo img {
+  height: 60px;
+  width: 60px;
+  max-width: 100px; /* Adjust logo size */
+  
+  
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 1.5rem; /* Space between links */
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d4edda; /* Light green hover effect */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .nav-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .nav-links {
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+}
 /* Forex Hero Section */
 .forex-hero {
   text-align: center;
