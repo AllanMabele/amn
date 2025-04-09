@@ -215,7 +215,15 @@ main {
  border-style: solid;
  border-color: gray;
  
-  
+ .summary:hover {
+  background-color: var(--blue);
+  color: var(--white);
+  border-color: var(--green);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+ 
+
 }
 
 .photo {
