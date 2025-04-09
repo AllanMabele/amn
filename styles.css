@@ -209,7 +209,7 @@ main {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.summary:hover {
+.summary:hover p {
   background-color: var(--blue);
   color: var(--white);
 }
@@ -240,6 +240,10 @@ main {
 
 .intro {
   flex: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .summary-description {
