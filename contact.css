@@ -9,6 +9,49 @@ body {
   padding: 20px;
 }
 
+/* Header Styles */
+.nav-header {
+  background-color: var(--green);
+  color: var(--white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+  height: var(--header-height);
+  border-bottom: 1px solid var(--white);
+  
+}
+
+.logo img {
+  height: 60px;
+  width: auto;
+  max-width: 100px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d4edda;
+}
+
+
 /* Headings */
 h1 {
   color: #007bff; /* Primary blue */
