@@ -241,11 +241,12 @@ main {
   flex: 1;
 }
 
-.summary-description {
+.p summary-description  {
   margin-top: 0;
   line-height: 1.6;
   text-align: justify;
   colo: white;
+  padding-right: 40px;
 }
 
 /* Responsive adjustments */
