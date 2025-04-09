@@ -211,7 +211,7 @@ main {
   gap: 30px;
   align-items: flex-start;
   margin: 20px;
-  color:white;
+  color:#007bff;
   
 }
 
@@ -243,7 +243,7 @@ main {
   flex: 1;
 }
 
-.p summary-description  {
+ .summary-description  p {
   margin-top: 0;
   line-height: 1.6;
   text-align: justify;
