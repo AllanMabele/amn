@@ -158,91 +158,67 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--gap);
-}/* Summary Section */
-.summary {
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center children horizontally */
-  background-color: var(--blue);
-  gap: 16px;
-  border-radius: 10px;
-  border: 1px solid var(--white);
-  margin-bottom: var(--gap);
-  padding: 20px; /* Add padding for better spacing */
-  max-width: 800px; /* Optional: Set max width for better readability */
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/* Intro Section - Vertical Layout */
-.intro {
+.summary {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.photo {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center all child elements */
-  width: 100%; /* Take full width of parent */
+  align-items: center;
+  width: 200px;
 }
 
 .photo img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin: 0 auto 20px; /* Top: 0, horizontal: auto, bottom: 20px */
-  display: block;
-  border: 3px solid var(--white); /* Optional: adds definition */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Optional: subtle depth */
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #007bff;
 }
 
 .my-name {
-  font-size: 28px;
-  color: var(--white);
-  font-weight: 700; /* Slightly bolder */
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: #007bff;
   text-align: center;
-  margin: 0 0 15px 0; /* Remove top margin, add bottom margin */
-  width: 100%; /* Take full width */
+}
+
+.intro {
+  flex: 1;
 }
 
 .summary-description {
-  font-size: 18px;
-  color: var(--white);
-  font-weight: 400;
-  text-align: center;
-  padding: 0 20px;
-  margin: 0 0 20px 0; /* Remove top margin, add bottom margin */
-  line-height: 1.6; /* Better readability */
-  max-width: 700px; /* Optimal line length for reading */
+  margin-top: 0;
+  line-height: 1.6;
+  text-align: justify;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .summary {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .photo {
+    width: 100%;
+  }
+  
   .photo img {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
   }
   
   .my-name {
-    font-size: 24px;
-  }
-  
-  .summary-description {
-    font-size: 16px;
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .photo img {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .my-name {
-    font-size: 22px;
-  }
-  
-  .summary-description {
-    font-size: 15px;
-    padding: 0 10px;
+    font-size: 1.3rem;
   }
 }
 
