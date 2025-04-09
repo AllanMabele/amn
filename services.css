@@ -78,7 +78,8 @@ h1 {
   margin-top: 20px;
   padding-top: 20px;
   word-wrap: break-word; /* Prevents long words from overflowing */
-  z-index: 2000;
+  
+  
 }
 
 /* Mobile-specific adjustments */
