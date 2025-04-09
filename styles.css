@@ -240,10 +240,6 @@ main {
 
 .intro {
   flex: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
 }
 
 .summary-description {
@@ -274,6 +270,10 @@ main {
 .id-home {
   background-color: var(--blue);
   border-color: var(--white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 /* Skills Section */
