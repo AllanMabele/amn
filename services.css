@@ -1,0 +1,170 @@
+:root {
+  --primary: #007bff;
+  --secondary: #28a745; /* green */
+  --light: #ffffff;
+  --dark: #000000;
+}
+
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+  background-color: var(--light);
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+.nav-header {
+  background-color: #28a745; /* Green background */
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between; /* Logo left, nav right */
+  align-items: center;
+  position: fixed; /* Stays at top when scrolling */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensures header stays above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  height: 40px;
+  border-bottom: 1px solid white;
+  margin-bottom: 12px;
+}
+
+/* Logo Styles */
+.logo img {
+  height: 60px;
+  width: 60px;
+  max-width: 100px; /* Adjust logo size */
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 1.5rem; /* Space between links */
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d4edda; /* Light green hover effect */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 30px 0;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  margin-top: 12px;
+  padding-top: 20px;
+}
+
+h2 {
+  color: var(--primary);
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 10px;
+  margin-top: 40px;
+}
+
+h3 {
+  color: var(--secondary);
+  margin-top: 25px;
+}
+
+.service-item {
+  background-color: rgba(0, 123, 255, 0.05);
+  border-left: 4px solid var(--secondary);
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.checkmark {
+  color: var(--secondary);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.benefits {
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 30px;
+  border-radius: 8px;
+  margin: 50px 0;
+}
+
+.benefits h2 {
+  color: var(--light);
+  border-bottom: 2px solid var(--light);
+}
+
+.benefits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.benefit-icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+
+footer {
+  background-color: var(--dark);
+  color: var(--light);
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .nav-header {
+    flex-direction: column;
+    padding: 1rem;
+    height: auto;
+  }
+  
+  .nav-links {
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .benefits-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .logo img {
+    height: 50px;
+    width: 50px;
+  }
+}
