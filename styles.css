@@ -270,10 +270,20 @@ main {
 .id-home {
   background-color: var(--blue);
   border-color: var(--white);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  color: var(--white);
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid;
+  border-radius: 0; /* Remove rounded corners for full width */
+  margin: 0; /* Remove margin */
+  padding: 10px 20px; /* Adjust padding as needed */
+  width: 100%; /* Stretch to full width */
+  position: relative; /* Allow stacking context */
+  top: -10px; /* Adjust this value to reduce space from the header */
+}  
 }
 
 /* Skills Section */
