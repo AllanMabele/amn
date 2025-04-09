@@ -20,7 +20,7 @@ body {
   background-color: var(--white);
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--header-height) 2rem 2rem;
+  padding: calc(var(--header-height) + 2rem) 2rem 2rem;
 }
 
 /* Header Styles */
@@ -45,6 +45,7 @@ body {
   height: 60px;
   width: auto;
   max-width: 100px;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -68,10 +69,10 @@ body {
 
 /* Main Content Layout */
 .main-content {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 /* Section Styling */
@@ -87,7 +88,7 @@ body {
 h1 {
   color: var(--primary-blue);
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 0 0 2rem 0;
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
@@ -95,7 +96,7 @@ h1 {
 
 h2 {
   color: var(--primary-blue);
-  margin: 2rem 0 1.5rem;
+  margin: 0 0 1.5rem 0;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--medium-gray);
   font-size: 1.8rem;
@@ -111,7 +112,8 @@ h3 {
 
 /* Content Sections */
 .about-section {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
 }
 
@@ -129,12 +131,15 @@ h3 {
   background-color: var(--light-gray);
   padding: var(--section-padding);
   margin: 2rem 0;
+  border-radius: var(--border-radius);
 }
 
 .why-choose ul {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   margin: 1.5rem 0;
+  padding: 0;
 }
 
 .why-choose li {
@@ -153,20 +158,22 @@ h3 {
 
 /* Contact Details */
 .contact-details {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
 .contact-items {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
 }
 
 .contact-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: var(--light-gray);
   border-radius: var(--border-radius);
   transition: all 0.3s ease;
@@ -187,6 +194,9 @@ h3 {
 
 .contact-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* Links & Buttons */
@@ -252,7 +262,7 @@ strong {
 /* Responsive Design */
 @media (max-width: 768px) {
   body {
-    padding: var(--header-height) 1.5rem 1.5rem;
+    padding: calc(var(--header-height) + 1rem) 1.5rem 1.5rem;
   }
   
   h1 {
@@ -279,7 +289,7 @@ strong {
   .contact-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
   .btn-container {
@@ -306,5 +316,9 @@ strong {
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
+  }
+  
+  .contact-item {
+    padding: 1rem;
   }
 }
