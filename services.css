@@ -74,10 +74,11 @@ header {
 
 h1 {
   margin: 0;
-  font-size: 2rem; /* Reduced from 2.5rem for better mobile display */
+  font-size: 3rem; /* Reduced from 2.5rem for better mobile display */
   margin-top: 20px;
   padding-top: 20px;
   word-wrap: break-word; /* Prevents long words from overflowing */
+  z-index: 2000;
 }
 
 /* Mobile-specific adjustments */
