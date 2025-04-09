@@ -245,6 +245,7 @@ main {
   margin-top: 0;
   line-height: 1.6;
   text-align: justify;
+  colo: white;
 }
 
 /* Responsive adjustments */
@@ -289,8 +290,8 @@ main {
 }
 
 .id-home {
-  background-color: var(--white);
-  color: var(--blue);
+  background-color: var(--#007bff);
+  color: var(--white);
   border-color: var(--white);
 }
 
