@@ -291,4 +291,10 @@
 .telegram-join-btn.green:hover {
   background-color: #218838;
 }
+  .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* or whatever height you need */
+}
 }
