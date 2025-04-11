@@ -291,10 +291,18 @@
 .telegram-join-btn.green:hover {
   background-color: #218838;
 }
-  .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* or whatever height you need */
+  iframe.xmlink {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
+  .copy {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #007bff;
+}
+  .
 }
