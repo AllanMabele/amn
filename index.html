@@ -337,35 +337,29 @@
       
     </footer>
     <script> 
-    document.addEventListener('DOMContentLoaded', function() {
-    // Create the Telegram popup element
-    const telegramPopup = document.createElement('div');
-    telegramPopup.className = 'telegram-popup';
-    telegramPopup.style.position = 'fixed';
-    telegramPopup.style.bottom = '20px';
-    telegramPopup.style.right = '20px';
-    telegramPopup.style.zIndex = '1000';
-    telegramPopup.style.backgroundColor = '#0088cc';
-    telegramPopup.style.color = 'white';
-    telegramPopup.style.padding = '15px';
-    telegramPopup.style.borderRadius = '8px';
-    telegramPopup.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-    telegramPopup.style.display = 'none';
-    telegramPopup.style.maxWidth = '300px';
-    telegramPopup.style.animation = 'fadeIn 0.5s ease-out';
+   document.addEventListener('DOMContentLoaded', function() {
+    // Create a container for the popup
+    const popupContainer = document.createElement('div');
+    popupContainer.style.position = 'fixed';
+    popupContainer.style.bottom = '20px';
+    popupContainer.style.right = '20px';
+    popupContainer.style.zIndex = '1000';
     
-    // Add the HTML content
-    telegramPopup.innerHTML = `
-        <div style="display: flex; align-items: center; margin-bottom: 10px;">
-            <div style="width: 24px; height: 24px; margin-right: 10px; background: url('https://telegram.org/img/t_logo.png') no-repeat center center; background-size: contain;"></div>
-            <strong style="font-size: 16px;">Join Our Telegram</strong>
+    // Add your HTML structure
+    popupContainer.innerHTML = `
+        <div class="contact-item" style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: fadeIn 0.5s ease-out;">
+            <div class="contact-icon telegram-icon" style="display: none;"></div>
+            <div class="contact-info">
+                <span style="display: block; margin-bottom: 5px; font-weight: bold;">Telegram Group: </span>
+                <div class="btn-container">
+                    <a href="https://t.me/PropTraderSignals" class="btn btn-telegram" style="display: inline-block; background: #0088cc; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-weight: bold;">Join Telegram</a>
+                </div>
+            </div>
+            <button id="close-popup" style="position: absolute; top: 5px; right: 5px; background: none; border: none; color: #888; cursor: pointer; font-size: 16px;">×</button>
         </div>
-        <p style="margin: 0 0 10px 0; font-size: 14px;">Get trading signals and updates in our Telegram group!</p>
-        <a href="https://t.me/PropTraderSignals" style="display: inline-block; background: white; color: #0088cc; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px;">Join Now</a>
-        <button id="close-telegram-popup" style="position: absolute; top: 5px; right: 5px; background: none; border: none; color: white; cursor: pointer; font-size: 16px;">×</button>
     `;
     
-    // Add CSS for fade-in animation
+    // Add CSS for animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes fadeIn {
@@ -375,24 +369,17 @@
     `;
     document.head.appendChild(style);
     
-    // Add the popup to the body
-    document.body.appendChild(telegramPopup);
+    // Add to body
+    document.body.appendChild(popupContainer);
     
-    // Show the popup after 3 seconds
+    // Show after delay
     setTimeout(() => {
-        telegramPopup.style.display = 'block';
+        popupContainer.style.display = 'block';
     }, 3000);
     
-    // Close button functionality
-    telegramPopup.querySelector('#close-telegram-popup').addEventListener('click', function() {
-        telegramPopup.style.display = 'none';
-    });
-    
-    // Optional: Close the popup when clicking outside of it
-    document.addEventListener('click', function(e) {
-        if (!telegramPopup.contains(e.target) {
-            telegramPopup.style.display = 'none';
-        }
+    // Close button
+    document.getElementById('close-popup').addEventListener('click', function() {
+        popupContainer.style.display = 'none';
     });
 });
     </script>
