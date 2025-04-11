@@ -292,12 +292,12 @@
   background-color: #218838;
 }
 .xmlink {
-  display: flex;
-  justify-content: center;
+  display: block;
+  align-items: center; 
   align: center;
 }
 .copy {
-  display: flex;
+  display: block;
   justify-content: center;
   align: center;
   color: #007bff;
