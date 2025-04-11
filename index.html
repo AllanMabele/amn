@@ -336,5 +336,65 @@
       </div>
       
     </footer>
+    <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+    // Create the Telegram popup element
+    const telegramPopup = document.createElement('div');
+    telegramPopup.className = 'telegram-popup';
+    telegramPopup.style.position = 'fixed';
+    telegramPopup.style.bottom = '20px';
+    telegramPopup.style.right = '20px';
+    telegramPopup.style.zIndex = '1000';
+    telegramPopup.style.backgroundColor = '#0088cc';
+    telegramPopup.style.color = 'white';
+    telegramPopup.style.padding = '15px';
+    telegramPopup.style.borderRadius = '8px';
+    telegramPopup.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    telegramPopup.style.display = 'none';
+    telegramPopup.style.maxWidth = '300px';
+    telegramPopup.style.animation = 'fadeIn 0.5s ease-out';
+    
+    // Add the HTML content
+    telegramPopup.innerHTML = `
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <div style="width: 24px; height: 24px; margin-right: 10px; background: url('https://telegram.org/img/t_logo.png') no-repeat center center; background-size: contain;"></div>
+            <strong style="font-size: 16px;">Join Our Telegram</strong>
+        </div>
+        <p style="margin: 0 0 10px 0; font-size: 14px;">Get trading signals and updates in our Telegram group!</p>
+        <a href="https://t.me/PropTraderSignals" style="display: inline-block; background: white; color: #0088cc; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px;">Join Now</a>
+        <button id="close-telegram-popup" style="position: absolute; top: 5px; right: 5px; background: none; border: none; color: white; cursor: pointer; font-size: 16px;">×</button>
+    `;
+    
+    // Add CSS for fade-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add the popup to the body
+    document.body.appendChild(telegramPopup);
+    
+    // Show the popup after 3 seconds
+    setTimeout(() => {
+        telegramPopup.style.display = 'block';
+    }, 3000);
+    
+    // Close button functionality
+    telegramPopup.querySelector('#close-telegram-popup').addEventListener('click', function() {
+        telegramPopup.style.display = 'none';
+    });
+    
+    // Optional: Close the popup when clicking outside of it
+    document.addEventListener('click', function(e) {
+        if (!telegramPopup.contains(e.target) {
+            telegramPopup.style.display = 'none';
+        }
+    });
+});
+    </script>
   </body>
 </html>
