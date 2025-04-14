@@ -1,0 +1,199 @@
+:root {
+  --green: #28a745;
+  --white: #ffffff;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --header-height: 80px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  padding-top: var(--header-height);
+}
+
+/* Header Styles */
+.nav-header {
+  background-color: var(--green);
+  color: var(--white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+  height: var(--header-height);
+  border-bottom: 1px solid var(--white);
+}
+
+.logo img {
+  height: 60px;
+  width: auto;
+  max-width: 100px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d4edda;
+}
+
+/* Main Content Styles */
+.artist-card,
+.upload-container,
+#musicList {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 30px;
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 2.2em;
+}
+
+.tagline {
+  text-align: center;
+  font-style: italic;
+  color: #7f8c8d;
+  margin-bottom: 30px;
+}
+
+.artist-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 25px;
+  border: 5px solid #ecf0f1;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bio {
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+.contact {
+  background-color: #f1f9fe;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+}
+
+.contact h2 {
+  color: #2980b9;
+  margin-top: 0;
+}
+
+.contact-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.contact-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-list li::before {
+  content: "•";
+  color: #2980b9;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.cta {
+  text-align: center;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 30px;
+  font-size: 1.1em;
+}
+
+/* Button Styles */
+.music-button,
+button,
+.download-btn {
+  display: inline-block;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.music-button {
+  background-color: #e74c3c;
+  padding: 12px 25px;
+  border-radius: 30px;
+  margin-top: 20px;
+}
+
+.music-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+button {
+  background-color: #4CAF50;
+  margin: 0 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.download-btn {
+  background-color: #007bff;
+}
+
+.download-btn:hover {
+  background-color: #0069d9;
+}
+
+/* Music List Styles */
+.music-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.music-item:last-child {
+  border-bottom: none;
+}
+
+input[type="file"] {
+  margin: 10px 0;
+}
