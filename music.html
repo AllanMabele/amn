@@ -56,95 +56,127 @@
         
         <p style="text-align: center; margin-top: 30px; font-style: italic;">Join his journey as he uses his God-given talents to spread light and praise through the power of song!</p>
     </div>
- 
+ <!-- HTML -->
 <div class="upload-container">
     <h2>Upload Music</h2>
-    <input type="file" id="musicUpload" accept="audio/*" multiple>
-    <p>Supported formats: MP3, WAV, OGG</p>
+    <div class="upload-box" id="dropZone">
+        <div class="upload-icon">🎵</div>
+        <p>Drag & drop audio files here or click to upload</p>
+        <input type="file" id="musicUpload" accept="audio/*" multiple hidden>
+    </div>
+    <div class="upload-status">
+        <p>Supported formats: MP3, WAV, OGG | Max file size: 25MB</p>
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 </div>
 
 <div id="musicList">
-    <h2>Uploaded Tracks</h2>
-    <div id="tracksContainer"></div>
+    <h2>Available Tracks</h2>
+    <div class="loading-spinner" id="loadingSpinner"></div>
+    <div id="tracksContainer" class="tracks-grid"></div>
+    <div id="emptyState" class="empty-state">
+        <p>No tracks available yet. Be the first to upload!</p>
+    </div>
 </div>
 
 <script>
-    const musicUpload = document.getElementById('musicUpload');
-    const tracksContainer = document.getElementById('tracksContainer');
-    let currentAudio = null;
+// Improved JavaScript with server simulation
+const musicUpload = document.getElementById('musicUpload');
+const dropZone = document.getElementById('dropZone');
+const tracksContainer = document.getElementById('tracksContainer');
+const loadingSpinner = document.getElementById('loadingSpinner');
+const emptyState = document.getElementById('emptyState');
 
-    // Load stored music from localStorage on page load
-    window.onload = function() {
-        const storedMusic = JSON.parse(localStorage.getItem('uploadedMusic')) || [];
-        storedMusic.forEach(fileData => {
-            createMusicItem(fileData.name, fileData.url);
-        });
-    };
-
-    musicUpload.addEventListener('change', function(e) {
-        const files = e.target.files;
-        
-        for (const file of files) {
-            if (!file.type.startsWith('audio/')) {
-                alert('Please upload audio files only');
-                continue;
-            }
-
-            const url = URL.createObjectURL(file);
-            createMusicItem(file.name, url);
-
-            // Store in localStorage
-            const storedMusic = JSON.parse(localStorage.getItem('uploadedMusic')) || [];
-            storedMusic.push({ name: file.name, url: url });
-            localStorage.setItem('uploadedMusic', JSON.stringify(storedMusic));
-        }
-    });
-
-    function createMusicItem(fileName, fileUrl) {
-        const musicItem = document.createElement('div');
-        musicItem.className = 'music-item';
-        
-        const audio = document.createElement('audio');
-        audio.src = fileUrl;
-        audio.style.display = 'none'; // Hide audio controls
-        
-        const playButton = document.createElement('button');
-        playButton.textContent = 'Play';
-        
-        const downloadButton = document.createElement('a');
-        downloadButton.href = fileUrl;
-        downloadButton.download = fileName;
-        downloadButton.className = 'download-btn';
-        downloadButton.innerHTML = 'Download';
-
-        const nameLabel = document.createElement('span');
-        nameLabel.textContent = fileName;
-        nameLabel.style.margin = '0 10px';
-        nameLabel.style.flexGrow = '1';
-
-        playButton.addEventListener('click', function() {
-            if (currentAudio && currentAudio !== audio) {
-                currentAudio.pause();
-                currentAudio.parentElement.querySelector('button').textContent = 'Play';
-            }
-
-            if (audio.paused) {
-                audio.play();
-                playButton.textContent = 'Pause';
-                currentAudio = audio;
-            } else {
-                audio.pause();
-                playButton.textContent = 'Play';
-                currentAudio = null;
-            }
-        });
-
-        musicItem.appendChild(playButton);
-        musicItem.appendChild(nameLabel);
-        musicItem.appendChild(downloadButton);
-        musicItem.appendChild(audio);
-        tracksContainer.appendChild(musicItem);
+// Simulated server database
+const mockServer = {
+    getTracks: () => JSON.parse(localStorage.getItem('musicLibrary')) || [],
+    saveTrack: (track) => {
+        const library = mockServer.getTracks();
+        library.push(track);
+        localStorage.setItem('musicLibrary', JSON.stringify(library));
+    },
+    deleteTrack: (id) => {
+        const library = mockServer.getTracks().filter(t => t.id !== id);
+        localStorage.setItem('musicLibrary', JSON.stringify(library));
     }
+};
+
+// Load tracks on page load
+window.addEventListener('load', async () => {
+    loadingSpinner.style.display = 'block';
+    const tracks = await mockServer.getTracks();
+    loadingSpinner.style.display = 'none';
+    
+    if(tracks.length > 0) {
+        emptyState.style.display = 'none';
+        tracks.forEach(track => createMusicItem(track));
+    }
+});
+
+// Drag & drop handlers
+dropZone.addEventListener('click', () => musicUpload.click());
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+});
+
+musicUpload.addEventListener('change', (e) => handleFiles(e.target.files));
+
+async function handleFiles(files) {
+    for (const file of files) {
+        if (!file.type.startsWith('audio/')) {
+            alert('Please upload audio files only');
+            continue;
+        }
+        
+        if(file.size > 25 * 1024 * 1024) {
+            alert('File size exceeds 25MB limit');
+            continue;
+        }
+
+        const track = {
+            id: Date.now().toString(),
+            name: file.name,
+            url: URL.createObjectURL(file),
+            size: (file.size / 1024 / 1024).toFixed(2) + 'MB',
+            uploaded: new Date().toLocaleDateString()
+        };
+
+        mockServer.saveTrack(track);
+        createMusicItem(track);
+        emptyState.style.display = 'none';
+    }
+}
+
+function createMusicItem(track) {
+    const musicItem = document.createElement('div');
+    musicItem.className = 'music-item';
+    musicItem.innerHTML = `
+        <div class="track-info">
+            <span class="track-name">${track.name}</span>
+            <span class="track-meta">${track.size} • ${track.uploaded}</span>
+        </div>
+        <div class="track-controls">
+            <button class="play-btn">▶ Play</button>
+            <a href="${track.url}" download="${track.name}" class="download-btn">⬇ Download</a>
+            <button class="delete-btn" onclick="deleteTrack('${track.id}')">🗑</button>
+        </div>
+    `;
+    tracksContainer.appendChild(musicItem);
+}
+
+function deleteTrack(id) {
+    mockServer.deleteTrack(id);
+    const item = document.querySelector(`[data-id="${id}"]`);
+    item.remove();
+    if(mockServer.getTracks().length === 0) emptyState.style.display = 'block';
+}
 </script>
     <footer>
         <!-- Your footer content here -->
