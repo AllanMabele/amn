@@ -56,77 +56,96 @@
         
         <p style="text-align: center; margin-top: 30px; font-style: italic;">Join his journey as he uses his God-given talents to spread light and praise through the power of song!</p>
     </div>
-    
-    <div class="upload-container">
-        <h2>Upload Music</h2>
-        <input type="file" id="musicUpload" accept="audio/*" multiple>
-        <p>Supported formats: MP3, WAV, OGG</p>
-    </div>
+ 
+<div class="upload-container">
+    <h2>Upload Music</h2>
+    <input type="file" id="musicUpload" accept="audio/*" multiple>
+    <p>Supported formats: MP3, WAV, OGG</p>
+</div>
 
-    <div id="musicList">
-        <h2>Uploaded Tracks</h2>
-        <div id="tracksContainer"></div>
-    </div>
+<div id="musicList">
+    <h2>Uploaded Tracks</h2>
+    <div id="tracksContainer"></div>
+</div>
 
-    <script>
-        const musicUpload = document.getElementById('musicUpload');
-        const tracksContainer = document.getElementById('tracksContainer');
-        let currentAudio = null;
+<script>
+    const musicUpload = document.getElementById('musicUpload');
+    const tracksContainer = document.getElementById('tracksContainer');
+    let currentAudio = null;
 
-        musicUpload.addEventListener('change', function(e) {
-            const files = e.target.files;
-            
-            for (const file of files) {
-                if (!file.type.startsWith('audio/')) {
-                    alert('Please upload audio files only');
-                    continue;
-                }
+    // Load stored music from localStorage on page load
+    window.onload = function() {
+        const storedMusic = JSON.parse(localStorage.getItem('uploadedMusic')) || [];
+        storedMusic.forEach(fileData => {
+            createMusicItem(fileData.name, fileData.url);
+        });
+    };
 
-                const musicItem = document.createElement('div');
-                musicItem.className = 'music-item';
-                
-                const audio = document.createElement('audio');
-                audio.src = URL.createObjectURL(file);
-                audio.controls = false;
-                
-                const playButton = document.createElement('button');
+    musicUpload.addEventListener('change', function(e) {
+        const files = e.target.files;
+        
+        for (const file of files) {
+            if (!file.type.startsWith('audio/')) {
+                alert('Please upload audio files only');
+                continue;
+            }
+
+            const url = URL.createObjectURL(file);
+            createMusicItem(file.name, url);
+
+            // Store in localStorage
+            const storedMusic = JSON.parse(localStorage.getItem('uploadedMusic')) || [];
+            storedMusic.push({ name: file.name, url: url });
+            localStorage.setItem('uploadedMusic', JSON.stringify(storedMusic));
+        }
+    });
+
+    function createMusicItem(fileName, fileUrl) {
+        const musicItem = document.createElement('div');
+        musicItem.className = 'music-item';
+        
+        const audio = document.createElement('audio');
+        audio.src = fileUrl;
+        audio.style.display = 'none'; // Hide audio controls
+        
+        const playButton = document.createElement('button');
+        playButton.textContent = 'Play';
+        
+        const downloadButton = document.createElement('a');
+        downloadButton.href = fileUrl;
+        downloadButton.download = fileName;
+        downloadButton.className = 'download-btn';
+        downloadButton.innerHTML = 'Download';
+
+        const nameLabel = document.createElement('span');
+        nameLabel.textContent = fileName;
+        nameLabel.style.margin = '0 10px';
+        nameLabel.style.flexGrow = '1';
+
+        playButton.addEventListener('click', function() {
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                currentAudio.parentElement.querySelector('button').textContent = 'Play';
+            }
+
+            if (audio.paused) {
+                audio.play();
+                playButton.textContent = 'Pause';
+                currentAudio = audio;
+            } else {
+                audio.pause();
                 playButton.textContent = 'Play';
-                
-                const downloadButton = document.createElement('a');
-                downloadButton.href = URL.createObjectURL(file);
-                downloadButton.download = file.name;
-                downloadButton.className = 'download-btn';
-                downloadButton.innerHTML = 'Download';
-
-                const fileName = document.createElement('span');
-                fileName.textContent = file.name;
-                fileName.style.margin = '0 10px';
-                fileName.style.flexGrow = '1';
-
-                playButton.addEventListener('click', function() {
-                    if (currentAudio && currentAudio !== audio) {
-                        currentAudio.pause();
-                        currentAudio.parentElement.querySelector('button').textContent = 'Play';
-                    }
-
-                    if (audio.paused) {
-                        audio.play();
-                        playButton.textContent = 'Pause';
-                        currentAudio = audio;
-                    } else {
-                        audio.pause();
-                        playButton.textContent = 'Play';
-                        currentAudio = null;
-                    }
-                });
-                musicItem.appendChild(playButton);
-                musicItem.appendChild(fileName);
-                musicItem.appendChild(downloadButton);
-                musicItem.appendChild(audio);
-                tracksContainer.appendChild(musicItem);
+                currentAudio = null;
             }
         });
-    </script>
+
+        musicItem.appendChild(playButton);
+        musicItem.appendChild(nameLabel);
+        musicItem.appendChild(downloadButton);
+        musicItem.appendChild(audio);
+        tracksContainer.appendChild(musicItem);
+    }
+</script>
     <footer>
         <!-- Your footer content here -->
         <div class="footer-grid">
