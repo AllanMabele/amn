@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Upload & Playback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .upload-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        #musicList {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .music-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .music-item:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+        }
+
+        .download-btn {
+            background-color: #008CBA;
+        }
+
+        .download-btn:hover {
+            background-color: #007399;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h2>Upload Music</h2>
+        <input type="file" id="musicUpload" accept="audio/*" multiple>
+        <p>Supported formats: MP3, WAV, OGG</p>
+    </div>
+
+    <div id="musicList">
+        <h2>Uploaded Tracks</h2>
+        <div id="tracksContainer"></div>
+    </div>
+
+    <script>
+        const musicUpload = document.getElementById('musicUpload');
+        const tracksContainer = document.getElementById('tracksContainer');
+        let currentAudio = null;
+
+        musicUpload.addEventListener('change', function(e) {
+            const files = e.target.files;
+            
+            for (const file of files) {
+                if (!file.type.startsWith('audio/')) {
+                    alert('Please upload audio files only');
+                    continue;
+                }
+
+                const musicItem = document.createElement('div');
+                musicItem.className = 'music-item';
+                
+                const audio = document.createElement('audio');
+                audio.src = URL.createObjectURL(file);
+                audio.controls = false;
+                
+                const playButton = document.createElement('button');
+                playButton.textContent = 'Play';
+                
+                const downloadButton = document.createElement('a');
+                downloadButton.href = URL.createObjectURL(file);
+                downloadButton.download = file.name;
+                downloadButton.className = 'download-btn';
+                downloadButton.innerHTML = 'Download';
+
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+                fileName.style.margin = '0 10px';
+                fileName.style.flexGrow = '1';
+
+                playButton.addEventListener('click', function() {
+                    if (currentAudio && currentAudio !== audio) {
+                        currentAudio.pause();
+                        currentAudio.parentElement.querySelector('button').textContent = 'Play';
+                    }
+
+                    if (audio.paused) {
+                        audio.play();
+                        playButton.textContent = 'Pause';
+                        currentAudio = audio;
+                    } else {
+                        audio.pause();
+                        playButton.textContent = 'Play';
+                        currentAudio = null;
+                    }
+                });
+                musicItem.appendChild(playButton);
+                musicItem.appendChild(fileName);
+                musicItem.appendChild(downloadButton);
+                musicItem.appendChild(audio);
+                tracksContainer.appendChild(musicItem);
+            }
+        });
+    </script>
+</body>
+</html>
