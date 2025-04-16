@@ -105,47 +105,62 @@ const trackTemplate = (index) => `
 // Generate 20 tracks
 for(let i = 1; i <= 20; i++) {
     tracksGrid.innerHTML += trackTemplate(i);
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const footerLinks = document.querySelectorAll('footer .footer-nav a, footer .social-links a');
+
+    footerLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+});
 }
 </script>
     <footer>
-        <!-- Your footer content here -->
         <div class="footer-grid">
-          <!-- Column 1: Navigation Links -->
-          <div class="footer-col">
+        <div class="footer-col">
             <h3>Quick Links</h3>
             <nav class="footer-nav">
-              <a href="index.html">Home</a>
-              <a href="#services">Services</a>
-              <a href="#learnforex.html">Learn Forex</a>
-              <a href="#contact">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="#services">Services</a>
+                <a href="#learnforex.html">Learn Forex</a>
+                <a href="#contact">Contact</a>
             </nav>
-          </div>
-      
-          <!-- Column 2: Social Media -->
-          <div class="footer-col">
+        </div>
+
+        <div class="footer-col">
             <h3>Follow Me</h3>
             <div class="social-links">
-              <a href="https://x.com/allan_mabele" target="_blank">X (Twitter)</a>
-              <a href="https://web.facebook.com/allan.mabel.7" target="_blank">Facebook</a>
-              <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank">LinkedIn</a>
-              <a href="https://github.com/AllanMabele" target="_blank">GitHub</a>
+                <a href="https://x.com/allan_mabele" target="_blank">X (Twitter)</a>
+                <a href="https://web.facebook.com/allan.mabel.7" target="_blank">Facebook</a>
+                <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/AllanMabele" target="_blank">GitHub</a>
             </div>
-          </div>
-      
-          <!-- Column 3: Contact Details -->
-          <div class="footer-col">
+        </div>
+
+        <div class="footer-col">
             <h3>Contact</h3>
             <div class="contact-details">
-              <p>Email: <a href="mailto:your@email.com">allymabz@gmail.com</a></p>
-              <p>Phone: <a href="tel:+1234567890">+254 769 174 049 | +254 701 540 201</a></p>
+                <p>Email: <a href="mailto:your@email.com">allymabz@gmail.com</a></p>
+                <p>Phone: <a href="tel:+1234567890">+254 769 174 049 | +254 701 540 201</a></p>
             </div>
-          </div>
         </div>
-      
-        <!-- Copyright (Full Width Below Grid) -->
-        <div class="copyright">
-          <p class="date-name">© 2024 Allan Mabele Nambafu</p>
-        </div>
+    </div>
+
+    <div class="copyright">
+        <p class="date-name">© 2024 Allan Mabele Nambafu</p>
+    </div>
       </footer>
 
 </body>
