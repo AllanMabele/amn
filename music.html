@@ -110,24 +110,55 @@ function generateTrackItems() {
         return;
     }
 
-    validTracks.forEach(track => {
-        const trackItem = document.createElement('div');
-        trackItem.className = 'track-item';
-        trackItem.innerHTML = `
-            <span class="track-title">${track.title || 'Untitled Track'}</span>
+    // Show the first track
+    if (validTracks.length > 0) {
+        const firstTrack = validTracks[0];
+        const firstTrackItem = document.createElement('div');
+        firstTrackItem.className = 'track-item';
+        firstTrackItem.innerHTML = `
+            <span class="track-title">${firstTrack.title || 'Untitled Track'}</span>
             <div class="track-links">
-                ${track.mdundoLink ? `<a href="${track.mdundoLink}" class="download-link" target="_blank">Mdundo</a>` : ''}
-                ${track.youtubeLink ? `<a href="${track.youtubeLink}" class="youtube-link" target="_blank">YouTube</a>` : ''}
+                ${firstTrack.mdundoLink ? `<a href="${firstTrack.mdundoLink}" class="download-link" target="_blank">Mdundo</a>` : ''}
+                ${firstTrack.youtubeLink ? `<a href="${firstTrack.youtubeLink}" class="youtube-link" target="_blank">YouTube</a>` : ''}
             </div>
         `;
-        tracksGrid.appendChild(trackItem);
-    });
+        tracksGrid.appendChild(firstTrackItem);
+    }
+
+    // Show placeholder for the second track
+    if (validTracks.length > 1) {
+        const secondTrackPlaceholder = document.createElement('div');
+        secondTrackPlaceholder.className = 'track-item';
+        secondTrackPlaceholder.innerHTML = `
+            <span class="track-title">Second Track: Placeholder</span>
+            <div class="track-links">
+                <span class="placeholder-link">Links will be added soon.</span>
+            </div>
+        `;
+        tracksGrid.appendChild(secondTrackPlaceholder);
+    }
+
+    // Hide remaining tracks
+    if (validTracks.length > 2) {
+        for (let i = 2; i < validTracks.length; i++) {
+            const hiddenTrackItem = document.createElement('div');
+            hiddenTrackItem.className = 'track-item hidden'; // Use a class to hide it
+            hiddenTrackItem.innerHTML = `
+                <span class="track-title">${validTracks[i].title || 'Untitled Track'}</span>
+                <div class="track-links">
+                    <span class="placeholder-link">Links will be added soon.</span>
+                </div>
+            `;
+            tracksGrid.appendChild(hiddenTrackItem);
+        }
+    }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
     // Generate valid tracks on load
     generateTrackItems();
+});
 
     // Footer link handling (moved outside loop)
     const footerLinks = document.querySelectorAll('footer .footer-nav a, footer .social-links a');
