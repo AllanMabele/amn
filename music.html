@@ -89,26 +89,49 @@
     <!-- Footer remains same -->
 
 <script>
-// Improved JavaScript with server simulation
-    // Add this to your existing script
+    // Improved JavaScript with server simulation
 const tracksGrid = document.querySelector('.tracks-grid');
-const trackTemplate = (index) => `
-    <div class="track-item">
-        <span class="track-title">Song Title ${index}</span>
-        <div class="track-links">
-            <a href="https://mdundo.com/song/4706497" class="download-link" target="_blank">Mdundo</a>
-            <a href="https://www.youtube.com/@allan_mabele/videos" class="youtube-link" target="_blank">YouTube</a>
-        </div>
-    </div>
-`;
+const mockServer = {
+    // Modified to include title check
+    getValidTracks: () => {
+        return JSON.parse(localStorage.getItem('musicLibrary')) || []
+            .filter(track => track.title && track.title !== '');
+    }
+};
 
-// Generate 20 tracks
-for(let i = 1; i <= 20; i++) {
-    tracksGrid.innerHTML += trackTemplate(i);
+// Generate track items only for valid tracks
+function generateTrackItems() {
+    tracksGrid.innerHTML = ''; // Clear existing content
+    
+    const validTracks = mockServer.getValidTracks();
+    
+    if (validTracks.length === 0) {
+        tracksGrid.innerHTML = '<div class="empty-state"><p>No tracks available yet. Be the first to upload!</p></div>';
+        return;
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    validTracks.forEach(track => {
+        const trackItem = document.createElement('div');
+        trackItem.className = 'track-item';
+        trackItem.innerHTML = `
+            <span class="track-title">${track.title || 'Untitled Track'}</span>
+            <div class="track-links">
+                ${track.mdundoLink ? `<a href="${track.mdundoLink}" class="download-link" target="_blank">Mdundo</a>` : ''}
+                ${track.youtubeLink ? `<a href="${track.youtubeLink}" class="youtube-link" target="_blank">YouTube</a>` : ''}
+            </div>
+        `;
+        tracksGrid.appendChild(trackItem);
+    });
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function () {
+    // Generate valid tracks on load
+    generateTrackItems();
+
+    // Footer link handling (moved outside loop)
     const footerLinks = document.querySelectorAll('footer .footer-nav a, footer .social-links a');
-
+    
     footerLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
@@ -125,6 +148,23 @@ for(let i = 1; i <= 20; i++) {
         });
     });
 });
+
+// Modified handleFiles function to include titles
+async function handleFiles(files) {
+    for (const file of files) {
+        const track = {
+            id: Date.now().toString(),
+            title: file.name.replace(/\.[^/.]+$/, ""), // Remove file extension
+            mdundoLink: '', // Initialize empty links
+            youtubeLink: '',
+            url: URL.createObjectURL(file),
+            size: (file.size / 1024 / 1024).toFixed(2) + 'MB',
+            uploaded: new Date().toLocaleDateString()
+        };
+
+        mockServer.saveTrack(track);
+        generateTrackItems(); // Regenerate track list after upload
+    }
 }
 </script>
     <footer>
