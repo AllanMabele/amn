@@ -3,179 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Upload & Playback</title>
-    <link rel= "stylesheet" href= 'music.css'>
-    <style>
-    </style>
+    <title>Allan Mabele Music</title>
+    <link rel="stylesheet" href="music.css">
 </head>
 <body>
     <header class="nav-header">
-      <!-- Logo Placeholder (Left Side) -->
-      <div class="logo">
-        <img src="thumbnails/AMN-LOGO-main.png" alt="Allan Mabele Logo" width="150"> <!-- Replace with actual logo -->
-      </div>
-    
-      <!-- Navigation Links (Right Side) -->
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="learnforex.html">Learn Forex</a>
-        <a href="contact.html">Contact</a>
-        <a href="#music.html">My Music</a>
-      </nav>
+        <div class="logo">
+            <img src="thumbnails/AMN-LOGO-main.png" alt="Allan Mabele Logo" width="150">
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="learnforex.html">Learn Forex</a>
+            <a href="contact.html">Contact</a>
+            <a href="#music.html">My Music</a>
+        </nav>
     </header>
 
     <div class="artist-card">
-        <!-- Placeholder for artist image - replace with actual image path -->
         <img src="thumbnails/dp.jpg" alt="Allan Mabele Nambafu" class="artist-image">
-        
         <h1>Allan Mabele Nambafu</h1>
         <p class="tagline">Anointed Gospel Artist & Songwriter from Kenya</p>
         
-        <div class="bio">
-            <p>Allan Mabele Nambafu, a gifted and anointed artist from Kenya, is a rising voice in the realm of gospel music, blending heartfelt songwriting with a divine calling to glorify God through his craft. Blessed with multifaceted talents, Allan shines as a passionate songwriter and emerging musician, dedicated to creating worship and praise songs that stir the soul and uplift the spirit.</p>
-            
-            <p>His music resonates with authenticity, reflecting a deep connection to faith and a desire to inspire others toward spiritual renewal. Whether through intimate worship melodies or vibrant praise anthems, Allan's work carries a message of hope, gratitude, and reverence.</p>
-            
-            <p>As he steps into the music scene, his dedication to ministry and artistic excellence promises to touch hearts across generations.</p>
+        <!-- New Music Release Section -->
+        <div class="new-release">
+            <h2>New Music Release</h2>
+            <div class="release-links">
+                <a href="https://mdundo.com/song/4706497" class="music-button" target="_blank">Download Now</a>
+                <a href="https://www.youtube.com/@allan_mabele/videos" class="music-button youtube" target="_blank">Watch on YouTube</a>
+            </div>
         </div>
-        
-        <div class="contact">
-            <h2>Connect & Collaborate</h2>
-            <ul class="contact-list">
-                <li>Email: <a href="mailto:allymabz@gmail.com">allymabz@gmail.com</a></li>
-                <li>Phone/WhatsApp: +254 769 174049 or +254 701 540201</li>
-            </ul>
-        </div>
-        
-        <p class="cta">Explore his uplifting music by downloading or streaming his tracks below!</p>
-        
-        <div style="text-align: center;">
-            <a href="#" class="music-button">Listen to Music</a>
-        </div>
-        
-        <p style="text-align: center; margin-top: 30px; font-style: italic;">Join his journey as he uses his God-given talents to spread light and praise through the power of song!</p>
-    </div>
- <!-- HTML -->
-<div class="upload-container">
-    <h2>Upload Music</h2>
-    <div class="upload-box" id="dropZone">
-        <div class="upload-icon">🎵</div>
-        <p>Drag & drop audio files here or click to upload</p>
-        <input type="file" id="musicUpload" accept="audio/*" multiple hidden>
-    </div>
-    <div class="upload-status">
-        <p>Supported formats: MP3, WAV, OGG | Max file size: 25MB</p>
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-</div>
 
-<div id="musicList">
-    <h2>Available Tracks</h2>
-    <div class="loading-spinner" id="loadingSpinner"></div>
-    <div id="tracksContainer" class="tracks-grid"></div>
-    <div id="emptyState" class="empty-state">
-        <p>No tracks available yet. Be the first to upload!</p>
+        <!-- Existing Music Section -->
+        <div class="existing-tracks">
+            <h2>Available Tracks</h2>
+            <div class="tracks-grid">
+                <!-- 20 placeholder tracks -->
+                <div class="track-item">
+                    <span class="track-title">Song Title 1</span>
+                    <div class="track-links">
+                        <a href="https://mdundo.com/song/4706497" class="download-link" target="_blank">Mdundo</a>
+                        <a href="https://www.youtube.com/@allan_mabele/videos" class="youtube-link" target="_blank">YouTube</a>
+                    </div>
+                </div>
+                <!-- Repeat similar structure for 19 more tracks -->
+            </div>
+        </div>
+
+        <!-- Rest of existing content -->
     </div>
-</div>
+
+    <!-- Footer remains same -->
 
 <script>
 // Improved JavaScript with server simulation
-const musicUpload = document.getElementById('musicUpload');
-const dropZone = document.getElementById('dropZone');
-const tracksContainer = document.getElementById('tracksContainer');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const emptyState = document.getElementById('emptyState');
-
-// Simulated server database
-const mockServer = {
-    getTracks: () => JSON.parse(localStorage.getItem('musicLibrary')) || [],
-    saveTrack: (track) => {
-        const library = mockServer.getTracks();
-        library.push(track);
-        localStorage.setItem('musicLibrary', JSON.stringify(library));
-    },
-    deleteTrack: (id) => {
-        const library = mockServer.getTracks().filter(t => t.id !== id);
-        localStorage.setItem('musicLibrary', JSON.stringify(library));
-    }
-};
-
-// Load tracks on page load
-window.addEventListener('load', async () => {
-    loadingSpinner.style.display = 'block';
-    const tracks = await mockServer.getTracks();
-    loadingSpinner.style.display = 'none';
-    
-    if(tracks.length > 0) {
-        emptyState.style.display = 'none';
-        tracks.forEach(track => createMusicItem(track));
-    }
-});
-
-// Drag & drop handlers
-dropZone.addEventListener('click', () => musicUpload.click());
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-});
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    handleFiles(e.dataTransfer.files);
-});
-
-musicUpload.addEventListener('change', (e) => handleFiles(e.target.files));
-
-async function handleFiles(files) {
-    for (const file of files) {
-        if (!file.type.startsWith('audio/')) {
-            alert('Please upload audio files only');
-            continue;
-        }
-        
-        if(file.size > 25 * 1024 * 1024) {
-            alert('File size exceeds 25MB limit');
-            continue;
-        }
-
-        const track = {
-            id: Date.now().toString(),
-            name: file.name,
-            url: URL.createObjectURL(file),
-            size: (file.size / 1024 / 1024).toFixed(2) + 'MB',
-            uploaded: new Date().toLocaleDateString()
-        };
-
-        mockServer.saveTrack(track);
-        createMusicItem(track);
-        emptyState.style.display = 'none';
-    }
-}
-
-function createMusicItem(track) {
-    const musicItem = document.createElement('div');
-    musicItem.className = 'music-item';
-    musicItem.innerHTML = `
-        <div class="track-info">
-            <span class="track-name">${track.name}</span>
-            <span class="track-meta">${track.size} • ${track.uploaded}</span>
+    // Add this to your existing script
+const tracksGrid = document.querySelector('.tracks-grid');
+const trackTemplate = (index) => `
+    <div class="track-item">
+        <span class="track-title">Song Title ${index}</span>
+        <div class="track-links">
+            <a href="https://mdundo.com/song/4706497" class="download-link" target="_blank">Mdundo</a>
+            <a href="https://www.youtube.com/@allan_mabele/videos" class="youtube-link" target="_blank">YouTube</a>
         </div>
-        <div class="track-controls">
-            <button class="play-btn">▶ Play</button>
-            <a href="${track.url}" download="${track.name}" class="download-btn">⬇ Download</a>
-            <button class="delete-btn" onclick="deleteTrack('${track.id}')">🗑</button>
-        </div>
-    `;
-    tracksContainer.appendChild(musicItem);
-}
+    </div>
+`;
 
-function deleteTrack(id) {
-    mockServer.deleteTrack(id);
-    const item = document.querySelector(`[data-id="${id}"]`);
-    item.remove();
-    if(mockServer.getTracks().length === 0) emptyState.style.display = 'block';
+// Generate 20 tracks
+for(let i = 1; i <= 20; i++) {
+    tracksGrid.innerHTML += trackTemplate(i);
 }
 </script>
     <footer>
