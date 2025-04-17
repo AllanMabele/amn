@@ -338,6 +338,33 @@
       
     </footer>
     <script> 
+  // Add smooth animation on load and scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const homeSection = document.getElementById('home');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                homeSection.style.opacity = '1';
+                homeSection.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    observer.observe(homeSection);
+
+    // Initial styles
+    homeSection.style.transition = 'all 0.8s ease-out';
+    homeSection.style.opacity = '0';
+    homeSection.style.transform = 'translateY(20px)';
+});
+
+// Dynamic theme color based on time of day
+function updateTheme() {
+    const hour = new Date().getHours();
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', hour >= 6 && hour < 18 ? '#2c3e50' : '#3498db');
+}
+window.addEventListener('load', updateTheme);
    document.addEventListener('DOMContentLoaded', function() {
     // Create a container for the popup
     const popupContainer = document.createElement('div');
