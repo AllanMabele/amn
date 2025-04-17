@@ -195,60 +195,85 @@ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 gap: var(--gap);
 }
 
-/* Summary Section */
+#home {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: var(--background-color);
+}
+
 .summary {
-display: flex;
-gap: 30px;
-align-items: flex-start;
-margin-top: 20px;
-color: #000;
-border: 1px solid gray;
-padding: 10px;
-border-radius: 8px;
-transition: background-color 0.3s, color 0.3s;
-}
-
-.summary:hover p {
-background-color: var(--blue);
-color: var(--white);
-}
-
-.photo {
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 200px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 40px;
+    align-items: center;
 }
 
 .photo img {
-width: 150px;
-height: 150px;
-border-radius: 50%;
-object-fit: cover;
-margin-bottom: 15px;
-border: 3px solid var(--blue);
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 4px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.photo:hover img {
+    transform: scale(1.03);
 }
 
 .my-name {
-font-size: 1.5rem;
-font-weight: bold;
-margin: 0;
-color: black;
-text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
 }
 
-.intro {
-flex: 1;
+.my-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
 }
 
 .summary-description {
-margin-top: 0;
-line-height: 1.6;
-text-align: justify;
-color: black; /* Fixed typo from "colo" to "color" */
-padding-right: 40px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    position: relative;
+    padding-left: 30px;
+    border-left: 3px solid var(--secondary-color);
 }
 
+@media (max-width: 768px) {
+    .summary {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .photo {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    .my-name {
+        font-size: 2rem;
+    }
+    
+    .my-name::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .summary-description {
+        padding-left: 0;
+        border-left: none;
+    }
 /* Headings */
 .working-exp,
 .id-home {
