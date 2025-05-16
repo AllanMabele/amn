@@ -86,9 +86,9 @@ border-bottom: 1px solid var(--white);
 
 .logo img {
 height: 60px;
-width: auto;
 max-width: 100px;
 border-radius: 30px;
+border: 4px solid var(--primary-color);
     
 }
 
