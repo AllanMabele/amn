@@ -88,6 +88,8 @@ border-bottom: 1px solid var(--white);
 height: 60px;
 width: auto;
 max-width: 100px;
+border-radius: 30px;
+    
 }
 
 .nav-links {
