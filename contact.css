@@ -46,6 +46,7 @@ body {
   width: auto;
   max-width: 100px;
   object-fit: contain;
+ border-radius: 30px
 }
 
 .nav-links {
