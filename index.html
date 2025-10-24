@@ -1,16 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Allan Mabele | Operations Research Analyst</title>
+    <meta name="description" content="A personal portfolio website for Allan Mabele, showcasing his work experience, skills, and services as an Operations Research Analyst and digital specialist." />
+    <title>Allan Mabele - Operations Research Analyst Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-  <script type="importmap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-border': 'pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        'pulse-border': {
+                            '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                            '50%': { opacity: 0.5, transform: 'scale(1.1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
@@ -20,41 +50,39 @@
 }
 </script>
 </head>
-  <body class="bg-slate-900 text-slate-300 font-sans leading-relaxed">
+<body class="bg-slate-900 text-slate-300 font-sans leading-relaxed">
 
     <!-- Header -->
     <header id="header" class="sticky top-0 z-50 transition-all duration-300">
       <div class="container mx-auto px-6 md:px-10 flex justify-between items-center py-4">
-        <a href="#home" class="flex items-center space-x-2">
-            <img src="https://thumbnails/LOGO1.jpeg" alt="Allan Mabele Logo" class="h-10 w-auto rounded"/>
-            <span class="text-xl font-bold text-white hidden sm:inline">Allan Mabele</span>
+        <a href="#home" class="flex items-center space-x-2 z-50">
+          <img src="https://allanmabele.github.io/thumbnails/LOGO1.jpeg" alt="Allan Mabele Logo" class="h-10 w-auto rounded" />
+          <span class="text-xl font-bold text-white hidden sm:inline">Allan Mabele</span>
         </a>
 
         <!-- Desktop Nav -->
         <nav class="hidden md:flex space-x-8">
-          <a href="#home" class="nav-link">Home</a>
-          <a href="#experience" class="nav-link">Experience</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#services" class="nav-link">Services</a>
-          <a href="#contact" class="nav-link">Contact</a>
-          <a href="#music" class="nav-link">Music</a>
-
+            <a href="#home" class="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium">Home</a>
+            <a href="#experience" class="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium">Experience</a>
+            <a href="#skills" class="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium">Skills</a>
+            <a href="#services" class="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium">Services</a>
+            <a href="#contact" class="text-slate-300 hover:text-emerald-400 transition-colors duration-300 font-medium">Contact</a>
         </nav>
 
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-button" class="md:hidden text-white z-50">
-          <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-          <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
         <!-- Mobile Nav -->
         <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-slate-900/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out md:hidden">
             <nav class="flex flex-col items-center justify-center h-full space-y-8">
-              <a href="#home" class="mobile-nav-link">Home</a>
-              <a href="#experience" class="mobile-nav-link">Experience</a>
-              <a href="#skills" class="mobile-nav-link">Skills</a>
-              <a href="#services" class="mobile-nav-link">Services</a>
-              <a href="#contact" class="mobile-nav-link">Contact</a>
+                <a href="#home" class="mobile-nav-link text-3xl font-bold text-slate-300 hover:text-emerald-400 transition-colors duration-300">Home</a>
+                <a href="#experience" class="mobile-nav-link text-3xl font-bold text-slate-300 hover:text-emerald-400 transition-colors duration-300">Experience</a>
+                <a href="#skills" class="mobile-nav-link text-3xl font-bold text-slate-300 hover:text-emerald-400 transition-colors duration-300">Skills</a>
+                <a href="#services" class="mobile-nav-link text-3xl font-bold text-slate-300 hover:text-emerald-400 transition-colors duration-300">Services</a>
+                <a href="#contact" class="mobile-nav-link text-3xl font-bold text-slate-300 hover:text-emerald-400 transition-colors duration-300">Contact</a>
             </nav>
         </div>
       </div>
@@ -66,14 +94,14 @@
       <section id="home" class="min-h-screen flex items-center justify-center text-center -mt-20">
         <div class="max-w-4xl">
           <div class="relative w-40 h-40 md:w-48 md:h-48 mx-auto mb-6">
-            <img src="https://thumbnails/dp.jpg" alt="Allan Mabele" class="rounded-full w-full h-full object-cover border-4 border-slate-700 shadow-lg"/>
-            <div class="absolute inset-0 rounded-full border-4 border-emerald-500/50 pulse-border"></div>
+            <img src="https://allanmabele.github.io/thumbnails/dp.jpg" alt="Allan Mabele" class="rounded-full w-full h-full object-cover border-4 border-slate-700 shadow-lg"/>
+            <div class="absolute inset-0 rounded-full border-4 border-emerald-500/50 animate-pulse-border"></div>
           </div>
           
           <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
             Allan Mabele Nambafu
           </h1>
-          <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text mb-6">
             Operations Research Analyst
           </h2>
           
@@ -82,233 +110,242 @@
           </p>
   
           <div class="flex justify-center space-x-6">
-            <a href="https://github.com/AllanMabele" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-            <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-            <a href="https://x.com/allan_mabele" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-            <a href="https://web.facebook.com/allan.mabel.7" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+            <a href="https://github.com/AllanMabele" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="https://x.com/allan_mabele" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+            <a href="https://web.facebook.com/allan.mabel.7" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           </div>
         </div>
       </section>
 
       <!-- Experience Section -->
-      <section id="experience" class="fade-in-section">
-        <h2 class="section-title">Work <span class="gradient-text">Experience</span></h2>
+      <section id="experience" class="py-24 fade-in-section">
+        <h2 class="text-center text-3xl md:text-4xl font-bold mb-16">Work <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">Experience</span></h2>
         <div class="relative max-w-4xl mx-auto">
-          <div class="timeline-line"></div>
+          <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-slate-700"></div>
           
           <!-- Job 1 -->
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-arrow"></div>
-              <div class="flex items-center gap-4 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                  <h3 class="text-xl font-bold text-white">Liquid Markets</h3>
-              </div>
-              <p class="text-emerald-400 font-semibold">Operations Officer (Virtual)</p>
-              <p class="text-sm text-slate-500 mb-4">Sep 2021 - Present</p>
-              <ul class="space-y-2 text-slate-400">
-                <li class="flex"><span class="bullet">›</span><span>Develop and implement company policies, plan and budget for projects.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Manage social media channels: Facebook, Telegram, Discord, Instagram, and X.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Execute digital marketing campaigns and create content for the company blog.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Innovate products and processes to improve operational efficiency and profit margins.</span></li>
-              </ul>
+          <div class="relative md:flex items-center w-full mb-8">
+            <div class="w-full md:w-1/2 md:pr-8">
+                <div class="relative bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                    <div class="hidden md:block absolute top-8 -right-2 w-4 h-4 bg-slate-800 border-slate-700 transform rotate-45 border-t border-r"></div>
+                    <div class="flex items-center gap-4 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <h3 class="text-xl font-bold text-white">Liquid Markets</h3>
+                    </div>
+                    <p class="text-emerald-400 font-semibold">Operations Officer (Virtual)</p>
+                    <p class="text-sm text-slate-500 mb-4">Sep 2021 - Present</p>
+                    <ul class="space-y-2 text-slate-400">
+                      <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Develop and implement company policies, plan and budget for projects.</span></li>
+                      <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Manage social media channels: Facebook, Telegram, Discord, Instagram, and X.</span></li>
+                      <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Execute digital marketing campaigns and create content for the company blog.</span></li>
+                      <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Innovate products and processes to improve operational efficiency and profit margins.</span></li>
+                    </ul>
+                </div>
             </div>
+            <div class="hidden md:block w-1/2"></div>
+            <div class="absolute top-10 w-5 h-5 bg-slate-900 border-2 border-emerald-400 rounded-full z-10 left-1/2 -translate-x-1/2"></div>
           </div>
 
           <!-- Job 2 -->
-          <div class="timeline-item-right">
-            <div class="timeline-dot-right"></div>
-            <div class="timeline-content">
-              <div class="timeline-arrow-right"></div>
-              <div class="flex items-center gap-4 mb-2 md:flex-row-reverse">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <h3 class="text-xl font-bold text-white">BluFX.co.uk</h3>
+          <div class="relative md:flex md:flex-row-reverse items-center w-full mb-8">
+              <div class="w-full md:w-1/2 md:pl-8">
+                  <div class="relative bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                      <div class="hidden md:block absolute top-8 -left-2 w-4 h-4 bg-slate-800 border-slate-700 transform rotate-45 border-b border-l"></div>
+                      <div class="flex items-center gap-4 mb-2 md:flex-row-reverse">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                          <h3 class="text-xl font-bold text-white">BluFX.co.uk</h3>
+                      </div>
+                      <p class="text-emerald-400 font-semibold md:text-right">Advocate East Africa</p>
+                      <p class="text-sm text-slate-500 mb-4 md:text-right">Apr 2021 - Aug 2021</p>
+                      <ul class="space-y-2 text-slate-400">
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Produced social media content, including videos and graphics.</span></li>
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Scheduled social media postings and localized content for the East African market.</span></li>
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Managed the BluFX Telegram group and provided customer support via Telegram/HubSpot.</span></li>
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Created and executed marketing plans tailored for East Africa.</span></li>
+                      </ul>
+                  </div>
               </div>
-              <p class="text-emerald-400 font-semibold">Advocate East Africa</p>
-              <p class="text-sm text-slate-500 mb-4">Apr 2021 - Aug 2021</p>
-              <ul class="space-y-2 text-slate-400">
-                <li class="flex"><span class="bullet">›</span><span>Produced social media content, including videos and graphics.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Scheduled social media postings and localized content for the East African market.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Managed the BluFX Telegram group and provided customer support via Telegram/HubSpot.</span></li>
-                <li class="flex"><span class="bullet">›</span><span>Created and executed marketing plans tailored for East Africa.</span></li>
-              </ul>
-            </div>
+              <div class="hidden md:block w-1/2"></div>
+              <div class="absolute top-10 w-5 h-5 bg-slate-900 border-2 border-emerald-400 rounded-full z-10 left-1/2 -translate-x-1/2"></div>
           </div>
           
           <!-- Job 3 -->
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-arrow"></div>
-              <div class="flex items-center gap-4 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                  <h3 class="text-xl font-bold text-white">Various Forex & Crypto Firms</h3>
-              </div>
-              <p class="text-emerald-400 font-semibold">Forex and Bitcoin Trader</p>
-              <p class="text-sm text-slate-500 mb-4">Jun 2019 - Feb 2021</p>
-              <ul class="space-y-2 text-slate-400">
-                  <li class="flex"><span class="bullet">›</span><span>Provided account management services for local and international clients.</span></li>
-                  <li class="flex"><span class="bullet">›</span><span>Developed partnerships to promote various forex firms.</span></li>
-                  <li class="flex"><span class="bullet">›</span><span>Offered affiliate and digital marketing services for different forex brokers.</span></li>
-                  <li class="flex"><span class="bullet">›</span><span>Created marketing content on personal blog to attract traffic and consult on trading.</span></li>
-              </ul>
+          <div class="relative md:flex items-center w-full mb-8">
+            <div class="w-full md:w-1/2 md:pr-8">
+                <div class="relative bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                    <div class="hidden md:block absolute top-8 -right-2 w-4 h-4 bg-slate-800 border-slate-700 transform rotate-45 border-t border-r"></div>
+                    <div class="flex items-center gap-4 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <h3 class="text-xl font-bold text-white">Various Forex & Crypto Firms</h3>
+                    </div>
+                    <p class="text-emerald-400 font-semibold">Forex and Bitcoin Trader</p>
+                    <p class="text-sm text-slate-500 mb-4">Jun 2019 - Feb 2021</p>
+                    <ul class="space-y-2 text-slate-400">
+                        <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Provided account management services for local and international clients.</span></li>
+                        <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Developed partnerships to promote various forex firms.</span></li>
+                        <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Offered affiliate and digital marketing services for different forex brokers.</span></li>
+                        <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Created marketing content on personal blog to attract traffic and consult on trading.</span></li>
+                    </ul>
+                </div>
             </div>
+            <div class="hidden md:block w-1/2"></div>
+            <div class="absolute top-10 w-5 h-5 bg-slate-900 border-2 border-emerald-400 rounded-full z-10 left-1/2 -translate-x-1/2"></div>
           </div>
 
           <!-- Job 4 -->
-          <div class="timeline-item-right">
-              <div class="timeline-dot-right"></div>
-              <div class="timeline-content">
-                  <div class="timeline-arrow-right"></div>
-                  <div class="flex items-center gap-4 mb-2 md:flex-row-reverse">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                    <h3 class="text-xl font-bold text-white">Hawk Research / WriteDome</h3>
+          <div class="relative md:flex md:flex-row-reverse items-center w-full mb-8">
+              <div class="w-full md:w-1/2 md:pl-8">
+                  <div class="relative bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                      <div class="hidden md:block absolute top-8 -left-2 w-4 h-4 bg-slate-800 border-slate-700 transform rotate-45 border-b border-l"></div>
+                      <div class="flex items-center gap-4 mb-2 md:flex-row-reverse">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                          <h3 class="text-xl font-bold text-white">Hawk Research / WriteDome</h3>
+                      </div>
+                      <p class="text-emerald-400 font-semibold md:text-right">Research Writer</p>
+                      <p class="text-sm text-slate-500 mb-4 md:text-right">Feb 2017 - 2020</p>
+                      <ul class="space-y-2 text-slate-400">
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Partnered with marketing teams to translate product features into customer value.</span></li>
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Utilized exceptional writing, editing, and proofreading skills to produce engaging content.</span></li>
+                          <li class="flex"><span class="text-emerald-400 mr-2">›</span><span>Researched and wrote technical articles on technology for various publications.</span></li>
+                      </ul>
                   </div>
-                  <p class="text-emerald-400 font-semibold">Research Writer</p>
-                  <p class="text-sm text-slate-500 mb-4">Feb 2017 - 2020</p>
-                  <ul class="space-y-2 text-slate-400">
-                      <li class="flex"><span class="bullet">›</span><span>Partnered with marketing teams to translate product features into customer value.</span></li>
-                      <li class="flex"><span class="bullet">›</span><span>Utilized exceptional writing, editing, and proofreading skills to produce engaging content.</span></li>
-                      <li class="flex"><span class="bullet">›</span><span>Researched and wrote technical articles on technology for various publications.</span></li>
-                  </ul>
               </div>
+              <div class="hidden md:block w-1/2"></div>
+              <div class="absolute top-10 w-5 h-5 bg-slate-900 border-2 border-emerald-400 rounded-full z-10 left-1/2 -translate-x-1/2"></div>
           </div>
         </div>
       </section>
 
       <!-- Skills Section -->
-      <section id="skills" class="fade-in-section">
-          <h2 class="section-title">Core <span class="gradient-text">Competencies</span></h2>
+      <section id="skills" class="py-24 fade-in-section">
+          <h2 class="text-center text-3xl md:text-4xl font-bold mb-16">Core <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">Competencies</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              
-              <div class="skill-card">
-                  <h3 class="skill-title">Analytical & Technical</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Market Trend Analysis</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Research & Writing</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>Problem-Solving</span></li>
-                  </ul>
-              </div>
-              <div class="skill-card">
-                  <h3 class="skill-title">Web & Design</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>HTML/CSS</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>WordPress</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>UX Design</span></li>
-                  </ul>
-              </div>
-              <div class="skill-card">
-                  <h3 class="skill-title">Trading & Finance</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Forex Trading</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Risk Assessment</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Asset Management</span></li>
-                  </ul>
-              </div>
-              <div class="skill-card">
-                  <h3 class="skill-title">Communication & Leadership</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Social Media Marketing</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Team Leadership</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Time Management</span></li>
-                  </ul>
-              </div>
-              <div class="skill-card">
-                  <h3 class="skill-title">Customer Service</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>CRM Software</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg><span>Technical Support</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg><span>Conflict Resolution</span></li>
-                  </ul>
-              </div>
-              <div class="skill-card">
-                  <h3 class="skill-title">Virtual Assistance</h3>
-                  <ul class="space-y-3">
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg><span>Data Entry</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Client Relations</span></li>
-                      <li class="skill-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg><span>MS Office & Google Workspace</span></li>
-                  </ul>
-              </div>
-
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Analytical & Technical</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Market Trend Analysis</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Research & Writing</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>Problem-Solving</span></li>
+                </ul>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Web & Design</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>HTML/CSS</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>WordPress</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>UX Design</span></li>
+                </ul>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Trading & Finance</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Forex Trading</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Risk Assessment</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span>Asset Management</span></li>
+                </ul>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Communication & Leadership</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Social Media Marketing</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Team Leadership</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg><span>Time Management</span></li>
+                </ul>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Customer Service</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>CRM Software</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg><span>Technical Support</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg><span>Conflict Resolution</span></li>
+                </ul>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="text-lg font-semibold text-white mb-4">Virtual Assistance</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg><span>Data Entry</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span>Client Relations</span></li>
+                    <li class="flex items-center gap-3 text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-emerald-400"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg><span>MS Office & Google Workspace</span></li>
+                </ul>
+            </div>
           </div>
       </section>
 
       <!-- Services Section -->
-      <section id="services" class="fade-in-section">
-          <h2 class="section-title">What I <span class="gradient-text">Offer</span></h2>
+      <section id="services" class="py-24 fade-in-section">
+          <h2 class="text-center text-3xl md:text-4xl font-bold mb-16">What I <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">Offer</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Website Development</h3>
-                  <p class="text-slate-400">Custom, responsive websites using HTML, CSS, and WordPress, optimized for performance and SEO.</p>
-              </div>
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Virtual Assistance</h3>
-                  <p class="text-slate-400">Efficiently managing emails, schedules, and data entry to streamline your business operations.</p>
-              </div>
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Research & Content Writing</h3>
-                  <p class="text-slate-400">Producing well-researched reports, articles, and SEO-optimized web copy to engage your audience.</p>
-              </div>
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Crypto & Forex Services</h3>
-                  <p class="text-slate-400">Assistance with P2P crypto exchange, asset management, and personalized forex trading coaching.</p>
-              </div>
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Social Media Management</h3>
-                  <p class="text-slate-400">Growing your online presence through strategic content creation, scheduling, and engagement.</p>
-              </div>
-              <div class="service-card">
-                  <div class="flex justify-center mb-4">
-                      <div class="service-icon-wrapper">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="service-icon"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg>
-                      </div>
-                  </div>
-                  <h3 class="text-xl font-semibold text-white mb-2">Customer Support</h3>
-                  <p class="text-slate-400">Handling customer inquiries and complaints professionally across multiple channels.</p>
-              </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Website Development</h3>
+                <p class="text-slate-400">Custom, responsive websites using HTML, CSS, and WordPress, optimized for performance and SEO.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Virtual Assistance</h3>
+                <p class="text-slate-400">Efficiently managing emails, schedules, and data entry to streamline your business operations.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Research & Content Writing</h3>
+                <p class="text-slate-400">Producing well-researched reports, articles, and SEO-optimized web copy to engage your audience.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Crypto & Forex Services</h3>
+                <p class="text-slate-400">Assistance with P2P crypto exchange, asset management, and personalized forex trading coaching.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Social Media Management</h3>
+                <p class="text-slate-400">Growing your online presence through strategic content creation, scheduling, and engagement.</p>
+            </div>
+            <div class="bg-slate-800/50 p-8 rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="p-4 bg-slate-900 border border-slate-700 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m5.9 16.5 1.4-1.4a1 1 0 1 1 2.8 0l2.8 2.9a1 1 0 1 0 3-3l-2.8-2.9a1 1 0 1 1 0-2.8l2.8-2.8a1 1 0 1 0-3-3l-2.8 2.8a1 1 0 1 1-2.8 0L8.8 7.1a1 1 0 1 0-3 3l2.8 2.8a1 1 0 1 1 0 2.8L5.9 16.5a1 1 0 1 0 0 2.8Z"/><path d="m18 5 3 3"/></svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Customer Support</h3>
+                <p class="text-slate-400">Handling customer inquiries and complaints professionally across multiple channels.</p>
+            </div>
           </div>
       </section>
 
       <!-- Contact Section -->
-      <section id="contact" class="fade-in-section">
+      <section id="contact" class="py-24 fade-in-section">
         <div class="max-w-3xl mx-auto text-center">
-          <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+          <h2 class="text-3xl md:text-4xl font-bold mb-8">Get In <span class="bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent bg-clip-text">Touch</span></h2>
           <p class="text-lg text-slate-400 mb-8">
             I'm currently available for freelance projects and new opportunities. Feel free to reach out.
           </p>
           <div class="flex flex-col md:flex-row justify-center items-center gap-6">
-              <a href="mailto:allymabz@gmail.com" class="contact-button bg-emerald-500 hover:bg-emerald-600">
+              <a href="mailto:allymabz@gmail.com" class="inline-flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-emerald-500 hover:bg-emerald-600">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>
                   <span>Email Me</span>
               </a>
-               <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener noreferrer" class="contact-button bg-blue-500 hover:bg-blue-600">
+               <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-blue-500 hover:bg-blue-600">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                   <span>Join on Telegram</span>
               </a>
@@ -345,10 +382,10 @@
           <div>
             <h3 class="text-lg font-semibold text-white mb-4">Follow Me</h3>
             <div class="flex justify-center md:justify-start space-x-5">
-              <a href="https://github.com/AllanMabele" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-              <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-              <a href="https://x.com/allan_mabele" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-              <a href="https://web.facebook.com/allan.mabel.7" target="_blank" rel="noopener noreferrer" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+              <a href="https://github.com/AllanMabele" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+              <a href="https://www.linkedin.com/in/allan-mabele-nambafu-79713484/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+              <a href="https://x.com/allan_mabele" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              <a href="https://web.facebook.com/allan.mabel.7" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-emerald-400 transition-colors duration-300"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
             </div>
           </div>
         </div>
@@ -372,9 +409,9 @@
         // Header scroll effect
         window.addEventListener('scroll', () => {
           if (window.scrollY > 10) {
-            header.classList.add('header-scrolled');
+            header.classList.add('bg-slate-900/80', 'backdrop-blur-lg', 'border-b', 'border-slate-800');
           } else {
-            header.classList.remove('header-scrolled');
+            header.classList.remove('bg-slate-900/80', 'backdrop-blur-lg', 'border-b', 'border-slate-800');
           }
         });
 
@@ -410,8 +447,5 @@
         });
       });
     </script>
-  </body>
+</body>
 </html>
-
-
-
