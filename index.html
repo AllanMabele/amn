@@ -1,805 +1,1246 @@
-// ============================================================================
-// FILE: src/styles.css
-// ============================================================================
-@import "tailwindcss" source(none);
-@source "../src";
-@import "tw-animate-css";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Allan Nambafu — Operations & Virtual Assistance Specialist | Nairobi</title>
+  <meta name="description" content="5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting for online businesses. Available for remote work." />
+  <meta property="og:title" content="Allan Nambafu — Operations & Digital Solutions Specialist" />
+  <meta property="og:description" content="Streamlining operations, CX and digital growth for online businesses worldwide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-@custom-variant dark (&:is(.dark *));
+    :root {
+      --bg:          #0d0e1c;
+      --surface:     #13152a;
+      --card:        #161829;
+      --border:      #2a2d4a;
+      --primary:     #7c6ef7;
+      --primary-2:   #a78bfa;
+      --indigo-glow: #b8a9ff;
+      --fg:          #f0eeff;
+      --muted:       #8e8eb0;
+      --gold:        #f59e0b;
+      --teal:        #2dd4bf;
+      --radius:      0.75rem;
+      --grad-primary: linear-gradient(135deg, #7c6ef7, #a78bfa);
+      --grad-hero:    radial-gradient(circle at 20% 0%, rgba(124,110,247,.55) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 30%, rgba(139,92,246,.35) 0%, transparent 50%),
+                      linear-gradient(180deg, #0d0e1c 0%, #090a16 100%);
+      --shadow-glow: 0 20px 60px -20px rgba(124,110,247,.5);
+      --shadow-card: 0 8px 24px -8px rgba(0,0,0,.6);
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+    }
 
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+    h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -.02em; line-height: 1.15; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
 
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --color-indigo-glow: var(--indigo-glow);
-  --color-surface: var(--surface);
-}
+    /* ── LAYOUT ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    @media(min-width:1024px){ .container { padding: 0 2.5rem; } }
 
-:root {
-  --radius: 0.75rem;
-  --background: oklch(0.12 0.04 280);
-  --foreground: oklch(0.96 0.01 270);
-  --surface: oklch(0.17 0.05 280);
-  --card: oklch(0.17 0.05 280);
-  --card-foreground: oklch(0.96 0.01 270);
-  --popover: oklch(0.17 0.05 280);
-  --popover-foreground: oklch(0.96 0.01 270);
-  --primary: oklch(0.58 0.22 280);
-  --primary-foreground: oklch(0.98 0.005 270);
-  --indigo-glow: oklch(0.72 0.18 285);
-  --secondary: oklch(0.25 0.08 280);
-  --secondary-foreground: oklch(0.96 0.01 270);
-  --muted: oklch(0.22 0.05 280);
-  --muted-foreground: oklch(0.72 0.04 270);
-  --accent: oklch(0.58 0.22 280);
-  --accent-foreground: oklch(0.98 0.005 270);
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.3 0.06 280);
-  --input: oklch(0.25 0.05 280);
-  --ring: oklch(0.58 0.22 280);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.15 0.04 280);
-  --sidebar-foreground: oklch(0.96 0.01 270);
-  --sidebar-primary: oklch(0.58 0.22 280);
-  --sidebar-primary-foreground: oklch(0.98 0.005 270);
-  --sidebar-accent: oklch(0.22 0.05 280);
-  --sidebar-accent-foreground: oklch(0.96 0.01 270);
-  --sidebar-border: oklch(0.3 0.06 280);
-  --sidebar-ring: oklch(0.58 0.22 280);
+    /* ── HEADER ── */
+    #site-header {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      background: rgba(13,14,28,.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .6rem; cursor: pointer;
+    }
+    .logo-badge {
+      height: 36px; width: 36px; border-radius: .5rem;
+      background: var(--grad-primary);
+      display: grid; place-items: center;
+      font-family: var(--font-display); font-weight: 700; font-size: .95rem;
+      color: #fff; box-shadow: var(--shadow-glow);
+    }
+    .logo-name { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+    nav.desktop { display: flex; align-items: center; gap: .25rem; }
+    nav.desktop a {
+      padding: .5rem 1rem; border-radius: .5rem;
+      font-size: .875rem; font-weight: 500;
+      color: var(--muted); transition: color .15s, background .15s;
+    }
+    nav.desktop a:hover, nav.desktop a.active {
+      color: var(--fg); background: rgba(42,45,74,.7);
+    }
+    .menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--fg); padding: .5rem; border-radius: .5rem;
+    }
+    .mobile-nav {
+      display: none; border-top: 1px solid var(--border);
+      background: rgba(13,14,28,.97); backdrop-filter: blur(18px);
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a {
+      display: block; padding: .85rem 1.5rem;
+      font-size: .875rem; font-weight: 500; color: var(--muted);
+      border-radius: .5rem; margin: .2rem .75rem;
+      transition: color .15s, background .15s;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--fg); background: rgba(42,45,74,.7); }
+    .mobile-nav-wrap { padding: .5rem 0; }
+    @media(max-width:767px){
+      nav.desktop { display: none; }
+      .menu-btn { display: block; }
+    }
 
-  --gradient-hero: radial-gradient(circle at 20% 0%, oklch(0.35 0.18 280 / 0.6), transparent 50%),
-                   radial-gradient(circle at 80% 30%, oklch(0.45 0.2 290 / 0.4), transparent 50%),
-                   linear-gradient(180deg, oklch(0.12 0.04 280), oklch(0.08 0.03 280));
-  --gradient-primary: linear-gradient(135deg, oklch(0.58 0.22 280), oklch(0.72 0.18 285));
-  --shadow-glow: 0 20px 60px -20px oklch(0.58 0.22 280 / 0.5);
-  --shadow-card: 0 8px 24px -8px oklch(0.05 0.02 280 / 0.6);
-}
+    /* ── PAGES ── */
+    .page { display: none; }
+    .page.active { display: block; }
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-}
+    /* ── HERO SECTION ── */
+    .hero {
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0 6rem;
+    }
+    @media(min-width:1024px){ .hero { padding: 7rem 0 8rem; } }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--grad-hero);
+    }
+    .hero > .container { position: relative; z-index: 1; }
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .25rem .75rem; border-radius: 999px;
+      border: 1px solid var(--border); background: rgba(42,45,74,.4);
+      font-size: .75rem; color: var(--muted);
+    }
+    .pulse {
+      height: 8px; width: 8px; border-radius: 50%;
+      background: var(--indigo-glow);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%{ opacity:.6; transform:scale(.9); }
+    }
+    .hero h1 {
+      margin-top: 1.5rem;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 700; max-width: 900px;
+    }
+    .grad-text {
+      background: var(--grad-primary);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc { margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted); max-width: 640px; }
+    .btn-group { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.4rem; border-radius: var(--radius);
+      background: var(--grad-primary); color: #fff; font-weight: 500;
+      box-shadow: var(--shadow-glow); transition: opacity .15s; cursor: pointer; border: none;
+      font-size: .9rem; font-family: var(--font-sans);
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.4rem; border-radius: var(--radius);
+      border: 1px solid var(--border); color: var(--fg);
+      background: transparent; font-weight: 500; transition: background .15s;
+      font-size: .9rem; cursor: pointer; font-family: var(--font-sans);
+    }
+    .btn-outline:hover { background: rgba(42,45,74,.6); }
+    .contact-row {
+      margin-top: 2.5rem; display: flex; flex-wrap: wrap;
+      gap: .5rem 1.5rem; font-size: .875rem; color: var(--muted);
+    }
+    .contact-row a, .contact-row span {
+      display: flex; align-items: center; gap: .4rem;
+      transition: color .15s;
+    }
+    .contact-row a:hover { color: var(--fg); }
 
-@layer base {
-  * { border-color: var(--color-border); }
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-  }
-  h1, h2, h3, h4 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
-  }
-}
+    /* ── SECTIONS ── */
+    .section { padding: 5rem 0; }
+    .section-sm { padding: 3rem 0; }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700; margin-bottom: 2.5rem;
+    }
+    .section-title.inline { display: flex; align-items: center; gap: .75rem; }
+    .section-label {
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--primary); margin-bottom: .75rem;
+    }
 
-// ============================================================================
-// FILE: src/components/Header.tsx
-// ============================================================================
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+    /* ── GRID ── */
+    .grid-2 { display: grid; gap: 1.5rem; }
+    .grid-3 { display: grid; gap: 1.25rem; }
+    @media(min-width:640px){ .grid-3 { grid-template-columns: repeat(2,1fr); } }
+    @media(min-width:1024px){ .grid-3 { grid-template-columns: repeat(3,1fr); } }
+    @media(min-width:768px){ .grid-2 { grid-template-columns: repeat(2,1fr); } }
+    .grid-about { display: grid; gap: 2.5rem; }
+    @media(min-width:768px){ .grid-about { grid-template-columns: 1fr 2fr; } }
 
-const navItems = [
-  { to: "/", label: "Home" },
-  { to: "/services", label: "Services" },
-  { to: "/learn-forex", label: "Learn Forex" },
-  { to: "/music", label: "Music" },
-  { to: "/contact", label: "Contact" },
-] as const;
+    /* ── CARD ── */
+    .card {
+      padding: 1.5rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+      box-shadow: var(--shadow-card); transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(124,110,247,.5); }
+    .card-icon {
+      height: 40px; width: 40px; border-radius: var(--radius);
+      background: rgba(42,45,74,.8); display: grid; place-items-center;
+      color: var(--primary); margin-bottom: 1rem;
+    }
+    .card-icon.grad { background: var(--grad-primary); color: #fff; }
+    .card h3 { font-size: 1rem; font-weight: 600; }
+    .card p { font-size: .875rem; color: var(--muted); margin-top: .5rem; }
 
-export function Header() {
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
-          <div className="h-9 w-9 rounded-lg bg-[image:var(--gradient-primary)] grid place-items-center font-display font-bold text-primary-foreground shadow-[var(--shadow-glow)]">A</div>
-          <span className="font-display font-semibold tracking-tight">Allan Nambafu</span>
-        </Link>
-        <nav className="hidden md:flex items-center gap-1">
-          {navItems.map((item) => (
-            <Link key={item.to} to={item.to}
-              activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: "text-foreground bg-secondary" }}
-              inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
-              className="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-secondary/60">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <button className="md:hidden p-2 rounded-md text-foreground" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
-          {open ? <X size={20} /> : <Menu size={20} />}
+    /* ── EXPERIENCE ── */
+    .exp-card {
+      padding: 1.5rem 2rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+      box-shadow: var(--shadow-card);
+    }
+    .exp-header {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; gap: .5rem;
+    }
+    .exp-role { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+    .exp-company { color: var(--primary); font-size: .875rem; margin-top: .25rem; }
+    .exp-period { font-size: .875rem; color: var(--muted); }
+    .exp-list {
+      margin-top: 1rem; padding-left: 1.25rem;
+      list-style: disc; display: flex; flex-direction: column; gap: .5rem;
+    }
+    .exp-list li { font-size: .875rem; color: var(--muted); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      border-radius: calc(var(--radius)*2.5);
+      padding: 3.5rem; text-align: center;
+      border: 1px solid var(--border);
+      background: var(--grad-hero);
+    }
+    .cta-banner h2 { font-size: clamp(1.6rem,4vw,2.25rem); font-weight: 700; }
+    .cta-banner p { color: var(--muted); margin-top: .75rem; }
+    .cta-banner .btn-group { justify-content: center; }
+
+    /* ── CHECK LIST ── */
+    .check-list { display: flex; flex-direction: column; gap: .75rem; margin-top: 1.5rem; }
+    .check-list li { display: flex; align-items: flex-start; gap: .6rem; font-size: .9rem; color: var(--muted); }
+    .check-list li .icon-check { color: var(--primary); flex-shrink: 0; margin-top: 2px; }
+
+    /* ── SERVICES ── */
+    .service-items { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+    .service-item { display: flex; gap: .65rem; }
+    .service-item .icon-check { color: var(--primary); flex-shrink: 0; margin-top: 2px; }
+    .service-item p { font-weight: 500; font-size: .9rem; }
+    .service-item small { font-size: .8rem; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; gap: 2.5rem; }
+    @media(min-width:1024px){ .contact-grid { grid-template-columns: 1fr 1fr; } }
+    .channel-list { display: flex; flex-direction: column; gap: .75rem; }
+    .channel-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--card);
+      transition: border-color .15s;
+    }
+    .channel-item:hover { border-color: rgba(124,110,247,.5); }
+    .channel-icon {
+      height: 40px; width: 40px; border-radius: var(--radius);
+      background: rgba(42,45,74,.8); display: grid; place-items-center;
+      color: var(--primary); flex-shrink: 0;
+    }
+    .channel-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .channel-value { font-weight: 500; font-size: .9rem; }
+    .contact-form { padding: 2rem; border-radius: calc(var(--radius)*1.5); border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); }
+    .contact-form h2 { font-size: 1.5rem; font-weight: 700; }
+    .contact-form .sub { font-size: .825rem; color: var(--muted); margin-top: .25rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: .875rem; margin-bottom: .5rem; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: .75rem 1rem; border-radius: var(--radius);
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--fg); font-family: var(--font-sans); font-size: .9rem;
+      outline: none; transition: border-color .15s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .btn-submit {
+      width: 100%; padding: .85rem; border-radius: var(--radius);
+      background: var(--grad-primary); color: #fff; font-weight: 500;
+      font-size: .95rem; border: none; cursor: pointer; font-family: var(--font-sans);
+      box-shadow: var(--shadow-glow); transition: opacity .15s;
+    }
+    .btn-submit:hover { opacity: .9; }
+
+    /* ── MUSIC ── */
+    .track-item {
+      padding: 1rem 1.25rem; border-radius: var(--radius);
+      background: rgba(42,45,74,.4); border: 1px solid var(--border);
+    }
+    .track-item p { font-weight: 500; font-size: .9rem; }
+    .track-links { display: flex; gap: .75rem; margin-top: .5rem; }
+    .track-links a { font-size: .8rem; color: var(--primary); }
+    .track-links a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    #site-footer {
+      border-top: 1px solid var(--border);
+      background: #090a16;
+      margin-top: 6rem;
+    }
+    .footer-grid {
+      display: grid; gap: 2.5rem; padding: 3.5rem 0;
+    }
+    @media(min-width:768px){ .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+    .footer-tagline { font-size: .875rem; color: var(--muted); margin-top: .75rem; max-width: 360px; }
+    .footer-col h4 { font-size: .875rem; font-weight: 600; margin-bottom: .75rem; }
+    .footer-links { display: flex; flex-direction: column; gap: .5rem; }
+    .footer-links a { font-size: .875rem; color: var(--muted); transition: color .15s; }
+    .footer-links a:hover { color: var(--fg); }
+    .footer-links span { display: flex; align-items: center; gap: .4rem; font-size: .875rem; color: var(--muted); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding: 1.5rem 0;
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      justify-content: space-between;
+      font-size: .75rem; color: var(--muted);
+    }
+
+    /* ── FOREX MODULES ── */
+    .module-price {
+      font-size: .875rem; font-weight: 600; color: var(--primary);
+      white-space: nowrap;
+    }
+    .module-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+    .module-icon-wrap { display: flex; align-items: center; gap: .75rem; flex: 1; }
+
+    /* ── ABOUT SECTION ── */
+    .about-text { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── BENEFIT CARD ── */
+    .benefit-card {
+      padding: 1.5rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: rgba(42,45,74,.25);
+    }
+    .benefit-icon {
+      height: 36px; width: 36px; border-radius: var(--radius);
+      background: rgba(124,110,247,.15); color: var(--primary);
+      display: grid; place-items-center; margin-bottom: 1rem;
+    }
+
+    /* ── ICON SVGs ── */
+    svg { display: inline-block; vertical-align: middle; }
+
+    /* ── HIGHLIGHT ── */
+    strong.hl { color: var(--fg); }
+
+    /* ── SECONDARY BG CARD ── */
+    .card-secondary { background: rgba(42,45,74,.2); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HEADER -->
+<header id="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo" onclick="navigate('home')">
+        <div class="logo-badge">A</div>
+        <span class="logo-name">Allan Nambafu</span>
+      </div>
+      <nav class="desktop" id="desktop-nav">
+        <a href="#" onclick="navigate('home');return false;" data-page="home">Home</a>
+        <a href="#" onclick="navigate('services');return false;" data-page="services">Services</a>
+        <a href="#" onclick="navigate('forex');return false;" data-page="forex">Learn Forex</a>
+        <a href="#" onclick="navigate('music');return false;" data-page="music">Music</a>
+        <a href="#" onclick="navigate('contact');return false;" data-page="contact">Contact</a>
+      </nav>
+      <button class="menu-btn" id="menu-btn" aria-label="Toggle menu" onclick="toggleMenu()">
+        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg id="icon-x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-wrap">
+      <a href="#" onclick="navigate('home');toggleMenu();return false;" data-page="home">Home</a>
+      <a href="#" onclick="navigate('services');toggleMenu();return false;" data-page="services">Services</a>
+      <a href="#" onclick="navigate('forex');toggleMenu();return false;" data-page="forex">Learn Forex</a>
+      <a href="#" onclick="navigate('music');toggleMenu();return false;" data-page="music">Music</a>
+      <a href="#" onclick="navigate('contact');toggleMenu();return false;" data-page="contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ PAGE: HOME -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="badge-pill">
+        <span class="pulse"></span>
+        Available for remote work worldwide
+      </div>
+      <h1>Operations, Virtual Assistance &amp; <span class="grad-text">Digital Solutions</span>.</h1>
+      <p class="hero-desc">I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping online businesses and fintech brands streamline workflows, elevate CX, and grow their digital presence.</p>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="navigate('contact')">
+          Hire me
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
+        <button class="btn-outline" onclick="navigate('services')">View services</button>
       </div>
-      {open && (
-        <nav className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
-          <div className="px-6 py-3 flex flex-col gap-1">
-            {navItems.map((item) => (
-              <Link key={item.to} to={item.to} onClick={() => setOpen(false)}
-                activeOptions={{ exact: item.to === "/" }}
-                activeProps={{ className: "text-foreground bg-secondary" }}
-                inactiveProps={{ className: "text-muted-foreground" }}
-                className="px-4 py-3 rounded-md text-sm font-medium">
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
-      )}
-    </header>
-  );
-}
-
-// ============================================================================
-// FILE: src/components/Footer.tsx
-// ============================================================================
-import { Link } from "@tanstack/react-router";
-import { Mail, Phone, Linkedin, Youtube, Send } from "lucide-react";
-
-export function Footer() {
-  return (
-    <footer className="border-t border-border bg-[oklch(0.1_0.03_280)] mt-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 grid gap-10 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <div className="font-display text-xl font-bold">Allan Nambafu</div>
-          <p className="mt-3 text-sm text-muted-foreground max-w-md">
-            Operations · Virtual Assistance · Digital Solutions. Helping online businesses
-            streamline operations, CX, and digital growth. Open to remote opportunities worldwide.
-          </p>
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold mb-3">Quick Links</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/" className="hover:text-foreground">Home</Link></li>
-            <li><Link to="/services" className="hover:text-foreground">Services</Link></li>
-            <li><Link to="/learn-forex" className="hover:text-foreground">Learn Forex</Link></li>
-            <li><Link to="/music" className="hover:text-foreground">Music</Link></li>
-            <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold mb-3">Connect</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><Mail size={14}/> <a href="mailto:allynabz@gmail.com" className="hover:text-foreground">allynabz@gmail.com</a></li>
-            <li className="flex items-center gap-2"><Phone size={14}/> +254 769 174 049</li>
-            <li className="flex items-center gap-2"><Linkedin size={14}/> <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" className="hover:text-foreground">LinkedIn</a></li>
-            <li className="flex items-center gap-2"><Youtube size={14}/> <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" className="hover:text-foreground">YouTube</a></li>
-            <li className="flex items-center gap-2"><Send size={14}/> <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="hover:text-foreground">Telegram</a></li>
-          </ul>
-        </div>
+      <div class="contact-row">
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Nairobi, Kenya
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92V19a2 2 0 01-2.18 2A19.79 19.79 0 013 4.18 2 2 0 015 2h2.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +254 769 174 049
+        </span>
+        <a href="mailto:allynabz@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+          allynabz@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          YouTube
+        </a>
       </div>
-      <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-muted-foreground flex flex-col sm:flex-row gap-2 justify-between">
-          <p>© {new Date().getFullYear()} Allan Nambafu Mabele. All rights reserved.</p>
-          <p>Nairobi, Kenya · Available for remote work</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
+    </div>
+  </section>
 
-// ============================================================================
-// FILE: src/routes/index.tsx
-// ============================================================================
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Mail, Phone, MapPin, Linkedin, Youtube, Briefcase, BarChart3, Headphones, Megaphone, Database, Calendar, Sparkles } from "lucide-react";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Allan Nambafu — Operations & Virtual Assistance Specialist | Nairobi" },
-      { name: "description", content: "5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting for online businesses. Available for remote work." },
-      { property: "og:title", content: "Allan Nambafu — Operations & Digital Solutions Specialist" },
-      { property: "og:description", content: "Streamlining operations, CX and digital growth for online businesses worldwide." },
-    ],
-  }),
-  component: Index,
-});
-
-const skills = [
-  { icon: Megaphone, title: "Social Media Management", desc: "Content production, scheduling, engagement and growth across platforms." },
-  { icon: BarChart3, title: "Performance Insights", desc: "Social media evaluation, reporting and data-driven optimization." },
-  { icon: Headphones, title: "Customer Support", desc: "Zendesk, SendGrid and CRM-driven support operations." },
-  { icon: Sparkles, title: "Digital Marketing", desc: "Campaign planning, scheduling and performance tracking." },
-  { icon: Calendar, title: "Operations Assistance", desc: "Calendar, email, documentation and admin coordination." },
-  { icon: Database, title: "SQL Data Analysis", desc: "Reporting, dashboards and operational intelligence." },
-];
-
-const experience = [
-  { role: "Operations Officer (Virtual)", company: "Liquid Markets", period: "Sep 2021 — Present",
-    points: ["Optimized workflows and policies, improving operational efficiency.","Managed social media and digital marketing across major platforms.","Provided customer support through CRM systems and chat moderation.","Used SQL and reporting tools for data-driven decisions.","Handled calendars, email, documentation and team coordination."] },
-  { role: "Advocate – East Africa", company: "BluFX.co.uk", period: "Apr 2021 — Aug 2021",
-    points: ["Produced blogs, videos and captions for social media.","Improved engagement by 30% through performance analysis.","Provided customer support through HubSpot and Telegram.","Evaluated digital campaign and content performance."] },
-  { role: "Forex & Bitcoin Trader", company: "Various Forex & Crypto Firms (Remote)", period: "Jun 2019 — Feb 2021",
-    points: ["Managed forex accounts on XM, HotForex and FBS for international clients.","Executed trades in BTC, ETH and USDT using technical analysis.","Created marketing content driving traffic to a personal trading blog."] },
-  { role: "Virtual Assistant", company: "FreelancerForCoins (Remote)", period: "Feb 2020 — Feb 2021",
-    points: ["Email marketing, web sourcing, surveys and admin support.","Connected clients with local experts to drive business growth."] },
-  { role: "Research Writer", company: "Hawk Research (Remote)", period: "Feb 2018 — 2020",
-    points: ["Researched and authored technical articles on finance and tech.","Developed academic content for students and professionals."] },
-  { role: "Internet Services Consultant", company: "West Media Company Ltd, Nairobi", period: "May 2016 — Aug 2016",
-    points: ["Built websites with HTML/CSS/JS — grew traffic to 500+ daily visitors.","Managed MySQL databases ensuring data integrity.","Trained 20+ clients daily on digital tools."] },
-];
-
-function Index() {
-  return (
-    <div>
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-24 lg:pt-28 lg:pb-32">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/40 text-xs text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-[var(--indigo-glow)] animate-pulse" />
-            Available for remote work worldwide
-          </div>
-          <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tight max-w-4xl">
-            Operations, Virtual Assistance & <span className="bg-clip-text text-transparent bg-[image:var(--gradient-primary)]">Digital Solutions</span>.
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping
-            online businesses and fintech brands streamline workflows, elevate CX, and grow
-            their digital presence.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">
-              Hire me <ArrowRight size={16} />
-            </Link>
-            <Link to="/services" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground hover:bg-secondary transition">
-              View services
-            </Link>
-          </div>
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-2"><MapPin size={14}/> Nairobi, Kenya</span>
-            <span className="flex items-center gap-2"><Phone size={14}/> +254 769 174 049</span>
-            <a href="mailto:allynabz@gmail.com" className="flex items-center gap-2 hover:text-foreground"><Mail size={14}/> allynabz@gmail.com</a>
-            <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-foreground"><Linkedin size={14}/> LinkedIn</a>
-            <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-foreground"><Youtube size={14}/> YouTube</a>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 grid md:grid-cols-3 gap-10">
-        <h2 className="text-3xl font-display font-bold">About</h2>
-        <div className="md:col-span-2 space-y-5 text-muted-foreground leading-relaxed">
+  <!-- About -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-about">
+        <div><h2 class="section-title">About</h2></div>
+        <div class="about-text">
           <p>I help online businesses and fintech brands streamline operations, improve customer experience and strengthen their digital presence. With 5+ years of experience in virtual operations, CRM systems, customer support, digital marketing and SQL reporting, I specialize in building structured workflows that reduce friction and increase efficiency.</p>
-          <p>I've worked with trading firms, startups and online brands to optimize systems, manage support experiences, implement CRM tools (Zendesk, HubSpot, SendGrid), analyze performance data, manage social media and run marketing campaigns. My background in Mathematics & Computer Science drives a data-first approach to every operation.</p>
+          <p>I've worked with trading firms, startups and online brands to optimize systems, manage support experiences, implement CRM tools (Zendesk, HubSpot, SendGrid), analyze performance data, manage social media and run marketing campaigns. My background in Mathematics &amp; Computer Science drives a data-first approach to every operation.</p>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
-        <h2 className="text-3xl font-display font-bold mb-10">Core Skills</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {skills.map((s) => (
-            <div key={s.title} className="p-6 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] hover:border-primary/60 transition">
-              <div className="h-10 w-10 rounded-lg bg-secondary grid place-items-center text-primary mb-4"><s.icon size={18} /></div>
-              <h3 className="font-semibold">{s.title}</h3>
-              <p className="text-sm text-muted-foreground mt-2">{s.desc}</p>
+  <!-- Skills -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Core Skills</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </div>
+          <h3>Social Media Management</h3>
+          <p>Content production, scheduling, engagement and growth across platforms.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Performance Insights</h3>
+          <p>Social media evaluation, reporting and data-driven optimization.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          </div>
+          <h3>Customer Support</h3>
+          <p>Zendesk, SendGrid and CRM-driven support operations.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Digital Marketing</h3>
+          <p>Campaign planning, scheduling and performance tracking.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>Operations Assistance</h3>
+          <p>Calendar, email, documentation and admin coordination.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0018 0V5"/><path d="M3 12a9 3 0 0018 0"/></svg>
+          </div>
+          <h3>SQL Data Analysis</h3>
+          <p>Reporting, dashboards and operational intelligence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title inline">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+        Experience
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Operations Officer (Virtual)</div>
+              <div class="exp-company">Liquid Markets</div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <h2 className="text-3xl font-display font-bold mb-10 flex items-center gap-3"><Briefcase className="text-primary"/> Experience</h2>
-        <div className="space-y-6">
-          {experience.map((job) => (
-            <div key={job.role + job.company} className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-              <div className="flex flex-wrap justify-between gap-2">
-                <div>
-                  <h3 className="font-display text-xl font-semibold">{job.role}</h3>
-                  <p className="text-primary text-sm mt-1">{job.company}</p>
-                </div>
-                <span className="text-sm text-muted-foreground">{job.period}</span>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-muted-foreground list-disc pl-5">
-                {job.points.map((p) => <li key={p}>{p}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid md:grid-cols-2 gap-8">
-        <div className="p-8 rounded-2xl border border-border bg-card">
-          <h2 className="text-2xl font-display font-bold mb-6">Education</h2>
-          <ul className="space-y-4 text-sm">
-            <li><p className="font-semibold">BSc Mathematics & Computer Science</p><p className="text-muted-foreground">Jomo Kenyatta University of Agriculture & Technology · 2013 – 2018</p></li>
-            <li><p className="font-semibold">KCSE</p><p className="text-muted-foreground">Shieywe High School · 2010 – 2012</p></li>
-            <li><p className="font-semibold">KCPE</p><p className="text-muted-foreground">Teremi Primary School · 1999 – 2008</p></li>
+            <span class="exp-period">Sep 2021 — Present</span>
+          </div>
+          <ul class="exp-list">
+            <li>Optimized workflows and policies, improving operational efficiency.</li>
+            <li>Managed social media and digital marketing across major platforms.</li>
+            <li>Provided customer support through CRM systems and chat moderation.</li>
+            <li>Used SQL and reporting tools for data-driven decisions.</li>
+            <li>Handled calendars, email, documentation and team coordination.</li>
           </ul>
         </div>
-        <div className="p-8 rounded-2xl border border-border bg-card">
-          <h2 className="text-2xl font-display font-bold mb-6">Accomplishments</h2>
-          <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5">
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Advocate – East Africa</div>
+              <div class="exp-company">BluFX.co.uk</div>
+            </div>
+            <span class="exp-period">Apr 2021 — Aug 2021</span>
+          </div>
+          <ul class="exp-list">
+            <li>Produced blogs, videos and captions for social media.</li>
+            <li>Improved engagement by 30% through performance analysis.</li>
+            <li>Provided customer support through HubSpot and Telegram.</li>
+            <li>Evaluated digital campaign and content performance.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Forex &amp; Bitcoin Trader</div>
+              <div class="exp-company">Various Forex &amp; Crypto Firms (Remote)</div>
+            </div>
+            <span class="exp-period">Jun 2019 — Feb 2021</span>
+          </div>
+          <ul class="exp-list">
+            <li>Managed forex accounts on XM, HotForex and FBS for international clients.</li>
+            <li>Executed trades in BTC, ETH and USDT using technical analysis.</li>
+            <li>Created marketing content driving traffic to a personal trading blog.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Virtual Assistant</div>
+              <div class="exp-company">FreelancerForCoins (Remote)</div>
+            </div>
+            <span class="exp-period">Feb 2020 — Feb 2021</span>
+          </div>
+          <ul class="exp-list">
+            <li>Email marketing, web sourcing, surveys and admin support.</li>
+            <li>Connected clients with local experts to drive business growth.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Research Writer</div>
+              <div class="exp-company">Hawk Research (Remote)</div>
+            </div>
+            <span class="exp-period">Feb 2018 — 2020</span>
+          </div>
+          <ul class="exp-list">
+            <li>Researched and authored technical articles on finance and tech.</li>
+            <li>Developed academic content for students and professionals.</li>
+          </ul>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Internet Services Consultant</div>
+              <div class="exp-company">West Media Company Ltd, Nairobi</div>
+            </div>
+            <span class="exp-period">May 2016 — Aug 2016</span>
+          </div>
+          <ul class="exp-list">
+            <li>Built websites with HTML/CSS/JS — grew traffic to 500+ daily visitors.</li>
+            <li>Managed MySQL databases ensuring data integrity.</li>
+            <li>Trained 20+ clients daily on digital tools.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Education & Accomplishments -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="grid-2">
+        <div class="card">
+          <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;">Education</h2>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div>
+              <p style="font-weight:600;">BSc Mathematics &amp; Computer Science</p>
+              <p style="font-size:.85rem;color:var(--muted);">Jomo Kenyatta University of Agriculture &amp; Technology · 2013 – 2018</p>
+            </div>
+            <div>
+              <p style="font-weight:600;">KCSE</p>
+              <p style="font-size:.85rem;color:var(--muted);">Shieywe High School · 2010 – 2012</p>
+            </div>
+            <div>
+              <p style="font-weight:600;">KCPE</p>
+              <p style="font-size:.85rem;color:var(--muted);">Teremi Primary School · 1999 – 2008</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;">Accomplishments</h2>
+          <ul class="exp-list">
             <li>Authored "Calculus Basics: Differentiation" — published on Amazon Kindle.</li>
             <li>Increased social media engagement by 30% for BluFX East Africa.</li>
             <li>Optimized operational costs by 15% at Liquid Markets via process re-engineering.</li>
             <li>Developed and hosted a personal portfolio website on GitHub.</li>
           </ul>
-          <h3 className="text-sm font-semibold mt-6 mb-2">Languages</h3>
-          <p className="text-sm text-muted-foreground">English (Fluent) · Swahili (Fluent)</p>
+          <p style="font-size:.875rem;font-weight:600;margin-top:1.5rem;">Languages</p>
+          <p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">English (Fluent) · Swahili (Fluent)</p>
         </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <div className="rounded-3xl p-10 md:p-14 border border-border bg-[image:var(--gradient-hero)] text-center">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">Let's build something efficient.</h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Open to remote opportunities worldwide — operations, virtual assistance, CRM and digital marketing roles.</p>
-          <Link to="/contact" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
-            Get in touch <ArrowRight size={16}/>
-          </Link>
-        </div>
-      </section>
+      </div>
     </div>
-  );
-}
+  </section>
 
-// ============================================================================
-// FILE: src/routes/services.tsx
-// ============================================================================
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Code2, Headphones, FileText, Briefcase, Bitcoin, LineChart, Share2, Check, ArrowRight } from "lucide-react";
-
-export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Services — Allan Mabele | Web, VA, Crypto, Forex & More" },
-      { name: "description", content: "Website development, virtual assistance, customer support, research writing, crypto exchange, forex training, fund management and social media services." },
-      { property: "og:title", content: "Services — Allan Mabele" },
-      { property: "og:description", content: "A one-stop digital partner: web, VA, crypto, forex training and social media." },
-    ],
-  }),
-  component: ServicesPage,
-});
-
-const services = [
-  { icon: Code2, title: "Website Development", items: [
-    { title: "Custom Website Design (HTML/CSS)", desc: "Responsive, fast-loading sites tailored to your business." },
-    { title: "WordPress Development", desc: "Custom themes, plugins, performance and SEO optimization." }] },
-  { icon: Headphones, title: "Virtual Assistance & Customer Support", items: [
-    { title: "Professional Customer Service", desc: "Inquiries and complaints via email, chat or phone." },
-    { title: "General Virtual Assistance", desc: "Email, scheduling, data entry and admin tasks." }] },
-  { icon: FileText, title: "Research & Content Writing", items: [
-    { title: "Research Writing", desc: "Cited reports, articles and academic papers." },
-    { title: "Freelance Writing", desc: "Blog posts, product copy and SEO web content." }] },
-  { icon: Briefcase, title: "General Freelance Services", items: [
-    { title: "Versatile Task Handling", desc: "Data analysis, project coordination and admin." },
-    { title: "Business Support", desc: "Presentations, market research and document formatting." }] },
-  { icon: Bitcoin, title: "Crypto Exchange & Trading", items: [
-    { title: "P2P Crypto Exchange Assistance", desc: "Help investors buy crypto locally and transfer securely." },
-    { title: "Crypto Asset Management", desc: "Investment management targeting 5%+ ROI per month." }] },
-  { icon: LineChart, title: "Forex Trading Services", items: [
-    { title: "Forex Trading Training", desc: "Strategies, risk management and personalized coaching." },
-    { title: "Forex Signals (Telegram)", desc: "High-quality real-time trading signals." },
-    { title: "Forex Fund Management", desc: "Professional management with consistent monthly returns." }] },
-  { icon: Share2, title: "Social Media Management", items: [
-    { title: "Account Management & Growth", desc: "Content, scheduling, engagement and growth strategies." }] },
-];
-
-const benefits = [
-  { title: "Reliable & Secure", desc: "Safe transactions in crypto and financial services." },
-  { title: "Proven Track Record", desc: "Consistent 5%+ monthly ROI on managed investments." },
-  { title: "Personalized Support", desc: "Tailored training and assistance for your needs." },
-  { title: "Multi-Skilled Freelancer", desc: "One-stop solution for writing, admin and digital services." },
-  { title: "24/7 Availability", desc: "Quick responses and dedicated support." },
-];
-
-function ServicesPage() {
-  return (
-    <div>
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-          <p className="text-sm uppercase tracking-widest text-primary">What I offer</p>
-          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Services</h1>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">A full suite of digital and operational services — from web development to crypto and forex.</p>
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Let's build something efficient.</h2>
+        <p>Open to remote opportunities worldwide — operations, virtual assistance, CRM and digital marketing roles.</p>
+        <div class="btn-group">
+          <button class="btn-primary" onclick="navigate('contact')">
+            Get in touch
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-2 gap-6">
-        {services.map((cat) => (
-          <div key={cat.title} className="p-7 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-            <div className="flex items-center gap-3">
-              <div className="h-11 w-11 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><cat.icon size={20} /></div>
-              <h2 className="text-xl font-display font-semibold">{cat.title}</h2>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+<!-- ═══════════════════════════════════════════════ PAGE: SERVICES -->
+<div class="page" id="page-services">
+
+  <section class="hero" style="padding:5rem 0 6rem;">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="section-label">What I offer</p>
+      <h1 style="font-size:clamp(2.5rem,7vw,3.75rem);font-weight:700;">Services</h1>
+      <p class="hero-desc">A full suite of digital and operational services — from web development to crypto and forex.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
-            <ul className="mt-5 space-y-4">
-              {cat.items.map((it) => (
-                <li key={it.title}>
-                  <div className="flex items-start gap-2">
-                    <Check size={16} className="text-primary mt-1 shrink-0" />
-                    <div>
-                      <p className="font-medium">{it.title}</p>
-                      <p className="text-sm text-muted-foreground">{it.desc}</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <h2 style="font-size:1.2rem;font-weight:600;">Website Development</h2>
           </div>
-        ))}
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="text-3xl font-display font-bold mb-8">Why choose my services?</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {benefits.map((b) => (
-            <div key={b.title} className="p-6 rounded-2xl border border-border bg-secondary/30">
-              <div className="h-9 w-9 rounded-lg bg-primary/20 text-primary grid place-items-center mb-4"><Check size={18} /></div>
-              <p className="font-semibold">{b.title}</p>
-              <p className="text-sm text-muted-foreground mt-1">{b.desc}</p>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Custom Website Design (HTML/CSS)</p><small>Responsive, fast-loading sites tailored to your business.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>WordPress Development</p><small>Custom themes, plugins, performance and SEO optimization.</small></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
             </div>
-          ))}
+            <h2 style="font-size:1.2rem;font-weight:600;">Virtual Assistance &amp; Customer Support</h2>
+          </div>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Professional Customer Service</p><small>Inquiries and complaints via email, chat or phone.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>General Virtual Assistance</p><small>Email, scheduling, data entry and admin tasks.</small></div></div>
+          </div>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
-        <div className="rounded-3xl border border-border p-10 text-center bg-[image:var(--gradient-hero)]">
-          <h3 className="font-display text-3xl font-bold">Ready to start?</h3>
-          <p className="text-muted-foreground mt-3">Reach out for a free discovery call.</p>
-          <Link to="/contact" className="mt-7 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
-            Contact me <ArrowRight size={16}/>
-          </Link>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h2 style="font-size:1.2rem;font-weight:600;">Research &amp; Content Writing</h2>
+          </div>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Research Writing</p><small>Cited reports, articles and academic papers.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Freelance Writing</p><small>Blog posts, product copy and SEO web content.</small></div></div>
+          </div>
         </div>
-      </section>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+            </div>
+            <h2 style="font-size:1.2rem;font-weight:600;">General Freelance Services</h2>
+          </div>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Versatile Task Handling</p><small>Data analysis, project coordination and admin.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Business Support</p><small>Presentations, market research and document formatting.</small></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h2 style="font-size:1.2rem;font-weight:600;">Crypto Exchange &amp; Trading</h2>
+          </div>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>P2P Crypto Exchange Assistance</p><small>Help investors buy crypto locally and transfer securely.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Crypto Asset Management</p><small>Investment management targeting 5%+ ROI per month.</small></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <h2 style="font-size:1.2rem;font-weight:600;">Forex Trading Services</h2>
+          </div>
+          <div class="service-items">
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Forex Trading Training</p><small>Strategies, risk management and personalized coaching.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Forex Signals (Telegram)</p><small>High-quality real-time trading signals.</small></div></div>
+            <div class="service-item"><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><div><p>Forex Fund Management</p><small>Professional management with consistent monthly returns.</small></div></div>
+          </div>
+        </div>
+
+      </div>
     </div>
-  );
-}
+  </section>
 
-// ============================================================================
-// FILE: src/routes/learn-forex.tsx
-// ============================================================================
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, GraduationCap, TrendingUp, Users, ArrowRight, Send } from "lucide-react";
+  <!-- Why choose -->
+  <section class="section-sm">
+    <div class="container">
+      <h2 class="section-title">Why choose my services?</h2>
+      <div class="grid-3">
+        <div class="benefit-card"><div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-weight:600;">Reliable &amp; Secure</p><p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">Safe transactions in crypto and financial services.</p></div>
+        <div class="benefit-card"><div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-weight:600;">Proven Track Record</p><p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">Consistent 5%+ monthly ROI on managed investments.</p></div>
+        <div class="benefit-card"><div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-weight:600;">Personalized Support</p><p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">Tailored training and assistance for your needs.</p></div>
+        <div class="benefit-card"><div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-weight:600;">Multi-Skilled Freelancer</p><p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">One-stop solution for writing, admin and digital services.</p></div>
+        <div class="benefit-card"><div class="benefit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-weight:600;">24/7 Availability</p><p style="font-size:.875rem;color:var(--muted);margin-top:.25rem;">Quick responses and dedicated support.</p></div>
+      </div>
+    </div>
+  </section>
 
-export const Route = createFileRoute("/learn-forex")({
-  head: () => ({
-    meta: [
-      { title: "Forex Trading Course for Beginners — Allan Mabele" },
-      { name: "description", content: "3-week comprehensive forex training: technical analysis, fundamentals, and live mentorship. $300 with up to 2 years post-course mentorship." },
-      { property: "og:title", content: "Learn Forex Trading — 3-Week Course with Allan Mabele" },
-      { property: "og:description", content: "Master price action, fundamentals and risk management with personalized mentorship." },
-    ],
-  }),
-  component: LearnForex,
-});
-
-const modules = [
-  { icon: GraduationCap, title: "Introduction to Forex", price: "Included",
-    points: ["Understanding the forex market","Basic forex terminology and concepts","Risk management and trading psychology","Choosing a broker and setting up an account"] },
-  { icon: TrendingUp, title: "Technical Analysis (Price Action)", price: "$100",
-    points: ["Introduction to technical analysis","Price action analysis","Support and resistance","Trend identification and trend-following","Candlestick patterns","Moving averages","Oscillators and momentum indicators"] },
-  { icon: TrendingUp, title: "Fundamental Analysis", price: "$100",
-    points: ["Understanding economic indicators","Interpreting news and events","Interest rates and currency pairs","Geopolitical influences","Integrating fundamentals into trades"] },
-  { icon: Users, title: "Mentorship", price: "$100",
-    points: ["Live trading sessions and demos","One-on-one guidance and feedback","Risk management and position sizing","Personalized trading plan","Continuous education"] },
-];
-
-function LearnForex() {
-  return (
-    <div>
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-          <p className="text-sm uppercase tracking-widest text-primary">3-Week Program</p>
-          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold max-w-3xl">Forex Trading Course for Beginners</h1>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">Master the art of currency trading with a comprehensive program that combines technical analysis, fundamentals and live mentorship.</p>
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Ready to start?</h2>
+        <p>Reach out for a free discovery call.</p>
+        <div class="btn-group">
+          <button class="btn-primary" onclick="navigate('contact')">
+            Contact me
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <h2 className="text-3xl font-display font-bold mb-10">Course outline</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {modules.map((m) => (
-            <div key={m.title} className="p-7 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] flex flex-col">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><m.icon size={18} /></div>
-                  <h3 className="font-display text-lg font-semibold">{m.title}</h3>
-                </div>
-                <span className="text-sm font-semibold text-primary whitespace-nowrap">{m.price}</span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-services -->
+
+<!-- ═══════════════════════════════════════════════ PAGE: FOREX -->
+<div class="page" id="page-forex">
+
+  <section class="hero" style="padding:5rem 0 6rem;">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="section-label">3-Week Program</p>
+      <h1 style="font-size:clamp(2.2rem,6vw,3.5rem);font-weight:700;max-width:700px;">Forex Trading Course for Beginners</h1>
+      <p class="hero-desc">Master currency trading with a program that combines technical analysis, fundamentals and live mentorship.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Course Outline</h2>
+      <div class="grid-2">
+
+        <div class="card">
+          <div class="module-header">
+            <div class="module-icon-wrap">
+              <div class="card-icon grad" style="margin:0;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
               </div>
-              <ul className="mt-5 space-y-2 text-sm text-muted-foreground flex-1">
-                {m.points.map((p) => (
-                  <li key={p} className="flex items-start gap-2"><Check size={14} className="text-primary mt-1 shrink-0"/>{p}</li>
-                ))}
-              </ul>
+              <h3 style="font-size:1.05rem;">Introduction to Forex</h3>
             </div>
-          ))}
-        </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
-        <div className="rounded-3xl border border-border p-10 grid md:grid-cols-2 gap-10 bg-secondary/20">
-          <div>
-            <h2 className="text-3xl font-display font-bold">Course Details</h2>
-            <ul className="mt-6 space-y-3 text-muted-foreground">
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Total cost: <strong className="text-foreground">$300</strong>, payable in installments</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Duration: ~3 weeks initial training</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Earning opportunity: trade with guidance during training</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Up to 2 years post-course mentorship</li>
-            </ul>
+            <span class="module-price">Included</span>
           </div>
-          <div>
-            <h2 className="text-3xl font-display font-bold">Key Highlights</h2>
-            <ul className="mt-6 space-y-3 text-muted-foreground">
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Comprehensive forex fundamentals</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Price-action focused technical analysis</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Hands-on mentorship and live trading</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Earn while you learn</li>
-            </ul>
-          </div>
+          <ul class="check-list" style="margin-top:1rem;">
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Understanding the forex market</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Basic forex terminology and concepts</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Risk management and trading psychology</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Choosing a broker and setting up an account</li>
+          </ul>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="rounded-3xl border border-border p-10 md:p-14 text-center bg-[image:var(--gradient-hero)]">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">Ready to start your forex journey?</h2>
-          <p className="mt-3 text-muted-foreground">Enroll today or reach out with questions.</p>
-          <div className="mt-8 flex flex-wrap gap-3 justify-center">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
-              Enroll for $300 <ArrowRight size={16}/>
-            </Link>
-            <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:bg-secondary">
-              <Send size={16}/> Join Telegram
-            </a>
+
+        <div class="card">
+          <div class="module-header">
+            <div class="module-icon-wrap">
+              <div class="card-icon grad" style="margin:0;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              </div>
+              <h3 style="font-size:1.05rem;">Technical Analysis (Price Action)</h3>
+            </div>
+            <span class="module-price">$100</span>
           </div>
-          <p className="text-sm text-muted-foreground mt-6">or email <a href="mailto:allymabz@gmail.com" className="text-primary">allymabz@gmail.com</a></p>
+          <ul class="check-list" style="margin-top:1rem;">
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Introduction to technical analysis</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Price action analysis &amp; support/resistance</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Trend identification and trend-following</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Candlestick patterns &amp; moving averages</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Oscillators and momentum indicators</li>
+          </ul>
         </div>
-      </section>
+
+        <div class="card">
+          <div class="module-header">
+            <div class="module-icon-wrap">
+              <div class="card-icon grad" style="margin:0;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <h3 style="font-size:1.05rem;">Fundamental Analysis</h3>
+            </div>
+            <span class="module-price">$100</span>
+          </div>
+          <ul class="check-list" style="margin-top:1rem;">
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Understanding economic indicators</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Interpreting news and events</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Interest rates and currency pairs</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Geopolitical influences</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Integrating fundamentals into trades</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="module-header">
+            <div class="module-icon-wrap">
+              <div class="card-icon grad" style="margin:0;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <h3 style="font-size:1.05rem;">Mentorship</h3>
+            </div>
+            <span class="module-price">$100</span>
+          </div>
+          <ul class="check-list" style="margin-top:1rem;">
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Live trading sessions and demos</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>One-on-one guidance and feedback</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Risk management and position sizing</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Personalized trading plan</li>
+            <li><svg class="icon-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Continuous education</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
-  );
-}
+  </section>
 
-// ============================================================================
-// FILE: src/routes/music.tsx
-// ============================================================================
-import { createFileRoute } from "@tanstack/react-router";
-import { Music, Youtube, Download, Mail, Phone } from "lucide-react";
-
-export const Route = createFileRoute("/music")({
-  head: () => ({
-    meta: [
-      { title: "My Music — Allan Mabele Nambafu | Gospel Artist" },
-      { name: "description", content: "Allan Mabele Nambafu — anointed Kenyan gospel artist and songwriter. Listen, download and watch new releases." },
-      { property: "og:title", content: "Allan Mabele — Gospel Music from Kenya" },
-      { property: "og:description", content: "Worship and praise music to uplift the spirit." },
-    ],
-  }),
-  component: MusicPage,
-});
-
-function MusicPage() {
-  return (
-    <div>
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-          <p className="text-sm uppercase tracking-widest text-primary">Gospel · Worship · Praise</p>
-          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Allan Mabele Nambafu</h1>
-          <p className="mt-4 text-xl text-muted-foreground">Anointed Gospel Artist & Songwriter from Kenya</p>
+  <section class="section-sm">
+    <div class="container">
+      <div class="grid-2">
+        <div class="card card-secondary">
+          <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1.25rem;">Course Details</h2>
+          <ul class="check-list">
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Total cost: <strong class="hl" style="margin-left:.25rem;">$300</strong>, payable in installments</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Duration: ~3 weeks initial training</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Earning opportunity: trade with guidance during training</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 2 years post-course mentorship</li>
+          </ul>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-3 gap-10">
-        <h2 className="text-3xl font-display font-bold">About</h2>
-        <div className="md:col-span-2 space-y-5 text-muted-foreground leading-relaxed">
+        <div class="card card-secondary">
+          <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:1.25rem;">Key Highlights</h2>
+          <ul class="check-list">
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Comprehensive forex fundamentals</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Price-action focused technical analysis</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hands-on mentorship and live trading</li>
+            <li><svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Earn while you learn</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Ready to start your forex journey?</h2>
+        <p>Enroll today or reach out with questions.</p>
+        <div class="btn-group">
+          <button class="btn-primary" onclick="navigate('contact')">
+            Enroll for $300
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <a class="btn-outline" href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Join Telegram
+          </a>
+        </div>
+        <p style="font-size:.875rem;color:var(--muted);margin-top:1.5rem;">or email <a href="mailto:allymabz@gmail.com" style="color:var(--primary);">allymabz@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-forex -->
+
+<!-- ═══════════════════════════════════════════════ PAGE: MUSIC -->
+<div class="page" id="page-music">
+
+  <section class="hero" style="padding:5rem 0 6rem;">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="section-label">Gospel · Worship · Praise</p>
+      <h1 style="font-size:clamp(2.5rem,7vw,3.75rem);font-weight:700;">Allan Mabele Nambafu</h1>
+      <p class="hero-desc" style="font-size:1.2rem;">Anointed Gospel Artist &amp; Songwriter from Kenya</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-about">
+        <div><h2 class="section-title">About</h2></div>
+        <div class="about-text">
           <p>Allan Mabele Nambafu is a gifted and anointed artist from Kenya — a rising voice in gospel music who blends heartfelt songwriting with a divine calling to glorify God through his craft.</p>
           <p>His music resonates with authenticity, reflecting a deep connection to faith and a desire to inspire spiritual renewal — through intimate worship melodies and vibrant praise anthems alike.</p>
           <p>As he steps further into the music scene, his dedication to ministry and artistic excellence promises to touch hearts across generations.</p>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-            <div className="flex items-center gap-3">
-              <div className="h-11 w-11 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><Music size={20}/></div>
-              <h3 className="font-display text-2xl font-semibold">New Music Release</h3>
-            </div>
-            <p className="mt-4 text-muted-foreground">Stream and download Allan's latest gospel tracks.</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://mdundo.com/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium">
-                <Download size={16}/> Download on Mdundo
-              </a>
-              <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border hover:bg-secondary">
-                <Youtube size={16}/> Watch on YouTube
-              </a>
-            </div>
-          </div>
-          <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-            <h3 className="font-display text-2xl font-semibold">Available Tracks</h3>
-            <ul className="mt-5 space-y-4">
-              <li className="p-4 rounded-xl bg-secondary/40 border border-border">
-                <p className="font-medium">UNAWEZA — Allan Mabele ft. Adah Allan</p>
-                <div className="mt-2 flex gap-3 text-sm">
-                  <a href="https://mdundo.com/" target="_blank" rel="noopener" className="text-primary hover:underline">Mdundo</a>
-                  <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="text-primary hover:underline">YouTube</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="rounded-3xl border border-border p-10 bg-[image:var(--gradient-hero)]">
-          <h3 className="font-display text-2xl font-bold">Connect & Collaborate</h3>
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-muted-foreground">
-            <a href="mailto:allymabz@gmail.com" className="flex items-center gap-2 hover:text-foreground"><Mail size={16}/> allymabz@gmail.com</a>
-            <span className="flex items-center gap-2"><Phone size={16}/> +254 769 174 049 / +254 701 540 201</span>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
-  );
-}
+  </section>
 
-// ============================================================================
-// FILE: src/routes/contact.tsx
-// ============================================================================
-import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Send, Linkedin, Youtube, MessageCircle } from "lucide-react";
-
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Allan Nambafu | Operations & Digital Solutions" },
-      { name: "description", content: "Get in touch with Allan Nambafu (Mabele) for operations, virtual assistance, forex training, crypto, and gospel music collaborations." },
-      { property: "og:title", content: "Contact Allan Nambafu" },
-      { property: "og:description", content: "Email, WhatsApp, Telegram and social — all the ways to reach Allan." },
-    ],
-  }),
-  component: ContactPage,
-});
-
-const channels = [
-  { icon: Mail, label: "Email", value: "allynabz@gmail.com", href: "mailto:allynabz@gmail.com" },
-  { icon: Mail, label: "Music / Services Email", value: "allymabz@gmail.com", href: "mailto:allymabz@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+254 769 174 049", href: "tel:+254769174049" },
-  { icon: MessageCircle, label: "WhatsApp", value: "+254 701 540 201", href: "https://wa.me/254701540201" },
-  { icon: Send, label: "Telegram Group", value: "PropTraderSignals", href: "https://t.me/PropTraderSignals" },
-  { icon: Linkedin, label: "LinkedIn", value: "@allannambafu", href: "https://www.linkedin.com/in/allannambafu" },
-  { icon: Youtube, label: "YouTube", value: "@AllanMabele", href: "https://www.youtube.com/@AllanMabele" },
-  { icon: MapPin, label: "Location", value: "Nairobi, Kenya" },
-];
-
-function ContactPage() {
-  return (
-    <div>
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-          <p className="text-sm uppercase tracking-widest text-primary">Get in touch</p>
-          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Let's talk</h1>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">
-            Whether it's operations, virtual assistance, forex training, crypto support or
-            a music collaboration — I'd love to hear from you.
-          </p>
+  <section class="section-sm">
+    <div class="container">
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+            <div class="card-icon grad" style="margin:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+            <h3 style="font-size:1.2rem;font-family:var(--font-display);font-weight:600;">New Music Release</h3>
+          </div>
+          <p style="color:var(--muted);font-size:.9rem;">Stream and download Allan's latest gospel tracks.</p>
+          <div class="btn-group" style="margin-top:1.5rem;">
+            <a class="btn-primary" href="https://mdundo.com/" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download on Mdundo
+            </a>
+            <a class="btn-outline" href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              Watch on YouTube
+            </a>
+          </div>
         </div>
-      </section>
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid lg:grid-cols-2 gap-10">
+        <div class="card">
+          <h3 style="font-size:1.2rem;font-family:var(--font-display);font-weight:600;margin-bottom:1.25rem;">Available Tracks</h3>
+          <div class="track-item">
+            <p>UNAWEZA — Allan Mabele ft. Adah Allan</p>
+            <div class="track-links">
+              <a href="https://mdundo.com/" target="_blank" rel="noopener">Mdundo</a>
+              <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="border-radius:calc(var(--radius)*2.5);border:1px solid var(--border);padding:2.5rem;background:var(--grad-hero);">
+        <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;">Connect &amp; Collaborate</h3>
+        <div style="margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:1rem 2rem;color:var(--muted);font-size:.9rem;">
+          <a href="mailto:allymabz@gmail.com" style="display:flex;align-items:center;gap:.5rem;transition:color .15s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+            allymabz@gmail.com
+          </a>
+          <span style="display:flex;align-items:center;gap:.5rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92V19a2 2 0 01-2.18 2A19.79 19.79 0 013 4.18 2 2 0 015 2h2.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +254 769 174 049 / +254 701 540 201
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-music -->
+
+<!-- ═══════════════════════════════════════════════ PAGE: CONTACT -->
+<div class="page" id="page-contact">
+
+  <section class="hero" style="padding:5rem 0 6rem;">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="section-label">Get in touch</p>
+      <h1 style="font-size:clamp(2.5rem,7vw,3.75rem);font-weight:700;">Let's talk</h1>
+      <p class="hero-desc">Whether it's operations, virtual assistance, forex training, crypto support or a music collaboration — I'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
         <div>
-          <h2 className="text-3xl font-display font-bold mb-8">Contact channels</h2>
-          <ul className="space-y-3">
-            {channels.map((c) => {
-              const inner = (
-                <div className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/60 transition">
-                  <div className="h-10 w-10 rounded-lg bg-secondary text-primary grid place-items-center"><c.icon size={18}/></div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.label}</p>
-                    <p className="font-medium">{c.value}</p>
-                  </div>
-                </div>
-              );
-              return (
-                <li key={c.label}>
-                  {c.href ? (
-                    <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener">{inner}</a>
-                  ) : inner}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <form
-          className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] h-fit"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const subject = encodeURIComponent(`New inquiry from ${data.get("name")}`);
-            const body = encodeURIComponent(`${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`);
-            window.location.href = `mailto:allynabz@gmail.com?subject=${subject}&body=${body}`;
-          }}
-        >
-          <h2 className="text-2xl font-display font-bold">Send a message</h2>
-          <p className="text-sm text-muted-foreground mt-1">Opens your email client with the message pre-filled.</p>
-          <div className="mt-6 space-y-4">
-            <div>
-              <label className="block text-sm mb-2">Name</label>
-              <input name="name" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" />
+          <h2 class="section-title">Contact channels</h2>
+          <div class="channel-list">
+
+            <a href="mailto:allynabz@gmail.com" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg></div>
+              <div><div class="channel-label">Email</div><div class="channel-value">allynabz@gmail.com</div></div>
+            </a>
+
+            <a href="mailto:allymabz@gmail.com" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg></div>
+              <div><div class="channel-label">Music / Services Email</div><div class="channel-value">allymabz@gmail.com</div></div>
+            </a>
+
+            <a href="tel:+254769174049" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92V19a2 2 0 01-2.18 2A19.79 19.79 0 013 4.18 2 2 0 015 2h2.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+              <div><div class="channel-label">Phone</div><div class="channel-value">+254 769 174 049</div></div>
+            </a>
+
+            <a href="https://wa.me/254701540201" target="_blank" rel="noopener" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+              <div><div class="channel-label">WhatsApp</div><div class="channel-value">+254 701 540 201</div></div>
+            </a>
+
+            <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+              <div><div class="channel-label">Telegram Group</div><div class="channel-value">PropTraderSignals</div></div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+              <div><div class="channel-label">LinkedIn</div><div class="channel-value">@allannambafu</div></div>
+            </a>
+
+            <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" class="channel-item">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></div>
+              <div><div class="channel-label">YouTube</div><div class="channel-value">@AllanMabele</div></div>
+            </a>
+
+            <div class="channel-item" style="cursor:default;">
+              <div class="channel-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><div class="channel-label">Location</div><div class="channel-value">Nairobi, Kenya</div></div>
             </div>
-            <div>
-              <label className="block text-sm mb-2">Email</label>
-              <input name="email" type="email" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm mb-2">Message</label>
-              <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none resize-none" />
-            </div>
-            <button type="submit" className="w-full py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">
-              Send message
-            </button>
+
           </div>
-        </form>
-      </section>
+        </div>
+
+        <div class="contact-form">
+          <h2>Send a message</h2>
+          <p class="sub">Opens your email client with the message pre-filled.</p>
+          <div style="margin-top:1.5rem;">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="contact-msg">Message</label>
+              <textarea id="contact-msg" rows="5" placeholder="Tell me about your project or inquiry..."></textarea>
+            </div>
+            <button class="btn-submit" onclick="sendContactEmail()">Send message</button>
+          </div>
+        </div>
+
+      </div>
     </div>
-  );
-}
+  </section>
+
+</div><!-- /page-contact -->
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;">Allan Nambafu</div>
+        <p class="footer-tagline">Operations · Virtual Assistance · Digital Solutions. Helping online businesses streamline operations, CX, and digital growth. Open to remote opportunities worldwide.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="#" onclick="navigate('home');return false;">Home</a>
+          <a href="#" onclick="navigate('services');return false;">Services</a>
+          <a href="#" onclick="navigate('forex');return false;">Learn Forex</a>
+          <a href="#" onclick="navigate('music');return false;">Music</a>
+          <a href="#" onclick="navigate('contact');return false;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <div class="footer-links">
+          <a href="mailto:allynabz@gmail.com" style="display:flex;align-items:center;gap:.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+            allynabz@gmail.com
+          </a>
+          <span style="display:flex;align-items:center;gap:.4rem;font-size:.875rem;color:var(--muted);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92V19a2 2 0 01-2.18 2A19.79 19.79 0 013 4.18 2 2 0 015 2h2.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +254 769 174 049
+          </span>
+          <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+            YouTube
+          </a>
+          <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p id="footer-year"></p>
+      <p>Nairobi, Kenya · Available for remote work</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── NAVIGATION ───────────────────────────────────────────────
+  var currentPage = 'home';
+
+  function navigate(page) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    // Show target page
+    var target = document.getElementById('page-' + page);
+    if (target) {
+      target.classList.add('active');
+      currentPage = page;
+    }
+    // Update nav active states
+    document.querySelectorAll('[data-page]').forEach(function(link) {
+      if (link.getAttribute('data-page') === page) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Update URL hash without reload
+    history.pushState({ page: page }, '', '#' + page);
+  }
+
+  // ── MOBILE MENU ──────────────────────────────────────────────
+  function toggleMenu() {
+    var nav = document.getElementById('mobile-nav');
+    var iconMenu = document.getElementById('icon-menu');
+    var iconX = document.getElementById('icon-x');
+    var isOpen = nav.classList.contains('open');
+    if (isOpen) {
+      nav.classList.remove('open');
+      iconMenu.style.display = '';
+      iconX.style.display = 'none';
+    } else {
+      nav.classList.add('open');
+      iconMenu.style.display = 'none';
+      iconX.style.display = '';
+    }
+  }
+
+  // ── CONTACT FORM ─────────────────────────────────────────────
+  function sendContactEmail() {
+    var name = document.getElementById('contact-name').value.trim();
+    var email = document.getElementById('contact-email').value.trim();
+    var msg = document.getElementById('contact-msg').value.trim();
+    if (!name || !email || !msg) {
+      alert('Please fill in all fields before sending.');
+      return;
+    }
+    var subject = encodeURIComponent('New inquiry from ' + name);
+    var body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = 'mailto:allynabz@gmail.com?subject=' + subject + '&body=' + body;
+  }
+
+  // ── INIT ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set footer year
+    document.getElementById('footer-year').textContent =
+      '© ' + new Date().getFullYear() + ' Allan Nambafu Mabele. All rights reserved.';
+
+    // Handle hash routing on load
+    var hash = window.location.hash.replace('#', '');
+    var validPages = ['home', 'services', 'forex', 'music', 'contact'];
+    if (hash && validPages.indexOf(hash) !== -1) {
+      navigate(hash);
+    } else {
+      navigate('home');
+    }
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', function(e) {
+    if (e.state && e.state.page) {
+      var target = document.getElementById('page-' + e.state.page);
+      if (target) {
+        document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+        target.classList.add('active');
+        document.querySelectorAll('[data-page]').forEach(function(link) {
+          link.classList.toggle('active', link.getAttribute('data-page') === e.state.page);
+        });
+      }
+    }
+  });
+</script>
+</body>
+</html>
