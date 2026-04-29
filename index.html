@@ -1,238 +1,84 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Allan Nambafu – Operations, Virtual Assistance &amp; Digital Solutions Specialist | Nairobi, Kenya</title>
-<meta name="description" content="Hire Allan Nambafu – 5+ years in virtual operations, CRM systems, customer support, digital marketing, SQL reporting. Based in Nairobi, Kenya. Available for remote work.">
-<meta name="keywords" content="virtual assistant, operations specialist, CRM expert, digital marketing, customer support, SQL analyst, Nairobi Kenya, remote worker, Zendesk, HubSpot">
-<meta name="author" content="Allan Nambafu">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://yoursite.com/portfolio">
-<meta property="og:title" content="Allan Nambafu – Operations &amp; Digital Solutions Specialist">
-<meta property="og:description" content="5+ years helping online businesses streamline operations, improve CX, and grow digitally. Available for remote work.">
-<meta property="og:type" content="profile">
-<meta property="og:url" content="https://yoursite.com/portfolio">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Allan Nambafu",
-  "jobTitle": "Operations, Virtual Assistance & Digital Solutions Specialist",
-  "url": "https://yoursite.com/portfolio",
-  "email": "allynabz@gmail.com",
-  "telephone": "+254769174049",
-  "address": {"@type": "PostalAddress", "addressLocality": "Nairobi", "addressCountry": "KE"},
-  "knowsAbout": ["Virtual Assistance","CRM Systems","Digital Marketing","SQL","Customer Support","Operations Management"],
-  "alumniOf": {"@type": "CollegeOrUniversity", "name": "Jomo Kenyatta University of Agriculture & Technology"},
-  "sameAs": ["https://www.youtube.com/@AllanMabele","https://www.linkedin.com/in/allannambafu"]
+import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+
+import appCss from "../styles.css?url";
+
+function NotFoundComponent() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Go home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }
-</script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.7}
-.portfolio-wrap{max-width:900px;margin:0 auto;padding:40px 24px 80px}
-.hero{text-align:center;padding:80px 0 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:200px;background:radial-gradient(circle,rgba(0,186,124,.15),transparent 70%);border-radius:50%;filter:blur(60px)}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:8px}
-.hero .tagline{font-size:1.1rem;font-weight:500;color:#00ba7c;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
-.hero .contact-line{font-size:.9rem;color:#888;margin-bottom:6px}
-.hero .contact-line a{color:#00ba7c;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
-.hero .contact-line a:hover{border-color:#00ba7c}
-.hero .links{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.hero .links a{display:inline-block;padding:10px 28px;border-radius:999px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .25s}
-.btn-primary{background:#00ba7c;color:#0a0a0a}
-.btn-primary:hover{background:#00d68f;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,186,124,.3)}
-.btn-outline{border:1.5px solid #333;color:#ccc}
-.btn-outline:hover{border-color:#00ba7c;color:#00ba7c}
-section{margin-top:56px}
-h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1a1a1a;position:relative}
-h2::after{content:'';position:absolute;bottom:-2px;left:0;width:48px;height:2px;background:#00ba7c}
-.summary-text{font-size:1rem;color:#bbb;max-width:780px}
-.summary-text strong{color:#fff}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.skill-tag{background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:14px 18px;font-size:.9rem;color:#ccc;transition:border-color .2s}
-.skill-tag:hover{border-color:#00ba7c}
-.job{margin-bottom:40px;padding:28px;background:#111;border:1px solid #1a1a1a;border-radius:14px;transition:border-color .25s}
-.job:hover{border-color:#00ba7c33}
-.job-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.job h3{font-size:1.1rem;font-weight:700;color:#fff}
-.job .company{color:#00ba7c;font-weight:600}
-.job .dates{font-size:.8rem;color:#666;white-space:nowrap}
-.job ul{list-style:none;padding:0}
-.job ul li{position:relative;padding-left:18px;margin-bottom:8px;font-size:.9rem;color:#aaa}
-.job ul li::before{content:'›';position:absolute;left:0;color:#00ba7c;font-weight:700}
-.edu-item{margin-bottom:16px;padding:16px 20px;background:#111;border-radius:10px;border:1px solid #1a1a1a}
-.edu-item h3{font-size:1rem;font-weight:600;color:#fff}
-.edu-item p{font-size:.85rem;color:#777}
-.accomplishments ul{list-style:none;padding:0}
-.accomplishments ul li{position:relative;padding-left:24px;margin-bottom:12px;font-size:.9rem;color:#bbb}
-.accomplishments ul li::before{content:'✦';position:absolute;left:0;color:#00ba7c}
-.lang-badges{display:flex;gap:10px;flex-wrap:wrap}
-.lang-badge{background:#111;border:1px solid #1e1e1e;padding:8px 20px;border-radius:999px;font-size:.85rem;color:#ccc}
-.creative-box{background:linear-gradient(135deg,#0d1f17,#111);border:1px solid #1a3a2a;border-radius:14px;padding:28px;text-align:center}
-.creative-box h3{font-size:1.1rem;color:#fff;margin-bottom:8px}
-.creative-box p{color:#888;font-size:.9rem;margin-bottom:16px}
-.creative-box a{color:#00ba7c;font-weight:600;text-decoration:none}
-.creative-box a:hover{text-decoration:underline}
-footer{text-align:center;margin-top:64px;padding-top:24px;border-top:1px solid #1a1a1a;font-size:.8rem;color:#555}
-</style>
 
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
+      { name: "description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
+      { name: "author", content: "Allan Nambafu" },
+      { name: "keywords", content: "virtual assistant, operations specialist, CRM expert, digital marketing, customer support, SQL analyst, Nairobi Kenya, remote, Zendesk, HubSpot, forex training, gospel music" },
+      { property: "og:title", content: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
+      { property: "og:description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
+      { property: "og:type", content: "profile" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
+      { name: "twitter:description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/AN7Cujd3r0MsjONez0Mm8irb6ej1/social-images/social-1777484250820-a-striking-studio-portrait-of-a-young-ma_okOpdfjvQIiebpGOT3cGaA_ISGGZrzoTlelOTq4kLwkGQ.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/AN7Cujd3r0MsjONez0Mm8irb6ej1/social-images/social-1777484250820-a-striking-studio-portrait-of-a-young-ma_okOpdfjvQIiebpGOT3cGaA_ISGGZrzoTlelOTq4kLwkGQ.webp" },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
+      },
+    ],
+  }),
+  shellComponent: RootShell,
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+});
 
-<div class="portfolio-wrap">
+function RootShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
 
-<header class="hero">
-  <h1>Allan Nambafu</h1>
-  <p class="tagline">Operations · Virtual Assistance · Digital Solutions</p>
-  <p class="contact-line">Nairobi, Kenya · <a href="tel:+254769174049">(254) 769-174-049</a> · <a href="mailto:allynabz@gmail.com">allynabz@gmail.com</a></p>
-  <div class="links">
-    <a href="https://www.linkedin.com/in/allannambafu" class="btn-primary" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://www.youtube.com/@AllanMabele" class="btn-outline" target="_blank" rel="noopener">YouTube – Allan Mabele</a>
-  </div>
-</header>
-
-<section>
-  <h2>About</h2>
-  <p class="summary-text">I help online businesses and fintech brands <strong>streamline operations</strong>, improve customer experience, and strengthen their digital presence. With <strong>5+ years</strong> of experience in virtual operations, CRM systems, customer support, digital marketing, and SQL reporting, I specialize in building structured workflows that reduce friction and increase efficiency.</p>
-  <br>
-  <p class="summary-text">I've worked with trading firms, startups, and online brands to optimize systems, manage support experiences, implement CRM tools (Zendesk, HubSpot, SendGrid), analyze performance data, manage social media, and support marketing campaigns. My background in <strong>Mathematics &amp; Computer Science</strong> drives a data-driven approach to every operation.</p>
-</section>
-
-<section>
-  <h2>Core Skills</h2>
-  <div class="skills-grid">
-    <div class="skill-tag">Social Media Management &amp; Content Production</div>
-    <div class="skill-tag">Social Media Evaluation &amp; Performance Insights</div>
-    <div class="skill-tag">Customer Support – Zendesk, SendGrid, CRM</div>
-    <div class="skill-tag">Digital Marketing – Campaigns &amp; Scheduling</div>
-    <div class="skill-tag">Operations Assistance – Calendar, Email, Admin</div>
-    <div class="skill-tag">SQL Data Analysis &amp; Reporting</div>
-    <div class="skill-tag">Tech-Savvy Virtual Assistance</div>
-  </div>
-</section>
-
-<section>
-  <h2>Experience</h2>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Operations Officer <span style="font-weight:400;color:#888">(Virtual)</span></h3><span class="company">Liquid Markets</span></div>
-      <span class="dates">Sep 2021 – Present</span>
+function RootComponent() {
+  return (
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <Header />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
-    <ul>
-      <li>Optimized workflows and policies, improving operational efficiency and supporting smoother digital operations</li>
-      <li>Managed social media and digital marketing activities across major platforms</li>
-      <li>Provided customer support through CRM systems and chat moderation</li>
-      <li>Used SQL and reporting tools for data-driven operational decisions</li>
-      <li>Handled calendar management, emails, documentation, and team coordination</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Advocate – East Africa</h3><span class="company">BluFX.co.uk</span></div>
-      <span class="dates">Apr 2021 – Aug 2021</span>
-    </div>
-    <ul>
-      <li>Produced social media content including blogs, videos, and captions</li>
-      <li>Analyzed social media performance and improved engagement by 30%</li>
-      <li>Provided customer support through HubSpot and Telegram</li>
-      <li>Evaluated digital campaigns and content performance</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Forex &amp; Bitcoin Trader</h3><span class="company">Various Forex &amp; Crypto Firms (Remote)</span></div>
-      <span class="dates">Jun 2019 – Feb 2021</span>
-    </div>
-    <ul>
-      <li>Managed diverse forex accounts for international clients on XM, HotForex, and FBS</li>
-      <li>Executed profitable trades in Bitcoin, Ethereum, and USDT with advanced technical analysis</li>
-      <li>Created compelling marketing content driving traffic to a personal trading blog</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Virtual Assistant</h3><span class="company">FreelancerForCoins (Remote)</span></div>
-      <span class="dates">Feb 2020 – Feb 2021</span>
-    </div>
-    <ul>
-      <li>Delivered administrative support including email marketing, web development sourcing, and surveys</li>
-      <li>Connected clients with local experts, leveraging opportunities for business growth</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Research Writer</h3><span class="company">Hawk Research (Remote)</span></div>
-      <span class="dates">Feb 2018 – 2020</span>
-    </div>
-    <ul>
-      <li>Researched, authored, and edited technical articles on finance and technology</li>
-      <li>Developed engaging academic content for students and professionals</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Internet Services Consultant</h3><span class="company">West Media Company Ltd, Nairobi</span></div>
-      <span class="dates">May 2016 – Aug 2016</span>
-    </div>
-    <ul>
-      <li>Designed web pages using HTML, CSS, and JavaScript – grew site traffic to 500+ daily visitors</li>
-      <li>Managed MySQL databases ensuring data integrity</li>
-      <li>Trained 20+ clients daily on digital tools and internet services</li>
-    </ul>
-  </article>
-
-  <article class="job">
-    <div class="job-header">
-      <div><h3>Customer Service Intern</h3><span class="company">Kenya Power &amp; Lighting Co., Nairobi</span></div>
-      <span class="dates">Apr 2015 – Aug 2015</span>
-    </div>
-    <ul>
-      <li>Addressed billing inquiries, processed meter readings, and delivered frontline support in a high-volume environment</li>
-    </ul>
-  </article>
-</section>
-
-<section>
-  <h2>Education</h2>
-  <div class="edu-item"><h3>BSc Mathematics &amp; Computer Science</h3><p>Jomo Kenyatta University of Agriculture &amp; Technology · 2013 – 2018</p></div>
-  <div class="edu-item"><h3>KCSE</h3><p>Shieywe High School · 2010 – 2012</p></div>
-  <div class="edu-item"><h3>KCPE</h3><p>Teremi Primary School · 1999 – 2008</p></div>
-</section>
-
-<section class="accomplishments">
-  <h2>Accomplishments</h2>
-  <ul>
-    <li>Authored <em>"Calculus Basics: Differentiation"</em> – published on Amazon Kindle</li>
-    <li>Increased social media engagement by 30% for BluFX East Africa</li>
-    <li>Optimized operational costs by 15% at Liquid Markets through process re-engineering</li>
-    <li>Developed and hosted a personal portfolio website on GitHub</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Languages</h2>
-  <div class="lang-badges">
-    <span class="lang-badge">English (Fluent)</span>
-    <span class="lang-badge">Swahili (Fluent)</span>
-  </div>
-</section>
-
-<section>
-  <h2>Gospel Music &amp; Creative Work</h2>
-  <div class="creative-box">
-    <h3>🎵 Allan Mabele</h3>
-    <p>Gospel artist and inspirational content creator</p>
-    <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener">Watch on YouTube →</a>
-  </div>
-</section>
-
-<footer>
-  <p>© 2025 Allan Nambafu. Open to remote opportunities worldwide.</p>
-</footer>
-
-</div>
+  );
+}
