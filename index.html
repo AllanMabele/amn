@@ -1,84 +1,719 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+// ===== FILE: src/styles.css =====
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
 
-import appCss from "../styles.css?url";
+@custom-variant dark (&:is(.dark *));
 
-function NotFoundComponent() {
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --color-indigo-glow: var(--indigo-glow);
+  --color-surface: var(--surface);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.12 0.04 280);
+  --foreground: oklch(0.96 0.01 270);
+  --surface: oklch(0.17 0.05 280);
+  --card: oklch(0.17 0.05 280);
+  --card-foreground: oklch(0.96 0.01 270);
+  --popover: oklch(0.17 0.05 280);
+  --popover-foreground: oklch(0.96 0.01 270);
+  --primary: oklch(0.58 0.22 280);
+  --primary-foreground: oklch(0.98 0.005 270);
+  --indigo-glow: oklch(0.72 0.18 285);
+  --secondary: oklch(0.25 0.08 280);
+  --secondary-foreground: oklch(0.96 0.01 270);
+  --muted: oklch(0.22 0.05 280);
+  --muted-foreground: oklch(0.72 0.04 270);
+  --accent: oklch(0.58 0.22 280);
+  --accent-foreground: oklch(0.98 0.005 270);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.3 0.06 280);
+  --input: oklch(0.25 0.05 280);
+  --ring: oklch(0.58 0.22 280);
+  --sidebar: oklch(0.15 0.04 280);
+  --sidebar-foreground: oklch(0.96 0.01 270);
+  --sidebar-primary: oklch(0.58 0.22 280);
+  --sidebar-primary-foreground: oklch(0.98 0.005 270);
+  --sidebar-accent: oklch(0.22 0.05 280);
+  --sidebar-accent-foreground: oklch(0.96 0.01 270);
+  --sidebar-border: oklch(0.3 0.06 280);
+  --sidebar-ring: oklch(0.58 0.22 280);
+
+  --gradient-hero: radial-gradient(circle at 20% 0%, oklch(0.35 0.18 280 / 0.6), transparent 50%),
+                   radial-gradient(circle at 80% 30%, oklch(0.45 0.2 290 / 0.4), transparent 50%),
+                   linear-gradient(180deg, oklch(0.12 0.04 280), oklch(0.08 0.03 280));
+  --gradient-primary: linear-gradient(135deg, oklch(0.58 0.22 280), oklch(0.72 0.18 285));
+  --shadow-glow: 0 20px 60px -20px oklch(0.58 0.22 280 / 0.5);
+  --shadow-card: 0 8px 24px -8px oklch(0.05 0.02 280 / 0.6);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+// ===== FILE: src/components/Header.tsx =====
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const navItems = [
+  { to: "/", label: "Home" },
+  { to: "/services", label: "Services" },
+  { to: "/learn-forex", label: "Learn Forex" },
+  { to: "/music", label: "Music" },
+  { to: "/contact", label: "Contact" },
+] as const;
+
+export function Header() {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
+          <div className="h-9 w-9 rounded-lg bg-[image:var(--gradient-primary)] grid place-items-center font-display font-bold text-primary-foreground shadow-[var(--shadow-glow)]">A</div>
+          <span className="font-display font-semibold tracking-tight">Allan Nambafu</span>
+        </Link>
+        <nav className="hidden md:flex items-center gap-1">
+          {navItems.map((item) => (
+            <Link key={item.to} to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              activeProps={{ className: "text-foreground bg-secondary" }}
+              inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
+              className="px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-secondary/60">
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <button className="md:hidden p-2 rounded-md text-foreground" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+      {open && (
+        <nav className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
+          <div className="px-6 py-3 flex flex-col gap-1">
+            {navItems.map((item) => (
+              <Link key={item.to} to={item.to} onClick={() => setOpen(false)}
+                activeOptions={{ exact: item.to === "/" }}
+                activeProps={{ className: "text-foreground bg-secondary" }}
+                inactiveProps={{ className: "text-muted-foreground" }}
+                className="px-4 py-3 rounded-md text-sm font-medium">
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      )}
+    </header>
+  );
+}
+
+// ===== FILE: src/components/Footer.tsx =====
+import { Link } from "@tanstack/react-router";
+import { Mail, Phone, Linkedin, Youtube, Send } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border bg-[oklch(0.1_0.03_280)] mt-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 grid gap-10 md:grid-cols-4">
+        <div className="md:col-span-2">
+          <div className="font-display text-xl font-bold">Allan Nambafu</div>
+          <p className="mt-3 text-sm text-muted-foreground max-w-md">
+            Operations · Virtual Assistance · Digital Solutions. Helping online businesses
+            streamline operations, CX, and digital growth. Open to remote opportunities worldwide.
+          </p>
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold mb-3">Quick Links</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li><Link to="/" className="hover:text-foreground">Home</Link></li>
+            <li><Link to="/services" className="hover:text-foreground">Services</Link></li>
+            <li><Link to="/learn-forex" className="hover:text-foreground">Learn Forex</Link></li>
+            <li><Link to="/music" className="hover:text-foreground">Music</Link></li>
+            <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-sm font-semibold mb-3">Connect</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2"><Mail size={14}/> <a href="mailto:allynabz@gmail.com" className="hover:text-foreground">allynabz@gmail.com</a></li>
+            <li className="flex items-center gap-2"><Phone size={14}/> +254 769 174 049</li>
+            <li className="flex items-center gap-2"><Linkedin size={14}/> <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" className="hover:text-foreground">LinkedIn</a></li>
+            <li className="flex items-center gap-2"><Youtube size={14}/> <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" className="hover:text-foreground">YouTube</a></li>
+            <li className="flex items-center gap-2"><Send size={14}/> <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="hover:text-foreground">Telegram</a></li>
+          </ul>
         </div>
       </div>
+      <div className="border-t border-border">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 text-xs text-muted-foreground flex flex-col sm:flex-row gap-2 justify-between">
+          <p>© {new Date().getFullYear()} Allan Nambafu Mabele. All rights reserved.</p>
+          <p>Nairobi, Kenya · Available for remote work</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ===== FILE: src/routes/index.tsx =====
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Mail, Phone, MapPin, Linkedin, Youtube, Briefcase, BarChart3, Headphones, Megaphone, Database, Calendar, Sparkles } from "lucide-react";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Allan Nambafu — Operations & Virtual Assistance Specialist | Nairobi" },
+      { name: "description", content: "5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting for online businesses. Available for remote work." },
+      { property: "og:title", content: "Allan Nambafu — Operations & Digital Solutions Specialist" },
+      { property: "og:description", content: "Streamlining operations, CX and digital growth for online businesses worldwide." },
+    ],
+  }),
+  component: Index,
+});
+
+const skills = [
+  { icon: Megaphone, title: "Social Media Management", desc: "Content production, scheduling, engagement and growth across platforms." },
+  { icon: BarChart3, title: "Performance Insights", desc: "Social media evaluation, reporting and data-driven optimization." },
+  { icon: Headphones, title: "Customer Support", desc: "Zendesk, SendGrid and CRM-driven support operations." },
+  { icon: Sparkles, title: "Digital Marketing", desc: "Campaign planning, scheduling and performance tracking." },
+  { icon: Calendar, title: "Operations Assistance", desc: "Calendar, email, documentation and admin coordination." },
+  { icon: Database, title: "SQL Data Analysis", desc: "Reporting, dashboards and operational intelligence." },
+];
+
+const experience = [
+  { role: "Operations Officer (Virtual)", company: "Liquid Markets", period: "Sep 2021 — Present",
+    points: ["Optimized workflows and policies, improving operational efficiency.","Managed social media and digital marketing across major platforms.","Provided customer support through CRM systems and chat moderation.","Used SQL and reporting tools for data-driven decisions.","Handled calendars, email, documentation and team coordination."] },
+  { role: "Advocate – East Africa", company: "BluFX.co.uk", period: "Apr 2021 — Aug 2021",
+    points: ["Produced blogs, videos and captions for social media.","Improved engagement by 30% through performance analysis.","Provided customer support through HubSpot and Telegram.","Evaluated digital campaign and content performance."] },
+  { role: "Forex & Bitcoin Trader", company: "Various Forex & Crypto Firms (Remote)", period: "Jun 2019 — Feb 2021",
+    points: ["Managed forex accounts on XM, HotForex and FBS for international clients.","Executed trades in BTC, ETH and USDT using technical analysis.","Created marketing content driving traffic to a personal trading blog."] },
+  { role: "Virtual Assistant", company: "FreelancerForCoins (Remote)", period: "Feb 2020 — Feb 2021",
+    points: ["Email marketing, web sourcing, surveys and admin support.","Connected clients with local experts to drive business growth."] },
+  { role: "Research Writer", company: "Hawk Research (Remote)", period: "Feb 2018 — 2020",
+    points: ["Researched and authored technical articles on finance and tech.","Developed academic content for students and professionals."] },
+  { role: "Internet Services Consultant", company: "West Media Company Ltd, Nairobi", period: "May 2016 — Aug 2016",
+    points: ["Built websites with HTML/CSS/JS — grew traffic to 500+ daily visitors.","Managed MySQL databases ensuring data integrity.","Trained 20+ clients daily on digital tools."] },
+];
+
+function Index() {
+  return (
+    <div>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-24 lg:pt-28 lg:pb-32">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-secondary/40 text-xs text-muted-foreground">
+            <span className="h-2 w-2 rounded-full bg-[var(--indigo-glow)] animate-pulse" />
+            Available for remote work worldwide
+          </div>
+          <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold tracking-tight max-w-4xl">
+            Operations, Virtual Assistance & <span className="bg-clip-text text-transparent bg-[image:var(--gradient-primary)]">Digital Solutions</span>.
+          </h1>
+          <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
+            I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping online businesses and fintech brands streamline workflows, elevate CX, and grow their digital presence.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">Hire me <ArrowRight size={16} /></Link>
+            <Link to="/services" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground hover:bg-secondary transition">View services</Link>
+          </div>
+          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <span className="flex items-center gap-2"><MapPin size={14}/> Nairobi, Kenya</span>
+            <span className="flex items-center gap-2"><Phone size={14}/> +254 769 174 049</span>
+            <a href="mailto:allynabz@gmail.com" className="flex items-center gap-2 hover:text-foreground"><Mail size={14}/> allynabz@gmail.com</a>
+            <a href="https://www.linkedin.com/in/allannambafu" target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-foreground"><Linkedin size={14}/> LinkedIn</a>
+            <a href="https://www.youtube.com/@AllanMabele" target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-foreground"><Youtube size={14}/> YouTube</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 grid md:grid-cols-3 gap-10">
+        <h2 className="text-3xl font-display font-bold">About</h2>
+        <div className="md:col-span-2 space-y-5 text-muted-foreground leading-relaxed">
+          <p>I help online businesses and fintech brands streamline operations, improve customer experience and strengthen their digital presence. With 5+ years of experience in virtual operations, CRM systems, customer support, digital marketing and SQL reporting, I specialize in building structured workflows that reduce friction and increase efficiency.</p>
+          <p>I've worked with trading firms, startups and online brands to optimize systems, manage support experiences, implement CRM tools (Zendesk, HubSpot, SendGrid), analyze performance data, manage social media and run marketing campaigns. My background in Mathematics & Computer Science drives a data-first approach to every operation.</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+        <h2 className="text-3xl font-display font-bold mb-10">Core Skills</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {skills.map((s) => (
+            <div key={s.title} className="p-6 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] hover:border-primary/60 transition">
+              <div className="h-10 w-10 rounded-lg bg-secondary grid place-items-center text-primary mb-4"><s.icon size={18} /></div>
+              <h3 className="font-semibold">{s.title}</h3>
+              <p className="text-sm text-muted-foreground mt-2">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+        <h2 className="text-3xl font-display font-bold mb-10 flex items-center gap-3"><Briefcase className="text-primary"/> Experience</h2>
+        <div className="space-y-6">
+          {experience.map((job) => (
+            <div key={job.role + job.company} className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
+              <div className="flex flex-wrap justify-between gap-2">
+                <div>
+                  <h3 className="font-display text-xl font-semibold">{job.role}</h3>
+                  <p className="text-primary text-sm mt-1">{job.company}</p>
+                </div>
+                <span className="text-sm text-muted-foreground">{job.period}</span>
+              </div>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground list-disc pl-5">
+                {job.points.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid md:grid-cols-2 gap-8">
+        <div className="p-8 rounded-2xl border border-border bg-card">
+          <h2 className="text-2xl font-display font-bold mb-6">Education</h2>
+          <ul className="space-y-4 text-sm">
+            <li><p className="font-semibold">BSc Mathematics & Computer Science</p><p className="text-muted-foreground">Jomo Kenyatta University of Agriculture & Technology · 2013 – 2018</p></li>
+            <li><p className="font-semibold">KCSE</p><p className="text-muted-foreground">Shieywe High School · 2010 – 2012</p></li>
+            <li><p className="font-semibold">KCPE</p><p className="text-muted-foreground">Teremi Primary School · 1999 – 2008</p></li>
+          </ul>
+        </div>
+        <div className="p-8 rounded-2xl border border-border bg-card">
+          <h2 className="text-2xl font-display font-bold mb-6">Accomplishments</h2>
+          <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5">
+            <li>Authored "Calculus Basics: Differentiation" — published on Amazon Kindle.</li>
+            <li>Increased social media engagement by 30% for BluFX East Africa.</li>
+            <li>Optimized operational costs by 15% at Liquid Markets via process re-engineering.</li>
+            <li>Developed and hosted a personal portfolio website on GitHub.</li>
+          </ul>
+          <h3 className="text-sm font-semibold mt-6 mb-2">Languages</h3>
+          <p className="text-sm text-muted-foreground">English (Fluent) · Swahili (Fluent)</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+        <div className="rounded-3xl p-10 md:p-14 border border-border bg-[image:var(--gradient-hero)] text-center">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">Let's build something efficient.</h2>
+          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Open to remote opportunities worldwide — operations, virtual assistance, CRM and digital marketing roles.</p>
+          <Link to="/contact" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Get in touch <ArrowRight size={16}/></Link>
+        </div>
+      </section>
     </div>
   );
 }
 
-export const Route = createRootRoute({
+// ===== FILE: src/routes/services.tsx =====
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Code2, Headphones, FileText, Briefcase, Bitcoin, LineChart, Share2, Check, ArrowRight } from "lucide-react";
+
+export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
-      { name: "description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
-      { name: "author", content: "Allan Nambafu" },
-      { name: "keywords", content: "virtual assistant, operations specialist, CRM expert, digital marketing, customer support, SQL analyst, Nairobi Kenya, remote, Zendesk, HubSpot, forex training, gospel music" },
-      { property: "og:title", content: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
-      { property: "og:description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
-      { property: "og:type", content: "profile" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Allan Nambafu — Operations, Virtual Assistance & Digital Solutions Specialist" },
-      { name: "twitter:description", content: "Allan Nambafu (Mabele): 5+ years in virtual operations, CRM, customer support, digital marketing & SQL reporting. Nairobi, Kenya. Open to remote work." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/AN7Cujd3r0MsjONez0Mm8irb6ej1/social-images/social-1777484250820-a-striking-studio-portrait-of-a-young-ma_okOpdfjvQIiebpGOT3cGaA_ISGGZrzoTlelOTq4kLwkGQ.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/AN7Cujd3r0MsjONez0Mm8irb6ej1/social-images/social-1777484250820-a-striking-studio-portrait-of-a-young-ma_okOpdfjvQIiebpGOT3cGaA_ISGGZrzoTlelOTq4kLwkGQ.webp" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { title: "Services — Allan Mabele | Web, VA, Crypto, Forex & More" },
+      { name: "description", content: "Website development, virtual assistance, customer support, research writing, crypto exchange, forex training, fund management and social media services." },
+      { property: "og:title", content: "Services — Allan Mabele" },
+      { property: "og:description", content: "A one-stop digital partner: web, VA, crypto, forex training and social media." },
     ],
   }),
-  shellComponent: RootShell,
-  component: RootComponent,
-  notFoundComponent: NotFoundComponent,
+  component: ServicesPage,
 });
 
-function RootShell({ children }: { children: React.ReactNode }) {
+const services = [
+  { icon: Code2, title: "Website Development", items: [
+    { title: "Custom Website Design (HTML/CSS)", desc: "Responsive, fast-loading sites tailored to your business." },
+    { title: "WordPress Development", desc: "Custom themes, plugins, performance and SEO optimization." }] },
+  { icon: Headphones, title: "Virtual Assistance & Customer Support", items: [
+    { title: "Professional Customer Service", desc: "Inquiries and complaints via email, chat or phone." },
+    { title: "General Virtual Assistance", desc: "Email, scheduling, data entry and admin tasks." }] },
+  { icon: FileText, title: "Research & Content Writing", items: [
+    { title: "Research Writing", desc: "Cited reports, articles and academic papers." },
+    { title: "Freelance Writing", desc: "Blog posts, product copy and SEO web content." }] },
+  { icon: Briefcase, title: "General Freelance Services", items: [
+    { title: "Versatile Task Handling", desc: "Data analysis, project coordination and admin." },
+    { title: "Business Support", desc: "Presentations, market research and document formatting." }] },
+  { icon: Bitcoin, title: "Crypto Exchange & Trading", items: [
+    { title: "P2P Crypto Exchange Assistance", desc: "Help investors buy crypto locally and transfer securely." },
+    { title: "Crypto Asset Management", desc: "Investment management targeting 5%+ ROI per month." }] },
+  { icon: LineChart, title: "Forex Trading Services", items: [
+    { title: "Forex Trading Training", desc: "Strategies, risk management and personalized coaching." },
+    { title: "Forex Signals (Telegram)", desc: "High-quality real-time trading signals." },
+    { title: "Forex Fund Management", desc: "Professional management with consistent monthly returns." }] },
+  { icon: Share2, title: "Social Media Management", items: [
+    { title: "Account Management & Growth", desc: "Content, scheduling, engagement and growth strategies." }] },
+];
+
+const benefits = [
+  { title: "Reliable & Secure", desc: "Safe transactions in crypto and financial services." },
+  { title: "Proven Track Record", desc: "Consistent 5%+ monthly ROI on managed investments." },
+  { title: "Personalized Support", desc: "Tailored training and assistance for your needs." },
+  { title: "Multi-Skilled Freelancer", desc: "One-stop solution for writing, admin and digital services." },
+  { title: "24/7 Availability", desc: "Quick responses and dedicated support." },
+];
+
+function ServicesPage() {
   return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
+    <div>
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+          <p className="text-sm uppercase tracking-widest text-primary">What I offer</p>
+          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Services</h1>
+          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">A full suite of digital and operational services — from web development to crypto and forex.</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-2 gap-6">
+        {services.map((cat) => (
+          <div key={cat.title} className="p-7 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><cat.icon size={20} /></div>
+              <h2 className="text-xl font-display font-semibold">{cat.title}</h2>
+            </div>
+            <ul className="mt-5 space-y-4">
+              {cat.items.map((it) => (
+                <li key={it.title}>
+                  <div className="flex items-start gap-2">
+                    <Check size={16} className="text-primary mt-1 shrink-0" />
+                    <div>
+                      <p className="font-medium">{it.title}</p>
+                      <p className="text-sm text-muted-foreground">{it.desc}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <h2 className="text-3xl font-display font-bold mb-8">Why choose my services?</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {benefits.map((b) => (
+            <div key={b.title} className="p-6 rounded-2xl border border-border bg-secondary/30">
+              <div className="h-9 w-9 rounded-lg bg-primary/20 text-primary grid place-items-center mb-4"><Check size={18} /></div>
+              <p className="font-semibold">{b.title}</p>
+              <p className="text-sm text-muted-foreground mt-1">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
+        <div className="rounded-3xl border border-border p-10 text-center bg-[image:var(--gradient-hero)]">
+          <h3 className="font-display text-3xl font-bold">Ready to start?</h3>
+          <p className="text-muted-foreground mt-3">Reach out for a free discovery call.</p>
+          <Link to="/contact" className="mt-7 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Contact me <ArrowRight size={16}/></Link>
+        </div>
+      </section>
+    </div>
   );
 }
 
-function RootComponent() {
+// ===== FILE: src/routes/learn-forex.tsx =====
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Check, GraduationCap, TrendingUp, Users, ArrowRight, Send } from "lucide-react";
+
+export const Route = createFileRoute("/learn-forex")({
+  head: () => ({
+    meta: [
+      { title: "Forex Trading Course for Beginners — Allan Mabele" },
+      { name: "description", content: "3-week comprehensive forex training: technical analysis, fundamentals, and live mentorship. $300 with up to 2 years post-course mentorship." },
+      { property: "og:title", content: "Learn Forex Trading — 3-Week Course with Allan Mabele" },
+      { property: "og:description", content: "Master price action, fundamentals and risk management with personalized mentorship." },
+    ],
+  }),
+  component: LearnForex,
+});
+
+const modules = [
+  { icon: GraduationCap, title: "Introduction to Forex", price: "Included",
+    points: ["Understanding the forex market","Basic forex terminology and concepts","Risk management and trading psychology","Choosing a broker and setting up an account"] },
+  { icon: TrendingUp, title: "Technical Analysis (Price Action)", price: "$100",
+    points: ["Introduction to technical analysis","Price action analysis","Support and resistance","Trend identification and trend-following","Candlestick patterns","Moving averages","Oscillators and momentum indicators"] },
+  { icon: TrendingUp, title: "Fundamental Analysis", price: "$100",
+    points: ["Understanding economic indicators","Interpreting news and events","Interest rates and currency pairs","Geopolitical influences","Integrating fundamentals into trades"] },
+  { icon: Users, title: "Mentorship", price: "$100",
+    points: ["Live trading sessions and demos","One-on-one guidance and feedback","Risk management and position sizing","Personalized trading plan","Continuous education"] },
+];
+
+function LearnForex() {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
+    <div>
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+          <p className="text-sm uppercase tracking-widest text-primary">3-Week Program</p>
+          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold max-w-3xl">Forex Trading Course for Beginners</h1>
+          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">Master the art of currency trading with a comprehensive program that combines technical analysis, fundamentals and live mentorship.</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <h2 className="text-3xl font-display font-bold mb-10">Course outline</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {modules.map((m) => (
+            <div key={m.title} className="p-7 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] flex flex-col">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><m.icon size={18} /></div>
+                  <h3 className="font-display text-lg font-semibold">{m.title}</h3>
+                </div>
+                <span className="text-sm font-semibold text-primary whitespace-nowrap">{m.price}</span>
+              </div>
+              <ul className="mt-5 space-y-2 text-sm text-muted-foreground flex-1">
+                {m.points.map((p) => (
+                  <li key={p} className="flex items-start gap-2"><Check size={14} className="text-primary mt-1 shrink-0"/>{p}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+        <div className="rounded-3xl border border-border p-10 grid md:grid-cols-2 gap-10 bg-secondary/20">
+          <div>
+            <h2 className="text-3xl font-display font-bold">Course Details</h2>
+            <ul className="mt-6 space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Total cost: <strong className="text-foreground">$300</strong>, payable in installments</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Duration: ~3 weeks initial training</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Earning opportunity: trade with guidance during training</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Up to 2 years post-course mentorship</li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-3xl font-display font-bold">Key Highlights</h2>
+            <ul className="mt-6 space-y-3 text-muted-foreground">
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Comprehensive forex fundamentals</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Price-action focused technical analysis</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Hands-on mentorship and live trading</li>
+              <li className="flex items-start gap-2"><Check size={16} className="text-primary mt-1"/>Earn while you learn</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <div className="rounded-3xl border border-border p-10 md:p-14 text-center bg-[image:var(--gradient-hero)]">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">Ready to start your forex journey?</h2>
+          <p className="mt-3 text-muted-foreground">Enroll today or reach out with questions.</p>
+          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Enroll for $300 <ArrowRight size={16}/></Link>
+            <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:bg-secondary"><Send size={16}/> Join Telegram</a>
+          </div>
+          <p className="text-sm text-muted-foreground mt-6">or email <a href="mailto:allymabz@gmail.com" className="text-primary">allymabz@gmail.com</a></p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ===== FILE: src/routes/music.tsx =====
+import { createFileRoute } from "@tanstack/react-router";
+import { Music, Youtube, Download, Mail, Phone } from "lucide-react";
+
+export const Route = createFileRoute("/music")({
+  head: () => ({
+    meta: [
+      { title: "My Music — Allan Mabele Nambafu | Gospel Artist" },
+      { name: "description", content: "Allan Mabele Nambafu — anointed Kenyan gospel artist and songwriter. Listen, download and watch new releases." },
+      { property: "og:title", content: "Allan Mabele — Gospel Music from Kenya" },
+      { property: "og:description", content: "Worship and praise music to uplift the spirit." },
+    ],
+  }),
+  component: MusicPage,
+});
+
+function MusicPage() {
+  return (
+    <div>
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+          <p className="text-sm uppercase tracking-widest text-primary">Gospel · Worship · Praise</p>
+          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Allan Mabele Nambafu</h1>
+          <p className="mt-4 text-xl text-muted-foreground">Anointed Gospel Artist & Songwriter from Kenya</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-3 gap-10">
+        <h2 className="text-3xl font-display font-bold">About</h2>
+        <div className="md:col-span-2 space-y-5 text-muted-foreground leading-relaxed">
+          <p>Allan Mabele Nambafu is a gifted and anointed artist from Kenya — a rising voice in gospel music who blends heartfelt songwriting with a divine calling to glorify God through his craft.</p>
+          <p>His music resonates with authenticity, reflecting a deep connection to faith and a desire to inspire spiritual renewal — through intimate worship melodies and vibrant praise anthems alike.</p>
+          <p>As he steps further into the music scene, his dedication to ministry and artistic excellence promises to touch hearts across generations.</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground"><Music size={20}/></div>
+              <h3 className="font-display text-2xl font-semibold">New Music Release</h3>
+            </div>
+            <p className="mt-4 text-muted-foreground">Stream and download Allan's latest gospel tracks.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="https://mdundo.com/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium"><Download size={16}/> Download on Mdundo</a>
+              <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border hover:bg-secondary"><Youtube size={16}/> Watch on YouTube</a>
+            </div>
+          </div>
+          <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
+            <h3 className="font-display text-2xl font-semibold">Available Tracks</h3>
+            <ul className="mt-5 space-y-4">
+              <li className="p-4 rounded-xl bg-secondary/40 border border-border">
+                <p className="font-medium">UNAWEZA — Allan Mabele ft. Adah Allan</p>
+                <div className="mt-2 flex gap-3 text-sm">
+                  <a href="https://mdundo.com/" target="_blank" rel="noopener" className="text-primary hover:underline">Mdundo</a>
+                  <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="text-primary hover:underline">YouTube</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+        <div className="rounded-3xl border border-border p-10 bg-[image:var(--gradient-hero)]">
+          <h3 className="font-display text-2xl font-bold">Connect & Collaborate</h3>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-muted-foreground">
+            <a href="mailto:allymabz@gmail.com" className="flex items-center gap-2 hover:text-foreground"><Mail size={16}/> allymabz@gmail.com</a>
+            <span className="flex items-center gap-2"><Phone size={16}/> +254 769 174 049 / +254 701 540 201</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ===== FILE: src/routes/contact.tsx =====
+import { createFileRoute } from "@tanstack/react-router";
+import { Mail, Phone, MapPin, Send, Linkedin, Youtube, MessageCircle } from "lucide-react";
+
+export const Route = createFileRoute("/contact")({
+  head: () => ({
+    meta: [
+      { title: "Contact — Allan Nambafu | Operations & Digital Solutions" },
+      { name: "description", content: "Get in touch with Allan Nambafu (Mabele) for operations, virtual assistance, forex training, crypto, and gospel music collaborations." },
+      { property: "og:title", content: "Contact Allan Nambafu" },
+      { property: "og:description", content: "Email, WhatsApp, Telegram and social — all the ways to reach Allan." },
+    ],
+  }),
+  component: ContactPage,
+});
+
+const channels = [
+  { icon: Mail, label: "Email", value: "allynabz@gmail.com", href: "mailto:allynabz@gmail.com" },
+  { icon: Mail, label: "Music / Services Email", value: "allymabz@gmail.com", href: "mailto:allymabz@gmail.com" },
+  { icon: Phone, label: "Phone", value: "+254 769 174 049", href: "tel:+254769174049" },
+  { icon: MessageCircle, label: "WhatsApp", value: "+254 701 540 201", href: "https://wa.me/254701540201" },
+  { icon: Send, label: "Telegram Group", value: "PropTraderSignals", href: "https://t.me/PropTraderSignals" },
+  { icon: Linkedin, label: "LinkedIn", value: "@allannambafu", href: "https://www.linkedin.com/in/allannambafu" },
+  { icon: Youtube, label: "YouTube", value: "@AllanMabele", href: "https://www.youtube.com/@AllanMabele" },
+  { icon: MapPin, label: "Location", value: "Nairobi, Kenya" },
+];
+
+function ContactPage() {
+  return (
+    <div>
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+          <p className="text-sm uppercase tracking-widest text-primary">Get in touch</p>
+          <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Let's talk</h1>
+          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">Whether it's operations, virtual assistance, forex training, crypto support or a music collaboration — I'd love to hear from you.</p>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid lg:grid-cols-2 gap-10">
+        <div>
+          <h2 className="text-3xl font-display font-bold mb-8">Contact channels</h2>
+          <ul className="space-y-3">
+            {channels.map((c) => {
+              const inner = (
+                <div className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/60 transition">
+                  <div className="h-10 w-10 rounded-lg bg-secondary text-primary grid place-items-center"><c.icon size={18}/></div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.label}</p>
+                    <p className="font-medium">{c.value}</p>
+                  </div>
+                </div>
+              );
+              return (
+                <li key={c.label}>
+                  {c.href ? (<a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener">{inner}</a>) : inner}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <form className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] h-fit"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = new FormData(e.currentTarget);
+            const subject = encodeURIComponent(`New inquiry from ${data.get("name")}`);
+            const body = encodeURIComponent(`${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`);
+            window.location.href = `mailto:allynabz@gmail.com?subject=${subject}&body=${body}`;
+          }}>
+          <h2 className="text-2xl font-display font-bold">Send a message</h2>
+          <p className="text-sm text-muted-foreground mt-1">Opens your email client with the message pre-filled.</p>
+          <div className="mt-6 space-y-4">
+            <div><label className="block text-sm mb-2">Name</label>
+              <input name="name" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" /></div>
+            <div><label className="block text-sm mb-2">Email</label>
+              <input name="email" type="email" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" /></div>
+            <div><label className="block text-sm mb-2">Message</label>
+              <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none resize-none" /></div>
+            <button type="submit" className="w-full py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">Send message</button>
+          </div>
+        </form>
+      </section>
     </div>
   );
 }
