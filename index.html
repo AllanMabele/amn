@@ -1,4 +1,6 @@
-// ===== FILE: src/styles.css =====
+// ============================================================================
+// FILE: src/styles.css
+// ============================================================================
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -35,6 +37,11 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -72,6 +79,11 @@
   --border: oklch(0.3 0.06 280);
   --input: oklch(0.25 0.05 280);
   --ring: oklch(0.58 0.22 280);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.15 0.04 280);
   --sidebar-foreground: oklch(0.96 0.01 270);
   --sidebar-primary: oklch(0.58 0.22 280);
@@ -89,6 +101,41 @@
   --shadow-card: 0 8px 24px -8px oklch(0.05 0.02 280 / 0.6);
 }
 
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
 @layer base {
   * { border-color: var(--color-border); }
   body {
@@ -97,10 +144,15 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
 }
 
-// ===== FILE: src/components/Header.tsx =====
+// ============================================================================
+// FILE: src/components/Header.tsx
+// ============================================================================
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -156,7 +208,9 @@ export function Header() {
   );
 }
 
-// ===== FILE: src/components/Footer.tsx =====
+// ============================================================================
+// FILE: src/components/Footer.tsx
+// ============================================================================
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, Linkedin, Youtube, Send } from "lucide-react";
 
@@ -202,7 +256,9 @@ export function Footer() {
   );
 }
 
-// ===== FILE: src/routes/index.tsx =====
+// ============================================================================
+// FILE: src/routes/index.tsx
+// ============================================================================
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Mail, Phone, MapPin, Linkedin, Youtube, Briefcase, BarChart3, Headphones, Megaphone, Database, Calendar, Sparkles } from "lucide-react";
 
@@ -256,11 +312,17 @@ function Index() {
             Operations, Virtual Assistance & <span className="bg-clip-text text-transparent bg-[image:var(--gradient-primary)]">Digital Solutions</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl">
-            I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping online businesses and fintech brands streamline workflows, elevate CX, and grow their digital presence.
+            I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping
+            online businesses and fintech brands streamline workflows, elevate CX, and grow
+            their digital presence.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">Hire me <ArrowRight size={16} /></Link>
-            <Link to="/services" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground hover:bg-secondary transition">View services</Link>
+            <Link to="/contact" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">
+              Hire me <ArrowRight size={16} />
+            </Link>
+            <Link to="/services" className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground hover:bg-secondary transition">
+              View services
+            </Link>
           </div>
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <span className="flex items-center gap-2"><MapPin size={14}/> Nairobi, Kenya</span>
@@ -339,14 +401,18 @@ function Index() {
         <div className="rounded-3xl p-10 md:p-14 border border-border bg-[image:var(--gradient-hero)] text-center">
           <h2 className="text-3xl md:text-4xl font-display font-bold">Let's build something efficient.</h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Open to remote opportunities worldwide — operations, virtual assistance, CRM and digital marketing roles.</p>
-          <Link to="/contact" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Get in touch <ArrowRight size={16}/></Link>
+          <Link to="/contact" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
+            Get in touch <ArrowRight size={16}/>
+          </Link>
         </div>
       </section>
     </div>
   );
 }
 
-// ===== FILE: src/routes/services.tsx =====
+// ============================================================================
+// FILE: src/routes/services.tsx
+// ============================================================================
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Code2, Headphones, FileText, Briefcase, Bitcoin, LineChart, Share2, Check, ArrowRight } from "lucide-react";
 
@@ -405,7 +471,6 @@ function ServicesPage() {
           <p className="mt-5 text-lg text-muted-foreground max-w-2xl">A full suite of digital and operational services — from web development to crypto and forex.</p>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-2 gap-6">
         {services.map((cat) => (
           <div key={cat.title} className="p-7 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -429,7 +494,6 @@ function ServicesPage() {
           </div>
         ))}
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <h2 className="text-3xl font-display font-bold mb-8">Why choose my services?</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -442,19 +506,22 @@ function ServicesPage() {
           ))}
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20">
         <div className="rounded-3xl border border-border p-10 text-center bg-[image:var(--gradient-hero)]">
           <h3 className="font-display text-3xl font-bold">Ready to start?</h3>
           <p className="text-muted-foreground mt-3">Reach out for a free discovery call.</p>
-          <Link to="/contact" className="mt-7 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Contact me <ArrowRight size={16}/></Link>
+          <Link to="/contact" className="mt-7 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
+            Contact me <ArrowRight size={16}/>
+          </Link>
         </div>
       </section>
     </div>
   );
 }
 
-// ===== FILE: src/routes/learn-forex.tsx =====
+// ============================================================================
+// FILE: src/routes/learn-forex.tsx
+// ============================================================================
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, GraduationCap, TrendingUp, Users, ArrowRight, Send } from "lucide-react";
 
@@ -492,7 +559,6 @@ function LearnForex() {
           <p className="mt-5 text-lg text-muted-foreground max-w-2xl">Master the art of currency trading with a comprehensive program that combines technical analysis, fundamentals and live mentorship.</p>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <h2 className="text-3xl font-display font-bold mb-10">Course outline</h2>
         <div className="grid md:grid-cols-2 gap-6">
@@ -514,7 +580,6 @@ function LearnForex() {
           ))}
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
         <div className="rounded-3xl border border-border p-10 grid md:grid-cols-2 gap-10 bg-secondary/20">
           <div>
@@ -537,14 +602,17 @@ function LearnForex() {
           </div>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="rounded-3xl border border-border p-10 md:p-14 text-center bg-[image:var(--gradient-hero)]">
           <h2 className="text-3xl md:text-4xl font-display font-bold">Ready to start your forex journey?</h2>
           <p className="mt-3 text-muted-foreground">Enroll today or reach out with questions.</p>
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
-            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">Enroll for $300 <ArrowRight size={16}/></Link>
-            <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:bg-secondary"><Send size={16}/> Join Telegram</a>
+            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)]">
+              Enroll for $300 <ArrowRight size={16}/>
+            </Link>
+            <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border hover:bg-secondary">
+              <Send size={16}/> Join Telegram
+            </a>
           </div>
           <p className="text-sm text-muted-foreground mt-6">or email <a href="mailto:allymabz@gmail.com" className="text-primary">allymabz@gmail.com</a></p>
         </div>
@@ -553,7 +621,9 @@ function LearnForex() {
   );
 }
 
-// ===== FILE: src/routes/music.tsx =====
+// ============================================================================
+// FILE: src/routes/music.tsx
+// ============================================================================
 import { createFileRoute } from "@tanstack/react-router";
 import { Music, Youtube, Download, Mail, Phone } from "lucide-react";
 
@@ -580,7 +650,6 @@ function MusicPage() {
           <p className="mt-4 text-xl text-muted-foreground">Anointed Gospel Artist & Songwriter from Kenya</p>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid md:grid-cols-3 gap-10">
         <h2 className="text-3xl font-display font-bold">About</h2>
         <div className="md:col-span-2 space-y-5 text-muted-foreground leading-relaxed">
@@ -589,7 +658,6 @@ function MusicPage() {
           <p>As he steps further into the music scene, his dedication to ministry and artistic excellence promises to touch hearts across generations.</p>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
         <div className="grid md:grid-cols-2 gap-6">
           <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -599,8 +667,12 @@ function MusicPage() {
             </div>
             <p className="mt-4 text-muted-foreground">Stream and download Allan's latest gospel tracks.</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://mdundo.com/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium"><Download size={16}/> Download on Mdundo</a>
-              <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border hover:bg-secondary"><Youtube size={16}/> Watch on YouTube</a>
+              <a href="https://mdundo.com/" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium">
+                <Download size={16}/> Download on Mdundo
+              </a>
+              <a href="https://www.youtube.com/@AllanMabele/videos" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border hover:bg-secondary">
+                <Youtube size={16}/> Watch on YouTube
+              </a>
             </div>
           </div>
           <div className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -617,7 +689,6 @@ function MusicPage() {
           </div>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="rounded-3xl border border-border p-10 bg-[image:var(--gradient-hero)]">
           <h3 className="font-display text-2xl font-bold">Connect & Collaborate</h3>
@@ -631,7 +702,9 @@ function MusicPage() {
   );
 }
 
-// ===== FILE: src/routes/contact.tsx =====
+// ============================================================================
+// FILE: src/routes/contact.tsx
+// ============================================================================
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Send, Linkedin, Youtube, MessageCircle } from "lucide-react";
 
@@ -666,10 +739,12 @@ function ContactPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
           <p className="text-sm uppercase tracking-widest text-primary">Get in touch</p>
           <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold">Let's talk</h1>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">Whether it's operations, virtual assistance, forex training, crypto support or a music collaboration — I'd love to hear from you.</p>
+          <p className="mt-5 text-lg text-muted-foreground max-w-2xl">
+            Whether it's operations, virtual assistance, forex training, crypto support or
+            a music collaboration — I'd love to hear from you.
+          </p>
         </div>
       </section>
-
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid lg:grid-cols-2 gap-10">
         <div>
           <h2 className="text-3xl font-display font-bold mb-8">Contact channels</h2>
@@ -686,31 +761,42 @@ function ContactPage() {
               );
               return (
                 <li key={c.label}>
-                  {c.href ? (<a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener">{inner}</a>) : inner}
+                  {c.href ? (
+                    <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener">{inner}</a>
+                  ) : inner}
                 </li>
               );
             })}
           </ul>
         </div>
-
-        <form className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] h-fit"
+        <form
+          className="p-8 rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] h-fit"
           onSubmit={(e) => {
             e.preventDefault();
             const data = new FormData(e.currentTarget);
             const subject = encodeURIComponent(`New inquiry from ${data.get("name")}`);
             const body = encodeURIComponent(`${data.get("message")}\n\n— ${data.get("name")} (${data.get("email")})`);
             window.location.href = `mailto:allynabz@gmail.com?subject=${subject}&body=${body}`;
-          }}>
+          }}
+        >
           <h2 className="text-2xl font-display font-bold">Send a message</h2>
           <p className="text-sm text-muted-foreground mt-1">Opens your email client with the message pre-filled.</p>
           <div className="mt-6 space-y-4">
-            <div><label className="block text-sm mb-2">Name</label>
-              <input name="name" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" /></div>
-            <div><label className="block text-sm mb-2">Email</label>
-              <input name="email" type="email" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" /></div>
-            <div><label className="block text-sm mb-2">Message</label>
-              <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none resize-none" /></div>
-            <button type="submit" className="w-full py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">Send message</button>
+            <div>
+              <label className="block text-sm mb-2">Name</label>
+              <input name="name" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm mb-2">Email</label>
+              <input name="email" type="email" required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm mb-2">Message</label>
+              <textarea name="message" rows={5} required className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary outline-none resize-none" />
+            </div>
+            <button type="submit" className="w-full py-3 rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground font-medium shadow-[var(--shadow-glow)] hover:opacity-95 transition">
+              Send message
+            </button>
           </div>
         </form>
       </section>
