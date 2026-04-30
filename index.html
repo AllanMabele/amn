@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allan Nambafu — Operations & Digital Solutions</title>
+  <title>Allan Nambafu — Operations & Digital Solutions Specialist</title>
+  <meta name="description" content="5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting." />
   
-  <!-- Supabase Library -->
+  <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,62 +40,54 @@
     }
 
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.6;
-    }
+    body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; line-height: 1.6; }
     h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -.02em; line-height: 1.15; }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; border-radius: var(--radius); }
+    a { color: inherit; text-decoration: none; transition: 0.2s; }
     
-    .hidden { display: none !important; }
-
-    /* ── LAYOUT ── */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .hidden { display: none !important; }
 
     /* ── HEADER ── */
     #site-header {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      background: rgba(13,14,28,.75);
-      border-bottom: 1px solid var(--border);
+      background: rgba(13,14,28,.75); border-bottom: 1px solid var(--border);
     }
     .header-inner { height: 64px; display: flex; align-items: center; justify-content: space-between; }
     .logo { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
-    .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: #fff; }
+    .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-weight: 700; color: #fff; }
     nav.desktop { display: flex; align-items: center; gap: .25rem; }
-    nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); transition: 0.2s; }
+    nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); }
     nav.desktop a.active, nav.desktop a:hover { color: var(--fg); background: rgba(42,45,74,.7); }
 
     /* ── PAGES ── */
-    .page { display: none; }
+    .page { display: none; min-height: 80vh; }
     .page.active { display: block; }
 
-    /* ── HERO ── */
-    .hero { position: relative; overflow: hidden; padding: 5rem 0 6rem; border-bottom: 1px solid var(--border); }
+    /* ── COMPONENTS ── */
+    .hero { position: relative; overflow: hidden; padding: 5rem 0; border-bottom: 1px solid var(--border); }
     .hero-bg { position: absolute; inset: 0; z-index: 0; background: var(--grad-hero); }
-    .hero > .container { position: relative; z-index: 1; }
-    .grad-text { background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-
-    /* ── CARDS & COMPONENTS ── */
-    .section { padding: 4rem 0; }
-    .grid-2 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .section { padding: 5rem 0; }
+    .section-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 10px; }
+    .grid-2 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
     .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
     .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); transition: 0.3s; }
     .card:hover { border-color: var(--primary); }
-    
-    .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; display: inline-block; }
-    .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; display: inline-block; }
+    .card-icon { height: 40px; width: 40px; background: rgba(42,45,74,.8); border-radius: 8px; display: grid; place-items: center; color: var(--primary); margin-bottom: 1rem; }
+    .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; }
+    .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; }
 
-    /* ── FORMS ── */
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-size: .875rem; margin-bottom: .5rem; color: var(--muted); }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: .75rem 1rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--fg); outline: none; font-family: inherit;
-    }
+    /* ── EXPERIENCE ── */
+    .exp-card { padding: 1.5rem 2rem; border-radius: 1.5rem; border: 1px solid var(--border); background: var(--card); margin-bottom: 1.25rem; }
+    .exp-role { font-size: 1.2rem; font-weight: 600; }
+    .exp-company { color: var(--primary); font-size: .875rem; }
+    .exp-period { font-size: .875rem; color: var(--muted); float: right; }
+    .exp-list { margin-top: 1rem; padding-left: 1.25rem; list-style: disc; color: var(--muted); font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    #site-footer { border-top: 1px solid var(--border); background: #090a16; padding: 4rem 0 2rem; margin-top: 5rem; }
+    .footer-grid { display: grid; gap: 3rem; grid-template-columns: 2fr 1fr 1fr; }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } .exp-period { float: none; display: block; margin-top: 5px; } }
   </style>
 </head>
 <body>
@@ -112,179 +105,17 @@
         <a href="#" onclick="navigate('music');return false;" data-page="music">Music</a>
         <a href="#" onclick="navigate('forex');return false;" data-page="forex">Forex</a>
         <a href="#" onclick="navigate('dashboard')" id="nav-dash-btn" class="hidden">Dashboard</a>
-        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Login</button>
+        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Client Login</button>
       </nav>
     </div>
   </div>
 </header>
 
-<!-- ════════════════════════ PAGE: HOME (PUBLIC) ════════════════════════ -->
+<!-- ════════════════════════ PAGE: HOME (FULL PORTFOLIO) ════════════════════════ -->
 <div class="page active" id="page-home">
-  <section class="hero"><div class="hero-bg"></div><div class="container">
+  <section class="hero"><div class="hero-bg"></div><div class="container" style="position:relative">
     <h1>Operations & <span class="grad-text">Digital Solutions</span></h1>
-    <p style="color:var(--muted); margin-top:1rem; max-width:600px; font-size:1.1rem;">I help online businesses and fintech brands streamline operations and grow their digital presence with 5+ years of expertise.</p>
+    <p style="color:var(--muted); margin-top:1rem; max-width:650px; font-size:1.15rem;">I help online businesses and fintech brands streamline operations, enhance customer experience, and scale digital systems with a data-driven approach.</p>
     <div style="margin-top:2rem; display:flex; gap:1rem;">
-        <button class="btn-primary" onclick="navigate('services')">Our Services</button>
-        <button class="btn-outline" onclick="navigate('login')">Client Portal</button>
-    </div>
-  </div></section>
-</div>
-
-<!-- ════════════════════════ PAGE: SERVICES (PUBLIC) ════════════════════════ -->
-<div class="page" id="page-services">
-  <section class="section"><div class="container">
-    <h2 class="section-title">Professional Services</h2>
-    <p style="color:var(--muted); margin-bottom:2rem;">Scalable solutions for modern digital brands.</p>
-    <div class="grid-3">
-      <div class="card">
-        <h3>Website Development</h3>
-        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Custom HTML/CSS sites and WordPress optimization tailored for speed and SEO.</p>
-      </div>
-      <div class="card">
-        <h3>Virtual Assistance</h3>
-        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Managing CRM systems (Zendesk, HubSpot), email coordination, and admin tasks.</p>
-      </div>
-      <div class="card">
-        <h3>Forex & Crypto Support</h3>
-        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">P2P exchange assistance and institutional-grade trading insights.</p>
-      </div>
-    </div>
-  </div></section>
-</div>
-
-<!-- ════════════════════════ PAGE: MUSIC (PUBLIC) ════════════════════════ -->
-<div class="page" id="page-music">
-  <section class="section"><div class="container">
-    <h2 class="section-title">Allan Mabele</h2>
-    <p style="color:var(--muted); margin-bottom:2rem;">Gospel Artist & Songwriter from Nairobi, Kenya.</p>
-    <div class="grid-2">
-      <div class="card">
-        <h3>UNAWEZA</h3>
-        <p style="color:var(--muted);">Latest worship release featuring Adah Allan.</p>
-        <div style="margin-top:1rem; display:flex; gap:10px;">
-            <a href="https://www.youtube.com/@AllanMabele" target="_blank" class="btn-outline" style="padding: 0.5rem 1rem; font-size:0.8rem;">Watch on YouTube</a>
-        </div>
-      </div>
-      <div class="card">
-          <h3>Ministry & Collaboration</h3>
-          <p style="color:var(--muted);">Available for worship events and vocal collaborations.</p>
-          <a href="mailto:allymabz@gmail.com" class="btn-primary" style="margin-top:1rem; padding: 0.5rem 1rem; font-size:0.8rem;">Contact for Music</a>
-      </div>
-    </div>
-  </div></section>
-</div>
-
-<!-- ════════════════════════ PAGE: FOREX ════════════════════════ -->
-<div class="page" id="page-forex">
-  <section class="section"><div class="container">
-    <h1>Learn Forex Trading</h1>
-    <p style="color:var(--muted); margin-top:1rem;">Master the markets with our 3-week beginner to advanced program.</p>
-    <div class="card" style="margin-top:2rem; max-width:600px;">
-        <h3>Complete Mentorship — $300</h3>
-        <p style="margin-bottom:1.5rem; color:var(--muted)">Includes Technical Analysis, Fundamentals, and 2 years of Telegram signals.</p>
-        <button class="btn-primary" onclick="navigate('login')">Enroll Now</button>
-    </div>
-  </div></section>
-</div>
-
-<!-- ════════════════════════ PAGE: LOGIN (RESTRICTED) ════════════════════════ -->
-<div class="page" id="page-login">
-  <section class="section">
-    <div class="container" style="max-width:400px">
-      <div class="card">
-        <h2 id="auth-title" style="margin-bottom:1.5rem">Client Access</h2>
-        <div class="form-group"><label>Email</label><input type="email" id="auth-email"></div>
-        <div class="form-group"><label>Password</label><input type="password" id="auth-password"></div>
-        <button class="btn-primary" style="width:100%" onclick="handleAuth()" id="auth-main-btn">Sign In</button>
-        <p style="margin-top:1rem; text-align:center; font-size:14px; color:var(--muted)">
-          <span id="auth-switch-text">New here?</span> <a href="#" onclick="toggleAuthMode()" style="color:var(--primary)">Create Account</a>
-        </p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ════════════════════════ PAGE: DASHBOARD (PRIVATE) ════════════════════════ -->
-<div class="page" id="page-dashboard">
-  <section class="section"><div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem">
-        <h1>Client Dashboard</h1>
-        <button class="btn-outline" onclick="logout()">Logout</button>
-      </div>
-      <div class="grid-3">
-        <div class="card"><h3>📦 My Courses</h3><p id="course-status" style="color:var(--muted); font-size:0.9rem;">No active enrollments.</p></div>
-        <div class="card"><h3>🛠 Support</h3><button class="btn-outline" style="width:100%; margin-top:10px;">New Ticket</button></div>
-      </div>
-  </div></section>
-</div>
-
-<script>
-  // ── SUPABASE CONFIG ──
-  const SUPABASE_URL = "https://gsivamaidhdjcrtzedmp.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha";
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  let isSignupMode = false;
-
-  // ── NAVIGATION (Allows anyone to switch between Home, Services, Music) ──
-  function navigate(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('nav.desktop a').forEach(a => a.classList.remove('active'));
-    
-    const target = document.getElementById('page-' + page);
-    if(target) target.classList.add('active');
-    
-    const navLink = document.querySelector(`nav.desktop a[onclick*="${page}"]`);
-    if(navLink) navLink.classList.add('active');
-    
-    window.scrollTo(0,0);
-  }
-
-  function toggleAuthMode() {
-    isSignupMode = !isSignupMode;
-    document.getElementById('auth-title').innerText = isSignupMode ? "Create Account" : "Client Access";
-    document.getElementById('auth-main-btn').innerText = isSignupMode ? "Sign Up" : "Sign In";
-  }
-
-  // ── AUTH LOGIC ──
-  async function handleAuth() {
-    const email = document.getElementById('auth-email').value;
-    const password = document.getElementById('auth-password').value;
-
-    if(isSignupMode) {
-      const { error } = await supabaseClient.auth.signUp({ email, password });
-      if (error) alert(error.message); else alert("Check email for verification!");
-    } else {
-      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message); else checkSession();
-    }
-  }
-
-  async function checkSession() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-      document.getElementById('nav-login-btn').classList.add('hidden');
-      document.getElementById('nav-dash-btn').classList.remove('hidden');
-      
-      // Only navigate to dashboard if the user is currently on the login page
-      if (document.getElementById('page-login').classList.contains('active')) {
-        navigate('dashboard');
-      }
-    }
-  }
-
-  async function logout() {
-    await supabaseClient.auth.signOut();
-    location.reload();
-  }
-
-  // Check login state on load, but default to Home page
-  document.addEventListener('DOMContentLoaded', () => {
-      checkSession();
-      // Handle logic for starting on specific pages via URL hash if needed
-      const hash = window.location.hash.substring(1);
-      if(['services', 'music', 'forex'].includes(hash)) navigate(hash);
-  });
-</script>
-</body>
-</html>
+        <button class="btn-primary" onclick="navigate('contact')">Hire Allan</button>
+        <button class="btn-outline" onclick="navig
