@@ -1,0 +1,43 @@
+"use client";
+import { updateServiceRequest, updateTicketStatus } from "../../lib/adminActions";
+import { useState } from "react";
+
+export default function AdminPanel() {
+  const [loading, setLoading] = useState(false);
+
+  const handleAction = async (task: () => Promise<any>) => {
+    setLoading(true);
+    try {
+      await task();
+      alert("Success!");
+    } catch (err) {
+      alert("Error: " + (err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="p-10 bg-slate-900 text-white min-h-screen">
+      <h1 className="text-2xl font-bold mb-6">Admin Management</h1>
+      
+      <div className="flex gap-4">
+        <button 
+          disabled={loading}
+          className="bg-teal-600 px-4 py-2 rounded hover:bg-teal-700 disabled:opacity-50"
+          onClick={() => handleAction(() => updateTicketStatus("ID_HERE", "closed"))}
+        >
+          {loading ? "Processing..." : "Close Support Ticket"}
+        </button>
+
+        <button 
+          disabled={loading}
+          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          onClick={() => handleAction(() => updateServiceRequest("ID_HERE", "approved", "Service Started"))}
+        >
+          {loading ? "Processing..." : "Approve Service Request"}
+        </button>
+      </div>
+    </div>
+  );
+}
