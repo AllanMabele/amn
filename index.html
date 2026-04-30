@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allan Nambafu — Operations & Digital Solutions Specialist</title>
-  <meta name="description" content="5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting." />
+  <title>Allan Nambafu — Operations & Digital Solutions</title>
   
-  <!-- Supabase SDK -->
+  <!-- Supabase Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,54 +39,59 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
     h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -.02em; line-height: 1.15; }
-    a { color: inherit; text-decoration: none; transition: 0.2s; }
+    a { color: inherit; text-decoration: none; }
     
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    /* NEW UTILITIES */
     .hidden { display: none !important; }
+    .status-pill { padding: 2px 8px; border-radius: 4px; font-size: 10px; text-transform: uppercase; font-weight: bold; background: var(--border); }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
     /* ── HEADER ── */
     #site-header {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      background: rgba(13,14,28,.75); border-bottom: 1px solid var(--border);
+      background: rgba(13,14,28,.75);
+      border-bottom: 1px solid var(--border);
     }
     .header-inner { height: 64px; display: flex; align-items: center; justify-content: space-between; }
     .logo { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
-    .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-weight: 700; color: #fff; }
+    .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: #fff; }
     nav.desktop { display: flex; align-items: center; gap: .25rem; }
     nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); }
-    nav.desktop a.active, nav.desktop a:hover { color: var(--fg); background: rgba(42,45,74,.7); }
+    nav.desktop a.active { color: var(--fg); background: rgba(42,45,74,.7); }
 
     /* ── PAGES ── */
-    .page { display: none; min-height: 80vh; }
+    .page { display: none; }
     .page.active { display: block; }
 
-    /* ── COMPONENTS ── */
-    .hero { position: relative; overflow: hidden; padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    /* ── HERO ── */
+    .hero { position: relative; overflow: hidden; padding: 5rem 0 6rem; border-bottom: 1px solid var(--border); }
     .hero-bg { position: absolute; inset: 0; z-index: 0; background: var(--grad-hero); }
-    .section { padding: 5rem 0; }
-    .section-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 10px; }
-    .grid-2 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
-    .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); transition: 0.3s; }
-    .card:hover { border-color: var(--primary); }
-    .card-icon { height: 40px; width: 40px; background: rgba(42,45,74,.8); border-radius: 8px; display: grid; place-items: center; color: var(--primary); margin-bottom: 1rem; }
+    .hero > .container { position: relative; z-index: 1; }
+    .grad-text { background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* ── CARDS & FORMS ── */
+    .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: .875rem; margin-bottom: .5rem; color: var(--muted); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: .75rem 1rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--fg); outline: none;
+    }
     .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; }
     .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; }
 
-    /* ── EXPERIENCE ── */
-    .exp-card { padding: 1.5rem 2rem; border-radius: 1.5rem; border: 1px solid var(--border); background: var(--card); margin-bottom: 1.25rem; }
-    .exp-role { font-size: 1.2rem; font-weight: 600; }
-    .exp-company { color: var(--primary); font-size: .875rem; }
-    .exp-period { font-size: .875rem; color: var(--muted); float: right; }
-    .exp-list { margin-top: 1rem; padding-left: 1.25rem; list-style: disc; color: var(--muted); font-size: 0.9rem; }
-
-    /* ── FOOTER ── */
-    #site-footer { border-top: 1px solid var(--border); background: #090a16; padding: 4rem 0 2rem; margin-top: 5rem; }
-    .footer-grid { display: grid; gap: 3rem; grid-template-columns: 2fr 1fr 1fr; }
-    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; } .exp-period { float: none; display: block; margin-top: 5px; } }
+    /* ── DASHBOARD GRID ── */
+    .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   </style>
 </head>
 <body>
@@ -102,20 +106,178 @@
       <nav class="desktop">
         <a href="#" onclick="navigate('home');return false;" data-page="home">Home</a>
         <a href="#" onclick="navigate('services');return false;" data-page="services">Services</a>
-        <a href="#" onclick="navigate('music');return false;" data-page="music">Music</a>
         <a href="#" onclick="navigate('forex');return false;" data-page="forex">Forex</a>
         <a href="#" onclick="navigate('dashboard')" id="nav-dash-btn" class="hidden">Dashboard</a>
-        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Client Login</button>
+        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Login</button>
       </nav>
     </div>
   </div>
 </header>
 
-<!-- ════════════════════════ PAGE: HOME (FULL PORTFOLIO) ════════════════════════ -->
+<!-- HOME PAGE -->
 <div class="page active" id="page-home">
-  <section class="hero"><div class="hero-bg"></div><div class="container" style="position:relative">
-    <h1>Operations & <span class="grad-text">Digital Solutions</span></h1>
-    <p style="color:var(--muted); margin-top:1rem; max-width:650px; font-size:1.15rem;">I help online businesses and fintech brands streamline operations, enhance customer experience, and scale digital systems with a data-driven approach.</p>
-    <div style="margin-top:2rem; display:flex; gap:1rem;">
-        <button class="btn-primary" onclick="navigate('contact')">Hire Allan</button>
-        <button class="btn-outline" onclick="navig
+  <section class="hero"><div class="hero-bg"></div><div class="container">
+    <h1>Strategic <span class="grad-text">Digital Solutions</span></h1>
+    <p style="color:var(--muted); margin-top:1rem; max-width:600px">Optimize your business with 5+ years of operations expertise.</p>
+    <button class="btn-primary" style="margin-top:2rem" onclick="navigate('login')">Get Started</button>
+  </div></section>
+</div>
+
+<!-- LOGIN / SIGNUP PAGE -->
+<div class="page" id="page-login">
+  <section class="section">
+    <div class="container" style="max-width:450px">
+      <div class="card">
+        <h2 id="auth-title" style="margin-bottom:1.5rem">Client Access</h2>
+        <div class="form-group"><label>Email</label><input type="email" id="auth-email"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="auth-password"></div>
+        <button class="btn-primary" style="width:100%" onclick="handleAuth()" id="auth-main-btn">Sign In</button>
+        <p style="margin-top:1rem; text-align:center; font-size:14px; color:var(--muted)">
+          <span id="auth-switch-text">New here?</span> <a href="#" onclick="toggleAuthMode()" style="color:var(--primary)">Click here</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- USER DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <section class="section">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem">
+        <h1>Dashboard</h1>
+        <button class="btn-outline" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="grid-3">
+        <!-- COURSES -->
+        <div class="card">
+          <h3>📚 My Courses</h3>
+          <div id="course-status" style="margin-top:1rem; color:var(--muted)">Checking enrollment...</div>
+          <button class="btn-primary" style="width:100%; margin-top:1rem" onclick="navigate('forex')">Buy Course ($300)</button>
+        </div>
+
+        <!-- SERVICE REQUEST -->
+        <div class="card">
+          <h3>🛠 Request Service</h3>
+          <div class="form-group" style="margin-top:1rem">
+            <select id="service-type">
+              <option value="VA Support">Virtual Assistance</option>
+              <option value="Web Dev">Web Development</option>
+              <option value="Forex Management">Fund Management</option>
+            </select>
+          </div>
+          <textarea id="service-desc" placeholder="Describe your needs..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
+          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitService()">Submit Request</button>
+        </div>
+
+        <!-- SUPPORT -->
+        <div class="card">
+          <h3>📩 Contact Support</h3>
+          <div class="form-group" style="margin-top:1rem"><input type="text" id="support-subject" placeholder="Subject"></div>
+          <textarea id="support-msg" placeholder="Your message..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
+          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitSupport()">Send Ticket</button>
+        </div>
+      </div>
+
+      <!-- ADMIN ONLY SECTION -->
+      <div id="admin-section" class="hidden" style="margin-top:3rem; border-top:1px solid var(--border); padding-top:2rem">
+        <h2 style="color:var(--teal)">Admin God-View</h2>
+        <div class="card" style="margin-top:1rem">
+          <p>You are logged in as the Administrator. You can view all requests in the Supabase backend.</p>
+          <button class="btn-primary" onclick="window.open('https://supabase.com/dashboard', '_blank')">Go to Supabase DB</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script>
+  // ── CONFIG ──
+  const SUPABASE_URL = "https://gsivamaidhdjcrtzedmp.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha";
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let isSignupMode = false;
+  let currentUser = null;
+
+  // ── NAVIGATION ──
+  function navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function toggleAuthMode() {
+    isSignupMode = !isSignupMode;
+    document.getElementById('auth-title').innerText = isSignupMode ? "Create Account" : "Client Access";
+    document.getElementById('auth-main-btn').innerText = isSignupMode ? "Sign Up" : "Sign In";
+  }
+
+  // ── AUTH LOGIC ──
+  async function handleAuth() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+
+    if(isSignupMode) {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) alert(error.message);
+      else alert("Check your email for confirmation!");
+    } else {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else checkSession();
+    }
+  }
+
+  async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      document.getElementById('nav-login-btn').classList.add('hidden');
+      document.getElementById('nav-dash-btn').classList.remove('hidden');
+      
+      // Admin Check (Replace with your email)
+      if(currentUser.email === "allynabz@gmail.com") {
+        document.getElementById('admin-section').classList.remove('hidden');
+      }
+
+      navigate('dashboard');
+      loadUserData();
+    }
+  }
+
+  async function logout() {
+    await supabase.auth.signOut();
+    location.reload();
+  }
+
+  // ── DATA LOGIC ──
+  async function submitService() {
+    const type = document.getElementById('service-type').value;
+    const desc = document.getElementById('service-desc').value;
+    const { error } = await supabase.from('service_requests').insert([{ user_id: currentUser.id, service_type: type, description: desc, status: 'pending' }]);
+    if (error) alert(error.message);
+    else alert("Request submitted successfully!");
+  }
+
+  async function submitSupport() {
+    const subject = document.getElementById('support-subject').value;
+    const msg = document.getElementById('support-msg').value;
+    const { error } = await supabase.from('support_tickets').insert([{ user_id: currentUser.id, subject: subject, message: msg, status: 'open' }]);
+    if (error) alert(error.message);
+    else alert("Support ticket sent!");
+  }
+
+  async function loadUserData() {
+    // Here you would fetch the user's specific courses from your 'enrollments' table
+    document.getElementById('course-status').innerText = "No active courses. Buy one below.";
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', checkSession);
+</script>
+
+</body>
+</html>
