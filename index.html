@@ -48,10 +48,9 @@
     }
     h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -.02em; line-height: 1.15; }
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; border-radius: var(--radius); }
     
-    /* NEW UTILITIES */
     .hidden { display: none !important; }
-    .status-pill { padding: 2px 8px; border-radius: 4px; font-size: 10px; text-transform: uppercase; font-weight: bold; background: var(--border); }
 
     /* ── LAYOUT ── */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
@@ -67,8 +66,8 @@
     .logo { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
     .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: #fff; }
     nav.desktop { display: flex; align-items: center; gap: .25rem; }
-    nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); }
-    nav.desktop a.active { color: var(--fg); background: rgba(42,45,74,.7); }
+    nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); transition: 0.2s; }
+    nav.desktop a.active, nav.desktop a:hover { color: var(--fg); background: rgba(42,45,74,.7); }
 
     /* ── PAGES ── */
     .page { display: none; }
@@ -80,18 +79,22 @@
     .hero > .container { position: relative; z-index: 1; }
     .grad-text { background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-    /* ── CARDS & FORMS ── */
-    .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); }
+    /* ── CARDS & COMPONENTS ── */
+    .section { padding: 4rem 0; }
+    .grid-2 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); transition: 0.3s; }
+    .card:hover { border-color: var(--primary); }
+    
+    .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; display: inline-block; }
+    .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; display: inline-block; }
+
+    /* ── FORMS ── */
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; font-size: .875rem; margin-bottom: .5rem; color: var(--muted); }
     .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: .75rem 1rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--fg); outline: none;
+      width: 100%; padding: .75rem 1rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--fg); outline: none; font-family: inherit;
     }
-    .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; }
-    .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; }
-
-    /* ── DASHBOARD GRID ── */
-    .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
   </style>
 </head>
 <body>
@@ -106,6 +109,7 @@
       <nav class="desktop">
         <a href="#" onclick="navigate('home');return false;" data-page="home">Home</a>
         <a href="#" onclick="navigate('services');return false;" data-page="services">Services</a>
+        <a href="#" onclick="navigate('music');return false;" data-page="music">Music</a>
         <a href="#" onclick="navigate('forex');return false;" data-page="forex">Forex</a>
         <a href="#" onclick="navigate('dashboard')" id="nav-dash-btn" class="hidden">Dashboard</a>
         <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Login</button>
@@ -114,98 +118,125 @@
   </div>
 </header>
 
-<!-- HOME PAGE -->
+<!-- ════════════════════════ PAGE: HOME (PUBLIC) ════════════════════════ -->
 <div class="page active" id="page-home">
   <section class="hero"><div class="hero-bg"></div><div class="container">
-    <h1>Strategic <span class="grad-text">Digital Solutions</span></h1>
-    <p style="color:var(--muted); margin-top:1rem; max-width:600px">Optimize your business with 5+ years of operations expertise.</p>
-    <button class="btn-primary" style="margin-top:2rem" onclick="navigate('login')">Get Started</button>
+    <h1>Operations & <span class="grad-text">Digital Solutions</span></h1>
+    <p style="color:var(--muted); margin-top:1rem; max-width:600px; font-size:1.1rem;">I help online businesses and fintech brands streamline operations and grow their digital presence with 5+ years of expertise.</p>
+    <div style="margin-top:2rem; display:flex; gap:1rem;">
+        <button class="btn-primary" onclick="navigate('services')">Our Services</button>
+        <button class="btn-outline" onclick="navigate('login')">Client Portal</button>
+    </div>
   </div></section>
 </div>
 
-<!-- LOGIN / SIGNUP PAGE -->
+<!-- ════════════════════════ PAGE: SERVICES (PUBLIC) ════════════════════════ -->
+<div class="page" id="page-services">
+  <section class="section"><div class="container">
+    <h2 class="section-title">Professional Services</h2>
+    <p style="color:var(--muted); margin-bottom:2rem;">Scalable solutions for modern digital brands.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Website Development</h3>
+        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Custom HTML/CSS sites and WordPress optimization tailored for speed and SEO.</p>
+      </div>
+      <div class="card">
+        <h3>Virtual Assistance</h3>
+        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">Managing CRM systems (Zendesk, HubSpot), email coordination, and admin tasks.</p>
+      </div>
+      <div class="card">
+        <h3>Forex & Crypto Support</h3>
+        <p style="color:var(--muted); font-size:0.9rem; margin-top:0.5rem;">P2P exchange assistance and institutional-grade trading insights.</p>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ════════════════════════ PAGE: MUSIC (PUBLIC) ════════════════════════ -->
+<div class="page" id="page-music">
+  <section class="section"><div class="container">
+    <h2 class="section-title">Allan Mabele</h2>
+    <p style="color:var(--muted); margin-bottom:2rem;">Gospel Artist & Songwriter from Nairobi, Kenya.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>UNAWEZA</h3>
+        <p style="color:var(--muted);">Latest worship release featuring Adah Allan.</p>
+        <div style="margin-top:1rem; display:flex; gap:10px;">
+            <a href="https://www.youtube.com/@AllanMabele" target="_blank" class="btn-outline" style="padding: 0.5rem 1rem; font-size:0.8rem;">Watch on YouTube</a>
+        </div>
+      </div>
+      <div class="card">
+          <h3>Ministry & Collaboration</h3>
+          <p style="color:var(--muted);">Available for worship events and vocal collaborations.</p>
+          <a href="mailto:allymabz@gmail.com" class="btn-primary" style="margin-top:1rem; padding: 0.5rem 1rem; font-size:0.8rem;">Contact for Music</a>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ════════════════════════ PAGE: FOREX ════════════════════════ -->
+<div class="page" id="page-forex">
+  <section class="section"><div class="container">
+    <h1>Learn Forex Trading</h1>
+    <p style="color:var(--muted); margin-top:1rem;">Master the markets with our 3-week beginner to advanced program.</p>
+    <div class="card" style="margin-top:2rem; max-width:600px;">
+        <h3>Complete Mentorship — $300</h3>
+        <p style="margin-bottom:1.5rem; color:var(--muted)">Includes Technical Analysis, Fundamentals, and 2 years of Telegram signals.</p>
+        <button class="btn-primary" onclick="navigate('login')">Enroll Now</button>
+    </div>
+  </div></section>
+</div>
+
+<!-- ════════════════════════ PAGE: LOGIN (RESTRICTED) ════════════════════════ -->
 <div class="page" id="page-login">
   <section class="section">
-    <div class="container" style="max-width:450px">
+    <div class="container" style="max-width:400px">
       <div class="card">
         <h2 id="auth-title" style="margin-bottom:1.5rem">Client Access</h2>
         <div class="form-group"><label>Email</label><input type="email" id="auth-email"></div>
         <div class="form-group"><label>Password</label><input type="password" id="auth-password"></div>
         <button class="btn-primary" style="width:100%" onclick="handleAuth()" id="auth-main-btn">Sign In</button>
         <p style="margin-top:1rem; text-align:center; font-size:14px; color:var(--muted)">
-          <span id="auth-switch-text">New here?</span> <a href="#" onclick="toggleAuthMode()" style="color:var(--primary)">Click here</a>
+          <span id="auth-switch-text">New here?</span> <a href="#" onclick="toggleAuthMode()" style="color:var(--primary)">Create Account</a>
         </p>
       </div>
     </div>
   </section>
 </div>
 
-<!-- USER DASHBOARD -->
+<!-- ════════════════════════ PAGE: DASHBOARD (PRIVATE) ════════════════════════ -->
 <div class="page" id="page-dashboard">
-  <section class="section">
-    <div class="container">
+  <section class="section"><div class="container">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem">
-        <h1>Dashboard</h1>
+        <h1>Client Dashboard</h1>
         <button class="btn-outline" onclick="logout()">Logout</button>
       </div>
-
       <div class="grid-3">
-        <!-- COURSES -->
-        <div class="card">
-          <h3>📚 My Courses</h3>
-          <div id="course-status" style="margin-top:1rem; color:var(--muted)">Checking enrollment...</div>
-          <button class="btn-primary" style="width:100%; margin-top:1rem" onclick="navigate('forex')">Buy Course ($300)</button>
-        </div>
-
-        <!-- SERVICE REQUEST -->
-        <div class="card">
-          <h3>🛠 Request Service</h3>
-          <div class="form-group" style="margin-top:1rem">
-            <select id="service-type">
-              <option value="VA Support">Virtual Assistance</option>
-              <option value="Web Dev">Web Development</option>
-              <option value="Forex Management">Fund Management</option>
-            </select>
-          </div>
-          <textarea id="service-desc" placeholder="Describe your needs..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
-          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitService()">Submit Request</button>
-        </div>
-
-        <!-- SUPPORT -->
-        <div class="card">
-          <h3>📩 Contact Support</h3>
-          <div class="form-group" style="margin-top:1rem"><input type="text" id="support-subject" placeholder="Subject"></div>
-          <textarea id="support-msg" placeholder="Your message..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
-          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitSupport()">Send Ticket</button>
-        </div>
+        <div class="card"><h3>📦 My Courses</h3><p id="course-status" style="color:var(--muted); font-size:0.9rem;">No active enrollments.</p></div>
+        <div class="card"><h3>🛠 Support</h3><button class="btn-outline" style="width:100%; margin-top:10px;">New Ticket</button></div>
       </div>
-
-      <!-- ADMIN ONLY SECTION -->
-      <div id="admin-section" class="hidden" style="margin-top:3rem; border-top:1px solid var(--border); padding-top:2rem">
-        <h2 style="color:var(--teal)">Admin God-View</h2>
-        <div class="card" style="margin-top:1rem">
-          <p>You are logged in as the Administrator. You can view all requests in the Supabase backend.</p>
-          <button class="btn-primary" onclick="window.open('https://supabase.com/dashboard', '_blank')">Go to Supabase DB</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
+  </div></section>
 </div>
 
 <script>
-  // ── CONFIG ──
+  // ── SUPABASE CONFIG ──
   const SUPABASE_URL = "https://gsivamaidhdjcrtzedmp.supabase.co";
   const SUPABASE_KEY = "sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha";
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let isSignupMode = false;
-  let currentUser = null;
 
-  // ── NAVIGATION ──
+  // ── NAVIGATION (Allows anyone to switch between Home, Services, Music) ──
   function navigate(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('nav.desktop a').forEach(a => a.classList.remove('active'));
+    
+    const target = document.getElementById('page-' + page);
+    if(target) target.classList.add('active');
+    
+    const navLink = document.querySelector(`nav.desktop a[onclick*="${page}"]`);
+    if(navLink) navLink.classList.add('active');
+    
     window.scrollTo(0,0);
   }
 
@@ -221,63 +252,39 @@
     const password = document.getElementById('auth-password').value;
 
     if(isSignupMode) {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) alert(error.message);
-      else alert("Check your email for confirmation!");
+      const { error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) alert(error.message); else alert("Check email for verification!");
     } else {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message);
-      else checkSession();
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message); else checkSession();
     }
   }
 
   async function checkSession() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await supabaseClient.auth.getSession();
     if (session) {
-      currentUser = session.user;
       document.getElementById('nav-login-btn').classList.add('hidden');
       document.getElementById('nav-dash-btn').classList.remove('hidden');
       
-      // Admin Check (Replace with your email)
-      if(currentUser.email === "allynabz@gmail.com") {
-        document.getElementById('admin-section').classList.remove('hidden');
+      // Only navigate to dashboard if the user is currently on the login page
+      if (document.getElementById('page-login').classList.contains('active')) {
+        navigate('dashboard');
       }
-
-      navigate('dashboard');
-      loadUserData();
     }
   }
 
   async function logout() {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
     location.reload();
   }
 
-  // ── DATA LOGIC ──
-  async function submitService() {
-    const type = document.getElementById('service-type').value;
-    const desc = document.getElementById('service-desc').value;
-    const { error } = await supabase.from('service_requests').insert([{ user_id: currentUser.id, service_type: type, description: desc, status: 'pending' }]);
-    if (error) alert(error.message);
-    else alert("Request submitted successfully!");
-  }
-
-  async function submitSupport() {
-    const subject = document.getElementById('support-subject').value;
-    const msg = document.getElementById('support-msg').value;
-    const { error } = await supabase.from('support_tickets').insert([{ user_id: currentUser.id, subject: subject, message: msg, status: 'open' }]);
-    if (error) alert(error.message);
-    else alert("Support ticket sent!");
-  }
-
-  async function loadUserData() {
-    // Here you would fetch the user's specific courses from your 'enrollments' table
-    document.getElementById('course-status').innerText = "No active courses. Buy one below.";
-  }
-
-  // Init
-  document.addEventListener('DOMContentLoaded', checkSession);
+  // Check login state on load, but default to Home page
+  document.addEventListener('DOMContentLoaded', () => {
+      checkSession();
+      // Handle logic for starting on specific pages via URL hash if needed
+      const hash = window.location.hash.substring(1);
+      if(['services', 'music', 'forex'].includes(hash)) navigate(hash);
+  });
 </script>
-
 </body>
 </html>
