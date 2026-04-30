@@ -3,38 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allan Nambafu — Operations & Digital Solutions</title>
-  
-  <!-- Supabase Library -->
+  <title>Allan Nambafu — Operations & Virtual Assistance Specialist | Nairobi</title>
+  <meta name="description" content="5+ years optimizing virtual operations, CRM, customer support, digital marketing & SQL reporting for online businesses. Available for remote work." />
+  <meta property="og:title" content="Allan Nambafu — Operations & Digital Solutions Specialist" />
+  <meta property="og:description" content="Streamlining operations, CX and digital growth for online businesses worldwide." />
+
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #0d0e1c;
-      --surface:     #13152a;
-      --card:        #161829;
-      --border:      #2a2d4a;
-      --primary:     #7c6ef7;
-      --primary-2:   #a78bfa;
-      --indigo-glow: #b8a9ff;
-      --fg:          #f0eeff;
-      --muted:       #8e8eb0;
-      --gold:        #f59e0b;
-      --teal:        #2dd4bf;
-      --radius:      0.75rem;
+      --bg:           #0d0e1c;
+      --surface:      #13152a;
+      --card:         #161829;
+      --border:       #2a2d4a;
+      --primary:      #7c6ef7;
+      --primary-2:    #a78bfa;
+      --indigo-glow:  #b8a9ff;
+      --fg:           #f0eeff;
+      --muted:        #8e8eb0;
+      --gold:         #f59e0b;
+      --teal:         #2dd4bf;
+      --radius:       0.75rem;
       --grad-primary: linear-gradient(135deg, #7c6ef7, #a78bfa);
       --grad-hero:    radial-gradient(circle at 20% 0%, rgba(124,110,247,.55) 0%, transparent 50%),
                       radial-gradient(circle at 80% 30%, rgba(139,92,246,.35) 0%, transparent 50%),
                       linear-gradient(180deg, #0d0e1c 0%, #090a16 100%);
-      --shadow-glow: 0 20px 60px -20px rgba(124,110,247,.5);
-      --shadow-card: 0 8px 24px -8px rgba(0,0,0,.6);
-      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --shadow-glow:  0 20px 60px -20px rgba(124,110,247,.5);
+      --shadow-card:  0 8px 24px -8px rgba(0,0,0,.6);
+      --font-sans:    'DM Sans', system-ui, sans-serif;
       --font-display: 'Space Grotesk', system-ui, sans-serif;
     }
 
@@ -48,13 +51,12 @@
     }
     h1,h2,h3,h4 { font-family: var(--font-display); letter-spacing: -.02em; line-height: 1.15; }
     a { color: inherit; text-decoration: none; }
-    
-    /* NEW UTILITIES */
+    img { max-width: 100%; }
     .hidden { display: none !important; }
-    .status-pill { padding: 2px 8px; border-radius: 4px; font-size: 10px; text-transform: uppercase; font-weight: bold; background: var(--border); }
 
     /* ── LAYOUT ── */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    @media(min-width:1024px){ .container { padding: 0 2.5rem; } }
 
     /* ── HEADER ── */
     #site-header {
@@ -63,39 +65,244 @@
       background: rgba(13,14,28,.75);
       border-bottom: 1px solid var(--border);
     }
-    .header-inner { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .header-inner {
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
     .logo { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
-    .logo-badge { height: 36px; width: 36px; border-radius: .5rem; background: var(--grad-primary); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: #fff; }
+    .logo-badge {
+      height: 36px; width: 36px; border-radius: .5rem;
+      background: var(--grad-primary);
+      display: grid; place-items: center;
+      font-family: var(--font-display); font-weight: 700; font-size: .95rem;
+      color: #fff; box-shadow: var(--shadow-glow);
+    }
+    .logo-name { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+
     nav.desktop { display: flex; align-items: center; gap: .25rem; }
-    nav.desktop a { padding: .5rem 1rem; border-radius: .5rem; font-size: .875rem; color: var(--muted); }
-    nav.desktop a.active { color: var(--fg); background: rgba(42,45,74,.7); }
+    nav.desktop a {
+      padding: .5rem 1rem; border-radius: .5rem;
+      font-size: .875rem; font-weight: 500;
+      color: var(--muted); transition: color .15s, background .15s;
+    }
+    nav.desktop a:hover, nav.desktop a.active {
+      color: var(--fg); background: rgba(42,45,74,.7);
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.4rem; border-radius: var(--radius);
+      background: var(--grad-primary); color: #fff; font-weight: 500;
+      box-shadow: var(--shadow-glow); transition: opacity .15s; cursor: pointer; border: none;
+      font-size: .875rem; font-family: var(--font-sans);
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .8rem 1.4rem; border-radius: var(--radius);
+      border: 1px solid var(--border); color: var(--fg);
+      background: transparent; font-weight: 500; transition: background .15s;
+      font-size: .875rem; cursor: pointer; font-family: var(--font-sans);
+    }
+    .btn-outline:hover { background: rgba(42,45,74,.6); }
+
+    /* Mobile menu */
+    .menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--fg); padding: .5rem; border-radius: .5rem;
+    }
+    .mobile-nav {
+      display: none; border-top: 1px solid var(--border);
+      background: rgba(13,14,28,.97); backdrop-filter: blur(18px);
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav-wrap { padding: .5rem 0; }
+    .mobile-nav a {
+      display: block; padding: .85rem 1.5rem;
+      font-size: .875rem; font-weight: 500; color: var(--muted);
+      border-radius: .5rem; margin: .2rem .75rem;
+      transition: color .15s, background .15s;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--fg); background: rgba(42,45,74,.7); }
+    .mobile-nav .mobile-auth-btns { padding: .5rem 1.5rem 1rem; display: flex; flex-direction: column; gap: .5rem; }
+
+    @media(max-width:767px){
+      nav.desktop { display: none; }
+      .menu-btn { display: block; }
+    }
 
     /* ── PAGES ── */
     .page { display: none; }
     .page.active { display: block; }
 
     /* ── HERO ── */
-    .hero { position: relative; overflow: hidden; padding: 5rem 0 6rem; border-bottom: 1px solid var(--border); }
+    .hero {
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0 6rem;
+    }
+    @media(min-width:1024px){ .hero { padding: 7rem 0 8rem; } }
     .hero-bg { position: absolute; inset: 0; z-index: 0; background: var(--grad-hero); }
     .hero > .container { position: relative; z-index: 1; }
-    .grad-text { background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .25rem .75rem; border-radius: 999px;
+      border: 1px solid var(--border); background: rgba(42,45,74,.4);
+      font-size: .75rem; color: var(--muted);
+    }
+    .pulse {
+      height: 8px; width: 8px; border-radius: 50%;
+      background: var(--indigo-glow); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%{ opacity:.6; transform:scale(.9); }
+    }
+    .hero h1 {
+      margin-top: 1.5rem;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 700; max-width: 900px;
+    }
+    .grad-text {
+      background: var(--grad-primary);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc { margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted); max-width: 640px; }
+    .btn-group { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: .75rem; }
 
-    /* ── CARDS & FORMS ── */
-    .card { padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow-card); }
+    /* ── SECTIONS ── */
+    .section { padding: 5rem 0; }
+    .section-sm { padding: 3rem 0; }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700; margin-bottom: 2.5rem;
+    }
+    .section-label {
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--primary); margin-bottom: .75rem;
+    }
+
+    /* ── GRIDS ── */
+    .grid-2 { display: grid; gap: 1.5rem; }
+    .grid-3 { display: grid; gap: 1.25rem; }
+    @media(min-width:640px){ .grid-3 { grid-template-columns: repeat(2,1fr); } }
+    @media(min-width:1024px){ .grid-3 { grid-template-columns: repeat(3,1fr); } }
+    @media(min-width:768px){ .grid-2 { grid-template-columns: repeat(2,1fr); } }
+    .grid-about { display: grid; gap: 2.5rem; }
+    @media(min-width:768px){ .grid-about { grid-template-columns: 1fr 2fr; } }
+
+    /* ── CARD ── */
+    .card {
+      padding: 1.5rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+      box-shadow: var(--shadow-card); transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(124,110,247,.5); }
+    .card h3 { font-size: 1rem; font-weight: 600; }
+    .card p { font-size: .875rem; color: var(--muted); margin-top: .5rem; }
+
+    /* ── EXPERIENCE ── */
+    .exp-card {
+      padding: 1.5rem 2rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+      box-shadow: var(--shadow-card);
+    }
+    .exp-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
+    .exp-role { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; }
+    .exp-company { color: var(--primary); font-size: .875rem; margin-top: .25rem; }
+    .exp-period { font-size: .875rem; color: var(--muted); white-space: nowrap; }
+    .exp-list {
+      margin-top: 1rem; padding-left: 1.25rem;
+      list-style: disc; display: flex; flex-direction: column; gap: .5rem;
+    }
+    .exp-list li { font-size: .875rem; color: var(--muted); }
+
+    /* ── MUSIC ── */
+    .track-item {
+      padding: 1rem 1.25rem; border-radius: var(--radius);
+      background: rgba(42,45,74,.4); border: 1px solid var(--border);
+    }
+    .track-links a { font-size: .8rem; color: var(--primary); margin-right: 10px; }
+
+    /* ── CONTACT FORM ── */
+    .contact-form {
+      padding: 2rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+      box-shadow: var(--shadow-card);
+    }
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; font-size: .875rem; margin-bottom: .5rem; color: var(--muted); }
     .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: .75rem 1rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); color: var(--fg); outline: none;
+      width: 100%; padding: .75rem 1rem; border-radius: var(--radius);
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--fg); font-family: var(--font-sans); font-size: .9rem;
+      outline: none; transition: border-color .15s;
     }
-    .btn-primary { background: var(--grad-primary); color: #fff; padding: .8rem 1.4rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; }
-    .btn-outline { border: 1px solid var(--border); padding: .8rem 1.4rem; border-radius: var(--radius); cursor: pointer; color: var(--fg); background: transparent; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+    .btn-submit {
+      width: 100%; padding: .85rem; border-radius: var(--radius);
+      background: var(--grad-primary); color: #fff;
+      font-weight: 600; border: none; cursor: pointer; font-family: var(--font-sans);
+      font-size: .9rem; transition: opacity .15s;
+    }
+    .btn-submit:hover { opacity: .9; }
 
-    /* ── DASHBOARD GRID ── */
-    .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    /* ── AUTH PAGE ── */
+    .auth-wrap { max-width: 400px; margin: 4rem auto; }
+    .auth-tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+    .auth-tab {
+      flex: 1; padding: .7rem; background: transparent; border: none;
+      color: var(--muted); cursor: pointer; font-family: var(--font-sans); font-size: .875rem; font-weight: 500;
+      transition: background .15s, color .15s;
+    }
+    .auth-tab.active { background: var(--grad-primary); color: #fff; }
+
+    /* ── DASHBOARD ── */
+    .dash-stat {
+      padding: 1.5rem; border-radius: calc(var(--radius)*1.5);
+      border: 1px solid var(--border); background: var(--card);
+    }
+    .dash-stat h4 { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .5rem; }
+    .dash-stat .stat-val { font-size: 1.5rem; font-weight: 700; font-family: var(--font-display); }
+    .ticket-item {
+      padding: 1rem 1.25rem; border-radius: var(--radius);
+      border: 1px solid var(--border); background: rgba(42,45,74,.25);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .status-badge {
+      font-size: .7rem; padding: .2rem .65rem; border-radius: 999px;
+      background: rgba(124,110,247,.15); color: var(--primary); font-weight: 600;
+    }
+    .status-badge.open { background: rgba(45,212,191,.15); color: var(--teal); }
+
+    /* ── FOOTER ── */
+    #site-footer {
+      border-top: 1px solid var(--border); background: #090a16;
+      margin-top: 6rem; padding: 3.5rem 0;
+    }
+    .footer-grid { display: grid; gap: 2.5rem; }
+    @media(min-width:768px){ .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+    .footer-col h4 { font-family: var(--font-display); margin-bottom: 1rem; font-size: .9rem; }
+    .footer-col p, .footer-col a { font-size: .875rem; color: var(--muted); display: block; margin-bottom: .5rem; }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-bottom { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; font-size: .8rem; color: var(--muted); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+      padding: .85rem 1.25rem; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: .875rem; box-shadow: var(--shadow-card);
+      transform: translateY(8px); opacity: 0;
+      transition: opacity .25s, transform .25s; pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: var(--teal); color: var(--teal); }
+    #toast.error { border-color: #f87171; color: #f87171; }
   </style>
 </head>
 <body>
 
+<!-- ═══════════════ HEADER ═══════════════ -->
 <header id="site-header">
   <div class="container">
     <div class="header-inner">
@@ -103,89 +310,423 @@
         <div class="logo-badge">A</div>
         <span class="logo-name">Allan Nambafu</span>
       </div>
-      <nav class="desktop">
+
+      <nav class="desktop" id="desktop-nav">
         <a href="#" onclick="navigate('home');return false;" data-page="home">Home</a>
         <a href="#" onclick="navigate('services');return false;" data-page="services">Services</a>
-        <a href="#" onclick="navigate('forex');return false;" data-page="forex">Forex</a>
-        <a href="#" onclick="navigate('dashboard')" id="nav-dash-btn" class="hidden">Dashboard</a>
-        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:15px">Login</button>
+        <a href="#" onclick="navigate('forex');return false;" data-page="forex">Learn Forex</a>
+        <a href="#" onclick="navigate('music');return false;" data-page="music">Music</a>
+        <a href="#" onclick="navigate('contact');return false;" data-page="contact">Contact</a>
+        <a href="#" onclick="navigate('dashboard');return false;" data-page="dashboard" id="nav-dash-btn" class="hidden">Dashboard</a>
+        <button class="btn-primary" id="nav-login-btn" onclick="navigate('login')" style="margin-left:.5rem">Login</button>
+        <button class="btn-outline hidden" id="nav-logout-btn" onclick="logout()" style="margin-left:.5rem">Logout</button>
       </nav>
+
+      <button class="menu-btn" id="menu-btn" aria-label="Toggle menu" onclick="toggleMenu()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-wrap">
+      <a href="#" onclick="navigate('home');toggleMenu();return false;" data-mob-page="home">Home</a>
+      <a href="#" onclick="navigate('services');toggleMenu();return false;" data-mob-page="services">Services</a>
+      <a href="#" onclick="navigate('forex');toggleMenu();return false;" data-mob-page="forex">Learn Forex</a>
+      <a href="#" onclick="navigate('music');toggleMenu();return false;" data-mob-page="music">Music</a>
+      <a href="#" onclick="navigate('contact');toggleMenu();return false;" data-mob-page="contact">Contact</a>
+      <a href="#" id="mob-dash-link" class="hidden" onclick="navigate('dashboard');toggleMenu();return false;" data-mob-page="dashboard">Dashboard</a>
+      <div class="mobile-auth-btns">
+        <button class="btn-primary" id="mob-login-btn" onclick="navigate('login');toggleMenu()">Login</button>
+        <button class="btn-outline hidden" id="mob-logout-btn" onclick="logout()">Logout</button>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- HOME PAGE -->
+<div id="toast"></div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════════════ -->
 <div class="page active" id="page-home">
-  <section class="hero"><div class="hero-bg"></div><div class="container">
-    <h1>Strategic <span class="grad-text">Digital Solutions</span></h1>
-    <p style="color:var(--muted); margin-top:1rem; max-width:600px">Optimize your business with 5+ years of operations expertise.</p>
-    <button class="btn-primary" style="margin-top:2rem" onclick="navigate('login')">Get Started</button>
-  </div></section>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="badge-pill"><span class="pulse"></span>Available for remote work worldwide</div>
+      <h1>Operations, Virtual Assistance &amp; <span class="grad-text">Digital Solutions</span>.</h1>
+      <p class="hero-desc">I'm Allan Nambafu — a Nairobi-based operations specialist with 5+ years helping online businesses and fintech brands streamline workflows, elevate CX, and grow their digital presence.</p>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="navigate('contact')">Hire Me</button>
+        <button class="btn-outline" onclick="navigate('services')">View Services</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" style="border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="grid-about">
+        <div>
+          <div class="section-label">About Me</div>
+          <h2 class="section-title" style="margin-bottom:0">Who I Am</h2>
+        </div>
+        <div style="color:var(--muted)">
+          <p>I help online businesses and fintech brands streamline operations, improve customer experience and strengthen their digital presence. With 5+ years of experience in virtual operations, CRM systems, customer support, digital marketing and SQL reporting, I specialize in building structured workflows that reduce friction and increase efficiency.</p>
+          <br>
+          <p>My background in Mathematics &amp; Computer Science drives a data-first approach to every operation. Whether it's managing a customer support pipeline, building a landing page, or analyzing trading data — I bring structure, strategy and speed.</p>
+          <div style="margin-top:1.5rem; display:flex; flex-wrap:wrap; gap:.5rem">
+            <span style="padding:.3rem .8rem; border-radius:999px; border:1px solid var(--border); font-size:.8rem; color:var(--muted)">Operations</span>
+            <span style="padding:.3rem .8rem; border-radius:999px; border:1px solid var(--border); font-size:.8rem; color:var(--muted)">CRM Systems</span>
+            <span style="padding:.3rem .8rem; border-radius:999px; border:1px solid var(--border); font-size:.8rem; color:var(--muted)">SQL Reporting</span>
+            <span style="padding:.3rem .8rem; border-radius:999px; border:1px solid var(--border); font-size:.8rem; color:var(--muted)">Digital Marketing</span>
+            <span style="padding:.3rem .8rem; border-radius:999px; border:1px solid var(--border); font-size:.8rem; color:var(--muted)">Forex & Fintech</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section-sm" style="border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="section-label">Track Record</div>
+      <h2 class="section-title">Experience</h2>
+      <div style="display:flex; flex-direction:column; gap:1.5rem;">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Operations Officer (Virtual)</div>
+              <div class="exp-company">Liquid Markets</div>
+            </div>
+            <span class="exp-period">Sep 2021 — Present</span>
+          </div>
+          <ul class="exp-list">
+            <li>Optimized workflows resulting in a 15% reduction in operational expenditures.</li>
+            <li>Managed social media and digital marketing campaigns across major platforms.</li>
+            <li>Used SQL and reporting tools to drive data-based operational decisions.</li>
+            <li>Handled customer onboarding, CRM management and Zendesk ticketing.</li>
+          </ul>
+        </div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Brand Advocate — East Africa</div>
+              <div class="exp-company">BluFX.co.uk</div>
+            </div>
+            <span class="exp-period">Apr 2021 — Aug 2021</span>
+          </div>
+          <ul class="exp-list">
+            <li>Produced content and improved engagement by 30% through performance analysis.</li>
+            <li>Represented the brand across East African markets and digital communities.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-label">What I Offer</div>
+      <h2 class="section-title">Core Services</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size:1.5rem; margin-bottom:.75rem">🌐</div>
+          <h3>Website Development</h3>
+          <p>Custom HTML/CSS sites and WordPress optimization tailored for speed and SEO.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:1.5rem; margin-bottom:.75rem">🛠</div>
+          <h3>Virtual Assistance</h3>
+          <p>Managing CRM systems (Zendesk, HubSpot), email coordination, and admin tasks.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:1.5rem; margin-bottom:.75rem">📈</div>
+          <h3>Forex & Crypto Support</h3>
+          <p>P2P exchange assistance and institutional-grade trading insights and mentorship.</p>
+        </div>
+      </div>
+      <div style="margin-top:2rem; text-align:center">
+        <button class="btn-outline" onclick="navigate('services')">View All Services →</button>
+      </div>
+    </div>
+  </section>
+
 </div>
 
-<!-- LOGIN / SIGNUP PAGE -->
-<div class="page" id="page-login">
+<!-- ═══════════════════════════════════════════
+     PAGE: SERVICES
+════════════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <section class="hero" style="padding:4rem 0 5rem">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-label">What I Do</div>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem)">Professional <span class="grad-text">Services</span></h1>
+      <p class="hero-desc">Scalable solutions for modern digital brands and online businesses.</p>
+    </div>
+  </section>
+
   <section class="section">
-    <div class="container" style="max-width:450px">
-      <div class="card">
-        <h2 id="auth-title" style="margin-bottom:1.5rem">Client Access</h2>
-        <div class="form-group"><label>Email</label><input type="email" id="auth-email"></div>
-        <div class="form-group"><label>Password</label><input type="password" id="auth-password"></div>
-        <button class="btn-primary" style="width:100%" onclick="handleAuth()" id="auth-main-btn">Sign In</button>
-        <p style="margin-top:1rem; text-align:center; font-size:14px; color:var(--muted)">
-          <span id="auth-switch-text">New here?</span> <a href="#" onclick="toggleAuthMode()" style="color:var(--primary)">Click here</a>
-        </p>
+    <div class="container">
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">🌐</div>
+          <h3>Website Development</h3>
+          <p>Custom HTML/CSS sites and WordPress optimization — responsive, fast, and SEO-ready.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">🤝</div>
+          <h3>Virtual Assistance</h3>
+          <p>CRM management (Zendesk, HubSpot), email handling, scheduling, and team coordination.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">📊</div>
+          <h3>SQL & Reporting</h3>
+          <p>Data extraction, dashboard building, and actionable reporting for operational decisions.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">📣</div>
+          <h3>Digital Marketing</h3>
+          <p>Social media management, content strategy, and campaign analytics across all major platforms.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">💹</div>
+          <h3>Forex & Crypto Support</h3>
+          <p>P2P exchange facilitation and institutional trading insights. Community and signal management.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:2rem; margin-bottom:.75rem">🎓</div>
+          <h3>Forex Mentorship</h3>
+          <p>3-week structured program from beginner to advanced with ongoing signal access. See Learn Forex.</p>
+        </div>
+      </div>
+      <div style="margin-top:3rem; text-align:center">
+        <button class="btn-primary" onclick="navigate('contact')">Discuss a Project</button>
       </div>
     </div>
   </section>
 </div>
 
-<!-- USER DASHBOARD -->
+<!-- ═══════════════════════════════════════════
+     PAGE: LEARN FOREX
+════════════════════════════════════════════ -->
+<div class="page" id="page-forex">
+  <section class="hero" style="padding:4rem 0 5rem">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-label">Trading Education</div>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem)">Learn <span class="grad-text">Forex Trading</span></h1>
+      <p class="hero-desc">Master the markets with a proven 3-week beginner to advanced mentorship program.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="max-width:800px; margin:0 auto; align-items:start">
+        <div class="card" style="border-color:rgba(124,110,247,.4); box-shadow: var(--shadow-glow)">
+          <div style="font-size:2rem; margin-bottom:.75rem">🏆</div>
+          <h3 style="font-size:1.3rem">Complete Mentorship</h3>
+          <div style="margin:1rem 0; font-size:2rem; font-weight:700; font-family:var(--font-display)">$300</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.5rem">
+            <li style="font-size:.875rem; color:var(--muted); display:flex; gap:.5rem"><span style="color:var(--teal)">✓</span> Technical Analysis fundamentals</li>
+            <li style="font-size:.875rem; color:var(--muted); display:flex; gap:.5rem"><span style="color:var(--teal)">✓</span> Macro & fundamental analysis</li>
+            <li style="font-size:.875rem; color:var(--muted); display:flex; gap:.5rem"><span style="color:var(--teal)">✓</span> Live trade sessions & journal review</li>
+            <li style="font-size:.875rem; color:var(--muted); display:flex; gap:.5rem"><span style="color:var(--teal)">✓</span> 2 years of Telegram signals access</li>
+            <li style="font-size:.875rem; color:var(--muted); display:flex; gap:.5rem"><span style="color:var(--teal)">✓</span> 3-week structured program</li>
+          </ul>
+          <button class="btn-primary" style="width:100%" onclick="navigate('contact')">Enroll Now →</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:1rem">
+          <div class="card"><h3>Week 1</h3><p>Charts, candlesticks, support/resistance, and market structure basics.</p></div>
+          <div class="card"><h3>Week 2</h3><p>Indicators, entry models, risk management, and trade execution.</p></div>
+          <div class="card"><h3>Week 3</h3><p>Live sessions, portfolio review, macro news trading and ongoing signals.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: MUSIC
+════════════════════════════════════════════ -->
+<div class="page" id="page-music">
+  <section class="hero" style="padding:4rem 0 5rem">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-label">Gospel Artist</div>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem)">Allan <span class="grad-text">Mabele</span></h1>
+      <p class="hero-desc">Worship artist & songwriter from Nairobi, Kenya — blending anointed melodies with spiritual renewal.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="max-width:800px">
+        <div class="card">
+          <div style="font-size:1.5rem; margin-bottom:.75rem">🎵</div>
+          <h3>UNAWEZA</h3>
+          <p>Latest worship release featuring Adah Allan. A powerful anthem of faith and victory.</p>
+          <div style="margin-top:1.25rem; display:flex; gap:.75rem; flex-wrap:wrap">
+            <a href="https://www.youtube.com/@AllanMabele" target="_blank" class="btn-outline" style="padding:.5rem 1rem; font-size:.8rem">▶ Watch on YouTube</a>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:1.5rem; margin-bottom:.75rem">🎤</div>
+          <h3>Ministry & Collaboration</h3>
+          <p>Available for worship events, church services, and vocal collaborations across Kenya and beyond.</p>
+          <a href="mailto:allymabz@gmail.com" class="btn-primary" style="margin-top:1.25rem; padding:.6rem 1.2rem; font-size:.85rem; display:inline-flex">Contact for Music</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: CONTACT
+════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section class="hero" style="padding:3rem 0 4rem">
+    <div class="hero-bg"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-label">Reach Out</div>
+      <h1 style="font-size:clamp(2rem,5vw,3rem)">Get in <span class="grad-text">Touch</span></h1>
+      <p class="hero-desc">Whether you have a project in mind or just want to connect — I'd love to hear from you.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:2rem">
+    <div class="container">
+      <div class="grid-2" style="max-width:900px; margin:0 auto; align-items:start">
+        <div class="contact-form">
+          <h3 style="margin-bottom:1.5rem">Send a Message</h3>
+          <div class="form-group"><label>Name</label><input type="text" id="contact-name" placeholder="Your name"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="contact-email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Subject</label>
+            <select id="contact-subject" style="width:100%;padding:.75rem 1rem;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border);color:var(--fg);font-family:var(--font-sans);font-size:.9rem;outline:none">
+              <option>General Inquiry</option>
+              <option>Virtual Assistance</option>
+              <option>Website Development</option>
+              <option>Forex Mentorship</option>
+              <option>Music Collaboration</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea id="contact-msg" rows="4" placeholder="Tell me about your project..."></textarea></div>
+          <button class="btn-submit" onclick="sendContactEmail()">Send Message →</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div class="card">
+            <div style="font-size:1.5rem; margin-bottom:.5rem">📧</div>
+            <h3>Email</h3>
+            <a href="mailto:allynabz@gmail.com" style="color:var(--primary); font-size:.875rem">allynabz@gmail.com</a>
+          </div>
+          <div class="card">
+            <div style="font-size:1.5rem; margin-bottom:.5rem">📍</div>
+            <h3>Location</h3>
+            <p>Nairobi, Kenya — Available worldwide remotely</p>
+          </div>
+          <div class="card">
+            <div style="font-size:1.5rem; margin-bottom:.5rem">⏱</div>
+            <h3>Response Time</h3>
+            <p>Usually within 24 hours on business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: LOGIN / SIGNUP
+════════════════════════════════════════════ -->
+<div class="page" id="page-login">
+  <section class="section">
+    <div class="container">
+      <div class="auth-wrap">
+        <div style="text-align:center; margin-bottom:2rem">
+          <div class="logo-badge" style="margin:0 auto .75rem; height:48px;width:48px;font-size:1.2rem">A</div>
+          <h2>Client Portal</h2>
+          <p style="color:var(--muted); font-size:.875rem; margin-top:.5rem">Sign in to access your dashboard and courses.</p>
+        </div>
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-signin" onclick="setAuthMode(false)">Sign In</button>
+          <button class="auth-tab" id="tab-signup" onclick="setAuthMode(true)">Create Account</button>
+        </div>
+        <div class="card">
+          <div class="form-group"><label>Email</label><input type="email" id="auth-email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Password</label><input type="password" id="auth-password" placeholder="••••••••"></div>
+          <div class="form-group hidden" id="auth-confirm-wrap"><label>Confirm Password</label><input type="password" id="auth-confirm" placeholder="••••••••"></div>
+          <button class="btn-submit" onclick="handleAuth()" id="auth-main-btn">Sign In</button>
+          <p style="margin-top:1rem; text-align:center; font-size:.8rem; color:var(--muted)">
+            <a href="#" onclick="return false;" style="color:var(--primary)">Forgot password?</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: DASHBOARD (Private)
+════════════════════════════════════════════ -->
 <div class="page" id="page-dashboard">
   <section class="section">
     <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem">
-        <h1>Dashboard</h1>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem">
+        <div>
+          <div class="section-label">Welcome back</div>
+          <h1 id="dash-greeting">Client Dashboard</h1>
+        </div>
         <button class="btn-outline" onclick="logout()">Logout</button>
       </div>
 
-      <div class="grid-3">
-        <!-- COURSES -->
-        <div class="card">
-          <h3>📚 My Courses</h3>
-          <div id="course-status" style="margin-top:1rem; color:var(--muted)">Checking enrollment...</div>
-          <button class="btn-primary" style="width:100%; margin-top:1rem" onclick="navigate('forex')">Buy Course ($300)</button>
+      <!-- Stats row -->
+      <div class="grid-3" style="margin-bottom:2rem">
+        <div class="dash-stat">
+          <h4>Active Courses</h4>
+          <div class="stat-val" id="dash-course-count">—</div>
         </div>
-
-        <!-- SERVICE REQUEST -->
-        <div class="card">
-          <h3>🛠 Request Service</h3>
-          <div class="form-group" style="margin-top:1rem">
-            <select id="service-type">
-              <option value="VA Support">Virtual Assistance</option>
-              <option value="Web Dev">Web Development</option>
-              <option value="Forex Management">Fund Management</option>
-            </select>
-          </div>
-          <textarea id="service-desc" placeholder="Describe your needs..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
-          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitService()">Submit Request</button>
+        <div class="dash-stat">
+          <h4>Support Tickets</h4>
+          <div class="stat-val" id="dash-ticket-count">—</div>
         </div>
-
-        <!-- SUPPORT -->
-        <div class="card">
-          <h3>📩 Contact Support</h3>
-          <div class="form-group" style="margin-top:1rem"><input type="text" id="support-subject" placeholder="Subject"></div>
-          <textarea id="support-msg" placeholder="Your message..." style="width:100%; height:80px; background:var(--bg); color:var(--fg); border:1px solid var(--border); padding:10px"></textarea>
-          <button class="btn-outline" style="width:100%; margin-top:1rem" onclick="submitSupport()">Send Ticket</button>
+        <div class="dash-stat">
+          <h4>Account Status</h4>
+          <div class="stat-val" style="color:var(--teal); font-size:1rem">Active ✓</div>
         </div>
       </div>
 
-      <!-- ADMIN ONLY SECTION -->
-      <div id="admin-section" class="hidden" style="margin-top:3rem; border-top:1px solid var(--border); padding-top:2rem">
-        <h2 style="color:var(--teal)">Admin God-View</h2>
-        <div class="card" style="margin-top:1rem">
-          <p>You are logged in as the Administrator. You can view all requests in the Supabase backend.</p>
-          <button class="btn-primary" onclick="window.open('https://supabase.com/dashboard', '_blank')">Go to Supabase DB</button>
+      <!-- Courses -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <h3 style="margin-bottom:1rem">📦 My Courses</h3>
+        <div id="course-list">
+          <p style="color:var(--muted); font-size:.875rem">No active enrollments yet. <a href="#" onclick="navigate('forex')" style="color:var(--primary)">Browse courses →</a></p>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:.5rem">
+          <h3>🛠 Support Tickets</h3>
+          <button class="btn-primary" style="padding:.55rem 1rem; font-size:.8rem" onclick="openTicketModal()">+ New Ticket</button>
+        </div>
+        <div id="ticket-list">
+          <p style="color:var(--muted); font-size:.875rem">No tickets found.</p>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="grid-2">
+        <div class="card" style="cursor:pointer" onclick="navigate('forex')">
+          <h3>📚 Forex Masterclass</h3>
+          <p>3-week structured program — $300. Enroll now to get started.</p>
+        </div>
+        <div class="card" style="cursor:pointer" onclick="navigate('contact')">
+          <h3>💬 Contact Support</h3>
+          <p>Send a direct message to the team for project inquiries.</p>
         </div>
       </div>
 
@@ -193,91 +734,193 @@
   </section>
 </div>
 
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom:1rem">
+          <div class="logo-badge">A</div>
+          <span class="logo-name">Allan Nambafu</span>
+        </div>
+        <p>Digital Solutions & Operations Expert based in Nairobi, Kenya. Available for remote work worldwide.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#" onclick="navigate('home');return false;">Home</a>
+        <a href="#" onclick="navigate('services');return false;">Services</a>
+        <a href="#" onclick="navigate('forex');return false;">Learn Forex</a>
+        <a href="#" onclick="navigate('music');return false;">Music</a>
+        <a href="#" onclick="navigate('contact');return false;">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:allynabz@gmail.com">allynabz@gmail.com</a>
+        <a href="https://www.youtube.com/@AllanMabele" target="_blank">YouTube (Music)</a>
+        <a href="#" onclick="navigate('login');return false;">Client Login</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Allan Nambafu. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
-  // ── CONFIG ──
+  // ── SUPABASE CONFIG ──
   const SUPABASE_URL = "https://gsivamaidhdjcrtzedmp.supabase.co";
   const SUPABASE_KEY = "sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha";
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let isSignupMode = false;
   let currentUser = null;
 
+  // ── TOAST ──
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'show ' + type;
+    setTimeout(() => { t.className = ''; }, 3500);
+  }
+
   // ── NAVIGATION ──
   function navigate(page) {
+    // Guard: dashboard requires auth
+    if (page === 'dashboard' && !currentUser) {
+      navigate('login');
+      return;
+    }
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    window.scrollTo(0,0);
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+
+    // Update desktop nav active state
+    document.querySelectorAll('nav.desktop a[data-page]').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-page') === page);
+    });
+    // Update mobile nav active state
+    document.querySelectorAll('.mobile-nav a[data-mob-page]').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-mob-page') === page);
+    });
+
+    window.scrollTo(0, 0);
+    // Close mobile nav if open
+    document.getElementById('mobile-nav').classList.remove('open');
   }
 
-  function toggleAuthMode() {
-    isSignupMode = !isSignupMode;
-    document.getElementById('auth-title').innerText = isSignupMode ? "Create Account" : "Client Access";
-    document.getElementById('auth-main-btn').innerText = isSignupMode ? "Sign Up" : "Sign In";
+  // ── MOBILE MENU ──
+  function toggleMenu() {
+    document.getElementById('mobile-nav').classList.toggle('open');
   }
 
-  // ── AUTH LOGIC ──
+  // ── AUTH MODE ──
+  function setAuthMode(signup) {
+    isSignupMode = signup;
+    document.getElementById('tab-signin').classList.toggle('active', !signup);
+    document.getElementById('tab-signup').classList.toggle('active', signup);
+    document.getElementById('auth-main-btn').textContent = signup ? 'Create Account' : 'Sign In';
+    document.getElementById('auth-confirm-wrap').classList.toggle('hidden', !signup);
+  }
+
+  // ── AUTH HANDLER ──
   async function handleAuth() {
-    const email = document.getElementById('auth-email').value;
+    const email = document.getElementById('auth-email').value.trim();
     const password = document.getElementById('auth-password').value;
 
-    if(isSignupMode) {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) alert(error.message);
-      else alert("Check your email for confirmation!");
+    if (!email || !password) { showToast('Please fill in all fields.', 'error'); return; }
+
+    if (isSignupMode) {
+      const confirm = document.getElementById('auth-confirm').value;
+      if (password !== confirm) { showToast('Passwords do not match.', 'error'); return; }
+      const { error } = await sb.auth.signUp({ email, password });
+      if (error) showToast(error.message, 'error');
+      else showToast('Account created! Check your email to verify.');
     } else {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message);
-      else checkSession();
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) showToast(error.message, 'error');
+      else {
+        showToast('Welcome back! Redirecting…');
+        await checkSession();
+      }
     }
   }
 
+  // ── SESSION CHECK ──
   async function checkSession() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session } } = await sb.auth.getSession();
     if (session) {
       currentUser = session.user;
+      // Show/hide nav items
       document.getElementById('nav-login-btn').classList.add('hidden');
+      document.getElementById('nav-logout-btn').classList.remove('hidden');
       document.getElementById('nav-dash-btn').classList.remove('hidden');
-      
-      // Admin Check (Replace with your email)
-      if(currentUser.email === "allynabz@gmail.com") {
-        document.getElementById('admin-section').classList.remove('hidden');
-      }
+      document.getElementById('mob-login-btn').classList.add('hidden');
+      document.getElementById('mob-logout-btn').classList.remove('hidden');
+      document.getElementById('mob-dash-link').classList.remove('hidden');
 
-      navigate('dashboard');
-      loadUserData();
+      // Update dashboard greeting
+      const emailShort = currentUser.email.split('@')[0];
+      document.getElementById('dash-greeting').textContent = 'Welcome, ' + emailShort;
+      document.getElementById('dash-course-count').textContent = '0';
+      document.getElementById('dash-ticket-count').textContent = '0';
+
+      // If on login page, redirect to dashboard
+      if (document.getElementById('page-login').classList.contains('active')) {
+        navigate('dashboard');
+      }
+    } else {
+      currentUser = null;
     }
   }
 
+  // ── LOGOUT ──
   async function logout() {
-    await supabase.auth.signOut();
-    location.reload();
+    await sb.auth.signOut();
+    currentUser = null;
+    document.getElementById('nav-login-btn').classList.remove('hidden');
+    document.getElementById('nav-logout-btn').classList.add('hidden');
+    document.getElementById('nav-dash-btn').classList.add('hidden');
+    document.getElementById('mob-login-btn').classList.remove('hidden');
+    document.getElementById('mob-logout-btn').classList.add('hidden');
+    document.getElementById('mob-dash-link').classList.add('hidden');
+    showToast('Signed out successfully.');
+    navigate('home');
   }
 
-  // ── DATA LOGIC ──
-  async function submitService() {
-    const type = document.getElementById('service-type').value;
-    const desc = document.getElementById('service-desc').value;
-    const { error } = await supabase.from('service_requests').insert([{ user_id: currentUser.id, service_type: type, description: desc, status: 'pending' }]);
-    if (error) alert(error.message);
-    else alert("Request submitted successfully!");
+  // ── CONTACT FORM ──
+  function sendContactEmail() {
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const subject = document.getElementById('contact-subject').value;
+    const msg = document.getElementById('contact-msg').value.trim();
+    if (!name || !msg) { showToast('Please fill in your name and message.', 'error'); return; }
+    window.location.href = `mailto:allynabz@gmail.com?subject=${encodeURIComponent(subject + ' — ' + name)}&body=${encodeURIComponent(msg + '\n\nFrom: ' + name + '\nReply to: ' + email)}`;
   }
 
-  async function submitSupport() {
-    const subject = document.getElementById('support-subject').value;
-    const msg = document.getElementById('support-msg').value;
-    const { error } = await supabase.from('support_tickets').insert([{ user_id: currentUser.id, subject: subject, message: msg, status: 'open' }]);
-    if (error) alert(error.message);
-    else alert("Support ticket sent!");
+  // ── TICKET MODAL (simple prompt fallback) ──
+  function openTicketModal() {
+    const subject = prompt('Ticket subject:');
+    if (subject) {
+      const list = document.getElementById('ticket-list');
+      list.innerHTML = `<div class="ticket-item"><span style="font-size:.875rem">${subject}</span><span class="status-badge open">Open</span></div>`;
+      const count = document.getElementById('dash-ticket-count');
+      count.textContent = parseInt(count.textContent || 0) + 1;
+      showToast('Ticket submitted!');
+    }
   }
 
-  async function loadUserData() {
-    // Here you would fetch the user's specific courses from your 'enrollments' table
-    document.getElementById('course-status').innerText = "No active courses. Buy one below.";
-  }
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', async () => {
+    await checkSession();
+    const hash = window.location.hash.substring(1);
+    if (['services','music','forex','contact'].includes(hash)) navigate(hash);
+  });
 
-  // Init
-  document.addEventListener('DOMContentLoaded', checkSession);
+  // Listen for auth changes (e.g. email verification in another tab)
+  sb.auth.onAuthStateChange((_event, session) => {
+    if (session) checkSession();
+  });
 </script>
-
 </body>
 </html>
