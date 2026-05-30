@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>XAUUSD Scalping AI V15 — LiquidGold AI</title>
+<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5. Three-timeframe alignment, adaptive AI confidence, layered risk management." />
+<meta property="og:title" content="XAUUSD Scalping AI V15 — LiquidGold AI" />
+<meta property="og:description" content="Fully automated MT5 Expert Advisor for high-conviction XAUUSD scalping during London & New York sessions." />
+<meta property="og:type" content="website" />
+<style>
+  :root{
+    --bg:#0b0d12;
+    --bg-2:#11141b;
+    --panel:#151924;
+    --line:#222838;
+    --text:#e8ecf3;
+    --muted:#9aa3b2;
+    --gold:#d4af37;
+    --gold-2:#f5d77a;
+    --green:#4ade80;
+    --red:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding:6px 12px;border:1px solid rgba(212,175,55,.35);border-radius:999px;background:rgba(212,175,55,.06)}
+  h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spacing:-.01em;margin:0 0 16px}
+  h1{font-size:clamp(36px,6vw,64px);line-height:1.05;background:linear-gradient(180deg,#fff 0%,#d4af37 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:clamp(28px,3.6vw,40px);color:#fff}
+  h3{font-size:20px;color:var(--gold-2);margin-bottom:8px}
+  p{color:var(--muted)}
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1080px;margin:0 auto}
+  .nav-left{display:flex;align-items:center;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.18em;font-size:13px;cursor:pointer}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+  .nav-links{display:flex;gap:18px}
+  .nav-links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--gold-2);text-decoration:none}
+  .cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2)}
+  .cta:hover{filter:brightness(1.08);text-decoration:none}
+  .cta.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(212,175,55,.4)}
+  /* Hero */
+  .hero{padding:90px 0 60px;background:
+    radial-gradient(900px 400px at 80% -10%,rgba(212,175,55,.18),transparent 60%),
+    radial-gradient(700px 300px at 10% 10%,rgba(212,175,55,.08),transparent 60%)}
+  .hero p.lead{font-size:18px;max-width:720px;margin:18px 0 28px;color:#c9d0dc}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .badge{font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:#cbd2df}
+  .badge b{color:var(--gold-2)}
+  .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:44px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
+  .stat .v{font-family:Georgia,serif;font-size:28px;color:var(--gold-2);font-weight:700}
+  .stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-top:6px}
+  @media (max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  /* Sections */
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .section-head{max-width:760px;margin-bottom:36px}
+  .grid{display:grid;gap:18px}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:780px){.cols-2,.cols-3{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:24px;transition:border-color .2s,transform .2s}
+  .card:hover{border-color:rgba(212,175,55,.35);transform:translateY(-2px)}
+  .card .num{font-family:Georgia,serif;color:var(--gold);font-size:14px;letter-spacing:.2em}
+  .card h3{margin-top:8px}
+  .card p{margin:8px 0 0;font-size:15px}
+  /* Table */
+  .tbl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tbl th,.tbl td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:15px}
+  .tbl th{background:#0f1320;color:var(--gold-2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td b{color:#fff}
+  /* Check list */
+  ul.checks{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  ul.checks li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;gap:12px}
+  ul.checks li::before{content:"✓";color:var(--gold);font-weight:700;margin-top:1px}
+  ul.checks li b{color:#fff;display:block;margin-bottom:2px}
+  ul.checks li span{color:var(--muted);font-size:14px}
+  /* CTA section */
+  .cta-section{text-align:center;background:radial-gradient(700px 300px at 50% 0%,rgba(212,175,55,.18),transparent 60%)}
+  .cta-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
+  .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto}
+  @media (max-width:600px){.contact-cards{grid-template-columns:1fr}}
+  .contact-cards .card{text-align:center}
+  .contact-cards .card a{font-size:18px;color:var(--gold-2);font-weight:600;word-break:break-all}
+  footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
+  .disclaimer{max-width:760px;margin:24px auto 0;font-size:12px;color:#6b7280;line-height:1.5}
+  @media (max-width:780px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <a class="brand" href="index.html"><span class="dot"></span>LIQUIDGOLD&nbsp;AI</a>
+      <div class="nav-links">
+        <a href="index.html">← Back to Portfolio</a>
+      </div>
+    </div>
+    <a class="cta" href="#contact">Deploy on My Account</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none">
+  <div class="wrap">
+    <span class="eyebrow">Confidential Investor Proposal · 2026</span>
+    <h1 style="margin-top:18px">Institutional-Grade Gold Scalping Engine with Adaptive AI</h1>
+    <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V15</b> is a fully automated MetaTrader 5 Expert Advisor engineered for high-conviction gold scalping during London and New York sessions. Three-timeframe institutional alignment + self-learning AI confidence scoring + layered risk management.</p>
+    <div class="cta-row" style="justify-content:flex-start">
+      <a class="cta" href="#contact">Get Started</a>
+      <a class="cta ghost" href="#advantages">See the Edge</a>
+    </div>
+    <div class="badges">
+      <span class="badge"><b>Version</b> · 15</span>
+      <span class="badge">XAUUSD</span>
+      <span class="badge">MetaTrader 5</span>
+      <span class="badge">H4 + M15 + M5</span>
+      <span class="badge">Fully Automated</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="v">H4</div><div class="l">Trend Director</div></div>
+      <div class="stat"><div class="v">3-TF</div><div class="l">Strict Alignment</div></div>
+      <div class="stat"><div class="v">100</div><div class="l">Momentum Score</div></div>
+      <div class="stat"><div class="v">AI</div><div class="l">Self-Learning</div></div>
+      <div class="stat"><div class="v">1%</div><div class="l">Risk Per Trade</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXEC SUMMARY -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Executive Summary</span>
+      <h2 style="margin-top:14px">A paradigm shift from V14</h2>
+      <p>The trend-directing timeframe has been elevated from H1 to H4, and entry alignment has been hardened from a relaxed "M15 OR M5" to a strict "<b style="color:#fff">H4 + M15 + M5 all agree</b>" requirement. The result: dramatically fewer false signals and significantly higher-quality execution — the precision institutional desks demand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section id="advantages" style="padding-top:0;border-top:none">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Core Advantages</span>
+      <h2 style="margin-top:14px">Four edges that compound</h2>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="num">ADVANTAGE 01</div>
+        <h3>Three-Timeframe Institutional Alignment</h3>
+        <p>Most EAs trade off one or two timeframes. V15 demands all three agree before firing a single order — filtering out an estimated <b style="color:var(--gold-2)">70–80% of false entries</b>.</p>
+      </div>
+      <div class="card">
+        <div class="num">ADVANTAGE 02</div>
+        <h3>Adaptive Three-Tier Bias Detection</h3>
+        <p>Price-action override → EMA21/55 cross → EMA slope fallback. The system is never blind: it always has a directional read and adapts to market regime.</p>
+      </div>
+      <div class="card">
+        <div class="num">ADVANTAGE 03</div>
+        <h3>AI Self-Learning Confidence Engine</h3>
+        <p>A 0–100% confidence score continuously evaluates win-rate, directional win-rate, consecutive-loss penalty and ATR regime — self-regulating risk no static system can match.</p>
+      </div>
+      <div class="card">
+        <div class="num">ADVANTAGE 04</div>
+        <h3>Comprehensive Momentum Scoring</h3>
+        <p>Every potential entry is scored on a 100-point scale. A minimum score must be met (55 standard / 48 pullback) — quantitative discipline, zero discretion.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;color:#fff;font-family:inherit;font-size:14px;letter-spacing:.18em;text-transform:uppercase">Timeframe Roles &amp; Scoring Weights</h3>
+    <table class="tbl">
+      <thead><tr><th>Timeframe</th><th>Role</th><th>Weight</th><th>Indicator</th></tr></thead>
+      <tbody>
+        <tr><td><b>H4</b></td><td>Trend Director — institutional bias</td><td>25 pts</td><td>EMA 21 / 55</td></tr>
+        <tr><td><b>M15</b></td><td>Confirmation — mid-frame structure</td><td>20 pts</td><td>EMA 20 / 50</td></tr>
+        <tr><td><b>M5</b></td><td>Entry Trigger — execution timing</td><td>15 pts</td><td>EMA 13 / 34</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- MOMENTUM SCORING -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Momentum Scoring</span>
+      <h2 style="margin-top:14px">100-point quantitative gate</h2>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Factor</th><th>Points</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>H4 alignment + slope</td><td>25</td><td>Institutional trend conviction</td></tr>
+        <tr><td>M15 alignment + slope</td><td>20</td><td>Mid-frame structure confirmation</td></tr>
+        <tr><td>M5 alignment + slope</td><td>15</td><td>Micro-level entry timing</td></tr>
+        <tr><td>RSI momentum</td><td>12</td><td>Momentum direction validation</td></tr>
+        <tr><td>M5 impulse candle</td><td>13</td><td>Volatility burst detection</td></tr>
+        <tr><td>ATR sanity check</td><td>8</td><td>Volatility regime filter</td></tr>
+        <tr><td>Spread quality</td><td>5</td><td>Execution quality gate</td></tr>
+        <tr><td>Entry distance from M15 EMA</td><td>+7 / −15</td><td>Late-entry penalty</td></tr>
+        <tr><td><b>Maximum Total</b></td><td><b>100</b></td><td><b>Min required: 55 standard · 48 pullback</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- RISK -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Risk Architecture</span>
+      <h2 style="margin-top:14px">Capital preservation layers</h2>
+    </div>
+    <ul class="checks">
+      <li><div><b>Session Filter</b><span>Trades only London (07:00–16:00) and New York (12:00–21:00) — peak institutional liquidity.</span></div></li>
+      <li><div><b>Daily Profit Target</b><span>Pauses trading once daily target is hit (default $600). Locks gains before the market reclaims them.</span></div></li>
+      <li><div><b>Daily Loss Limit</b><span>Same mechanism on the downside (default −$600) — no catastrophic drawdown days.</span></div></li>
+      <li><div><b>Consecutive Loss Block</b><span>After 3 consecutive losses, trading halts. Combined with 600s cooldown — prevents revenge trading.</span></div></li>
+      <li><div><b>Spread Filter</b><span>Rejects entries when spread exceeds 35 points. Protects against news spikes and thin liquidity.</span></div></li>
+      <li><div><b>Broker Stop-Level Compliance</b><span>SL is always above broker minimum + 10pt buffer — orders are never silently rejected.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- POSITION MGMT -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Position Management</span>
+      <h2 style="margin-top:14px">Automated trade lifecycle</h2>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Mechanism</th><th>Trigger</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><b>Break-Even</b></td><td>+50 pips profit</td><td>Moves SL to entry +2 pips — eliminates risk</td></tr>
+        <tr><td><b>Partial Close</b></td><td>+100 pips profit</td><td>Closes 2 of 3 positions — locks profit, runners stay</td></tr>
+        <tr><td><b>ATR Trailing Stop</b></td><td>After partial close</td><td>Trails at 1.5× ATR with 700-pip cap</td></tr>
+        <tr><td><b>Re-entry Cooldown</b></td><td>Same direction</td><td>90s minimum between same-direction entries</td></tr>
+        <tr><td><b>Fresh Momentum</b></td><td>Post-close</td><td>Requires new impulse before re-entering</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TECH SPECS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Technical Specifications</span>
+      <h2 style="margin-top:14px">Platform &amp; configuration</h2>
+    </div>
+    <table class="tbl">
+      <tbody>
+        <tr><td><b>Platform</b></td><td>MetaTrader 5 (MT5) — native .mq5 Expert Advisor</td></tr>
+        <tr><td><b>Symbol</b></td><td>XAUUSD (Gold) — optimised for all broker digit formats</td></tr>
+        <tr><td><b>Timeframes</b></td><td>H4 (trend) · M15 (confirmation) · M5 (execution)</td></tr>
+        <tr><td><b>Indicators</b></td><td>EMA 21/55 (H4) · EMA 20/50 (M15) · EMA 13/34 (M5) · RSI 14 · ATR 14</td></tr>
+        <tr><td><b>Risk Model</b></td><td>% of account balance per signal batch (dynamic lot sizing)</td></tr>
+        <tr><td><b>Default SL</b></td><td>60 pips from entry (1 pip = $0.10 on XAUUSD)</td></tr>
+        <tr><td><b>Min Account</b></td><td>$500 minimum · $1,000+ recommended</td></tr>
+        <tr><td><b>Leverage</b></td><td>1:100 or higher recommended</td></tr>
+        <tr><td><b>Sessions</b></td><td>London 07:00–16:00 · New York 12:00–21:00 (server time)</td></tr>
+        <tr><td><b>Notifications</b></td><td>Telegram Bot API — entry, close, daily events, H4 flips</td></tr>
+        <tr><td><b>VPS Compatible</b></td><td>Yes — runs 24/5 on any Windows VPS with MT5 installed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Competitive Analysis</span>
+      <h2 style="margin-top:14px">V15 vs typical commercial EAs</h2>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Feature</th><th style="color:var(--gold-2)">V15 ScalpingAI</th><th>Typical Commercial EA</th></tr></thead>
+      <tbody>
+        <tr><td>Timeframe alignment</td><td><b>3-TF strict (H4+M15+M5)</b></td><td>1–2 TF, often relaxed</td></tr>
+        <tr><td>AI confidence</td><td><b>Self-learning, adaptive</b></td><td>Static rules only</td></tr>
+        <tr><td>Momentum scoring</td><td><b>100-point quantitative gate</b></td><td>Single-indicator triggers</td></tr>
+        <tr><td>Risk layers</td><td><b>Daily target, loss limit, loss block, spread, cooldown</b></td><td>Basic SL/TP only</td></tr>
+        <tr><td>Transparency</td><td><b>Live on-chart dashboard + Telegram</b></td><td>Black box</td></tr>
+        <tr><td>H4 reversal handling</td><td><b>Auto-close + instant re-hunt</b></td><td>Holds losing positions</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Product Roadmap</span>
+      <h2 style="margin-top:14px">Where V15 is heading</h2>
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="num">V16</div><h3>ML Bias Weighting</h3><p>Replace fixed 25/20/15 weights with dynamic weights based on recent per-TF accuracy.</p></div>
+      <div class="card"><div class="num">V17</div><h3>News Filter Integration</h3><p>Auto-pause around high-impact economic releases via calendar API.</p></div>
+      <div class="card"><div class="num">V18</div><h3>Web Dashboard</h3><p>Real-time portfolio monitoring via browser — no MT5 required for oversight.</p></div>
+      <div class="card"><div class="num">V19</div><h3>Drawdown-Based Sizing</h3><p>Risk automatically decreases as drawdown increases — adaptive position sizing.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="cta-section">
+  <div class="wrap">
+    <span class="eyebrow">Ready to Get Started?</span>
+    <h2 style="margin-top:14px">Let us deploy the AI on your trading account</h2>
+    <p style="max-width:680px;margin:14px auto 0">No technical knowledge required. We handle MT5 configuration, broker optimisation, risk calibration, VPS deployment and live monitoring. You see every trade in real time on Telegram while we manage the engine.</p>
+
+    <div class="contact-cards">
+      <div class="card">
+        <div class="num">EMAIL</div>
+        <a href="mailto:allymabz@gmail.com">allymabz@gmail.com</a>
+      </div>
+      <div class="card">
+        <div class="num">TELEGRAM</div>
+        <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">t.me/PropTraderSignals</a>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="cta" href="mailto:allymabz@gmail.com">Contact via Email</a>
+      <a class="cta ghost" href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">Message on Telegram</a>
+    </div>
+
+    <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Figures and configurations referenced above are defaults and may vary based on broker, account size and market conditions.</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 LiquidGold AI · XAUUSD ScalpingAI V15 · Confidential Investor Proposal
+</footer>
+
+</body>
+</html>
