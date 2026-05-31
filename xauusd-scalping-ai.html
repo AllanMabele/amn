@@ -117,6 +117,7 @@
   .pin-digit{width:50px;height:50px;font-size:24px;font-weight:700;text-align:center;background:var(--bg-2);border:2px solid var(--line);border-radius:8px;color:var(--gold-2);caret-color:var(--gold-2)}
   .pin-digit:focus{outline:none;border-color:var(--gold)}
   .pin-note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:12px 0;border-radius:4px;font-size:12px;color:var(--muted)}
+  .security-badge{background:rgba(74,222,128,.1);border:1px solid var(--green);border-radius:8px;padding:10px;margin:12px 0;color:var(--green);font-size:12px;text-align:center}
 </style>
 </head>
 <body>
@@ -280,7 +281,7 @@
     </div>
     <table class="tbl">
       <tbody>
-        <tr><td><b>Platform</b></td><td>MetaTrader 5 (MT5) — native .mq5 Expert Advisor</td></tr>
+        <tr><td><b>Platform</b></td><td>MetaTrader 5 (MT5) — native .ex5 compiled Expert Advisor</td></tr>
         <tr><td><b>Symbol</b></td><td>XAUUSD (Gold) — optimised for all broker digit formats</td></tr>
         <tr><td><b>Timeframes</b></td><td>H4 (trend) · M15 (confirmation) · M5 (execution)</td></tr>
         <tr><td><b>Indicators</b></td><td>EMA 21/55 (H4) · EMA 20/50 (M15) · EMA 13/34 (M5) · RSI 14 · ATR 14</td></tr>
@@ -338,7 +339,7 @@
   <div class="wrap">
     <span class="eyebrow">Ready to Get Started?</span>
     <h2 style="margin-top:14px">Purchase XAUUSD Scalping AI V15</h2>
-    <p style="max-width:680px;margin:14px auto 0">One-time payment unlocks lifetime access to the AI + Telegram signal channel + dedicated support. No recurring fees. Complete installation & setup guide included.</p>
+    <p style="max-width:680px;margin:14px auto 0">One-time payment unlocks lifetime access to the protected AI + Telegram signal channel + dedicated support. No recurring fees. Complete installation & setup guide included.</p>
 
     <div class="contact-cards">
       <div class="card">
@@ -349,7 +350,7 @@
       <div class="card">
         <div class="num">INCLUDES</div>
         <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
-          <li>✓ Full .mq5 source code</li>
+          <li>✓ Protected .ex5 compiled file</li>
           <li>✓ 12mo Telegram signals</li>
           <li>✓ VPS setup guide</li>
           <li>✓ Email support</li>
@@ -413,7 +414,7 @@
     </div>
 
     <div class="success-msg" id="successMsg">
-      ✅ Payment verified! Check your email for download link within 5 minutes.
+      ✅ Payment verified! Proceeding to security verification...
     </div>
     <div class="error-msg" id="errorMsg">
       ❌ Transaction not found or invalid. Please try again.
@@ -443,8 +444,10 @@
 
     <div class="download-section" id="downloadSection">
       <h3>✅ Access Granted</h3>
-      <p>Your payment has been verified and security PIN confirmed. Download the AI:</p>
-      <a href="#" onclick="alert('Download will be sent to your email. Admins will deliver via email with setup guide.')">📥 Download XAUUSD_ScalpingAI_V15.mq5</a>
+      <div class="security-badge">🔒 Protected EX5 File — Your Source Code is Secure</div>
+      <p>Your payment has been verified and security PIN confirmed. Download the protected AI:</p>
+      <a href="#" onclick="alert('Download link will be sent to your email.\n\nFile: XAUUSD_ScalpingAI_V15.ex5 (Protected Compiled Binary)\n\nCheck your spam folder if not received within 5 minutes.')">📥 Download XAUUSD_ScalpingAI_V15.ex5</a>
+      <p style="font-size:12px;margin-top:12px;color:var(--muted)"><b>This is the protected compiled file (.ex5)</b> — your proprietary code cannot be accessed or decompiled.</p>
       <p style="font-size:12px;margin-top:12px;color:var(--muted)">Check your email for setup instructions & Telegram signal group link</p>
     </div>
 
@@ -563,7 +566,7 @@ function verifyPIN() {
     downloadSection.classList.add('active');
     alert(`✅ PIN verified!\n\nDownload link will be sent to ${currentBuyerEmail}\n\nCheck your spam folder if not received within 5 minutes.`);
   } else {
-    pinErrorMsg.textContent = '❌ Incorrect PIN. Please try again or contact admin@allymabz@gmail.com for assistance.';
+    pinErrorMsg.textContent = '❌ Incorrect PIN. Please try again or contact allymabz@gmail.com for assistance.';
     pinErrorMsg.style.display = 'block';
   }
 }
