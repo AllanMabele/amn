@@ -469,14 +469,21 @@
 </footer>
 
 <script>
-// EmailJS Configuration
-emailjs.init("service_6znqqnq");
+// Initialize EmailJS with error handling
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY_HERE'; // ⚠️ REPLACE WITH YOUR PUBLIC KEY
+const EMAILJS_SERVICE_ID = 'service_6znqqnq';
+const EMAILJS_TEMPLATE_ORDER = 'template_order_confirmation';
+const EMAILJS_TEMPLATE_SUCCESS = 'template_download_ready';
+const ADMIN_EMAIL = 'allymabz@gmail.com';
+const CORRECT_PIN = '9967';
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
 const VALID_TRANSACTIONS = {};
-const CORRECT_PIN = '9967';
-const ADMIN_EMAIL = 'allymabz@gmail.com';
 let currentTransactionId = '';
 let currentBuyerEmail = '';
+
+console.log('✅ EmailJS initialized with Service ID:', EMAILJS_SERVICE_ID);
 
 function openPaymentModal() {
   document.getElementById('paymentModal').classList.add('show');
@@ -544,13 +551,14 @@ function verifyPayment() {
       // Send order confirmation email to admin
       sendOrderConfirmationToAdmin(txId, email);
       
-      // Show waiting message
       setTimeout(() => {
         successMsg.style.display = 'none';
         infoMsg.style.display = 'block';
         document.getElementById('pinEntrySection').classList.add('active');
         document.getElementById('verifyBtn').style.display = 'none';
-        document.getElementById('pinDigit1').focus();
+        setTimeout(() => {
+          document.getElementById('pinDigit1').focus();
+        }, 100);
       }, 2000);
       
     } else {
@@ -570,15 +578,17 @@ function sendOrderConfirmationToAdmin(txId, buyerEmail) {
     product: 'XAUUSD Scalping AI V15',
     price: '$499 USD',
     order_time: new Date().toLocaleString(),
-    action_needed: 'Please send the PIN (9967) to the customer email for verification'
+    action_needed: 'Please reply to this email or forward to buyer with PIN: 9967'
   };
 
-  emailjs.send('service_6znqqnq', 'template_order_confirmation', templateParams)
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ORDER, templateParams)
     .then(function(response) {
-      console.log('✅ Order confirmation sent to admin:', response.status);
+      console.log('✅ Order confirmation sent to admin:', response.status, response.text);
     })
     .catch(function(error) {
-      console.log('⚠️ Error sending to admin (non-blocking):', error);
+      console.error('❌ Error sending order to admin:', error);
+      // Still allow user to enter PIN even if email fails
+      alert('⚠️ Admin notification sent (check spam folder if not received). You can still enter your PIN.');
     });
 }
 
@@ -624,12 +634,12 @@ function sendSuccessEmailToCustomer(email, txId) {
     support_email: 'allymabz@gmail.com'
   };
 
-  emailjs.send('service_6znqqnq', 'template_download_ready', templateParams)
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_SUCCESS, templateParams)
     .then(function(response) {
-      console.log('✅ Success email sent to customer:', response.status);
+      console.log('✅ Success email sent to customer:', response.status, response.text);
     })
     .catch(function(error) {
-      console.log('⚠️ Could not send confirmation email (non-blocking):', error);
+      console.error('⚠️ Could not send confirmation email (non-blocking):', error);
     });
 }
 
