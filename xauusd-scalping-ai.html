@@ -8,6 +8,7 @@
 <meta property="og:title" content="XAUUSD Scalping AI V15 — LiquidGold AI" />
 <meta property="og:description" content="Fully automated MT5 Expert Advisor for high-conviction XAUUSD scalping during London & New York sessions." />
 <meta property="og:type" content="website" />
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/build/index.min.js"></script>
 <style>
   :root{
     --bg:#0b0d12;
@@ -107,6 +108,7 @@
   .note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
   .success-msg{display:none;background:rgba(74,222,128,.1);border:1px solid var(--green);border-radius:8px;padding:12px;margin:12px 0;color:var(--green);font-size:13px;text-align:center}
   .error-msg{display:none;background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:8px;padding:12px;margin:12px 0;color:var(--red);font-size:13px;text-align:center}
+  .info-msg{display:none;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.5);border-radius:8px;padding:12px;margin:12px 0;color:rgba(59,130,246,.8);font-size:13px;text-align:center}
   .download-section{display:none;background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:20px;margin-top:20px;text-align:center}
   .download-section.active{display:block}
   .download-section a{display:inline-block;padding:12px 24px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border-radius:8px;margin-top:12px}
@@ -414,10 +416,13 @@
     </div>
 
     <div class="success-msg" id="successMsg">
-      ✅ Payment verified! Proceeding to security verification...
+      ✅ Payment verified! Sending order confirmation to admin...
     </div>
     <div class="error-msg" id="errorMsg">
       ❌ Transaction not found or invalid. Please try again.
+    </div>
+    <div class="info-msg" id="infoMsg">
+      ℹ️ Waiting for admin confirmation. You'll receive PIN via email shortly...
     </div>
 
     <button class="btn-verify" onclick="verifyPayment()" id="verifyBtn">Verify Payment & Continue</button>
@@ -425,7 +430,7 @@
     <!-- PIN ENTRY SECTION -->
     <div class="pin-entry-section" id="pinEntrySection">
       <h3 style="text-align:center;color:var(--gold-2)">🔐 Extra Security: Enter Your PIN</h3>
-      <p style="text-align:center;color:var(--muted);font-size:13px">As an extra layer of security, please enter the 4-digit PIN provided by the admin.</p>
+      <p style="text-align:center;color:var(--muted);font-size:13px">Check your email for the PIN from the admin. Enter it below to unlock your download link.</p>
       
       <div class="pin-input-wrapper">
         <input type="text" class="pin-digit" id="pinDigit1" maxlength="1" inputmode="numeric" />
@@ -435,7 +440,7 @@
       </div>
 
       <div class="pin-note">
-        <b>Don't have a PIN yet?</b> Contact the admin at <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> to request your security PIN.
+        <b>Haven't received your PIN?</b> Check your spam folder or contact <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a>
       </div>
 
       <button class="btn-verify" onclick="verifyPIN()" id="pinVerifyBtn">Verify PIN & Get Access</button>
@@ -446,7 +451,9 @@
       <h3>✅ Access Granted</h3>
       <div class="security-badge">🔒 Protected EX5 File — Your Source Code is Secure</div>
       <p>Your payment has been verified and security PIN confirmed. Download the protected AI:</p>
-      <a href="#" onclick="alert('Download link will be sent to your email.\n\nFile: XAUUSD_ScalpingAI_V15.ex5 (Protected Compiled Binary)\n\nCheck your spam folder if not received within 5 minutes.')">📥 Download XAUUSD_ScalpingAI_V15.ex5</a>
+      <a href="https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip" target="_blank" download>
+        📥 Download XAUUSD_ScalpingAI_V15.ex5
+      </a>
       <p style="font-size:12px;margin-top:12px;color:var(--muted)"><b>This is the protected compiled file (.ex5)</b> — your proprietary code cannot be accessed or decompiled.</p>
       <p style="font-size:12px;margin-top:12px;color:var(--muted)">Check your email for setup instructions & Telegram signal group link</p>
     </div>
@@ -462,8 +469,12 @@
 </footer>
 
 <script>
+// EmailJS Configuration
+emailjs.init("service_6znqqnq");
+
 const VALID_TRANSACTIONS = {};
 const CORRECT_PIN = '9967';
+const ADMIN_EMAIL = 'allymabz@gmail.com';
 let currentTransactionId = '';
 let currentBuyerEmail = '';
 
@@ -500,10 +511,12 @@ function verifyPayment() {
   const email = document.getElementById('buyerEmail').value.trim();
   const successMsg = document.getElementById('successMsg');
   const errorMsg = document.getElementById('errorMsg');
+  const infoMsg = document.getElementById('infoMsg');
   const verifyBtn = document.getElementById('verifyBtn');
 
   successMsg.style.display = 'none';
   errorMsg.style.display = 'none';
+  infoMsg.style.display = 'none';
 
   if(!txId || !email) {
     errorMsg.textContent = '❌ Please enter transaction ID and email';
@@ -519,19 +532,26 @@ function verifyPayment() {
     
     if(isValid) {
       successMsg.style.display = 'block';
-      verifyBtn.style.display = 'none';
       
-      VALID_TRANSACTIONS[txId] = { email, timestamp: new Date().toISOString() };
+      VALID_TRANSACTIONS[txId] = { 
+        email: email, 
+        timestamp: new Date().toISOString(),
+        pinSent: false
+      };
       currentTransactionId = txId;
       currentBuyerEmail = email;
       
-      // Show PIN entry section
-      document.getElementById('pinEntrySection').classList.add('active');
+      // Send order confirmation email to admin
+      sendOrderConfirmationToAdmin(txId, email);
       
-      // Focus on first PIN digit
+      // Show waiting message
       setTimeout(() => {
+        successMsg.style.display = 'none';
+        infoMsg.style.display = 'block';
+        document.getElementById('pinEntrySection').classList.add('active');
+        document.getElementById('verifyBtn').style.display = 'none';
         document.getElementById('pinDigit1').focus();
-      }, 100);
+      }, 2000);
       
     } else {
       errorMsg.textContent = '❌ Transaction ID not found. Please check and try again.';
@@ -542,6 +562,26 @@ function verifyPayment() {
   }, 1500);
 }
 
+function sendOrderConfirmationToAdmin(txId, buyerEmail) {
+  const templateParams = {
+    to_email: ADMIN_EMAIL,
+    transaction_id: txId,
+    buyer_email: buyerEmail,
+    product: 'XAUUSD Scalping AI V15',
+    price: '$499 USD',
+    order_time: new Date().toLocaleString(),
+    action_needed: 'Please send the PIN (9967) to the customer email for verification'
+  };
+
+  emailjs.send('service_6znqqnq', 'template_order_confirmation', templateParams)
+    .then(function(response) {
+      console.log('✅ Order confirmation sent to admin:', response.status);
+    })
+    .catch(function(error) {
+      console.log('⚠️ Error sending to admin (non-blocking):', error);
+    });
+}
+
 function verifyPIN() {
   const pin1 = document.getElementById('pinDigit1').value;
   const pin2 = document.getElementById('pinDigit2').value;
@@ -550,7 +590,6 @@ function verifyPIN() {
   const enteredPin = pin1 + pin2 + pin3 + pin4;
   
   const pinErrorMsg = document.getElementById('pinErrorMsg');
-  const pinVerifyBtn = document.getElementById('pinVerifyBtn');
   const downloadSection = document.getElementById('downloadSection');
   const pinEntrySection = document.getElementById('pinEntrySection');
 
@@ -564,11 +603,34 @@ function verifyPIN() {
     pinErrorMsg.style.display = 'none';
     pinEntrySection.classList.remove('active');
     downloadSection.classList.add('active');
-    alert(`✅ PIN verified!\n\nDownload link will be sent to ${currentBuyerEmail}\n\nCheck your spam folder if not received within 5 minutes.`);
+    
+    // Send success confirmation to customer
+    sendSuccessEmailToCustomer(currentBuyerEmail, currentTransactionId);
+    
+    alert(`✅ PIN verified!\n\nYour download is now ready. You can download the file below or check your email for the direct link.`);
   } else {
-    pinErrorMsg.textContent = '❌ Incorrect PIN. Please try again or contact allymabz@gmail.com for assistance.';
+    pinErrorMsg.textContent = '❌ Incorrect PIN. Please check your email or contact allymabz@gmail.com for assistance.';
     pinErrorMsg.style.display = 'block';
   }
+}
+
+function sendSuccessEmailToCustomer(email, txId) {
+  const templateParams = {
+    to_email: email,
+    transaction_id: txId,
+    product: 'XAUUSD Scalping AI V15',
+    download_link: 'https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip',
+    setup_instructions: 'Extract the .ex5 file to your MT5 Experts folder: MQL5/Experts/',
+    support_email: 'allymabz@gmail.com'
+  };
+
+  emailjs.send('service_6znqqnq', 'template_download_ready', templateParams)
+    .then(function(response) {
+      console.log('✅ Success email sent to customer:', response.status);
+    })
+    .catch(function(error) {
+      console.log('⚠️ Could not send confirmation email (non-blocking):', error);
+    });
 }
 
 // PIN input auto-advance to next field
@@ -595,6 +657,7 @@ function resetPaymentForm() {
   document.getElementById('buyerEmail').value = '';
   document.getElementById('successMsg').style.display = 'none';
   document.getElementById('errorMsg').style.display = 'none';
+  document.getElementById('infoMsg').style.display = 'none';
   document.getElementById('pinErrorMsg').style.display = 'none';
   document.getElementById('downloadSection').classList.remove('active');
   document.getElementById('pinEntrySection').classList.remove('active');
