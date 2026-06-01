@@ -469,31 +469,43 @@
 </footer>
 
 <script>
-// Initialize EmailJS with error handling
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY_HERE'; // ⚠️ REPLACE WITH YOUR PUBLIC KEY
+// ═══════════════════════════════════════════════════════════════════════════
+// EmailJS Configuration - WITH YOUR REAL CREDENTIALS
+// ═══════════════════════════════════════════════════════════════════════════
+
+const EMAILJS_PUBLIC_KEY = 'ehkRhmWH5ltLrAJlt';
 const EMAILJS_SERVICE_ID = 'service_6znqqnq';
-const EMAILJS_TEMPLATE_ORDER = 'template_order_confirmation';
-const EMAILJS_TEMPLATE_SUCCESS = 'template_download_ready';
+const EMAILJS_TEMPLATE_ORDER = 'template_o6agw4m';
+const EMAILJS_TEMPLATE_SUCCESS = 'template_evikxck';
 const ADMIN_EMAIL = 'allymabz@gmail.com';
 const CORRECT_PIN = '9967';
 
-emailjs.init(EMAILJS_PUBLIC_KEY);
+// Initialize EmailJS
+try {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+  console.log('✅ EmailJS initialized successfully');
+  console.log('📧 Service ID:', EMAILJS_SERVICE_ID);
+  console.log('📝 Order Template:', EMAILJS_TEMPLATE_ORDER);
+  console.log('📝 Success Template:', EMAILJS_TEMPLATE_SUCCESS);
+} catch(e) {
+  console.error('❌ EmailJS initialization failed:', e);
+}
 
 const VALID_TRANSACTIONS = {};
 let currentTransactionId = '';
 let currentBuyerEmail = '';
 
-console.log('✅ EmailJS initialized with Service ID:', EMAILJS_SERVICE_ID);
-
 function openPaymentModal() {
   document.getElementById('paymentModal').classList.add('show');
   document.body.style.overflow = 'hidden';
+  console.log('💳 Payment modal opened');
 }
 
 function closePaymentModal() {
   document.getElementById('paymentModal').classList.remove('show');
   document.body.style.overflow = 'auto';
   resetPaymentForm();
+  console.log('💳 Payment modal closed');
 }
 
 function selectPayment(method) {
@@ -506,10 +518,12 @@ function selectPayment(method) {
     usdtDetails.style.display = 'block';
     mpesaDetails.style.display = 'none';
     methods[0].classList.add('selected');
+    console.log('💎 USDT payment selected');
   } else if(method === 'mpesa') {
     usdtDetails.style.display = 'none';
     mpesaDetails.style.display = 'block';
     methods[1].classList.add('selected');
+    console.log('📱 M-Pesa payment selected');
   }
 }
 
@@ -525,9 +539,14 @@ function verifyPayment() {
   errorMsg.style.display = 'none';
   infoMsg.style.display = 'none';
 
+  console.log('🔍 Verifying payment...');
+  console.log('Transaction ID:', txId);
+  console.log('Email:', email);
+
   if(!txId || !email) {
     errorMsg.textContent = '❌ Please enter transaction ID and email';
     errorMsg.style.display = 'block';
+    console.error('❌ Missing transaction ID or email');
     return;
   }
 
@@ -538,6 +557,7 @@ function verifyPayment() {
     const isValid = txId.length > 5;
     
     if(isValid) {
+      console.log('✅ Transaction verification passed');
       successMsg.style.display = 'block';
       
       VALID_TRANSACTIONS[txId] = { 
@@ -556,12 +576,14 @@ function verifyPayment() {
         infoMsg.style.display = 'block';
         document.getElementById('pinEntrySection').classList.add('active');
         document.getElementById('verifyBtn').style.display = 'none';
+        console.log('📌 PIN entry section activated');
         setTimeout(() => {
           document.getElementById('pinDigit1').focus();
         }, 100);
       }, 2000);
       
     } else {
+      console.error('❌ Transaction verification failed');
       errorMsg.textContent = '❌ Transaction ID not found. Please check and try again.';
       errorMsg.style.display = 'block';
       verifyBtn.disabled = false;
@@ -578,17 +600,25 @@ function sendOrderConfirmationToAdmin(txId, buyerEmail) {
     product: 'XAUUSD Scalping AI V15',
     price: '$499 USD',
     order_time: new Date().toLocaleString(),
-    action_needed: 'Please reply to this email or forward to buyer with PIN: 9967'
+    action_needed: 'Reply to customer with PIN: 9967'
   };
+
+  console.log('📤 Sending order confirmation email...');
+  console.log('📧 Recipient:', ADMIN_EMAIL);
+  console.log('🏷️ Template ID:', EMAILJS_TEMPLATE_ORDER);
 
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ORDER, templateParams)
     .then(function(response) {
-      console.log('✅ Order confirmation sent to admin:', response.status, response.text);
+      console.log('✅ Order confirmation email sent successfully!');
+      console.log('Response Status:', response.status);
+      console.log('Response Text:', response.text);
     })
     .catch(function(error) {
-      console.error('❌ Error sending order to admin:', error);
-      // Still allow user to enter PIN even if email fails
-      alert('⚠️ Admin notification sent (check spam folder if not received). You can still enter your PIN.');
+      console.error('❌ Error sending order confirmation email:', error);
+      console.error('Error Message:', error.message || error);
+      console.error('Error Status:', error.status);
+      // Don't block user - show warning but allow continuation
+      alert('⚠️ There was an issue notifying the admin, but your order is still being processed. You can continue entering your PIN.');
     });
 }
 
@@ -603,13 +633,17 @@ function verifyPIN() {
   const downloadSection = document.getElementById('downloadSection');
   const pinEntrySection = document.getElementById('pinEntrySection');
 
+  console.log('🔐 PIN verification attempt. Entered:', enteredPin, 'Correct:', CORRECT_PIN);
+
   if(!pin1 || !pin2 || !pin3 || !pin4) {
     pinErrorMsg.textContent = '❌ Please enter all 4 PIN digits';
     pinErrorMsg.style.display = 'block';
+    console.log('❌ Incomplete PIN entry');
     return;
   }
 
   if(enteredPin === CORRECT_PIN) {
+    console.log('✅ PIN verification successful!');
     pinErrorMsg.style.display = 'none';
     pinEntrySection.classList.remove('active');
     downloadSection.classList.add('active');
@@ -619,6 +653,7 @@ function verifyPIN() {
     
     alert(`✅ PIN verified!\n\nYour download is now ready. You can download the file below or check your email for the direct link.`);
   } else {
+    console.error('❌ PIN verification failed. Incorrect PIN entered.');
     pinErrorMsg.textContent = '❌ Incorrect PIN. Please check your email or contact allymabz@gmail.com for assistance.';
     pinErrorMsg.style.display = 'block';
   }
@@ -634,29 +669,40 @@ function sendSuccessEmailToCustomer(email, txId) {
     support_email: 'allymabz@gmail.com'
   };
 
+  console.log('📤 Sending download ready email to customer...');
+  console.log('📧 Recipient:', email);
+  console.log('🏷️ Template ID:', EMAILJS_TEMPLATE_SUCCESS);
+
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_SUCCESS, templateParams)
     .then(function(response) {
-      console.log('✅ Success email sent to customer:', response.status, response.text);
+      console.log('✅ Download confirmation email sent successfully!');
+      console.log('Response Status:', response.status);
+      console.log('Response Text:', response.text);
     })
     .catch(function(error) {
-      console.error('⚠️ Could not send confirmation email (non-blocking):', error);
+      console.error('⚠️ Could not send customer confirmation email:', error);
+      console.error('Error Message:', error.message || error);
+      // This is non-blocking - user already has download link visible
     });
 }
 
 // PIN input auto-advance to next field
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎯 Page initialized - setting up PIN input handlers');
   const pinDigits = document.querySelectorAll('.pin-digit');
   
   pinDigits.forEach((digit, index) => {
     digit.addEventListener('input', function(e) {
       if(this.value.length === 1 && index < pinDigits.length - 1) {
         pinDigits[index + 1].focus();
+        console.log('→ Moved to PIN digit', index + 2);
       }
     });
     
     digit.addEventListener('keydown', function(e) {
       if(e.key === 'Backspace' && !this.value && index > 0) {
         pinDigits[index - 1].focus();
+        console.log('← Moved back to PIN digit', index);
       }
     });
   });
@@ -676,6 +722,7 @@ function resetPaymentForm() {
   document.getElementById('verifyBtn').style.display = 'block';
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
   document.querySelectorAll('.pin-digit').forEach(digit => digit.value = '');
+  console.log('🔄 Payment form reset');
 }
 
 // Close modal on outside click
