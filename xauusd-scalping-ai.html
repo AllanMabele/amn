@@ -4,11 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>XAUUSD Scalping AI V15 — LiquidGold AI</title>
-<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5. Three-timeframe alignment, adaptive AI confidence, layered r[...]
+<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5. Three-timeframe alignment, adaptive AI confidence, layered risk management." />
 <meta property="og:title" content="XAUUSD Scalping AI V15 — LiquidGold AI" />
 <meta property="og:description" content="Fully automated MT5 Expert Advisor for high-conviction XAUUSD scalping during London & New York sessions." />
 <meta property="og:type" content="website" />
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/build/index.min.js"></script>
 <style>
   :root{
     --bg:#0b0d12;
@@ -27,7 +26,7 @@
   a{color:var(--gold-2);text-decoration:none}
   a:hover{text-decoration:underline}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding:6px 12px;border:1px solid rgba(212,175,55,.35);border-radius:999px;background:rgba(212,175,55,.08)}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding:6px 12px;border:1px solid rgba(212,175,55,.35);border-radius:999px;background:rgba(212,175,55,.1)}
   h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spacing:-.01em;margin:0 0 16px}
   h1{font-size:clamp(36px,6vw,64px);line-height:1.05;background:linear-gradient(180deg,#fff 0%,#d4af37 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   h2{font-size:clamp(28px,3.6vw,40px);color:#fff}
@@ -136,7 +135,7 @@
   <div class="wrap">
     <span class="eyebrow">Confidential Investor Proposal · 2026</span>
     <h1 style="margin-top:18px">Institutional-Grade Gold Scalping Engine with Adaptive AI</h1>
-    <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V15</b> is a fully automated MetaTrader 5 Expert Advisor engineered for high-conviction gold scalping during London and New York sessions.</p>
+    <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V15</b> is a fully automated MetaTrader 5 Expert Advisor engineered for high-conviction gold scalping during London and New York sessions with three-timeframe alignment and adaptive AI confidence.</p>
     <div class="cta-row" style="justify-content:flex-start">
       <a class="cta" href="#payment" onclick="openPaymentModal()">Get Started</a>
       <a class="cta ghost" href="#advantages">See the Edge</a>
@@ -164,7 +163,7 @@
     <div class="section-head">
       <span class="eyebrow">Executive Summary</span>
       <h2 style="margin-top:14px">A paradigm shift from V14</h2>
-      <p>The trend-directing timeframe has been elevated from H1 to H4, and entry alignment has been hardened from a relaxed "M15 OR M5" to a strict "<b style="color:#fff">H4 + M15 + M5 all agree</b>" model. This eliminates 70–80% of false entries seen in competing systems.</p>
+      <p>The trend-directing timeframe has been elevated from H1 to H4, and entry alignment has been hardened from a relaxed "M15 OR M5" to a strict "<b style="color:#fff">H4 + M15 + M5 all agree</b>" model. This drastically reduces false signals and keeps you in high-conviction setups only.</p>
     </div>
   </div>
 </section>
@@ -341,7 +340,7 @@
   <div class="wrap">
     <span class="eyebrow">Ready to Get Started?</span>
     <h2 style="margin-top:14px">Purchase XAUUSD Scalping AI V15</h2>
-    <p style="max-width:680px;margin:14px auto 0">One-time payment unlocks lifetime access to the protected AI + Telegram signal channel + dedicated support. No recurring fees. Complete installation & setup guide included.</p>
+    <p style="max-width:680px;margin:14px auto 0">One-time payment unlocks lifetime access to the protected AI + Telegram signal channel + dedicated support. No recurring fees. Complete installation guide included.</p>
 
     <div class="contact-cards">
       <div class="card">
@@ -365,7 +364,7 @@
       <a class="cta ghost" href="mailto:allymabz@gmail.com">Email Support</a>
     </div>
 
-    <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Always trade with capital you can afford to lose.</p>
+    <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Always use proper risk management and never risk more than you can afford to lose.</p>
   </div>
 </section>
 
@@ -411,26 +410,26 @@
     </div>
 
     <div class="form-group">
-      <label>📧 Your Email (for download link)</label>
+      <label>📧 Your Email (for admin confirmation)</label>
       <input type="email" id="buyerEmail" placeholder="you@example.com" />
     </div>
 
     <div class="success-msg" id="successMsg">
-      ✅ Payment verified! Sending order confirmation to admin...
+      ✅ Payment verified! Waiting for admin confirmation...
     </div>
     <div class="error-msg" id="errorMsg">
       ❌ Transaction not found or invalid. Please try again.
     </div>
     <div class="info-msg" id="infoMsg">
-      ℹ️ Waiting for admin confirmation. You'll receive PIN via email shortly...
+      ℹ️ Your payment has been registered. Contact <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID to request your PIN.
     </div>
 
     <button class="btn-verify" onclick="verifyPayment()" id="verifyBtn">Verify Payment & Continue</button>
 
     <!-- PIN ENTRY SECTION -->
     <div class="pin-entry-section" id="pinEntrySection">
-      <h3 style="text-align:center;color:var(--gold-2)">🔐 Extra Security: Enter Your PIN</h3>
-      <p style="text-align:center;color:var(--muted);font-size:13px">Check your email for the PIN from the admin. Enter it below to unlock your download link.</p>
+      <h3 style="text-align:center;color:var(--gold-2)">🔐 Security: Enter Your PIN</h3>
+      <p style="text-align:center;color:var(--muted);font-size:13px">Once you receive your PIN from the admin, enter it below to unlock your download link.</p>
       
       <div class="pin-input-wrapper">
         <input type="text" class="pin-digit" id="pinDigit1" maxlength="1" inputmode="numeric" />
@@ -440,7 +439,7 @@
       </div>
 
       <div class="pin-note">
-        <b>Haven't received your PIN?</b> Check your spam folder or contact <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a>
+        <b>Requesting your PIN?</b> Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID.
       </div>
 
       <button class="btn-verify" onclick="verifyPIN()" id="pinVerifyBtn">Verify PIN & Get Access</button>
@@ -450,12 +449,11 @@
     <div class="download-section" id="downloadSection">
       <h3>✅ Access Granted</h3>
       <div class="security-badge">🔒 Protected EX5 File — Your Source Code is Secure</div>
-      <p>Your payment has been verified and security PIN confirmed. Download the protected AI:</p>
+      <p>Your PIN has been verified. Download the protected AI:</p>
       <a href="https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip" target="_blank" download>
         📥 Download XAUUSD_ScalpingAI_V15.ex5
       </a>
       <p style="font-size:12px;margin-top:12px;color:var(--muted)"><b>This is the protected compiled file (.ex5)</b> — your proprietary code cannot be accessed or decompiled.</p>
-      <p style="font-size:12px;margin-top:12px;color:var(--muted)">Check your email for setup instructions & Telegram signal group link</p>
     </div>
 
     <p style="font-size:11px;color:var(--muted);margin-top:20px;text-align:center">
@@ -469,27 +467,8 @@
 </footer>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════════════
-// EmailJS Configuration - WITH YOUR REAL CREDENTIALS
-// ═══════════════════════════════════════════════════════════════════════════
-
-const EMAILJS_PUBLIC_KEY = 'ehkRhmWH5ltLrAJlt';
-const EMAILJS_SERVICE_ID = 'service_6znqqnq';
-const EMAILJS_TEMPLATE_ORDER = 'template_o6agw4m';
-const EMAILJS_TEMPLATE_SUCCESS = 'template_evikxck';
-const ADMIN_EMAIL = 'allymabz@gmail.com';
 const CORRECT_PIN = '9967';
-
-// Initialize EmailJS
-try {
-  emailjs.init(EMAILJS_PUBLIC_KEY);
-  console.log('✅ EmailJS initialized successfully');
-  console.log('📧 Service ID:', EMAILJS_SERVICE_ID);
-  console.log('📝 Order Template:', EMAILJS_TEMPLATE_ORDER);
-  console.log('📝 Success Template:', EMAILJS_TEMPLATE_SUCCESS);
-} catch(e) {
-  console.error('❌ EmailJS initialization failed:', e);
-}
+const ADMIN_EMAIL = 'allymabz@gmail.com';
 
 const VALID_TRANSACTIONS = {};
 let currentTransactionId = '';
@@ -562,14 +541,10 @@ function verifyPayment() {
       
       VALID_TRANSACTIONS[txId] = { 
         email: email, 
-        timestamp: new Date().toISOString(),
-        pinSent: false
+        timestamp: new Date().toISOString()
       };
       currentTransactionId = txId;
       currentBuyerEmail = email;
-      
-      // Send order confirmation email to admin
-      sendOrderConfirmationToAdmin(txId, email);
       
       setTimeout(() => {
         successMsg.style.display = 'none';
@@ -590,36 +565,6 @@ function verifyPayment() {
       verifyBtn.textContent = 'Verify Payment & Continue';
     }
   }, 1500);
-}
-
-function sendOrderConfirmationToAdmin(txId, buyerEmail) {
-  const templateParams = {
-    to_email: ADMIN_EMAIL,
-    transaction_id: txId,
-    buyer_email: buyerEmail,
-    product: 'XAUUSD Scalping AI V15',
-    price: '$499 USD',
-    order_time: new Date().toLocaleString(),
-    action_needed: 'Reply to customer with PIN: 9967'
-  };
-
-  console.log('📤 Sending order confirmation email...');
-  console.log('📧 Recipient:', ADMIN_EMAIL);
-  console.log('🏷️ Template ID:', EMAILJS_TEMPLATE_ORDER);
-
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ORDER, templateParams)
-    .then(function(response) {
-      console.log('✅ Order confirmation email sent successfully!');
-      console.log('Response Status:', response.status);
-      console.log('Response Text:', response.text);
-    })
-    .catch(function(error) {
-      console.error('❌ Error sending order confirmation email:', error);
-      console.error('Error Message:', error.message || error);
-      console.error('Error Status:', error.status);
-      // Don't block user - show warning but allow continuation
-      alert('⚠️ There was an issue notifying the admin, but your order is still being processed. You can continue entering your PIN.');
-    });
 }
 
 function verifyPIN() {
@@ -647,43 +592,12 @@ function verifyPIN() {
     pinErrorMsg.style.display = 'none';
     pinEntrySection.classList.remove('active');
     downloadSection.classList.add('active');
-    
-    // Send success confirmation to customer
-    sendSuccessEmailToCustomer(currentBuyerEmail, currentTransactionId);
-    
-    alert(`✅ PIN verified!\n\nYour download is now ready. You can download the file below or check your email for the direct link.`);
+    alert(`✅ PIN verified!\n\nYour download is now ready. Click the link below to download the file.`);
   } else {
     console.error('❌ PIN verification failed. Incorrect PIN entered.');
     pinErrorMsg.textContent = '❌ Incorrect PIN. Please check your email or contact allymabz@gmail.com for assistance.';
     pinErrorMsg.style.display = 'block';
   }
-}
-
-function sendSuccessEmailToCustomer(email, txId) {
-  const templateParams = {
-    to_email: email,
-    transaction_id: txId,
-    product: 'XAUUSD Scalping AI V15',
-    download_link: 'https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip',
-    setup_instructions: 'Extract the .ex5 file to your MT5 Experts folder: MQL5/Experts/',
-    support_email: 'allymabz@gmail.com'
-  };
-
-  console.log('📤 Sending download ready email to customer...');
-  console.log('📧 Recipient:', email);
-  console.log('🏷️ Template ID:', EMAILJS_TEMPLATE_SUCCESS);
-
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_SUCCESS, templateParams)
-    .then(function(response) {
-      console.log('✅ Download confirmation email sent successfully!');
-      console.log('Response Status:', response.status);
-      console.log('Response Text:', response.text);
-    })
-    .catch(function(error) {
-      console.error('⚠️ Could not send customer confirmation email:', error);
-      console.error('Error Message:', error.message || error);
-      // This is non-blocking - user already has download link visible
-    });
 }
 
 // PIN input auto-advance to next field
