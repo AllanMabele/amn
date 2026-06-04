@@ -4,10 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>XAUUSD Scalping AI V15 — LiquidGold AI</title>
-<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5. Three-timeframe alignment, adaptive AI confidence, layered risk management." />
-<meta property="og:title" content="XAUUSD Scalping AI V15 — LiquidGold AI" />
-<meta property="og:description" content="Fully automated MT5 Expert Advisor for high-conviction XAUUSD scalping during London & New York sessions." />
-<meta property="og:type" content="website" />
+<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5." />
 <style>
   :root{
     --bg:#0b0d12;
@@ -32,7 +29,6 @@
   h2{font-size:clamp(28px,3.6vw,40px);color:#fff}
   h3{font-size:20px;color:var(--gold-2);margin-bottom:8px}
   p{color:var(--muted)}
-  /* Header */
   header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1080px;margin:0 auto}
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.18em;font-size:13px}
@@ -40,7 +36,6 @@
   .cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2)}
   .cta:hover{filter:brightness(1.08);text-decoration:none}
   .cta.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(212,175,55,.4)}
-  /* Hero */
   .hero{padding:90px 0 60px;background:radial-gradient(900px 400px at 80% -10%,rgba(212,175,55,.18),transparent 60%),radial-gradient(700px 300px at 10% 10%,rgba(212,175,55,.08),transparent 60%)}
   .hero p.lead{font-size:18px;max-width:720px;margin:18px 0 28px;color:#c9d0dc}
   .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
@@ -50,45 +45,42 @@
   .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
   .stat .v{font-family:Georgia,serif;font-size:28px;color:var(--gold-2);font-weight:700}
   .stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-top:6px}
-  @media (max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
-  /* Sections */
+  @media(max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
   section{padding:72px 0;border-top:1px solid var(--line)}
   .section-head{max-width:760px;margin-bottom:36px}
   .grid{display:grid;gap:18px}
   .cols-2{grid-template-columns:repeat(2,1fr)}
   .cols-3{grid-template-columns:repeat(3,1fr)}
-  @media (max-width:780px){.cols-2,.cols-3{grid-template-columns:1fr}}
+  @media(max-width:780px){.cols-2,.cols-3{grid-template-columns:1fr}}
   .card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:24px;transition:border-color .2s,transform .2s}
   .card:hover{border-color:rgba(212,175,55,.35);transform:translateY(-2px)}
   .card .num{font-family:Georgia,serif;color:var(--gold);font-size:14px;letter-spacing:.2em}
   .card h3{margin-top:8px}
   .card p{margin:8px 0 0;font-size:15px}
-  /* Table */
   .tbl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
   .tbl th,.tbl td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:15px}
   .tbl th{background:#0f1320;color:var(--gold-2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
   .tbl tr:last-child td{border-bottom:none}
   .tbl td b{color:#fff}
-  /* Check list */
   ul.checks{list-style:none;padding:0;margin:0;display:grid;gap:12px}
   ul.checks li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;gap:12px}
   ul.checks li::before{content:"✓";color:var(--gold);font-weight:700;margin-top:1px}
   ul.checks li b{color:#fff;display:block;margin-bottom:2px}
   ul.checks li span{color:var(--muted);font-size:14px}
-  /* CTA section */
   .cta-section{text-align:center;background:radial-gradient(700px 300px at 50% 0%,rgba(212,175,55,.18),transparent 60%)}
   .cta-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
   .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto}
-  @media (max-width:600px){.contact-cards{grid-template-columns:1fr}}
+  @media(max-width:600px){.contact-cards{grid-template-columns:1fr}}
   .contact-cards .card{text-align:center}
   .contact-cards .card a{font-size:18px;color:var(--gold-2);font-weight:600;word-break:break-all}
   footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
   .disclaimer{max-width:760px;margin:24px auto 0;font-size:12px;color:#6b7280;line-height:1.5}
-  /* ─────── PAYMENT MODAL ─────── */
-  .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,.8);align-items:center;justify-content:center}
+
+  /* ── MODAL ── */
+  .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
   .modal.show{display:flex}
-  .modal-content{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:40px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto}
-  .modal-close{float:right;font-size:24px;font-weight:bold;cursor:pointer;color:var(--muted)}
+  .modal-content{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:40px;max-width:520px;width:90%;max-height:92vh;overflow-y:auto}
+  .modal-close{float:right;font-size:24px;font-weight:bold;cursor:pointer;color:var(--muted);line-height:1}
   .modal-close:hover{color:var(--text)}
   .modal h2{margin-top:0;color:var(--gold-2)}
   .payment-method{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:16px;margin:12px 0;cursor:pointer;transition:all .2s}
@@ -96,29 +88,82 @@
   .payment-method.selected{border-color:var(--gold);background:rgba(212,175,55,.1)}
   .payment-method h4{margin:0 0 6px;color:var(--gold-2)}
   .payment-method p{margin:0;font-size:13px}
-  .payment-addr{background:rgba(0,0,0,.3);padding:12px;border-radius:8px;margin:12px 0;word-break:break-all;font-family:monospace;font-size:13px;color:var(--gold-2)}
+  .payment-addr{background:rgba(0,0,0,.4);padding:12px;border-radius:8px;margin:12px 0;word-break:break-all;font-family:monospace;font-size:13px;color:var(--gold-2);position:relative}
+  .copy-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(212,175,55,.2);border:1px solid rgba(212,175,55,.4);color:var(--gold-2);font-size:11px;padding:4px 8px;border-radius:4px;cursor:pointer}
+  .copy-btn:hover{background:rgba(212,175,55,.35)}
   .form-group{margin:12px 0}
   .form-group label{display:block;margin-bottom:4px;font-size:13px;color:var(--muted)}
   .form-group input{width:100%;padding:10px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:14px;font-family:monospace}
   .form-group input:focus{outline:none;border-color:var(--gold)}
-  .btn-verify{width:100%;padding:12px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:16px;font-size:14px}
-  .btn-verify:hover{filter:brightness(1.08)}
-  .btn-verify:disabled{opacity:.5;cursor:not-allowed}
+  .btn-main{width:100%;padding:13px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:16px;font-size:15px;transition:filter .2s}
+  .btn-main:hover{filter:brightness(1.08)}
+  .btn-main:disabled{opacity:.45;cursor:not-allowed;filter:none}
   .note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
-  .success-msg{display:none;background:rgba(74,222,128,.1);border:1px solid var(--green);border-radius:8px;padding:12px;margin:12px 0;color:var(--green);font-size:13px;text-align:center}
-  .error-msg{display:none;background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:8px;padding:12px;margin:12px 0;color:var(--red);font-size:13px;text-align:center}
-  .info-msg{display:none;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.5);border-radius:8px;padding:12px;margin:12px 0;color:rgba(59,130,246,.8);font-size:13px;text-align:center}
-  .download-section{display:none;background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:20px;margin-top:20px;text-align:center}
-  .download-section.active{display:block}
-  .download-section a{display:inline-block;padding:12px 24px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border-radius:8px;margin-top:12px}
-  /* PIN Entry Styling */
-  .pin-entry-section{background:var(--panel);border:1px solid rgba(212,175,55,.3);border-radius:12px;padding:20px;margin:20px 0;display:none}
-  .pin-entry-section.active{display:block}
-  .pin-input-wrapper{display:flex;gap:8px;justify-content:center;margin:16px 0}
-  .pin-digit{width:50px;height:50px;font-size:24px;font-weight:700;text-align:center;background:var(--bg-2);border:2px solid var(--line);border-radius:8px;color:var(--gold-2);caret-color:var(--gold-2)}
-  .pin-digit:focus{outline:none;border-color:var(--gold)}
-  .pin-note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:12px 0;border-radius:4px;font-size:12px;color:var(--muted)}
-  .security-badge{background:rgba(74,222,128,.1);border:1px solid var(--green);border-radius:8px;padding:10px;margin:12px 0;color:var(--green);font-size:12px;text-align:center}
+  .msg{border-radius:8px;padding:12px;margin:12px 0;font-size:13px;text-align:center;display:none}
+  .msg.success{background:rgba(74,222,128,.1);border:1px solid var(--green);color:var(--green)}
+  .msg.error{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
+  .msg.info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.5);color:rgba(140,180,255,.9)}
+  .msg.show{display:block}
+
+  /* Steps */
+  .step{display:none}
+  .step.active{display:block}
+  .step-indicator{display:flex;gap:8px;margin-bottom:24px}
+  .step-dot{width:28px;height:28px;border-radius:50%;background:var(--panel);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);transition:all .3s}
+  .step-dot.done{background:rgba(74,222,128,.2);border-color:var(--green);color:var(--green)}
+  .step-dot.active{background:rgba(212,175,55,.2);border-color:var(--gold);color:var(--gold-2)}
+  .step-line{flex:1;height:2px;background:var(--line);align-self:center;border-radius:2px}
+  .step-line.done{background:var(--green)}
+
+  /* License display */
+  .license-box{background:rgba(212,175,55,.08);border:2px solid rgba(212,175,55,.4);border-radius:12px;padding:20px;text-align:center;margin:16px 0}
+  .license-key{font-family:monospace;font-size:22px;color:var(--gold-2);font-weight:700;letter-spacing:.12em;word-break:break-all}
+  .license-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;text-align:left}
+  .license-info-item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px}
+  .license-info-item .li-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .license-info-item .li-value{font-size:14px;color:#fff;font-weight:600;margin-top:2px}
+  .download-btn{display:inline-block;padding:14px 28px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border-radius:10px;margin-top:14px;font-size:15px;cursor:pointer;border:none;width:100%;text-align:center}
+  .download-btn:hover{filter:brightness(1.08);text-decoration:none}
+
+  /* Spinner */
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Admin portal */
+  #adminPortal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:var(--bg);overflow-y:auto}
+  .admin-nav{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  .admin-nav h3{margin:0;font-size:16px}
+  .admin-content{max-width:1200px;margin:0 auto;padding:24px}
+  .admin-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--panel);padding:4px;border-radius:10px;border:1px solid var(--line)}
+  .admin-tab{flex:1;padding:10px;text-align:center;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);border:none;background:none;transition:all .2s}
+  .admin-tab.active{background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408}
+  .admin-panel{display:none}
+  .admin-panel.active{display:block}
+  .admin-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+  .admin-card h4{margin:0 0 16px;color:var(--gold-2)}
+  .admin-input{width:100%;padding:10px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:14px;margin-bottom:10px}
+  .admin-input:focus{outline:none;border-color:var(--gold)}
+  .admin-btn{padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:none;transition:all .2s}
+  .admin-btn.primary{background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408}
+  .admin-btn.danger{background:rgba(239,68,68,.2);color:var(--red);border:1px solid rgba(239,68,68,.4)}
+  .admin-btn.success{background:rgba(74,222,128,.2);color:var(--green);border:1px solid rgba(74,222,128,.4)}
+  .admin-btn:hover{filter:brightness(1.1)}
+  .license-table{width:100%;border-collapse:collapse}
+  .license-table th,.license-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:13px}
+  .license-table th{color:var(--gold-2);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+  .license-table tr:hover td{background:rgba(255,255,255,.02)}
+  .badge-status{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.08em}
+  .badge-status.active{background:rgba(74,222,128,.2);color:var(--green)}
+  .badge-status.suspended{background:rgba(239,68,68,.2);color:var(--red)}
+  .badge-status.expired{background:rgba(156,163,175,.2);color:#9ca3af}
+  .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+  @media(max-width:700px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
+  .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
+  .stat-card .sc-v{font-size:28px;font-family:Georgia,serif;color:var(--gold-2);font-weight:700}
+  .stat-card .sc-l{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:4px}
+  .log-entry{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;display:flex;gap:12px;align-items:flex-start}
+  .log-entry .log-time{color:var(--muted);font-family:monospace;font-size:11px;white-space:nowrap}
+  select.admin-input option{background:var(--bg-2)}
 </style>
 </head>
 <body>
@@ -126,7 +171,10 @@
 <header>
   <div class="nav">
     <div class="brand"><span class="dot"></span>LIQUIDGOLD&nbsp;AI</div>
-    <a class="cta" href="#payment" onclick="openPaymentModal()">Purchase Access</a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="cta ghost" href="#" onclick="showAdminLogin();return false" style="font-size:12px;padding:7px 14px">Admin</a>
+      <a class="cta" href="#contact" onclick="openPaymentModal();return false">Purchase Access</a>
+    </div>
   </div>
 </header>
 
@@ -137,7 +185,7 @@
     <h1 style="margin-top:18px">Institutional-Grade Gold Scalping Engine with Adaptive AI</h1>
     <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V15</b> is a fully automated MetaTrader 5 Expert Advisor engineered for high-conviction gold scalping during London and New York sessions with three-timeframe alignment and adaptive AI confidence.</p>
     <div class="cta-row" style="justify-content:flex-start">
-      <a class="cta" href="#payment" onclick="openPaymentModal()">Get Started</a>
+      <a class="cta" href="#contact" onclick="openPaymentModal();return false">Get Started</a>
       <a class="cta ghost" href="#advantages">See the Edge</a>
     </div>
     <div class="badges">
@@ -175,30 +223,12 @@
       <span class="eyebrow">Core Advantages</span>
       <h2 style="margin-top:14px">Four edges that compound</h2>
     </div>
-
     <div class="grid cols-2">
-      <div class="card">
-        <div class="num">ADVANTAGE 01</div>
-        <h3>Three-Timeframe Institutional Alignment</h3>
-        <p>Most EAs trade off one or two timeframes. V15 demands all three agree before firing a single order — filtering out an estimated <b style="color:var(--gold-2)">70–80% of false entries</b>.</p>
-      </div>
-      <div class="card">
-        <div class="num">ADVANTAGE 02</div>
-        <h3>Adaptive Three-Tier Bias Detection</h3>
-        <p>Price-action override → EMA21/55 cross → EMA slope fallback. The system is never blind: it always has a directional read and adapts to market regime.</p>
-      </div>
-      <div class="card">
-        <div class="num">ADVANTAGE 03</div>
-        <h3>AI Self-Learning Confidence Engine</h3>
-        <p>A 0–100% confidence score continuously evaluates win-rate, directional win-rate, consecutive-loss penalty and ATR regime — self-regulating risk no static system can match.</p>
-      </div>
-      <div class="card">
-        <div class="num">ADVANTAGE 04</div>
-        <h3>Comprehensive Momentum Scoring</h3>
-        <p>Every potential entry is scored on a 100-point scale. A minimum score must be met (55 standard / 48 pullback) — quantitative discipline, zero discretion.</p>
-      </div>
+      <div class="card"><div class="num">ADVANTAGE 01</div><h3>Three-Timeframe Institutional Alignment</h3><p>Most EAs trade off one or two timeframes. V15 demands all three agree before firing a single order — filtering out an estimated <b style="color:var(--gold-2)">70–80% of false entries</b>.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 02</div><h3>Adaptive Three-Tier Bias Detection</h3><p>Price-action override → EMA21/55 cross → EMA slope fallback. The system is never blind: it always has a directional read and adapts to market regime.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 03</div><h3>AI Self-Learning Confidence Engine</h3><p>A 0–100% confidence score continuously evaluates win-rate, directional win-rate, consecutive-loss penalty and ATR regime — self-regulating risk no static system can match.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 04</div><h3>Comprehensive Momentum Scoring</h3><p>Every potential entry is scored on a 100-point scale. A minimum score must be met (55 standard / 48 pullback) — quantitative discipline, zero discretion.</p></div>
     </div>
-
     <h3 style="margin-top:48px;color:#fff;font-family:inherit;font-size:14px;letter-spacing:.18em;text-transform:uppercase">Timeframe Roles &amp; Scoring Weights</h3>
     <table class="tbl">
       <thead><tr><th>Timeframe</th><th>Role</th><th>Weight</th><th>Indicator</th></tr></thead>
@@ -335,13 +365,12 @@
   </div>
 </section>
 
-<!-- PRICING & PURCHASE -->
+<!-- PRICING -->
 <section id="contact" class="cta-section">
   <div class="wrap">
     <span class="eyebrow">Ready to Get Started?</span>
     <h2 style="margin-top:14px">Purchase XAUUSD Scalping AI V15</h2>
     <p style="max-width:680px;margin:14px auto 0">One-time payment unlocks lifetime access to the protected AI + Telegram signal channel + dedicated support. No recurring fees. Complete installation guide included.</p>
-
     <div class="contact-cards">
       <div class="card">
         <div class="num">PRICE</div>
@@ -358,292 +387,739 @@
         </ul>
       </div>
     </div>
-
     <div class="cta-row">
-      <a class="cta" href="#payment" onclick="openPaymentModal()">Purchase Now</a>
+      <a class="cta" href="#" onclick="openPaymentModal();return false">Purchase Now</a>
       <a class="cta ghost" href="mailto:allymabz@gmail.com">Email Support</a>
     </div>
-
     <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Always use proper risk management and never risk more than you can afford to lose.</p>
   </div>
 </section>
 
-<!-- ═════════════════ PAYMENT MODAL ════════════════ -->
+<footer>© 2026 LiquidGold AI · XAUUSD ScalpingAI V15 · All rights reserved</footer>
+
+<!-- ═══════════════════ PAYMENT MODAL ═══════════════════ -->
 <div id="paymentModal" class="modal">
   <div class="modal-content">
     <span class="modal-close" onclick="closePaymentModal()">&times;</span>
     <h2>🔒 Secure Purchase</h2>
-    
-    <div class="note">
-      <b>XAUUSD Scalping AI V15</b><br/>
-      One-time payment: <b>$499 USD</b><br/>
-      Includes lifetime access + Telegram signals
+
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="sd1">1</div>
+      <div class="step-line" id="sl1"></div>
+      <div class="step-dot" id="sd2">2</div>
+      <div class="step-line" id="sl2"></div>
+      <div class="step-dot" id="sd3">✓</div>
     </div>
 
-    <h3 style="margin-top:24px;margin-bottom:12px">Select Payment Method</h3>
-    
-    <div class="payment-method" onclick="selectPayment('usdt')">
-      <h4>💎 USDT (TRC20)</h4>
-      <p>Fast, low fees · Recommended for most users</p>
-    </div>
-
-    <div id="usdtDetails" style="display:none">
-      <p style="font-size:13px;margin:8px 0">Send exactly <b>$499 USD worth of USDT</b> to:</p>
-      <div class="payment-addr">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz</div>
-      <p style="font-size:12px;color:var(--muted);margin:8px 0">⚠️ Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
-    </div>
-
-    <div class="payment-method" onclick="selectPayment('mpesa')">
-      <h4>📱 M-Pesa (Kenya)</h4>
-      <p>Instant · Kenya residents only</p>
-    </div>
-
-    <div id="mpesaDetails" style="display:none">
-      <p style="font-size:13px;margin:8px 0">Send payment to:</p>
-      <div class="payment-addr">+254701540201</div>
-      <p style="font-size:12px;color:var(--muted);margin:8px 0">Amount: KES 64,000 (approx $499 USD)</p>
-    </div>
-
-    <div class="form-group" style="margin-top:20px">
-      <label>📋 Transaction ID / Reference</label>
-      <input type="text" id="transactionId" placeholder="Paste your transaction hash or M-Pesa ref code" />
-    </div>
-
-    <div class="form-group">
-      <label>📧 Your Email (for admin confirmation)</label>
-      <input type="email" id="buyerEmail" placeholder="you@example.com" />
-    </div>
-
-    <div class="success-msg" id="successMsg">
-      ✅ Payment verified! Waiting for admin confirmation...
-    </div>
-    <div class="error-msg" id="errorMsg">
-      ❌ Transaction not found or invalid. Please try again.
-    </div>
-    <div class="info-msg" id="infoMsg">
-      ℹ️ Your payment has been registered. Contact <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID to request your PIN.
-    </div>
-
-    <button class="btn-verify" onclick="verifyPayment()" id="verifyBtn">Verify Payment & Continue</button>
-
-    <!-- PIN ENTRY SECTION -->
-    <div class="pin-entry-section" id="pinEntrySection">
-      <h3 style="text-align:center;color:var(--gold-2)">🔐 Security: Enter Your PIN</h3>
-      <p style="text-align:center;color:var(--muted);font-size:13px">Once you receive your PIN from the admin, enter it below to unlock your download link.</p>
-      
-      <div class="pin-input-wrapper">
-        <input type="text" class="pin-digit" id="pinDigit1" maxlength="1" inputmode="numeric" />
-        <input type="text" class="pin-digit" id="pinDigit2" maxlength="1" inputmode="numeric" />
-        <input type="text" class="pin-digit" id="pinDigit3" maxlength="1" inputmode="numeric" />
-        <input type="text" class="pin-digit" id="pinDigit4" maxlength="1" inputmode="numeric" />
+    <!-- STEP 1: Choose payment & submit transaction -->
+    <div class="step active" id="step1">
+      <div class="note">
+        <b>XAUUSD Scalping AI V15</b><br/>
+        One-time payment: <b>$499 USD</b> · Lifetime access + Telegram signals
       </div>
 
-      <div class="pin-note">
-        <b>Requesting your PIN?</b> Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID.
+      <h3 style="margin-top:20px;margin-bottom:12px;font-size:15px">Select Payment Method</h3>
+
+      <div class="payment-method" onclick="selectPayment('usdt')">
+        <h4>💎 USDT (TRC20)</h4>
+        <p>Fast, low fees · Recommended for most users</p>
+      </div>
+      <div id="usdtDetails" style="display:none">
+        <p style="font-size:13px;margin:8px 0">Send exactly <b>$499 USDT</b> to:</p>
+        <div class="payment-addr" style="padding-right:60px">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz<button class="copy-btn" onclick="copyAddr('TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz')">Copy</button></div>
+        <p style="font-size:12px;color:var(--muted);margin:4px 0">⚠️ Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
       </div>
 
-      <button class="btn-verify" onclick="verifyPIN()" id="pinVerifyBtn">Verify PIN & Get Access</button>
-      <div class="error-msg" id="pinErrorMsg"></div>
+      <div class="payment-method" onclick="selectPayment('mpesa')">
+        <h4>📱 M-Pesa (Kenya)</h4>
+        <p>Instant · Kenya residents only</p>
+      </div>
+      <div id="mpesaDetails" style="display:none">
+        <p style="font-size:13px;margin:8px 0">Send to:</p>
+        <div class="payment-addr" style="padding-right:60px">+254701540201<button class="copy-btn" onclick="copyAddr('+254701540201')">Copy</button></div>
+        <p style="font-size:12px;color:var(--muted);margin:4px 0">Amount: KES 64,000 (approx $499 USD)</p>
+      </div>
+
+      <div class="form-group" style="margin-top:20px">
+        <label>📋 Transaction ID / Reference</label>
+        <input type="text" id="txId" placeholder="Paste your transaction hash or M-Pesa ref" />
+      </div>
+      <div class="form-group">
+        <label>👤 Your Full Name</label>
+        <input type="text" id="buyerName" placeholder="John Smith" />
+      </div>
+      <div class="form-group">
+        <label>📧 Your Email</label>
+        <input type="email" id="buyerEmail" placeholder="you@example.com" />
+      </div>
+
+      <div id="step1Msg" class="msg"></div>
+      <button class="btn-main" id="step1Btn" onclick="submitPurchase()">Submit Payment Details</button>
     </div>
 
-    <div class="download-section" id="downloadSection">
-      <h3>✅ Access Granted</h3>
-      <div class="security-badge">🔒 Protected EX5 File — Your Source Code is Secure</div>
-      <p>Your PIN has been verified. Download the protected AI:</p>
-      <a href="https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip" target="_blank" download>
-        📥 Download XAUUSD_ScalpingAI_V15.ex5
-      </a>
-      <p style="font-size:12px;margin-top:12px;color:var(--muted)"><b>This is the protected compiled file (.ex5)</b> — your proprietary code cannot be accessed or decompiled.</p>
+    <!-- STEP 2: License key delivered -->
+    <div class="step" id="step2">
+      <div id="licenseBox" class="license-box">
+        <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
+        <div class="license-key" id="displayLicenseKey">—</div>
+        <div class="license-info" id="licenseInfoGrid"></div>
+        <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">📋 Copy Key</button>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <b>⚠️ Important:</b> Save this license key securely. You will need it to activate your EA in MetaTrader 5. It has also been sent to your email.
+      </div>
+      <div id="step2Msg" class="msg"></div>
+      <button class="download-btn" id="downloadBtn" onclick="requestDownload()">📥 Download XAUUSD_ScalpingAI_V15.ex5</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
     </div>
 
-    <p style="font-size:11px;color:var(--muted);margin-top:20px;text-align:center">
-      Questions? Email <a href="mailto:allymabz@gmail.com">allymabz@gmail.com</a> with your transaction ID
-    </p>
   </div>
 </div>
 
-<footer>
-  © 2026 LiquidGold AI · XAUUSD ScalpingAI V15 · All rights reserved
-</footer>
+<!-- ═══════════════════ ADMIN LOGIN MODAL ═══════════════════ -->
+<div id="adminLoginModal" class="modal">
+  <div class="modal-content" style="max-width:380px">
+    <span class="modal-close" onclick="document.getElementById('adminLoginModal').classList.remove('show')">&times;</span>
+    <h2>🔑 Admin Login</h2>
+    <div class="form-group">
+      <label>Admin Password</label>
+      <input type="password" id="adminPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin()" />
+    </div>
+    <div id="adminLoginMsg" class="msg"></div>
+    <button class="btn-main" onclick="adminLogin()">Login</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN PORTAL ═══════════════════ -->
+<div id="adminPortal">
+  <div class="admin-nav">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="brand"><span class="dot"></span>LIQUIDGOLD ADMIN</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span style="font-size:12px;color:var(--muted)" id="adminEmailDisplay"></span>
+      <button class="admin-btn danger" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="admin-content">
+    <!-- Stats -->
+    <div class="stat-cards" id="adminStats">
+      <div class="stat-card"><div class="sc-v" id="statTotal">—</div><div class="sc-l">Total Licenses</div></div>
+      <div class="stat-card"><div class="sc-v" id="statActive" style="color:var(--green)">—</div><div class="sc-l">Active</div></div>
+      <div class="stat-card"><div class="sc-v" id="statSuspended" style="color:var(--red)">—</div><div class="sc-l">Suspended</div></div>
+      <div class="stat-card"><div class="sc-v" id="statExpired" style="color:var(--muted)">—</div><div class="sc-l">Expired</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('licenses',this)">Licenses</button>
+      <button class="admin-tab" onclick="switchAdminTab('create',this)">Create License</button>
+      <button class="admin-tab" onclick="switchAdminTab('logs',this)">Access Logs</button>
+      <button class="admin-tab" onclick="switchAdminTab('pending',this)">Pending Orders</button>
+    </div>
+
+    <!-- Tab: Licenses -->
+    <div class="admin-panel active" id="tabLicenses">
+      <div class="admin-card">
+        <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
+          <input type="text" class="admin-input" id="searchLicenses" placeholder="Search by key, name, email…" style="margin:0;flex:1" oninput="filterLicenses()" />
+          <select class="admin-input" id="filterStatus" style="margin:0;width:140px" onchange="filterLicenses()">
+            <option value="">All statuses</option>
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+            <option value="expired">Expired</option>
+          </select>
+          <button class="admin-btn primary" onclick="loadLicenses()">↻ Refresh</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="license-table">
+            <thead><tr>
+              <th>License Key</th><th>Name</th><th>Email</th><th>MT5 Account</th>
+              <th>Status</th><th>Expiry</th><th>Last Seen</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="licensesBody"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:32px">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Create -->
+    <div class="admin-panel" id="tabCreate">
+      <div class="admin-card">
+        <h4>➕ Create New License</h4>
+        <div class="grid cols-2">
+          <div class="form-group"><label>Customer Name *</label><input type="text" class="admin-input" id="newName" placeholder="John Smith" /></div>
+          <div class="form-group"><label>Customer Email *</label><input type="email" class="admin-input" id="newEmail" placeholder="john@example.com" /></div>
+          <div class="form-group"><label>Product</label><input type="text" class="admin-input" id="newProduct" value="XAUUSD Scalping AI V15" /></div>
+          <div class="form-group"><label>Subscription Duration</label>
+            <select class="admin-input" id="newDuration">
+              <option value="30">30 days</option>
+              <option value="90">90 days</option>
+              <option value="180">6 months</option>
+              <option value="365" selected>1 year</option>
+              <option value="3650">Lifetime (10yr)</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="newNotes" placeholder="Transaction ID, etc." /></div>
+        </div>
+        <div id="createMsg" class="msg"></div>
+        <button class="admin-btn primary" onclick="createLicense()" style="margin-top:8px">Generate License Key</button>
+        <div id="createdLicenseResult" style="display:none;margin-top:16px;background:rgba(74,222,128,.08);border:1px solid var(--green);border-radius:10px;padding:16px">
+          <p style="margin:0 0 8px;color:var(--green);font-size:13px;font-weight:700">✅ License Created Successfully</p>
+          <div style="font-family:monospace;font-size:18px;color:var(--gold-2);font-weight:700;word-break:break-all" id="createdKeyDisplay"></div>
+          <button class="copy-btn" style="position:static;margin-top:10px;padding:6px 14px;font-size:12px" onclick="copyText(document.getElementById('createdKeyDisplay').textContent)">Copy Key</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Logs -->
+    <div class="admin-panel" id="tabLogs">
+      <div class="admin-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h4 style="margin:0">Recent EA Access Logs</h4>
+          <button class="admin-btn primary" onclick="loadLogs()">↻ Refresh</button>
+        </div>
+        <div id="logsContainer"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
+      </div>
+    </div>
+
+    <!-- Tab: Pending Orders -->
+    <div class="admin-panel" id="tabPending">
+      <div class="admin-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h4 style="margin:0">Pending Purchase Requests</h4>
+          <button class="admin-btn primary" onclick="loadPending()">↻ Refresh</button>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">These customers have submitted payment details and are waiting for license assignment.</p>
+        <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Edit License Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content" style="max-width:440px">
+    <span class="modal-close" onclick="document.getElementById('editModal').classList.remove('show')">&times;</span>
+    <h2 style="font-size:18px">Edit License</h2>
+    <input type="hidden" id="editLicenseId" />
+    <div class="form-group"><label>Status</label>
+      <select class="admin-input" id="editStatus">
+        <option value="active">Active</option>
+        <option value="suspended">Suspended</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Extend Expiry By</label>
+      <select class="admin-input" id="editExtend">
+        <option value="0">No change</option>
+        <option value="30">+ 30 days</option>
+        <option value="90">+ 90 days</option>
+        <option value="180">+ 6 months</option>
+        <option value="365">+ 1 year</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="editNotes" /></div>
+    <div id="editMsg" class="msg"></div>
+    <button class="btn-main" onclick="saveLicenseEdit()">Save Changes</button>
+  </div>
+</div>
 
 <script>
-const CORRECT_PIN = '9967';
-const ADMIN_EMAIL = 'allymabz@gmail.com';
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha';
+const ADMIN_PASSWORD = 'LiquidGold2026!'; // Change this in production
+const DOWNLOAD_URL = 'https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip';
 
-const VALID_TRANSACTIONS = {};
-let currentTransactionId = '';
-let currentBuyerEmail = '';
+const headers = {
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`
+};
 
+// ── Supabase helpers ──────────────────────────────────────
+async function sbSelect(table, query = '') {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}${query}`, { headers });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function sbInsert(table, data) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { ...headers, 'Prefer': 'return=representation' },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function sbUpdate(table, id, data) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { ...headers, 'Prefer': 'return=representation' },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function sbRpc(fn, params) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(params)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+// ── License key generator (client-side fallback) ──────────
+function generateLicenseKey() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let key = 'LGAI-XAU-';
+  for (let i = 0; i < 8; i++) key += chars[Math.floor(Math.random() * chars.length)];
+  return key;
+}
+
+// ── Expiry helper ─────────────────────────────────────────
+function addDays(days) {
+  const d = new Date();
+  d.setDate(d.getDate() + parseInt(days));
+  return d.toISOString();
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+function isExpired(iso) {
+  if (!iso) return false;
+  return new Date(iso) < new Date();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PAYMENT MODAL
+// ═══════════════════════════════════════════════════════════
 function openPaymentModal() {
   document.getElementById('paymentModal').classList.add('show');
   document.body.style.overflow = 'hidden';
-  console.log('💳 Payment modal opened');
 }
 
 function closePaymentModal() {
   document.getElementById('paymentModal').classList.remove('show');
-  document.body.style.overflow = 'auto';
-  resetPaymentForm();
-  console.log('💳 Payment modal closed');
+  document.body.style.overflow = '';
+  resetPaymentModal();
+}
+
+function resetPaymentModal() {
+  document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===0));
+  document.querySelectorAll('.step-dot').forEach((d,i) => { d.classList.toggle('active',i===0); d.classList.remove('done'); });
+  document.querySelectorAll('.step-line').forEach(l => l.classList.remove('done'));
+  ['txId','buyerName','buyerEmail'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  setMsg('step1Msg','','');
+  document.getElementById('step1Btn').disabled = false;
+  document.getElementById('step1Btn').textContent = 'Submit Payment Details';
+  document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+  document.getElementById('usdtDetails').style.display = 'none';
+  document.getElementById('mpesaDetails').style.display = 'none';
 }
 
 function selectPayment(method) {
-  const usdtDetails = document.getElementById('usdtDetails');
-  const mpesaDetails = document.getElementById('mpesaDetails');
-  const methods = document.querySelectorAll('.payment-method');
-  methods.forEach(m => m.classList.remove('selected'));
-  
-  if(method === 'usdt') {
-    usdtDetails.style.display = 'block';
-    mpesaDetails.style.display = 'none';
-    methods[0].classList.add('selected');
-    console.log('💎 USDT payment selected');
-  } else if(method === 'mpesa') {
-    usdtDetails.style.display = 'none';
-    mpesaDetails.style.display = 'block';
-    methods[1].classList.add('selected');
-    console.log('📱 M-Pesa payment selected');
-  }
-}
-
-function verifyPayment() {
-  const txId = document.getElementById('transactionId').value.trim();
-  const email = document.getElementById('buyerEmail').value.trim();
-  const successMsg = document.getElementById('successMsg');
-  const errorMsg = document.getElementById('errorMsg');
-  const infoMsg = document.getElementById('infoMsg');
-  const verifyBtn = document.getElementById('verifyBtn');
-
-  successMsg.style.display = 'none';
-  errorMsg.style.display = 'none';
-  infoMsg.style.display = 'none';
-
-  console.log('🔍 Verifying payment...');
-  console.log('Transaction ID:', txId);
-  console.log('Email:', email);
-
-  if(!txId || !email) {
-    errorMsg.textContent = '❌ Please enter transaction ID and email';
-    errorMsg.style.display = 'block';
-    console.error('❌ Missing transaction ID or email');
-    return;
-  }
-
-  verifyBtn.disabled = true;
-  verifyBtn.textContent = 'Verifying...';
-
-  setTimeout(() => {
-    const isValid = txId.length > 5;
-    
-    if(isValid) {
-      console.log('✅ Transaction verification passed');
-      successMsg.style.display = 'block';
-      
-      VALID_TRANSACTIONS[txId] = { 
-        email: email, 
-        timestamp: new Date().toISOString()
-      };
-      currentTransactionId = txId;
-      currentBuyerEmail = email;
-      
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-        infoMsg.style.display = 'block';
-        document.getElementById('pinEntrySection').classList.add('active');
-        document.getElementById('verifyBtn').style.display = 'none';
-        console.log('📌 PIN entry section activated');
-        setTimeout(() => {
-          document.getElementById('pinDigit1').focus();
-        }, 100);
-      }, 2000);
-      
-    } else {
-      console.error('❌ Transaction verification failed');
-      errorMsg.textContent = '❌ Transaction ID not found. Please check and try again.';
-      errorMsg.style.display = 'block';
-      verifyBtn.disabled = false;
-      verifyBtn.textContent = 'Verify Payment & Continue';
-    }
-  }, 1500);
-}
-
-function verifyPIN() {
-  const pin1 = document.getElementById('pinDigit1').value;
-  const pin2 = document.getElementById('pinDigit2').value;
-  const pin3 = document.getElementById('pinDigit3').value;
-  const pin4 = document.getElementById('pinDigit4').value;
-  const enteredPin = pin1 + pin2 + pin3 + pin4;
-  
-  const pinErrorMsg = document.getElementById('pinErrorMsg');
-  const downloadSection = document.getElementById('downloadSection');
-  const pinEntrySection = document.getElementById('pinEntrySection');
-
-  console.log('🔐 PIN verification attempt. Entered:', enteredPin, 'Correct:', CORRECT_PIN);
-
-  if(!pin1 || !pin2 || !pin3 || !pin4) {
-    pinErrorMsg.textContent = '❌ Please enter all 4 PIN digits';
-    pinErrorMsg.style.display = 'block';
-    console.log('❌ Incomplete PIN entry');
-    return;
-  }
-
-  if(enteredPin === CORRECT_PIN) {
-    console.log('✅ PIN verification successful!');
-    pinErrorMsg.style.display = 'none';
-    pinEntrySection.classList.remove('active');
-    downloadSection.classList.add('active');
-    alert(`✅ PIN verified!\n\nYour download is now ready. Click the link below to download the file.`);
-  } else {
-    console.error('❌ PIN verification failed. Incorrect PIN entered.');
-    pinErrorMsg.textContent = '❌ Incorrect PIN. Please check your email or contact allymabz@gmail.com for assistance.';
-    pinErrorMsg.style.display = 'block';
-  }
-}
-
-// PIN input auto-advance to next field
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🎯 Page initialized - setting up PIN input handlers');
-  const pinDigits = document.querySelectorAll('.pin-digit');
-  
-  pinDigits.forEach((digit, index) => {
-    digit.addEventListener('input', function(e) {
-      if(this.value.length === 1 && index < pinDigits.length - 1) {
-        pinDigits[index + 1].focus();
-        console.log('→ Moved to PIN digit', index + 2);
-      }
-    });
-    
-    digit.addEventListener('keydown', function(e) {
-      if(e.key === 'Backspace' && !this.value && index > 0) {
-        pinDigits[index - 1].focus();
-        console.log('← Moved back to PIN digit', index);
-      }
-    });
-  });
-});
-
-function resetPaymentForm() {
-  document.getElementById('transactionId').value = '';
-  document.getElementById('buyerEmail').value = '';
-  document.getElementById('successMsg').style.display = 'none';
-  document.getElementById('errorMsg').style.display = 'none';
-  document.getElementById('infoMsg').style.display = 'none';
-  document.getElementById('pinErrorMsg').style.display = 'none';
-  document.getElementById('downloadSection').classList.remove('active');
-  document.getElementById('pinEntrySection').classList.remove('active');
-  document.getElementById('verifyBtn').disabled = false;
-  document.getElementById('verifyBtn').textContent = 'Verify Payment & Continue';
-  document.getElementById('verifyBtn').style.display = 'block';
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.querySelectorAll('.pin-digit').forEach(digit => digit.value = '');
-  console.log('🔄 Payment form reset');
+  document.getElementById('usdtDetails').style.display = method==='usdt' ? 'block' : 'none';
+  document.getElementById('mpesaDetails').style.display = method==='mpesa' ? 'block' : 'none';
+  event.currentTarget.classList.add('selected');
 }
 
-// Close modal on outside click
-document.addEventListener('click', function(e) {
-  const modal = document.getElementById('paymentModal');
-  if(e.target === modal) closePaymentModal();
+function setMsg(id, type, text) {
+  const el = document.getElementById(id);
+  el.className = `msg ${type}`;
+  el.innerHTML = text;
+  el.classList.toggle('show', !!text);
+}
+
+function goStep(n) {
+  document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===n-1));
+  for (let i=1; i<=3; i++) {
+    const dot = document.getElementById('sd'+i);
+    if (dot) {
+      dot.classList.toggle('active', i===n);
+      dot.classList.toggle('done', i<n);
+    }
+    const line = document.getElementById('sl'+i);
+    if (line) line.classList.toggle('done', i<n);
+  }
+}
+
+async function submitPurchase() {
+  const txId = document.getElementById('txId').value.trim();
+  const name = document.getElementById('buyerName').value.trim();
+  const email = document.getElementById('buyerEmail').value.trim();
+
+  if (!txId || !name || !email) {
+    setMsg('step1Msg','error','❌ Please fill in all fields.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setMsg('step1Msg','error','❌ Please enter a valid email address.');
+    return;
+  }
+
+  const btn = document.getElementById('step1Btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Registering…';
+  setMsg('step1Msg','','');
+
+  try {
+    // Check if txId already submitted
+    const existing = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}`);
+    if (existing && existing.length > 0) {
+      setMsg('step1Msg','error','❌ This transaction ID has already been submitted.');
+      btn.disabled = false;
+      btn.textContent = 'Submit Payment Details';
+      return;
+    }
+
+    // Save pending order
+    await sbInsert('pending_orders', {
+      transaction_id: txId,
+      customer_name: name,
+      customer_email: email,
+      amount_usd: 499,
+      status: 'pending',
+      submitted_at: new Date().toISOString()
+    });
+
+    setMsg('step1Msg','success','✅ Payment details registered! The admin will verify and issue your license key shortly. Check your email.');
+
+    // Show the info to user in a friendly way
+    setTimeout(() => {
+      goStep(2);
+      document.getElementById('displayLicenseKey').textContent = 'Pending Admin Approval';
+      document.getElementById('licenseInfoGrid').innerHTML = `
+        <div class="license-info-item"><div class="li-label">Name</div><div class="li-value">${name}</div></div>
+        <div class="license-info-item"><div class="li-label">Email</div><div class="li-value">${email}</div></div>
+        <div class="license-info-item"><div class="li-label">Transaction</div><div class="li-value" style="font-size:12px">${txId}</div></div>
+        <div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:orange">⏳ Awaiting Verification</div></div>
+      `;
+      document.getElementById('downloadBtn').style.display = 'none';
+      setMsg('step2Msg','info','ℹ️ Your payment is being verified. Once approved, your license key and download link will be sent to <b>' + email + '</b>. Usually within 1–2 hours.');
+    }, 1500);
+
+  } catch (e) {
+    setMsg('step1Msg','error','❌ Error submitting: ' + e.message + '<br><small>You may also email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID.</small>');
+    btn.disabled = false;
+    btn.textContent = 'Submit Payment Details';
+  }
+}
+
+function copyAddr(addr) {
+  navigator.clipboard.writeText(addr).then(() => alert('Address copied!'));
+}
+function copyLicenseKey() {
+  copyText(document.getElementById('displayLicenseKey').textContent);
+}
+function copyText(t) {
+  navigator.clipboard.writeText(t).then(() => alert('Copied!'));
+}
+
+function requestDownload() {
+  window.open(DOWNLOAD_URL, '_blank');
+}
+
+// Close modal on backdrop click
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) closePaymentModal();
 });
+document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+
+// ═══════════════════════════════════════════════════════════
+//  ADMIN
+// ═══════════════════════════════════════════════════════════
+function showAdminLogin() {
+  document.getElementById('adminLoginModal').classList.add('show');
+}
+
+function adminLogin() {
+  const pw = document.getElementById('adminPassword').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('adminLoginModal').classList.remove('show');
+    document.getElementById('adminPortal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('adminEmailDisplay').textContent = 'allymabz@gmail.com';
+    loadLicenses();
+    loadAdminStats();
+  } else {
+    setMsg('adminLoginMsg','error','❌ Incorrect password.');
+  }
+}
+
+function adminLogout() {
+  document.getElementById('adminPortal').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('adminPassword').value = '';
+}
+
+function switchAdminTab(tab, btn) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  if (tab === 'logs') loadLogs();
+  if (tab === 'pending') loadPending();
+}
+
+// ── Load stats ────────────────────────────────────────────
+async function loadAdminStats() {
+  try {
+    const licenses = await sbSelect('licenses', '?select=status');
+    const total = licenses.length;
+    const active = licenses.filter(l => l.status === 'active').length;
+    const suspended = licenses.filter(l => l.status === 'suspended').length;
+    const expired = licenses.filter(l => l.status !== 'suspended' && isExpired(l.expiry_date)).length;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statActive').textContent = active;
+    document.getElementById('statSuspended').textContent = suspended;
+    document.getElementById('statExpired').textContent = expired;
+  } catch(e) { console.error(e); }
+}
+
+// ── Load licenses ─────────────────────────────────────────
+let allLicenses = [];
+
+async function loadLicenses() {
+  document.getElementById('licensesBody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:32px">Loading…</td></tr>';
+  try {
+    allLicenses = await sbSelect('licenses', '?order=created_at.desc');
+    renderLicenses(allLicenses);
+    loadAdminStats();
+  } catch (e) {
+    document.getElementById('licensesBody').innerHTML = `<tr><td colspan="8" style="color:var(--red);padding:20px">Error: ${e.message}</td></tr>`;
+  }
+}
+
+function renderLicenses(list) {
+  const tbody = document.getElementById('licensesBody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:32px">No licenses found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(l => {
+    const expired = isExpired(l.expiry_date);
+    const statusDisplay = expired && l.status === 'active' ? 'expired' : l.status;
+    return `<tr>
+      <td style="font-family:monospace;font-size:12px;color:var(--gold-2)">${l.license_key || '—'}</td>
+      <td>${l.customer_name || '—'}</td>
+      <td style="font-size:12px">${l.customer_email || '—'}</td>
+      <td style="font-family:monospace">${l.account_number || '—'}</td>
+      <td><span class="badge-status ${statusDisplay}">${statusDisplay}</span></td>
+      <td style="font-size:12px">${formatDate(l.expiry_date)}</td>
+      <td style="font-size:12px">${formatDate(l.last_seen)}</td>
+      <td>
+        <button class="admin-btn primary" style="padding:5px 10px;font-size:11px;margin-right:4px" onclick="openEditModal('${l.id}','${l.status}','${l.notes||''}')">Edit</button>
+        ${l.status === 'active' ? `<button class="admin-btn danger" style="padding:5px 10px;font-size:11px" onclick="quickSuspend('${l.id}')">Suspend</button>` : `<button class="admin-btn success" style="padding:5px 10px;font-size:11px" onclick="quickActivate('${l.id}')">Activate</button>`}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterLicenses() {
+  const q = document.getElementById('searchLicenses').value.toLowerCase();
+  const st = document.getElementById('filterStatus').value;
+  const filtered = allLicenses.filter(l => {
+    const matchQ = !q || [l.license_key, l.customer_name, l.customer_email].some(v => v && v.toLowerCase().includes(q));
+    const matchSt = !st || l.status === st || (st === 'expired' && isExpired(l.expiry_date));
+    return matchQ && matchSt;
+  });
+  renderLicenses(filtered);
+}
+
+// ── Create license ────────────────────────────────────────
+async function createLicense() {
+  const name = document.getElementById('newName').value.trim();
+  const email = document.getElementById('newEmail').value.trim();
+  const product = document.getElementById('newProduct').value.trim();
+  const duration = document.getElementById('newDuration').value;
+  const notes = document.getElementById('newNotes').value.trim();
+
+  if (!name || !email) { setMsg('createMsg','error','❌ Name and email are required.'); return; }
+
+  setMsg('createMsg','info','<span class="spinner"></span>Generating license…');
+  document.getElementById('createdLicenseResult').style.display = 'none';
+
+  try {
+    // Try RPC first, fallback to client-side generation
+    let licenseKey;
+    try {
+      licenseKey = await sbRpc('generate_license_key', {});
+    } catch {
+      licenseKey = generateLicenseKey();
+    }
+
+    const expiry = addDays(duration);
+    await sbInsert('licenses', {
+      license_key: licenseKey,
+      customer_name: name,
+      customer_email: email,
+      product_name: product || 'XAUUSD Scalping AI V15',
+      status: 'active',
+      expiry_date: expiry,
+      notes: notes
+    });
+
+    setMsg('createMsg','success','✅ License created!');
+    document.getElementById('createdKeyDisplay').textContent = licenseKey;
+    document.getElementById('createdLicenseResult').style.display = 'block';
+    loadLicenses();
+
+    // Clear form
+    ['newName','newEmail','newNotes'].forEach(id => document.getElementById(id).value = '');
+  } catch (e) {
+    setMsg('createMsg','error','❌ Error: ' + e.message);
+  }
+}
+
+// ── Edit / suspend / activate ─────────────────────────────
+function openEditModal(id, status, notes) {
+  document.getElementById('editLicenseId').value = id;
+  document.getElementById('editStatus').value = status;
+  document.getElementById('editNotes').value = notes;
+  document.getElementById('editExtend').value = '0';
+  setMsg('editMsg','','');
+  document.getElementById('editModal').classList.add('show');
+}
+
+async function saveLicenseEdit() {
+  const id = document.getElementById('editLicenseId').value;
+  const status = document.getElementById('editStatus').value;
+  const extend = parseInt(document.getElementById('editExtend').value);
+  const notes = document.getElementById('editNotes').value;
+
+  setMsg('editMsg','info','<span class="spinner"></span>Saving…');
+
+  try {
+    const updates = { status, notes };
+    if (extend > 0) {
+      // Get current expiry
+      const [lic] = await sbSelect('licenses', `?id=eq.${id}&select=expiry_date`);
+      const base = lic && lic.expiry_date && new Date(lic.expiry_date) > new Date() ? new Date(lic.expiry_date) : new Date();
+      base.setDate(base.getDate() + extend);
+      updates.expiry_date = base.toISOString();
+    }
+    await sbUpdate('licenses', id, updates);
+    setMsg('editMsg','success','✅ Saved!');
+    setTimeout(() => { document.getElementById('editModal').classList.remove('show'); loadLicenses(); }, 800);
+  } catch (e) {
+    setMsg('editMsg','error','❌ ' + e.message);
+  }
+}
+
+async function quickSuspend(id) {
+  if (!confirm('Suspend this license?')) return;
+  try { await sbUpdate('licenses', id, { status: 'suspended' }); loadLicenses(); }
+  catch (e) { alert('Error: ' + e.message); }
+}
+
+async function quickActivate(id) {
+  try { await sbUpdate('licenses', id, { status: 'active' }); loadLicenses(); }
+  catch (e) { alert('Error: ' + e.message); }
+}
+
+// ── Load logs ─────────────────────────────────────────────
+async function loadLogs() {
+  document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
+  try {
+    const logs = await sbSelect('access_logs', '?order=login_time.desc&limit=100');
+    if (!logs.length) { document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs yet.</p>'; return; }
+    document.getElementById('logsContainer').innerHTML = logs.map(l => `
+      <div class="log-entry">
+        <span class="log-time">${formatDate(l.login_time)}</span>
+        <div>
+          <span style="color:var(--gold-2);font-family:monospace">${l.license_key || '—'}</span>
+          · Account <b style="color:#fff">${l.account_number || '—'}</b>
+          · IP <span style="color:var(--muted)">${l.ip_address || '—'}</span>
+          ${l.terminal_name ? `· <span style="color:var(--muted)">${l.terminal_name}</span>` : ''}
+        </div>
+      </div>`).join('');
+  } catch (e) {
+    document.getElementById('logsContainer').innerHTML = `<p style="color:var(--red);font-size:13px">Error loading logs: ${e.message}</p>`;
+  }
+}
+
+// ── Load pending orders ───────────────────────────────────
+async function loadPending() {
+  document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
+  try {
+    const orders = await sbSelect('pending_orders', '?order=submitted_at.desc');
+    if (!orders.length) { document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending orders.</p>'; return; }
+    document.getElementById('pendingContainer').innerHTML = `
+      <table class="license-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Transaction ID</th><th>Amount</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>${orders.map(o => `<tr>
+          <td>${o.customer_name}</td>
+          <td style="font-size:12px">${o.customer_email}</td>
+          <td style="font-family:monospace;font-size:12px;color:var(--gold-2)">${o.transaction_id}</td>
+          <td>$${o.amount_usd}</td>
+          <td style="font-size:12px">${formatDate(o.submitted_at)}</td>
+          <td><span class="badge-status ${o.status === 'pending' ? 'suspended' : 'active'}">${o.status}</span></td>
+          <td>
+            ${o.status === 'pending' ? `<button class="admin-btn success" style="padding:5px 10px;font-size:11px" onclick="approveOrder('${o.id}','${o.customer_name}','${o.customer_email}')">✓ Approve</button>
+            <button class="admin-btn danger" style="padding:5px 10px;font-size:11px;margin-left:4px" onclick="rejectOrder('${o.id}')">✗ Reject</button>` : '—'}
+          </td>
+        </tr>`).join('')}</tbody>
+      </table>`;
+  } catch (e) {
+    document.getElementById('pendingContainer').innerHTML = `<p style="color:var(--red);font-size:13px">Error: ${e.message}</p>`;
+  }
+}
+
+async function approveOrder(orderId, name, email) {
+  const duration = prompt('License duration in days? (default 365)', '365');
+  if (!duration) return;
+
+  try {
+    let licenseKey;
+    try { licenseKey = await sbRpc('generate_license_key', {}); }
+    catch { licenseKey = generateLicenseKey(); }
+
+    await sbInsert('licenses', {
+      license_key: licenseKey,
+      customer_name: name,
+      customer_email: email,
+      product_name: 'XAUUSD Scalping AI V15',
+      status: 'active',
+      expiry_date: addDays(duration),
+      notes: `Approved from pending order ${orderId}`
+    });
+
+    await sbUpdate('pending_orders', orderId, { status: 'approved' });
+
+    alert(`✅ License created!\n\nKey: ${licenseKey}\n\nCustomer: ${name}\nEmail: ${email}\n\nSend this key to the customer.`);
+    loadPending();
+    loadLicenses();
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+}
+
+async function rejectOrder(orderId) {
+  if (!confirm('Mark this order as rejected?')) return;
+  try {
+    await sbUpdate('pending_orders', orderId, { status: 'rejected' });
+    loadPending();
+  } catch (e) { alert('Error: ' + e.message); }
+}
 </script>
 
 </body>
