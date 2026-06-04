@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>XAUUSD Scalping AI V15 — LiquidGold AI</title>
 <meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5." />
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <style>
   :root{
     --bg:#0b0d12;
@@ -125,9 +129,20 @@
   .download-btn{display:inline-block;padding:14px 28px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border-radius:10px;margin-top:14px;font-size:15px;cursor:pointer;border:none;width:100%;text-align:center}
   .download-btn:hover{filter:brightness(1.08);text-decoration:none}
 
+  /* Polling status */
+  .poll-status{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.35);border-radius:10px;padding:16px;margin:16px 0;text-align:center}
+  .poll-status .poll-icon{font-size:32px;margin-bottom:8px}
+  .poll-status p{margin:4px 0;font-size:13px;color:var(--muted)}
+  .poll-status b{color:#8cb4ff}
+
   /* Spinner */
   .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+  .spinner-gold{border-color:rgba(212,175,55,.3);border-top-color:var(--gold)}
   @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Pulse animation for waiting state */
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  .pulse{animation:pulse 2s ease-in-out infinite}
 
   /* Admin portal */
   #adminPortal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:var(--bg);overflow-y:auto}
@@ -421,7 +436,7 @@
 
       <h3 style="margin-top:20px;margin-bottom:12px;font-size:15px">Select Payment Method</h3>
 
-      <div class="payment-method" onclick="selectPayment('usdt')">
+      <div class="payment-method" onclick="selectPayment('usdt',event)">
         <h4>💎 USDT (TRC20)</h4>
         <p>Fast, low fees · Recommended for most users</p>
       </div>
@@ -431,7 +446,7 @@
         <p style="font-size:12px;color:var(--muted);margin:4px 0">⚠️ Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
       </div>
 
-      <div class="payment-method" onclick="selectPayment('mpesa')">
+      <div class="payment-method" onclick="selectPayment('mpesa',event)">
         <h4>📱 M-Pesa (Kenya)</h4>
         <p>Instant · Kenya residents only</p>
       </div>
@@ -458,20 +473,53 @@
       <button class="btn-main" id="step1Btn" onclick="submitPurchase()">Submit Payment Details</button>
     </div>
 
-    <!-- STEP 2: License key delivered -->
+    <!-- STEP 2: Polling / License delivered -->
     <div class="step" id="step2">
-      <div id="licenseBox" class="license-box">
-        <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
-        <div class="license-key" id="displayLicenseKey">—</div>
-        <div class="license-info" id="licenseInfoGrid"></div>
-        <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">📋 Copy Key</button>
+
+      <!-- Waiting state (shown while polling) -->
+      <div id="waitingState">
+        <div class="poll-status">
+          <div class="poll-icon pulse">⏳</div>
+          <b style="color:#8cb4ff;font-size:15px">Awaiting Payment Verification</b>
+          <p>Your payment details have been submitted. The admin is reviewing your transaction.</p>
+          <p style="margin-top:8px;font-size:12px">This page will automatically update once approved. <span class="spinner spinner-gold" style="width:12px;height:12px"></span></p>
+        </div>
+        <div id="pollInfo" style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:16px 0;font-size:13px">
+          <p style="margin:0 0 6px"><b style="color:#fff">Submitted Details</b></p>
+          <p style="margin:4px 0" id="pollName"></p>
+          <p style="margin:4px 0" id="pollEmail"></p>
+          <p style="margin:4px 0" id="pollTx" style="word-break:break-all"></p>
+        </div>
+        <p style="font-size:12px;color:var(--muted);text-align:center">Usually approved within 1–2 hours. You'll also receive an email once approved.</p>
       </div>
-      <div class="note" style="margin-top:16px">
-        <b>⚠️ Important:</b> Save this license key securely. You will need it to activate your EA in MetaTrader 5. It has also been sent to your email.
+
+      <!-- Approved state (shown when license is ready) -->
+      <div id="approvedState" style="display:none">
+        <div style="text-align:center;margin-bottom:16px">
+          <div style="font-size:40px">🎉</div>
+          <h3 style="color:var(--green);margin:8px 0">Payment Approved!</h3>
+          <p style="margin:0;font-size:14px">Your license has been activated. Check your email for a copy.</p>
+        </div>
+
+        <div id="licenseBox" class="license-box">
+          <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
+          <div class="license-key" id="displayLicenseKey">—</div>
+          <div class="license-info" id="licenseInfoGrid"></div>
+          <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">📋 Copy Key</button>
+        </div>
+
+        <div class="note" style="margin-top:16px">
+          <b>⚠️ Important:</b> Save this license key securely. You will need it to activate your EA in MetaTrader 5. It has also been sent to your email.
+        </div>
+
+        <div id="step2Msg" class="msg"></div>
+
+        <a class="download-btn" id="downloadBtn" href="https://www.udrop.com/Oyp4/XAUUSD_ScalpingAI_MarketReady.zip" target="_blank" rel="noopener">
+          📥 Download XAUUSD_ScalpingAI_V15.ex5
+        </a>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
       </div>
-      <div id="step2Msg" class="msg"></div>
-      <button class="download-btn" id="downloadBtn" onclick="requestDownload()">📥 Download XAUUSD_ScalpingAI_V15.ex5</button>
-      <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
+
     </div>
 
   </div>
@@ -503,7 +551,6 @@
     </div>
   </div>
   <div class="admin-content">
-    <!-- Stats -->
     <div class="stat-cards" id="adminStats">
       <div class="stat-card"><div class="sc-v" id="statTotal">—</div><div class="sc-l">Total Licenses</div></div>
       <div class="stat-card"><div class="sc-v" id="statActive" style="color:var(--green)">—</div><div class="sc-l">Active</div></div>
@@ -511,7 +558,6 @@
       <div class="stat-card"><div class="sc-v" id="statExpired" style="color:var(--muted)">—</div><div class="sc-l">Expired</div></div>
     </div>
 
-    <!-- Tabs -->
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="switchAdminTab('licenses',this)">Licenses</button>
       <button class="admin-tab" onclick="switchAdminTab('create',this)">Create License</button>
@@ -591,7 +637,7 @@
           <h4 style="margin:0">Pending Purchase Requests</h4>
           <button class="admin-btn primary" onclick="loadPending()">↻ Refresh</button>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">These customers have submitted payment details and are waiting for license assignment.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Customers awaiting license assignment after payment submission.</p>
         <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
       </div>
     </div>
@@ -630,11 +676,28 @@
 // ═══════════════════════════════════════════════════════════
 //  CONFIG
 // ═══════════════════════════════════════════════════════════
-const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha';
-const ADMIN_PASSWORD = 'EuniceTwela1@'; // Change this in production
-const DOWNLOAD_URL = 'https://www.udrop.com/OxMs/XAUUSD_Scalping_AI.zip';
 
+// ⚠️  IMPORTANT — LICENSE VALIDATION FIX:
+//  The HTTP 401 error from the EA occurs because the Supabase key below
+//  must be your project's anon/service_role key (starts with "eyJ...").
+//  The key "sb_publishable_..." is NOT a valid Supabase REST API key.
+//  Go to: Supabase Dashboard → Project Settings → API → copy "anon public" key.
+//  Replace SUPABASE_KEY below with that eyJ... key.
+
+const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_TqiZkP7rouOFK3zNjBT8Ig_5uOuH1ha'; // ← REPLACE with your eyJ... anon key
+const ADMIN_PASSWORD = 'EuniceTwela1@';
+const DOWNLOAD_URL   = 'https://www.udrop.com/Oyp4/XAUUSD_ScalpingAI_MarketReady.zip';
+
+// EmailJS config
+const EMAILJS_PUBLIC_KEY  = 'ehkRhmWH5ltLrAJlt';
+const EMAILJS_TEMPLATE_ID = 'template_8adw61b';
+const EMAILJS_SERVICE_ID  = 'default_service'; // Update if you have a custom service ID in EmailJS
+
+// Polling interval (ms) — how often to check if admin approved the order
+const POLL_INTERVAL_MS = 15000; // 15 seconds
+
+// ── Supabase headers ──────────────────────────────────────
 const headers = {
   'Content-Type': 'application/json',
   'apikey': SUPABASE_KEY,
@@ -678,7 +741,7 @@ async function sbRpc(fn, params) {
   return r.json();
 }
 
-// ── License key generator (client-side fallback) ──────────
+// ── License key generator ─────────────────────────────────
 function generateLicenseKey() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let key = 'LGAI-XAU-';
@@ -686,7 +749,7 @@ function generateLicenseKey() {
   return key;
 }
 
-// ── Expiry helper ─────────────────────────────────────────
+// ── Date helpers ──────────────────────────────────────────
 function addDays(days) {
   const d = new Date();
   d.setDate(d.getDate() + parseInt(days));
@@ -703,9 +766,41 @@ function isExpired(iso) {
   return new Date(iso) < new Date();
 }
 
+// ── EmailJS init ──────────────────────────────────────────
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+/**
+ * Send license email to customer via EmailJS.
+ * Make sure your EmailJS template uses these variable names:
+ *   {{customer_name}}, {{email}}, {{license_key}},
+ *   {{order_id}}, {{download_url}}
+ */
+async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId) {
+  try {
+    const result = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      customer_name : customerName,
+      email         : customerEmail,
+      license_key   : licenseKey,
+      order_id      : orderId || 'N/A',
+      download_url  : DOWNLOAD_URL
+    });
+    console.log('EmailJS success:', result.status, result.text);
+    return true;
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    return false;
+  }
+}
+
 // ═══════════════════════════════════════════════════════════
 //  PAYMENT MODAL
 // ═══════════════════════════════════════════════════════════
+let pollTimer = null;
+let currentOrderId   = null;
+let currentTxId      = null;
+let currentBuyerName  = null;
+let currentBuyerEmail = null;
+
 function openPaymentModal() {
   document.getElementById('paymentModal').classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -714,31 +809,43 @@ function openPaymentModal() {
 function closePaymentModal() {
   document.getElementById('paymentModal').classList.remove('show');
   document.body.style.overflow = '';
+  stopPolling();
   resetPaymentModal();
 }
 
 function resetPaymentModal() {
   document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===0));
-  document.querySelectorAll('.step-dot').forEach((d,i) => { d.classList.toggle('active',i===0); d.classList.remove('done'); });
+  document.querySelectorAll('.step-dot').forEach((d,i) => {
+    d.classList.toggle('active',i===0);
+    d.classList.remove('done');
+  });
   document.querySelectorAll('.step-line').forEach(l => l.classList.remove('done'));
-  ['txId','buyerName','buyerEmail'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  ['txId','buyerName','buyerEmail'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   setMsg('step1Msg','','');
-  document.getElementById('step1Btn').disabled = false;
-  document.getElementById('step1Btn').textContent = 'Submit Payment Details';
+  const btn = document.getElementById('step1Btn');
+  btn.disabled = false;
+  btn.textContent = 'Submit Payment Details';
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
   document.getElementById('usdtDetails').style.display = 'none';
   document.getElementById('mpesaDetails').style.display = 'none';
+  document.getElementById('waitingState').style.display = 'block';
+  document.getElementById('approvedState').style.display = 'none';
+  currentOrderId = currentTxId = currentBuyerName = currentBuyerEmail = null;
 }
 
-function selectPayment(method) {
+function selectPayment(method, event) {
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.getElementById('usdtDetails').style.display = method==='usdt' ? 'block' : 'none';
-  document.getElementById('mpesaDetails').style.display = method==='mpesa' ? 'block' : 'none';
-  event.currentTarget.classList.add('selected');
+  document.getElementById('usdtDetails').style.display  = method === 'usdt'  ? 'block' : 'none';
+  document.getElementById('mpesaDetails').style.display = method === 'mpesa' ? 'block' : 'none';
+  if (event && event.currentTarget) event.currentTarget.classList.add('selected');
 }
 
 function setMsg(id, type, text) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.className = `msg ${type}`;
   el.innerHTML = text;
   el.classList.toggle('show', !!text);
@@ -746,7 +853,7 @@ function setMsg(id, type, text) {
 
 function goStep(n) {
   document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===n-1));
-  for (let i=1; i<=3; i++) {
+  for (let i = 1; i <= 3; i++) {
     const dot = document.getElementById('sd'+i);
     if (dot) {
       dot.classList.toggle('active', i===n);
@@ -758,8 +865,8 @@ function goStep(n) {
 }
 
 async function submitPurchase() {
-  const txId = document.getElementById('txId').value.trim();
-  const name = document.getElementById('buyerName').value.trim();
+  const txId  = document.getElementById('txId').value.trim();
+  const name  = document.getElementById('buyerName').value.trim();
   const email = document.getElementById('buyerEmail').value.trim();
 
   if (!txId || !name || !email) {
@@ -777,7 +884,7 @@ async function submitPurchase() {
   setMsg('step1Msg','','');
 
   try {
-    // Check if txId already submitted
+    // Check for duplicate txId
     const existing = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}`);
     if (existing && existing.length > 0) {
       setMsg('step1Msg','error','❌ This transaction ID has already been submitted.');
@@ -786,31 +893,30 @@ async function submitPurchase() {
       return;
     }
 
-    // Save pending order
-    await sbInsert('pending_orders', {
-      transaction_id: txId,
-      customer_name: name,
-      customer_email: email,
-      amount_usd: 499,
-      status: 'pending',
-      submitted_at: new Date().toISOString()
+    // Insert pending order
+    const inserted = await sbInsert('pending_orders', {
+      transaction_id : txId,
+      customer_name  : name,
+      customer_email : email,
+      amount_usd     : 499,
+      status         : 'pending',
+      submitted_at   : new Date().toISOString()
     });
 
-    setMsg('step1Msg','success','✅ Payment details registered! The admin will verify and issue your license key shortly. Check your email.');
+    // Save state for polling
+    currentOrderId    = inserted[0]?.id || null;
+    currentTxId       = txId;
+    currentBuyerName  = name;
+    currentBuyerEmail = email;
 
-    // Show the info to user in a friendly way
-    setTimeout(() => {
-      goStep(2);
-      document.getElementById('displayLicenseKey').textContent = 'Pending Admin Approval';
-      document.getElementById('licenseInfoGrid').innerHTML = `
-        <div class="license-info-item"><div class="li-label">Name</div><div class="li-value">${name}</div></div>
-        <div class="license-info-item"><div class="li-label">Email</div><div class="li-value">${email}</div></div>
-        <div class="license-info-item"><div class="li-label">Transaction</div><div class="li-value" style="font-size:12px">${txId}</div></div>
-        <div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:orange">⏳ Awaiting Verification</div></div>
-      `;
-      document.getElementById('downloadBtn').style.display = 'none';
-      setMsg('step2Msg','info','ℹ️ Your payment is being verified. Once approved, your license key and download link will be sent to <b>' + email + '</b>. Usually within 1–2 hours.');
-    }, 1500);
+    // Update poll info display
+    document.getElementById('pollName').textContent  = '👤 ' + name;
+    document.getElementById('pollEmail').textContent = '📧 ' + email;
+    document.getElementById('pollTx').textContent    = '🔑 TX: ' + txId;
+
+    // Move to step 2 and start polling
+    goStep(2);
+    startPolling(txId, name, email);
 
   } catch (e) {
     setMsg('step1Msg','error','❌ Error submitting: ' + e.message + '<br><small>You may also email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID.</small>');
@@ -819,6 +925,60 @@ async function submitPurchase() {
   }
 }
 
+// ── Polling ───────────────────────────────────────────────
+function startPolling(txId, name, email) {
+  stopPolling(); // clear any existing timer
+  pollTimer = setInterval(() => checkApprovalStatus(txId, name, email), POLL_INTERVAL_MS);
+  // Also check immediately after a short delay
+  setTimeout(() => checkApprovalStatus(txId, name, email), 3000);
+}
+
+function stopPolling() {
+  if (pollTimer) {
+    clearInterval(pollTimer);
+    pollTimer = null;
+  }
+}
+
+async function checkApprovalStatus(txId, name, email) {
+  try {
+    // Check if the pending order has been approved and a license created
+    const orders = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}&select=id,status`);
+    if (!orders || !orders.length) return;
+
+    const order = orders[0];
+    if (order.status === 'approved') {
+      // Find the license by email that was created after submission
+      const licenses = await sbSelect('licenses', `?customer_email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1`);
+      if (licenses && licenses.length > 0) {
+        const lic = licenses[0];
+        stopPolling();
+        showApprovedState(lic, name, email);
+      }
+    }
+  } catch (e) {
+    console.warn('Poll check failed:', e.message);
+  }
+}
+
+function showApprovedState(license, name, email) {
+  // Switch from waiting to approved view
+  document.getElementById('waitingState').style.display  = 'none';
+  document.getElementById('approvedState').style.display = 'block';
+
+  // Populate license key display
+  document.getElementById('displayLicenseKey').textContent = license.license_key || '—';
+  document.getElementById('licenseInfoGrid').innerHTML = `
+    <div class="license-info-item"><div class="li-label">Name</div><div class="li-value">${name}</div></div>
+    <div class="license-info-item"><div class="li-label">Email</div><div class="li-value">${email}</div></div>
+    <div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:var(--green)">✅ Active</div></div>
+    <div class="license-info-item"><div class="li-label">Expires</div><div class="li-value">${formatDate(license.expiry_date)}</div></div>
+  `;
+
+  setMsg('step2Msg','success','✅ License activated! Check your inbox for the email with your key and download link.');
+}
+
+// ── Utility ───────────────────────────────────────────────
 function copyAddr(addr) {
   navigator.clipboard.writeText(addr).then(() => alert('Address copied!'));
 }
@@ -827,10 +987,6 @@ function copyLicenseKey() {
 }
 function copyText(t) {
   navigator.clipboard.writeText(t).then(() => alert('Copied!'));
-}
-
-function requestDownload() {
-  window.open(DOWNLOAD_URL, '_blank');
 }
 
 // Close modal on backdrop click
@@ -880,22 +1036,22 @@ function switchAdminTab(tab, btn) {
   if (tab === 'pending') loadPending();
 }
 
-// ── Load stats ────────────────────────────────────────────
+// ── Stats ─────────────────────────────────────────────────
 async function loadAdminStats() {
   try {
-    const licenses = await sbSelect('licenses', '?select=status');
-    const total = licenses.length;
-    const active = licenses.filter(l => l.status === 'active').length;
+    const licenses = await sbSelect('licenses', '?select=status,expiry_date');
+    const total     = licenses.length;
+    const active    = licenses.filter(l => l.status === 'active' && !isExpired(l.expiry_date)).length;
     const suspended = licenses.filter(l => l.status === 'suspended').length;
-    const expired = licenses.filter(l => l.status !== 'suspended' && isExpired(l.expiry_date)).length;
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statActive').textContent = active;
+    const expired   = licenses.filter(l => l.status !== 'suspended' && isExpired(l.expiry_date)).length;
+    document.getElementById('statTotal').textContent     = total;
+    document.getElementById('statActive').textContent    = active;
     document.getElementById('statSuspended').textContent = suspended;
-    document.getElementById('statExpired').textContent = expired;
+    document.getElementById('statExpired').textContent   = expired;
   } catch(e) { console.error(e); }
 }
 
-// ── Load licenses ─────────────────────────────────────────
+// ── Licenses ──────────────────────────────────────────────
 let allLicenses = [];
 
 async function loadLicenses() {
@@ -927,18 +1083,20 @@ function renderLicenses(list) {
       <td style="font-size:12px">${formatDate(l.expiry_date)}</td>
       <td style="font-size:12px">${formatDate(l.last_seen)}</td>
       <td>
-        <button class="admin-btn primary" style="padding:5px 10px;font-size:11px;margin-right:4px" onclick="openEditModal('${l.id}','${l.status}','${l.notes||''}')">Edit</button>
-        ${l.status === 'active' ? `<button class="admin-btn danger" style="padding:5px 10px;font-size:11px" onclick="quickSuspend('${l.id}')">Suspend</button>` : `<button class="admin-btn success" style="padding:5px 10px;font-size:11px" onclick="quickActivate('${l.id}')">Activate</button>`}
+        <button class="admin-btn primary" style="padding:5px 10px;font-size:11px;margin-right:4px" onclick="openEditModal('${l.id}','${l.status}','${(l.notes||'').replace(/'/g,"\\'")}')">Edit</button>
+        ${l.status === 'active'
+          ? `<button class="admin-btn danger" style="padding:5px 10px;font-size:11px" onclick="quickSuspend('${l.id}')">Suspend</button>`
+          : `<button class="admin-btn success" style="padding:5px 10px;font-size:11px" onclick="quickActivate('${l.id}')">Activate</button>`}
       </td>
     </tr>`;
   }).join('');
 }
 
 function filterLicenses() {
-  const q = document.getElementById('searchLicenses').value.toLowerCase();
+  const q  = document.getElementById('searchLicenses').value.toLowerCase();
   const st = document.getElementById('filterStatus').value;
   const filtered = allLicenses.filter(l => {
-    const matchQ = !q || [l.license_key, l.customer_name, l.customer_email].some(v => v && v.toLowerCase().includes(q));
+    const matchQ  = !q  || [l.license_key, l.customer_name, l.customer_email].some(v => v && v.toLowerCase().includes(q));
     const matchSt = !st || l.status === st || (st === 'expired' && isExpired(l.expiry_date));
     return matchQ && matchSt;
   });
@@ -947,11 +1105,11 @@ function filterLicenses() {
 
 // ── Create license ────────────────────────────────────────
 async function createLicense() {
-  const name = document.getElementById('newName').value.trim();
-  const email = document.getElementById('newEmail').value.trim();
-  const product = document.getElementById('newProduct').value.trim();
+  const name     = document.getElementById('newName').value.trim();
+  const email    = document.getElementById('newEmail').value.trim();
+  const product  = document.getElementById('newProduct').value.trim();
   const duration = document.getElementById('newDuration').value;
-  const notes = document.getElementById('newNotes').value.trim();
+  const notes    = document.getElementById('newNotes').value.trim();
 
   if (!name || !email) { setMsg('createMsg','error','❌ Name and email are required.'); return; }
 
@@ -959,31 +1117,32 @@ async function createLicense() {
   document.getElementById('createdLicenseResult').style.display = 'none';
 
   try {
-    // Try RPC first, fallback to client-side generation
     let licenseKey;
-    try {
-      licenseKey = await sbRpc('generate_license_key', {});
-    } catch {
-      licenseKey = generateLicenseKey();
-    }
+    try { licenseKey = await sbRpc('generate_license_key', {}); }
+    catch { licenseKey = generateLicenseKey(); }
 
     const expiry = addDays(duration);
-    await sbInsert('licenses', {
-      license_key: licenseKey,
-      customer_name: name,
-      customer_email: email,
-      product_name: product || 'XAUUSD Scalping AI V15',
-      status: 'active',
-      expiry_date: expiry,
-      notes: notes
+    const inserted = await sbInsert('licenses', {
+      license_key    : licenseKey,
+      customer_name  : name,
+      customer_email : email,
+      product_name   : product || 'XAUUSD Scalping AI V15',
+      status         : 'active',
+      expiry_date    : expiry,
+      notes          : notes
     });
 
-    setMsg('createMsg','success','✅ License created!');
+    const orderId = inserted[0]?.id || 'N/A';
+
+    // Send email
+    const emailSent = await sendLicenseEmail(name, email, licenseKey, orderId);
+    const emailNote = emailSent ? ' Email sent to customer.' : ' (Email sending failed — send manually.)';
+
+    setMsg('createMsg','success','✅ License created!' + emailNote);
     document.getElementById('createdKeyDisplay').textContent = licenseKey;
     document.getElementById('createdLicenseResult').style.display = 'block';
     loadLicenses();
 
-    // Clear form
     ['newName','newEmail','newNotes'].forEach(id => document.getElementById(id).value = '');
   } catch (e) {
     setMsg('createMsg','error','❌ Error: ' + e.message);
@@ -993,27 +1152,27 @@ async function createLicense() {
 // ── Edit / suspend / activate ─────────────────────────────
 function openEditModal(id, status, notes) {
   document.getElementById('editLicenseId').value = id;
-  document.getElementById('editStatus').value = status;
-  document.getElementById('editNotes').value = notes;
-  document.getElementById('editExtend').value = '0';
+  document.getElementById('editStatus').value    = status;
+  document.getElementById('editNotes').value     = notes;
+  document.getElementById('editExtend').value    = '0';
   setMsg('editMsg','','');
   document.getElementById('editModal').classList.add('show');
 }
 
 async function saveLicenseEdit() {
-  const id = document.getElementById('editLicenseId').value;
+  const id     = document.getElementById('editLicenseId').value;
   const status = document.getElementById('editStatus').value;
   const extend = parseInt(document.getElementById('editExtend').value);
-  const notes = document.getElementById('editNotes').value;
+  const notes  = document.getElementById('editNotes').value;
 
   setMsg('editMsg','info','<span class="spinner"></span>Saving…');
 
   try {
     const updates = { status, notes };
     if (extend > 0) {
-      // Get current expiry
       const [lic] = await sbSelect('licenses', `?id=eq.${id}&select=expiry_date`);
-      const base = lic && lic.expiry_date && new Date(lic.expiry_date) > new Date() ? new Date(lic.expiry_date) : new Date();
+      const base  = lic && lic.expiry_date && new Date(lic.expiry_date) > new Date()
+                    ? new Date(lic.expiry_date) : new Date();
       base.setDate(base.getDate() + extend);
       updates.expiry_date = base.toISOString();
     }
@@ -1036,12 +1195,15 @@ async function quickActivate(id) {
   catch (e) { alert('Error: ' + e.message); }
 }
 
-// ── Load logs ─────────────────────────────────────────────
+// ── Logs ──────────────────────────────────────────────────
 async function loadLogs() {
   document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
   try {
     const logs = await sbSelect('access_logs', '?order=login_time.desc&limit=100');
-    if (!logs.length) { document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs yet.</p>'; return; }
+    if (!logs.length) {
+      document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs yet.</p>';
+      return;
+    }
     document.getElementById('logsContainer').innerHTML = logs.map(l => `
       <div class="log-entry">
         <span class="log-time">${formatDate(l.login_time)}</span>
@@ -1057,15 +1219,21 @@ async function loadLogs() {
   }
 }
 
-// ── Load pending orders ───────────────────────────────────
+// ── Pending orders ────────────────────────────────────────
 async function loadPending() {
   document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
   try {
     const orders = await sbSelect('pending_orders', '?order=submitted_at.desc');
-    if (!orders.length) { document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending orders.</p>'; return; }
+    if (!orders.length) {
+      document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending orders.</p>';
+      return;
+    }
     document.getElementById('pendingContainer').innerHTML = `
       <table class="license-table">
-        <thead><tr><th>Name</th><th>Email</th><th>Transaction ID</th><th>Amount</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
+        <thead><tr>
+          <th>Name</th><th>Email</th><th>Transaction ID</th>
+          <th>Amount</th><th>Submitted</th><th>Status</th><th>Actions</th>
+        </tr></thead>
         <tbody>${orders.map(o => `<tr>
           <td>${o.customer_name}</td>
           <td style="font-size:12px">${o.customer_email}</td>
@@ -1074,8 +1242,12 @@ async function loadPending() {
           <td style="font-size:12px">${formatDate(o.submitted_at)}</td>
           <td><span class="badge-status ${o.status === 'pending' ? 'suspended' : 'active'}">${o.status}</span></td>
           <td>
-            ${o.status === 'pending' ? `<button class="admin-btn success" style="padding:5px 10px;font-size:11px" onclick="approveOrder('${o.id}','${o.customer_name}','${o.customer_email}')">✓ Approve</button>
-            <button class="admin-btn danger" style="padding:5px 10px;font-size:11px;margin-left:4px" onclick="rejectOrder('${o.id}')">✗ Reject</button>` : '—'}
+            ${o.status === 'pending'
+              ? `<button class="admin-btn success" style="padding:5px 10px;font-size:11px"
+                   onclick="approveOrder('${o.id}','${o.customer_name.replace(/'/g,"\\'")}','${o.customer_email}')">✓ Approve</button>
+                 <button class="admin-btn danger" style="padding:5px 10px;font-size:11px;margin-left:4px"
+                   onclick="rejectOrder('${o.id}')">✗ Reject</button>`
+              : '—'}
           </td>
         </tr>`).join('')}</tbody>
       </table>`;
@@ -1084,32 +1256,60 @@ async function loadPending() {
   }
 }
 
+/**
+ * Approve a pending order:
+ * 1. Create license in Supabase
+ * 2. Mark order as approved
+ * 3. Send email to customer via EmailJS
+ */
 async function approveOrder(orderId, name, email) {
   const duration = prompt('License duration in days? (default 365)', '365');
   if (!duration) return;
 
   try {
+    // Generate license key
     let licenseKey;
     try { licenseKey = await sbRpc('generate_license_key', {}); }
     catch { licenseKey = generateLicenseKey(); }
 
-    await sbInsert('licenses', {
-      license_key: licenseKey,
-      customer_name: name,
-      customer_email: email,
-      product_name: 'XAUUSD Scalping AI V15',
-      status: 'active',
-      expiry_date: addDays(duration),
-      notes: `Approved from pending order ${orderId}`
+    const expiry = addDays(duration);
+
+    // Create license record
+    const inserted = await sbInsert('licenses', {
+      license_key    : licenseKey,
+      customer_name  : name,
+      customer_email : email,
+      product_name   : 'XAUUSD Scalping AI V15',
+      status         : 'active',
+      expiry_date    : expiry,
+      notes          : `Approved from pending order ${orderId}`
     });
 
+    const licenseId = inserted[0]?.id || orderId;
+
+    // Mark order approved
     await sbUpdate('pending_orders', orderId, { status: 'approved' });
 
-    alert(`✅ License created!\n\nKey: ${licenseKey}\n\nCustomer: ${name}\nEmail: ${email}\n\nSend this key to the customer.`);
+    // Send email to customer
+    const emailSent = await sendLicenseEmail(name, email, licenseKey, licenseId);
+
+    const emailStatus = emailSent
+      ? '✅ Email sent to customer.'
+      : '⚠️ Email sending failed. Please send the key manually.';
+
+    alert(
+      `✅ License Created!\n\n` +
+      `Key: ${licenseKey}\n` +
+      `Customer: ${name}\n` +
+      `Email: ${email}\n` +
+      `Expires: ${formatDate(expiry)}\n\n` +
+      emailStatus
+    );
+
     loadPending();
     loadLicenses();
   } catch (e) {
-    alert('Error: ' + e.message);
+    alert('Error approving order: ' + e.message);
   }
 }
 
