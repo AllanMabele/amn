@@ -8,6 +8,8 @@
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Paystack inline JS -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
 
 <style>
   :root{
@@ -21,6 +23,7 @@
     --gold-2:#f5d77a;
     --green:#4ade80;
     --red:#ef4444;
+    --blue:#3b82f6;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
@@ -119,7 +122,11 @@
   .btn-main{width:100%;padding:13px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:16px;font-size:15px;transition:filter .2s}
   .btn-main:hover{filter:brightness(1.08)}
   .btn-main:disabled{opacity:.45;cursor:not-allowed;filter:none}
+  .btn-paystack{width:100%;padding:13px;background:linear-gradient(180deg,#00c3ff,#0076d4);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:12px;font-size:15px;transition:filter .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+  .btn-paystack:hover{filter:brightness(1.1)}
+  .btn-paystack:disabled{opacity:.45;cursor:not-allowed;filter:none}
   .note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
+  .note-blue{background:rgba(59,130,246,.08);border-left:3px solid var(--blue);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
   .msg{border-radius:8px;padding:12px;margin:12px 0;font-size:13px;text-align:center;display:none}
   .msg.success{background:rgba(74,222,128,.1);border:1px solid var(--green);color:var(--green)}
   .msg.error{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
@@ -161,12 +168,19 @@
   .poll-status p{margin:4px 0;font-size:13px;color:var(--muted)}
   .poll-status b{color:#8cb4ff}
 
+  /* Paystack in-modal info */
+  .paystack-info{background:rgba(0,195,255,.06);border:1px solid rgba(0,195,255,.25);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:13px}
+  .paystack-info p{margin:4px 0}
+
   /* Spinner */
   .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
   .spinner-gold{border-color:rgba(212,175,55,.3);border-top-color:var(--gold)}
   @keyframes spin{to{transform:rotate(360deg)}}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
   .pulse{animation:pulse 2s ease-in-out infinite}
+
+  /* Paystack logo SVG */
+  .paystack-logo{height:18px;filter:brightness(10)}
 
   /* Admin portal */
   #adminPortal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:var(--bg);overflow-y:auto}
@@ -195,6 +209,7 @@
   .badge-status.active{background:rgba(74,222,128,.2);color:var(--green)}
   .badge-status.suspended{background:rgba(239,68,68,.2);color:var(--red)}
   .badge-status.expired{background:rgba(156,163,175,.2);color:#9ca3af}
+  .badge-status.paystack{background:rgba(0,195,255,.15);color:#00c3ff}
   .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
   @media(max-width:700px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
   .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
@@ -203,8 +218,6 @@
   .log-entry{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;display:flex;gap:12px;align-items:flex-start}
   .log-entry .log-time{color:var(--muted);font-family:monospace;font-size:11px;white-space:nowrap}
   select.admin-input option{background:var(--bg-2)}
-
-  /* SQL fix notice */
   .sql-notice{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:16px;margin-bottom:16px;font-size:13px}
   .sql-notice h5{margin:0 0 8px;color:var(--red)}
   .sql-notice code{background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;font-size:12px;color:#fca5a5;display:block;margin:4px 0;word-break:break-all}
@@ -458,9 +471,9 @@
       <div class="card">
         <div class="num">PAYMENT</div>
         <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
-          <li>💎 USDT TRC20</li>
-          <li>📱 M-Pesa (Kenya)</li>
-          <li>🔒 Instant access on approval</li>
+          <li>⚡ Paystack — instant &amp; automatic</li>
+          <li>💎 USDT TRC20 — manual approval</li>
+          <li>🔒 License issued immediately on Paystack</li>
           <li>✓ No recurring charges</li>
         </ul>
       </div>
@@ -490,33 +503,29 @@
       <div class="step-dot" id="sd3">✓</div>
     </div>
 
-    <!-- STEP 1 -->
+    <!-- STEP 1: Choose plan + method -->
     <div class="step active" id="step1">
-
-      <!-- Plan selector inside modal -->
-      <div style="margin-bottom:8px">
-        <p style="font-size:13px;color:var(--muted);margin:0 0 10px">Select your plan:</p>
-        <div class="modal-pricing" id="modalPricing">
-          <div class="modal-price-opt selected" onclick="selectModalPlan(0,this)">
-            <div class="mpo-dur">1 Month</div>
-            <div class="mpo-price">$15</div>
-          </div>
-          <div class="modal-price-opt" onclick="selectModalPlan(1,this)">
-            <div class="mpo-dur">3 Months</div>
-            <div class="mpo-price">$50</div>
-          </div>
-          <div class="modal-price-opt" onclick="selectModalPlan(2,this)">
-            <div class="mpo-dur">6 Months</div>
-            <div class="mpo-price">$100</div>
-          </div>
-          <div class="modal-price-opt" onclick="selectModalPlan(3,this)">
-            <div class="mpo-dur">12 Months</div>
-            <div class="mpo-price">$249</div>
-          </div>
-          <div class="modal-price-opt" onclick="selectModalPlan(4,this)">
-            <div class="mpo-dur">Lifetime</div>
-            <div class="mpo-price">$499</div>
-          </div>
+      <p style="font-size:13px;color:var(--muted);margin:0 0 10px">Select your plan:</p>
+      <div class="modal-pricing" id="modalPricing">
+        <div class="modal-price-opt selected" onclick="selectModalPlan(0,this)">
+          <div class="mpo-dur">1 Month</div>
+          <div class="mpo-price">$15</div>
+        </div>
+        <div class="modal-price-opt" onclick="selectModalPlan(1,this)">
+          <div class="mpo-dur">3 Months</div>
+          <div class="mpo-price">$50</div>
+        </div>
+        <div class="modal-price-opt" onclick="selectModalPlan(2,this)">
+          <div class="mpo-dur">6 Months</div>
+          <div class="mpo-price">$100</div>
+        </div>
+        <div class="modal-price-opt" onclick="selectModalPlan(3,this)">
+          <div class="mpo-dur">12 Months</div>
+          <div class="mpo-price">$249</div>
+        </div>
+        <div class="modal-price-opt" onclick="selectModalPlan(4,this)">
+          <div class="mpo-dur">Lifetime</div>
+          <div class="mpo-price">$499</div>
         </div>
       </div>
 
@@ -525,64 +534,82 @@
         Amount due: <b id="planPrice">$15 USD</b>
       </div>
 
-      <h3 style="margin-top:20px;margin-bottom:12px;font-size:15px">Select Payment Method</h3>
+      <h3 style="margin-top:20px;margin-bottom:4px;font-size:15px">Select Payment Method</h3>
 
-      <div class="payment-method" onclick="selectPayment('usdt',event)">
+      <!-- ── PAYSTACK ── -->
+      <div class="payment-method" id="pmPaystack" onclick="selectPayment('paystack',event)">
+        <h4>⚡ Paystack — Card / Bank / Mobile Money</h4>
+        <p>Instant license delivery · Automatic · Recommended</p>
+      </div>
+      <div id="paystackDetails" style="display:none">
+        <div class="paystack-info">
+          <p>✅ <b style="color:#fff">Fully automatic</b> — your license key is generated and emailed to you the moment payment is confirmed by Paystack.</p>
+          <p style="margin-top:8px">Supports: Visa, Mastercard, bank transfer, USSD &amp; mobile money.</p>
+        </div>
+        <div class="form-group">
+          <label>👤 Your Full Name *</label>
+          <input type="text" id="psName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
+        </div>
+        <div class="form-group">
+          <label>📧 Your Email *</label>
+          <input type="email" id="psEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
+        </div>
+        <div id="paystackMsg" class="msg"></div>
+        <button class="btn-paystack" id="paystackBtn" onclick="initiatePaystack()">
+          <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg>
+          Pay with Paystack
+        </button>
+        <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">🔐 Secured by Paystack — your card details are never stored here</p>
+      </div>
+
+      <!-- ── USDT ── -->
+      <div class="payment-method" id="pmUsdt" onclick="selectPayment('usdt',event)" style="margin-top:8px">
         <h4>💎 USDT (TRC20)</h4>
-        <p>Fast, low fees · Recommended for most users</p>
+        <p>Manual verification · Admin approves within 1–2 hours</p>
       </div>
       <div id="usdtDetails" style="display:none">
         <p style="font-size:13px;margin:8px 0">Send exactly <b id="usdtAmount">$15 USDT</b> to:</p>
         <div class="payment-addr" style="padding-right:60px">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz<button class="copy-btn" onclick="copyAddr('TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz')">Copy</button></div>
         <p style="font-size:12px;color:var(--muted);margin:4px 0">⚠️ Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
+        <div class="form-group" style="margin-top:16px">
+          <label>📋 Transaction Hash *</label>
+          <input type="text" id="txId" placeholder="Paste your TRC20 transaction hash" />
+        </div>
+        <div class="form-group">
+          <label>👤 Your Full Name *</label>
+          <input type="text" id="buyerName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
+        </div>
+        <div class="form-group">
+          <label>📧 Your Email *</label>
+          <input type="email" id="buyerEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
+        </div>
+        <div class="note-blue" style="margin-top:12px">
+          ⏱️ USDT payments are verified manually by the admin. Expect approval within <b>1–2 hours</b> during business hours. You'll receive your license key by email once approved.
+        </div>
+        <div id="step1Msg" class="msg"></div>
+        <button class="btn-main" id="step1Btn" onclick="submitUsdtPurchase()">Submit USDT Payment</button>
       </div>
 
-      <div class="payment-method" onclick="selectPayment('mpesa',event)">
-        <h4>📱 M-Pesa (Kenya)</h4>
-        <p>Instant · Kenya residents only</p>
-      </div>
-      <div id="mpesaDetails" style="display:none">
-        <p style="font-size:13px;margin:8px 0">Send to:</p>
-        <div class="payment-addr" style="padding-right:60px">+254701540201<button class="copy-btn" onclick="copyAddr('+254701540201')">Copy</button></div>
-        <p style="font-size:12px;color:var(--muted);margin:4px 0">Amount: <b id="mpesaAmount">KES 1,930</b> (approx <span id="mpesaUSD">$15</span> USD)</p>
-      </div>
-
-      <div class="form-group" style="margin-top:20px">
-        <label>📋 Transaction ID / Reference</label>
-        <input type="text" id="txId" placeholder="Paste your transaction hash or M-Pesa ref" />
-      </div>
-      <div class="form-group">
-        <label>👤 Your Full Name</label>
-        <input type="text" id="buyerName" placeholder="John Smith" />
-      </div>
-      <div class="form-group">
-        <label>📧 Your Email</label>
-        <input type="email" id="buyerEmail" placeholder="you@example.com" />
-      </div>
-
-      <div id="step1Msg" class="msg"></div>
-      <button class="btn-main" id="step1Btn" onclick="submitPurchase()">Submit Payment Details</button>
     </div>
 
-    <!-- STEP 2: Polling / License delivered -->
+    <!-- STEP 2: USDT Waiting / Approved -->
     <div class="step" id="step2">
       <div id="waitingState">
         <div class="poll-status">
           <div class="poll-icon pulse">⏳</div>
-          <b style="color:#8cb4ff;font-size:15px">Awaiting Payment Verification</b>
-          <p>Your payment details have been submitted. The admin is reviewing your transaction.</p>
-          <p style="margin-top:8px;font-size:12px">This page will automatically update once approved. <span class="spinner spinner-gold" style="width:12px;height:12px"></span></p>
+          <b style="color:#8cb4ff;font-size:15px">Awaiting USDT Verification</b>
+          <p>Your payment details have been submitted. The admin is reviewing your transaction on-chain.</p>
+          <p style="margin-top:8px;font-size:12px">This page updates automatically. <span class="spinner spinner-gold" style="width:12px;height:12px"></span></p>
         </div>
         <div id="pollInfo" style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:16px 0;font-size:13px">
           <p style="margin:0 0 6px"><b style="color:#fff">Submitted Details</b></p>
           <p style="margin:4px 0" id="pollName"></p>
           <p style="margin:4px 0" id="pollEmail"></p>
-          <p style="margin:4px 0" id="pollTx" style="word-break:break-all"></p>
+          <p style="margin:4px 0" id="pollTx"></p>
           <p style="margin:4px 0" id="pollPlan"></p>
         </div>
         <p style="font-size:12px;color:var(--muted);text-align:center">Usually approved within 1–2 hours. You'll also receive an email once approved.</p>
       </div>
-
       <div id="approvedState" style="display:none">
         <div style="text-align:center;margin-bottom:16px">
           <div style="font-size:40px">🎉</div>
@@ -595,15 +622,29 @@
           <div class="license-info" id="licenseInfoGrid"></div>
           <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">📋 Copy Key</button>
         </div>
-        <div class="note" style="margin-top:16px">
-          <b>⚠️ Important:</b> Save this license key securely. You will need it to activate your EA in MetaTrader 5. It has also been sent to your email.
-        </div>
+        <div class="note" style="margin-top:16px"><b>⚠️ Important:</b> Save this license key. You need it to activate your EA in MetaTrader 5.</div>
         <div id="step2Msg" class="msg"></div>
-        <a class="download-btn" id="downloadBtn" href="https://www.udrop.com/Oyq7/XAUUSD_TraderAI.ex5" target="_blank" rel="noopener">
-          📥 Download XAUUSD_TraderAI.ex5
-        </a>
+        <a class="download-btn" href="https://www.udrop.com/Oyq7/XAUUSD_TraderAI.ex5" target="_blank" rel="noopener">📥 Download XAUUSD_TraderAI.ex5</a>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
       </div>
+    </div>
+
+    <!-- STEP 3: Paystack success (instant) -->
+    <div class="step" id="step3">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:48px">🎉</div>
+        <h3 style="color:var(--green);margin:8px 0">Payment Confirmed!</h3>
+        <p style="font-size:14px;margin:0">Paystack has confirmed your payment. Your license is now active.</p>
+      </div>
+      <div class="license-box">
+        <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
+        <div class="license-key" id="instantLicenseKey">—</div>
+        <div class="license-info" id="instantLicenseInfo"></div>
+        <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyText(document.getElementById('instantLicenseKey').textContent)">📋 Copy Key</button>
+      </div>
+      <div class="note"><b>⚠️ Important:</b> Save this key — it's been emailed to you as well.</div>
+      <a class="download-btn" href="https://www.udrop.com/Oyq7/XAUUSD_TraderAI.ex5" target="_blank" rel="noopener">📥 Download XAUUSD_TraderAI.ex5</a>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
     </div>
 
   </div>
@@ -646,7 +687,7 @@
       <button class="admin-tab active" onclick="switchAdminTab('licenses',this)">Licenses</button>
       <button class="admin-tab" onclick="switchAdminTab('create',this)">Create License</button>
       <button class="admin-tab" onclick="switchAdminTab('logs',this)">Access Logs</button>
-      <button class="admin-tab" onclick="switchAdminTab('pending',this)">Pending Orders</button>
+      <button class="admin-tab" onclick="switchAdminTab('pending',this)">Pending (USDT)</button>
     </div>
 
     <!-- Tab: Licenses -->
@@ -666,7 +707,7 @@
           <table class="license-table">
             <thead><tr>
               <th>License Key</th><th>Name</th><th>Email</th><th>MT5 Account</th>
-              <th>Status</th><th>Expiry</th><th>Last Seen</th><th>Actions</th>
+              <th>Status</th><th>Source</th><th>Expiry</th><th>Actions</th>
             </tr></thead>
             <tbody id="licensesBody"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:32px">Loading…</td></tr></tbody>
           </table>
@@ -706,21 +747,16 @@
     <!-- Tab: Logs -->
     <div class="admin-panel" id="tabLogs">
       <div class="admin-card">
-        <!-- Access logs SQL fix notice -->
         <div class="sql-notice" id="logsFixNotice">
           <h5>⚠️ If Access Logs Are Empty — Run This SQL in Supabase</h5>
-          <p style="color:var(--muted);margin:0 0 8px;font-size:12px">The EA inserts rows via the <code>anon</code> key. Without RLS INSERT permission, all log writes silently fail. Run these in your Supabase SQL Editor:</p>
-          <code>-- 1. Allow anon to insert access logs (EA uses anon key)</code>
+          <p style="color:var(--muted);margin:0 0 8px;font-size:12px">The EA inserts rows via the <code>anon</code> key. Without RLS INSERT permission, all log writes silently fail.</p>
           <code>ALTER TABLE access_logs ENABLE ROW LEVEL SECURITY;</code>
           <code>DROP POLICY IF EXISTS "allow_anon_insert_logs" ON access_logs;</code>
           <code>CREATE POLICY "allow_anon_insert_logs" ON access_logs FOR INSERT TO anon WITH CHECK (true);</code>
-          <code>-- 2. Allow anon to read licenses (for EA validation)</code>
           <code>DROP POLICY IF EXISTS "allow_anon_select_licenses" ON licenses;</code>
           <code>CREATE POLICY "allow_anon_select_licenses" ON licenses FOR SELECT TO anon USING (true);</code>
-          <code>-- 3. Allow anon to update licenses (last_seen, account_number)</code>
           <code>DROP POLICY IF EXISTS "allow_anon_update_licenses" ON licenses;</code>
           <code>CREATE POLICY "allow_anon_update_licenses" ON licenses FOR UPDATE TO anon USING (true);</code>
-          <p style="color:var(--muted);margin:8px 0 0;font-size:12px">Also confirm your <b>access_logs</b> table has these columns: <code>id</code> (uuid default), <code>license_key</code> (text), <code>account_number</code> (text), <code>ip_address</code> (text), <code>terminal_name</code> (text), <code>login_time</code> (timestamptz default now()). If columns are missing, add them:</p>
           <code>ALTER TABLE access_logs ADD COLUMN IF NOT EXISTS terminal_name text;</code>
           <code>ALTER TABLE access_logs ADD COLUMN IF NOT EXISTS ip_address text;</code>
           <button class="admin-btn primary" style="margin-top:10px;font-size:11px;padding:6px 14px" onclick="document.getElementById('logsFixNotice').style.display='none'">Dismiss</button>
@@ -733,18 +769,17 @@
       </div>
     </div>
 
-    <!-- Tab: Pending Orders -->
+    <!-- Tab: Pending USDT -->
     <div class="admin-panel" id="tabPending">
       <div class="admin-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <h4 style="margin:0">Pending Purchase Requests</h4>
+          <h4 style="margin:0">⏳ Pending USDT Payments</h4>
           <button class="admin-btn primary" onclick="loadPending()">↻ Refresh</button>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Customers awaiting license assignment after payment submission.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">USDT customers awaiting manual on-chain verification. Paystack orders are processed automatically and do not appear here.</p>
         <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -763,10 +798,10 @@
     <div class="form-group"><label>Extend Expiry By</label>
       <select class="admin-input" id="editExtend">
         <option value="0">No change</option>
-        <option value="30">+ 1 Month (30 days)</option>
-        <option value="90">+ 3 Months (90 days)</option>
-        <option value="180">+ 6 Months (180 days)</option>
-        <option value="365">+ 12 Months (365 days)</option>
+        <option value="30">+ 1 Month</option>
+        <option value="90">+ 3 Months</option>
+        <option value="180">+ 6 Months</option>
+        <option value="365">+ 12 Months</option>
         <option value="3650">+ Lifetime (10yr)</option>
       </select>
     </div>
@@ -789,20 +824,22 @@ const EMAILJS_PUBLIC_KEY  = 'ehkRhmWH5ltLrAJlt';
 const EMAILJS_TEMPLATE_ID = 'template_8adw61b';
 const EMAILJS_SERVICE_ID  = 'service_6znqqnq';
 
+// Paystack
+const PAYSTACK_PUBLIC_KEY = 'pk_live_a9968885c72fc50bf6c9f09eaf0c098fb89ea7bb';
+
 const POLL_INTERVAL_MS = 15000;
 
-// ── Pricing tiers ──────────────────────────────────────────
 const PRICE_TIERS = [
-  { label: '1 Month',   days: 30,   price: 15,  kes: 1930  },
-  { label: '3 Months',  days: 90,   price: 50,  kes: 6450  },
-  { label: '6 Months',  days: 180,  price: 100, kes: 12900 },
-  { label: '12 Months', days: 365,  price: 249, kes: 32100 },
-  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350 }
+  { label: '1 Month',   days: 30,   price: 15,  kobo: 1500000  },
+  { label: '3 Months',  days: 90,   price: 50,  kobo: 5000000  },
+  { label: '6 Months',  days: 180,  price: 100, kobo: 10000000 },
+  { label: '12 Months', days: 365,  price: 249, kobo: 24900000 },
+  { label: 'Lifetime',  days: 3650, price: 499, kobo: 49900000 }
 ];
 
-let selectedTierIndex = 0; // default to first tier
+let selectedTierIndex = 0;
+let activePaymentMethod = null; // 'paystack' | 'usdt'
 
-// ── Supabase headers ──────────────────────────────────────
 const headers = {
   'Content-Type': 'application/json',
   'apikey': SUPABASE_KEY,
@@ -841,7 +878,6 @@ async function sbRpc(fn, params) {
   return r.json();
 }
 
-// ── License key generator ─────────────────────────────────
 function generateLicenseKey() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let key = 'LGAI-XAU-';
@@ -849,7 +885,6 @@ function generateLicenseKey() {
   return key;
 }
 
-// ── Date helpers ──────────────────────────────────────────
 function addDays(days) {
   const d = new Date();
   d.setDate(d.getDate() + parseInt(days));
@@ -864,7 +899,6 @@ function isExpired(iso) {
   return new Date(iso) < new Date();
 }
 
-// ── EmailJS init ──────────────────────────────────────────
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
 async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId, planLabel) {
@@ -877,7 +911,7 @@ async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId
       plan          : planLabel || 'N/A',
       download_url  : DOWNLOAD_URL
     });
-    console.log('EmailJS success:', result.status, result.text);
+    console.log('EmailJS success:', result.status);
     return true;
   } catch (err) {
     console.error('EmailJS error:', err);
@@ -886,7 +920,7 @@ async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId
 }
 
 // ═══════════════════════════════════════════════════════════
-//  PRICING SELECTION (landing page cards)
+//  PRICING SELECTION
 // ═══════════════════════════════════════════════════════════
 function selectPriceTier(index, el) {
   selectedTierIndex = index;
@@ -904,7 +938,6 @@ let currentBuyerName  = null;
 let currentBuyerEmail = null;
 
 function openPaymentModal(preselectedIndex) {
-  // If called from a price card, use that tier; otherwise keep current selection
   if (typeof preselectedIndex === 'number') selectedTierIndex = preselectedIndex;
   syncModalPlanUI();
   document.getElementById('paymentModal').classList.add('show');
@@ -912,7 +945,6 @@ function openPaymentModal(preselectedIndex) {
 }
 
 function syncModalPlanUI() {
-  // Sync modal mini pricing options
   document.querySelectorAll('.modal-price-opt').forEach((el, i) => {
     el.classList.toggle('selected', i === selectedTierIndex);
   });
@@ -920,8 +952,6 @@ function syncModalPlanUI() {
   document.getElementById('planLabel').textContent  = `XAUUSD Scalping AI V15 · ${tier.label}`;
   document.getElementById('planPrice').textContent  = `$${tier.price} USD`;
   document.getElementById('usdtAmount').textContent = `$${tier.price} USDT`;
-  document.getElementById('mpesaAmount').textContent = `KES ${tier.kes.toLocaleString()}`;
-  document.getElementById('mpesaUSD').textContent   = `$${tier.price}`;
 }
 
 function selectModalPlan(index, el) {
@@ -937,33 +967,40 @@ function closePaymentModal() {
 }
 
 function resetPaymentModal() {
-  document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===0));
+  // Show only step 1
+  ['step1','step2','step3'].forEach((id,i) => {
+    document.getElementById(id).classList.toggle('active', i===0);
+  });
   document.querySelectorAll('.step-dot').forEach((d,i) => {
     d.classList.toggle('active', i===0);
     d.classList.remove('done');
   });
   document.querySelectorAll('.step-line').forEach(l => l.classList.remove('done'));
-  ['txId','buyerName','buyerEmail'].forEach(id => {
+  ['txId','buyerName','buyerEmail','psName','psEmail'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
   setMsg('step1Msg','','');
+  setMsg('paystackMsg','','');
   const btn = document.getElementById('step1Btn');
-  btn.disabled = false;
-  btn.textContent = 'Submit Payment Details';
+  if (btn) { btn.disabled = false; btn.textContent = 'Submit USDT Payment'; }
+  const psBtn = document.getElementById('paystackBtn');
+  if (psBtn) { psBtn.disabled = false; psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Pay with Paystack'; }
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.getElementById('usdtDetails').style.display  = 'none';
-  document.getElementById('mpesaDetails').style.display = 'none';
-  document.getElementById('waitingState').style.display  = 'block';
-  document.getElementById('approvedState').style.display = 'none';
+  document.getElementById('paystackDetails').style.display = 'none';
+  document.getElementById('usdtDetails').style.display     = 'none';
+  document.getElementById('waitingState').style.display    = 'block';
+  document.getElementById('approvedState').style.display   = 'none';
+  activePaymentMethod = null;
   currentOrderId = currentTxId = currentBuyerName = currentBuyerEmail = null;
   syncModalPlanUI();
 }
 
 function selectPayment(method, event) {
+  activePaymentMethod = method;
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.getElementById('usdtDetails').style.display  = method === 'usdt'  ? 'block' : 'none';
-  document.getElementById('mpesaDetails').style.display = method === 'mpesa' ? 'block' : 'none';
+  document.getElementById('paystackDetails').style.display = method === 'paystack' ? 'block' : 'none';
+  document.getElementById('usdtDetails').style.display     = method === 'usdt'     ? 'block' : 'none';
   if (event && event.currentTarget) event.currentTarget.classList.add('selected');
 }
 
@@ -976,7 +1013,9 @@ function setMsg(id, type, text) {
 }
 
 function goStep(n) {
-  document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i===n-1));
+  ['step1','step2','step3'].forEach((id,i) => {
+    document.getElementById(id).classList.toggle('active', i === n-1);
+  });
   for (let i = 1; i <= 3; i++) {
     const dot  = document.getElementById('sd'+i);
     const line = document.getElementById('sl'+i);
@@ -985,7 +1024,118 @@ function goStep(n) {
   }
 }
 
-async function submitPurchase() {
+// ═══════════════════════════════════════════════════════════
+//  PAYSTACK FLOW — instant license on success
+// ═══════════════════════════════════════════════════════════
+function initiatePaystack() {
+  const name  = document.getElementById('psName').value.trim();
+  const email = document.getElementById('psEmail').value.trim();
+
+  if (!name || !email) {
+    setMsg('paystackMsg','error','❌ Please enter your name and email first.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setMsg('paystackMsg','error','❌ Please enter a valid email address.');
+    return;
+  }
+
+  const tier = PRICE_TIERS[selectedTierIndex];
+  const psBtn = document.getElementById('paystackBtn');
+  psBtn.disabled = true;
+  psBtn.innerHTML = '<span class="spinner"></span> Opening Paystack…';
+  setMsg('paystackMsg','','');
+
+  const handler = PaystackPop.setup({
+    key      : PAYSTACK_PUBLIC_KEY,
+    email    : email,
+    amount   : tier.kobo,       // amount in kobo (smallest unit); Paystack will show NGN; use USD currency if your account is USD
+    currency : 'USD',           // change to 'NGN' if your Paystack account is Nigeria-only
+    ref      : 'LGAI-' + Date.now() + '-' + Math.random().toString(36).substr(2,6).toUpperCase(),
+    metadata : {
+      custom_fields: [
+        { display_name: 'Customer Name', variable_name: 'customer_name', value: name },
+        { display_name: 'Plan',          variable_name: 'plan_label',    value: tier.label },
+        { display_name: 'Plan Days',     variable_name: 'plan_days',     value: String(tier.days) }
+      ]
+    },
+    callback : function(response) {
+      // Payment confirmed by Paystack popup
+      onPaystackSuccess(response, name, email, tier);
+    },
+    onClose  : function() {
+      psBtn.disabled = false;
+      psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Pay with Paystack';
+      setMsg('paystackMsg','info','ℹ️ Payment window closed. Try again when ready.');
+    }
+  });
+
+  handler.openIframe();
+}
+
+async function onPaystackSuccess(response, name, email, tier) {
+  const psBtn = document.getElementById('paystackBtn');
+  psBtn.innerHTML = '<span class="spinner"></span> Generating License…';
+
+  try {
+    // Generate license key
+    let licenseKey;
+    try { licenseKey = await sbRpc('generate_license_key', {}); }
+    catch { licenseKey = generateLicenseKey(); }
+
+    const expiry = addDays(tier.days);
+
+    // Save license to Supabase
+    const inserted = await sbInsert('licenses', {
+      license_key    : licenseKey,
+      customer_name  : name,
+      customer_email : email,
+      product_name   : 'XAUUSD Scalping AI V15',
+      status         : 'active',
+      expiry_date    : expiry,
+      notes          : `Paystack · ref:${response.reference} · ${tier.label}`
+    });
+
+    const licenseId = inserted[0]?.id || response.reference;
+
+    // Also log the order in pending_orders as approved
+    try {
+      await sbInsert('pending_orders', {
+        transaction_id : response.reference,
+        customer_name  : name,
+        customer_email : email,
+        amount_usd     : tier.price,
+        plan_label     : tier.label,
+        plan_days      : tier.days,
+        status         : 'approved',
+        submitted_at   : new Date().toISOString()
+      });
+    } catch(e) { /* best effort */ }
+
+    // Send email
+    await sendLicenseEmail(name, email, licenseKey, licenseId, tier.label);
+
+    // Show success step
+    document.getElementById('instantLicenseKey').textContent = licenseKey;
+    document.getElementById('instantLicenseInfo').innerHTML = `
+      <div class="license-info-item"><div class="li-label">Name</div><div class="li-value">${name}</div></div>
+      <div class="license-info-item"><div class="li-label">Email</div><div class="li-value">${email}</div></div>
+      <div class="license-info-item"><div class="li-label">Plan</div><div class="li-value">${tier.label}</div></div>
+      <div class="license-info-item"><div class="li-label">Expires</div><div class="li-value">${formatDate(expiry)}</div></div>
+    `;
+    goStep(3);
+
+  } catch(e) {
+    psBtn.disabled = false;
+    psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Retry';
+    setMsg('paystackMsg','error','❌ Payment was confirmed but license generation failed: ' + e.message + ' — email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your Paystack ref: <b>' + response.reference + '</b>');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  USDT FLOW — manual admin approval
+// ═══════════════════════════════════════════════════════════
+async function submitUsdtPurchase() {
   const txId  = document.getElementById('txId').value.trim();
   const name  = document.getElementById('buyerName').value.trim();
   const email = document.getElementById('buyerEmail').value.trim();
@@ -1008,22 +1158,34 @@ async function submitPurchase() {
   try {
     const existing = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}`);
     if (existing && existing.length > 0) {
-      setMsg('step1Msg','error','❌ This transaction ID has already been submitted.');
+      setMsg('step1Msg','error','❌ This transaction hash has already been submitted.');
       btn.disabled = false;
-      btn.textContent = 'Submit Payment Details';
+      btn.textContent = 'Submit USDT Payment';
       return;
     }
 
-    const inserted = await sbInsert('pending_orders', {
-      transaction_id : txId,
-      customer_name  : name,
-      customer_email : email,
-      amount_usd     : tier.price,
-      plan_label     : tier.label,
-      plan_days      : tier.days,
-      status         : 'pending',
-      submitted_at   : new Date().toISOString()
-    });
+    let inserted;
+    try {
+      inserted = await sbInsert('pending_orders', {
+        transaction_id : txId,
+        customer_name  : name,
+        customer_email : email,
+        amount_usd     : tier.price,
+        plan_label     : tier.label,
+        plan_days      : tier.days,
+        status         : 'pending',
+        submitted_at   : new Date().toISOString()
+      });
+    } catch {
+      inserted = await sbInsert('pending_orders', {
+        transaction_id : txId,
+        customer_name  : name,
+        customer_email : email,
+        amount_usd     : tier.price,
+        status         : 'pending',
+        submitted_at   : new Date().toISOString()
+      });
+    }
 
     currentOrderId    = inserted[0]?.id || null;
     currentTxId       = txId;
@@ -1032,42 +1194,20 @@ async function submitPurchase() {
 
     document.getElementById('pollName').textContent  = '👤 ' + name;
     document.getElementById('pollEmail').textContent = '📧 ' + email;
-    document.getElementById('pollTx').textContent    = '🔑 TX: ' + txId;
+    document.getElementById('pollTx').textContent    = '🔗 TX: ' + txId;
     document.getElementById('pollPlan').textContent  = '💳 Plan: ' + tier.label + ' — $' + tier.price;
 
     goStep(2);
     startPolling(txId, name, email);
 
   } catch (e) {
-    // If plan_label / plan_days columns don't exist yet, retry without them
-    try {
-      const inserted = await sbInsert('pending_orders', {
-        transaction_id : txId,
-        customer_name  : name,
-        customer_email : email,
-        amount_usd     : tier.price,
-        status         : 'pending',
-        submitted_at   : new Date().toISOString()
-      });
-      currentOrderId    = inserted[0]?.id || null;
-      currentTxId       = txId;
-      currentBuyerName  = name;
-      currentBuyerEmail = email;
-      document.getElementById('pollName').textContent  = '👤 ' + name;
-      document.getElementById('pollEmail').textContent = '📧 ' + email;
-      document.getElementById('pollTx').textContent    = '🔑 TX: ' + txId;
-      document.getElementById('pollPlan').textContent  = '💳 Plan: ' + tier.label + ' — $' + tier.price;
-      goStep(2);
-      startPolling(txId, name, email);
-    } catch (e2) {
-      setMsg('step1Msg','error','❌ Error submitting: ' + e2.message + '<br><small>You may also email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your transaction ID.</small>');
-      btn.disabled = false;
-      btn.textContent = 'Submit Payment Details';
-    }
+    setMsg('step1Msg','error','❌ Error submitting: ' + e.message + '<br><small>Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your TX hash.</small>');
+    btn.disabled = false;
+    btn.textContent = 'Submit USDT Payment';
   }
 }
 
-// ── Polling ───────────────────────────────────────────────
+// ── Polling for USDT approval ─────────────────────────────
 function startPolling(txId, name, email) {
   stopPolling();
   pollTimer = setInterval(() => checkApprovalStatus(txId, name, email), POLL_INTERVAL_MS);
@@ -1130,13 +1270,11 @@ function adminLogin() {
     setMsg('adminLoginMsg','error','❌ Incorrect password.');
   }
 }
-
 function adminLogout() {
   document.getElementById('adminPortal').style.display = 'none';
   document.body.style.overflow = '';
   document.getElementById('adminPassword').value = '';
 }
-
 function switchAdminTab(tab, btn) {
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
@@ -1146,7 +1284,6 @@ function switchAdminTab(tab, btn) {
   if (tab === 'pending') loadPending();
 }
 
-// ── Stats ─────────────────────────────────────────────────
 async function loadAdminStats() {
   try {
     const licenses = await sbSelect('licenses', '?select=status,expiry_date');
@@ -1161,7 +1298,6 @@ async function loadAdminStats() {
   } catch(e) { console.error(e); }
 }
 
-// ── Licenses ──────────────────────────────────────────────
 let allLicenses = [];
 
 async function loadLicenses() {
@@ -1184,14 +1320,19 @@ function renderLicenses(list) {
   tbody.innerHTML = list.map(l => {
     const expired = isExpired(l.expiry_date);
     const statusDisplay = expired && l.status === 'active' ? 'expired' : l.status;
+    // detect source from notes
+    const isPaystack = l.notes && l.notes.toLowerCase().includes('paystack');
+    const sourceLabel = isPaystack
+      ? '<span class="badge-status paystack">Paystack</span>'
+      : '<span class="badge-status" style="background:rgba(212,175,55,.15);color:var(--gold-2)">USDT</span>';
     return `<tr>
       <td style="font-family:monospace;font-size:12px;color:var(--gold-2)">${l.license_key || '—'}</td>
       <td>${l.customer_name || '—'}</td>
       <td style="font-size:12px">${l.customer_email || '—'}</td>
       <td style="font-family:monospace">${l.account_number || '—'}</td>
       <td><span class="badge-status ${statusDisplay}">${statusDisplay}</span></td>
+      <td>${sourceLabel}</td>
       <td style="font-size:12px">${formatDate(l.expiry_date)}</td>
-      <td style="font-size:12px">${formatDate(l.last_seen)}</td>
       <td>
         <button class="admin-btn primary" style="padding:5px 10px;font-size:11px;margin-right:4px" onclick="openEditModal('${l.id}','${l.status}','${(l.notes||'').replace(/'/g,"\\'")}')">Edit</button>
         ${l.status === 'active'
@@ -1213,7 +1354,6 @@ function filterLicenses() {
   renderLicenses(filtered);
 }
 
-// ── Create license ────────────────────────────────────────
 async function createLicense() {
   const name     = document.getElementById('newName').value.trim();
   const email    = document.getElementById('newEmail').value.trim();
@@ -1243,23 +1383,20 @@ async function createLicense() {
     });
 
     const orderId = inserted[0]?.id || 'N/A';
-    // Determine plan label from days
     const tier = PRICE_TIERS.find(t => String(t.days) === String(duration)) || { label: duration + ' days' };
     const emailSent = await sendLicenseEmail(name, email, licenseKey, orderId, tier.label);
-    const emailNote = emailSent ? ' Email sent to customer.' : ' (Email sending failed — send manually.)';
+    const emailNote = emailSent ? ' Email sent.' : ' (Email failed — send manually.)';
 
     setMsg('createMsg','success','✅ License created!' + emailNote);
     document.getElementById('createdKeyDisplay').textContent = licenseKey;
     document.getElementById('createdLicenseResult').style.display = 'block';
     loadLicenses();
-
     ['newName','newEmail','newNotes'].forEach(id => document.getElementById(id).value = '');
   } catch (e) {
     setMsg('createMsg','error','❌ Error: ' + e.message);
   }
 }
 
-// ── Edit / suspend / activate ─────────────────────────────
 function openEditModal(id, status, notes) {
   document.getElementById('editLicenseId').value = id;
   document.getElementById('editStatus').value    = status;
@@ -1302,14 +1439,12 @@ async function quickActivate(id) {
   catch (e) { alert('Error: ' + e.message); }
 }
 
-// ── Logs ──────────────────────────────────────────────────
 async function loadLogs() {
   document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
   try {
     const logs = await sbSelect('access_logs', '?order=login_time.desc&limit=100');
     if (!logs.length) {
-      document.getElementById('logsContainer').innerHTML = `
-        <p style="color:var(--muted);font-size:13px">No access logs found. This usually means the EA has not connected yet, or the RLS policy is blocking inserts from the EA. See the SQL fix notice above.</p>`;
+      document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs found. See the SQL fix notice above.</p>';
       return;
     }
     document.getElementById('logsContainer').innerHTML = logs.map(l => `
@@ -1327,25 +1462,26 @@ async function loadLogs() {
   }
 }
 
-// ── Pending orders ────────────────────────────────────────
 async function loadPending() {
   document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
   try {
+    // Show only USDT (non-Paystack) pending orders
     const orders = await sbSelect('pending_orders', '?order=submitted_at.desc');
-    if (!orders.length) {
-      document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending orders.</p>';
+    const usdtOrders = orders.filter(o => !o.transaction_id || !o.transaction_id.startsWith('LGAI-'));
+    if (!usdtOrders.length) {
+      document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending USDT orders. ✅</p>';
       return;
     }
     document.getElementById('pendingContainer').innerHTML = `
       <table class="license-table">
         <thead><tr>
-          <th>Name</th><th>Email</th><th>Transaction ID</th>
+          <th>Name</th><th>Email</th><th>TX Hash</th>
           <th>Plan</th><th>Amount</th><th>Submitted</th><th>Status</th><th>Actions</th>
         </tr></thead>
-        <tbody>${orders.map(o => `<tr>
+        <tbody>${usdtOrders.map(o => `<tr>
           <td>${o.customer_name}</td>
           <td style="font-size:12px">${o.customer_email}</td>
-          <td style="font-family:monospace;font-size:12px;color:var(--gold-2)">${o.transaction_id}</td>
+          <td style="font-family:monospace;font-size:11px;color:var(--gold-2);max-width:160px;word-break:break-all">${o.transaction_id}</td>
           <td style="font-size:12px">${o.plan_label || '—'}</td>
           <td>$${o.amount_usd}</td>
           <td style="font-size:12px">${formatDate(o.submitted_at)}</td>
@@ -1365,12 +1501,7 @@ async function loadPending() {
   }
 }
 
-/**
- * Approve a pending order.
- * Now uses the plan_days from the order record automatically.
- */
 async function approveOrder(orderId, name, email, planDays, planLabel) {
-  // planDays comes from the order; fall back to asking if missing
   let duration = planDays && parseInt(planDays) > 0 ? planDays : null;
   if (!duration) {
     duration = prompt('License duration in days? (30=1mo, 90=3mo, 180=6mo, 365=12mo, 3650=lifetime)', '365');
@@ -1391,26 +1522,16 @@ async function approveOrder(orderId, name, email, planDays, planLabel) {
       product_name   : 'XAUUSD Scalping AI V15',
       status         : 'active',
       expiry_date    : expiry,
-      notes          : `Approved from pending order ${orderId} · ${label}`
+      notes          : `USDT approved · order ${orderId} · ${label}`
     });
 
     const licenseId = inserted[0]?.id || orderId;
     await sbUpdate('pending_orders', orderId, { status: 'approved' });
 
     const emailSent = await sendLicenseEmail(name, email, licenseKey, licenseId, label);
-    const emailStatus = emailSent
-      ? '✅ Email sent to customer.'
-      : '⚠️ Email sending failed. Please send the key manually.';
+    const emailStatus = emailSent ? '✅ Email sent to customer.' : '⚠️ Email failed. Send key manually.';
 
-    alert(
-      `✅ License Created!\n\n` +
-      `Key: ${licenseKey}\n` +
-      `Plan: ${label}\n` +
-      `Customer: ${name}\n` +
-      `Email: ${email}\n` +
-      `Expires: ${formatDate(expiry)}\n\n` +
-      emailStatus
-    );
+    alert(`✅ License Created!\n\nKey: ${licenseKey}\nPlan: ${label}\nCustomer: ${name}\nEmail: ${email}\nExpires: ${formatDate(expiry)}\n\n${emailStatus}`);
 
     loadPending();
     loadLicenses();
@@ -1427,9 +1548,7 @@ async function rejectOrder(orderId) {
   } catch (e) { alert('Error: ' + e.message); }
 }
 
-// ── Init: sync modal plan display on load ─────────────────
 syncModalPlanUI();
 </script>
-
 </body>
 </html>
