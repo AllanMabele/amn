@@ -544,7 +544,7 @@
       <div id="paystackDetails" style="display:none">
         <div class="paystack-info">
           <p>✅ <b style="color:#fff">Fully automatic</b> — your license key is generated and emailed to you the moment payment is confirmed by Paystack.</p>
-          <p style="margin-top:8px">Supports: Visa, Mastercard, bank transfer, USSD &amp; mobile money.</p>
+          <p style="margin-top:8px">Amount charged: <b style="color:#fff" id="paystackKesAmount">KES 1,930</b> · Supports M-Pesa, Visa, Mastercard, bank transfer &amp; USSD.</p>
         </div>
         <div class="form-group">
           <label>👤 Your Full Name *</label>
@@ -830,11 +830,11 @@ const PAYSTACK_PUBLIC_KEY = 'pk_live_a9968885c72fc50bf6c9f09eaf0c098fb89ea7bb';
 const POLL_INTERVAL_MS = 15000;
 
 const PRICE_TIERS = [
-  { label: '1 Month',   days: 30,   price: 15,  kobo: 1500000  },
-  { label: '3 Months',  days: 90,   price: 50,  kobo: 5000000  },
-  { label: '6 Months',  days: 180,  price: 100, kobo: 10000000 },
-  { label: '12 Months', days: 365,  price: 249, kobo: 24900000 },
-  { label: 'Lifetime',  days: 3650, price: 499, kobo: 49900000 }
+  { label: '1 Month',   days: 30,   price: 15,  kes: 1930,  kes_cents: 193000  },
+  { label: '3 Months',  days: 90,   price: 50,  kes: 6450,  kes_cents: 645000  },
+  { label: '6 Months',  days: 180,  price: 100, kes: 12900, kes_cents: 1290000 },
+  { label: '12 Months', days: 365,  price: 249, kes: 32100, kes_cents: 3210000 },
+  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350, kes_cents: 6435000 }
 ];
 
 let selectedTierIndex = 0;
@@ -950,8 +950,10 @@ function syncModalPlanUI() {
   });
   const tier = PRICE_TIERS[selectedTierIndex];
   document.getElementById('planLabel').textContent  = `XAUUSD Scalping AI V15 · ${tier.label}`;
-  document.getElementById('planPrice').textContent  = `$${tier.price} USD`;
+  document.getElementById('planPrice').textContent  = `KES ${tier.kes.toLocaleString()} (~$${tier.price} USD)`;
   document.getElementById('usdtAmount').textContent = `$${tier.price} USDT`;
+  const kesEl = document.getElementById('paystackKesAmount');
+  if (kesEl) kesEl.textContent = `KES ${tier.kes.toLocaleString()}`;
 }
 
 function selectModalPlan(index, el) {
@@ -1049,8 +1051,8 @@ function initiatePaystack() {
   const handler = PaystackPop.setup({
     key      : PAYSTACK_PUBLIC_KEY,
     email    : email,
-    amount   : tier.kobo,       // amount in kobo (smallest unit); Paystack will show NGN; use USD currency if your account is USD
-    currency : 'USD',           // change to 'NGN' if your Paystack account is Nigeria-only
+    amount   : tier.kes_cents,  // amount in KES cents (KES × 100)
+    currency : 'KES',
     ref      : 'LGAI-' + Date.now() + '-' + Math.random().toString(36).substr(2,6).toUpperCase(),
     metadata : {
       custom_fields: [
