@@ -3,13 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>XAUUSD Scalping AI V15 — LiquidGold AI</title>
-<meta name="description" content="XAUUSD ScalpingAI V15 — Institutional-grade automated gold scalping Expert Advisor for MetaTrader 5." />
+<title>XAUUSD Scalping AI V19 — LiquidGold AI</title>
+<meta name="description" content="XAUUSD ScalpingAI V19 — Next-Gen Institutional Adaptive AI Scalping Engine for MetaTrader 5. H4/M15/M5 multi-timeframe with Smart Money filters." />
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<!-- Paystack inline JS -->
-<script src="https://js.paystack.co/v1/inline.js"></script>
 
 <style>
   :root{
@@ -24,6 +22,7 @@
     --green:#4ade80;
     --red:#ef4444;
     --blue:#3b82f6;
+    --purple:#a855f7;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
@@ -64,6 +63,10 @@
   .card .num{font-family:Georgia,serif;color:var(--gold);font-size:14px;letter-spacing:.2em}
   .card h3{margin-top:8px}
   .card p{margin:8px 0 0;font-size:15px}
+  .card.smc{border-color:rgba(168,85,247,.3);background:linear-gradient(180deg,rgba(168,85,247,.06),var(--bg-2))}
+  .card.smc:hover{border-color:rgba(168,85,247,.55)}
+  .card.smc .num{color:var(--purple)}
+  .card.smc h3{color:#c084fc}
   .tbl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
   .tbl th,.tbl td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:15px}
   .tbl th{background:#0f1320;color:var(--gold-2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
@@ -77,7 +80,14 @@
   .cta-section{text-align:center;background:radial-gradient(700px 300px at 50% 0%,rgba(212,175,55,.18),transparent 60%)}
   .cta-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
 
-  /* ── PRICING CARDS ── */
+  /* V19 SMC Banner */
+  .smc-banner{background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(212,175,55,.08));border:1px solid rgba(168,85,247,.35);border-radius:16px;padding:28px 32px;margin-top:40px}
+  .smc-banner h3{color:#c084fc;margin:0 0 8px;font-size:18px}
+  .smc-banner p{margin:0;font-size:14px}
+  .smc-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .smc-pill{font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:8px;border:1px solid rgba(168,85,247,.4);background:rgba(168,85,247,.1);color:#c084fc}
+
+  /* Pricing */
   .pricing-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:32px 0 24px}
   @media(max-width:900px){.pricing-grid{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:580px){.pricing-grid{grid-template-columns:repeat(2,1fr)}}
@@ -96,11 +106,10 @@
   .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto}
   @media(max-width:600px){.contact-cards{grid-template-columns:1fr}}
   .contact-cards .card{text-align:center}
-  .contact-cards .card a{font-size:18px;color:var(--gold-2);font-weight:600;word-break:break-all}
   footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
   .disclaimer{max-width:760px;margin:24px auto 0;font-size:12px;color:#6b7280;line-height:1.5}
 
-  /* ── MODAL ── */
+  /* MODAL */
   .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
   .modal.show{display:flex}
   .modal-content{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:40px;max-width:520px;width:90%;max-height:92vh;overflow-y:auto}
@@ -122,18 +131,16 @@
   .btn-main{width:100%;padding:13px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:16px;font-size:15px;transition:filter .2s}
   .btn-main:hover{filter:brightness(1.08)}
   .btn-main:disabled{opacity:.45;cursor:not-allowed;filter:none}
-  .btn-paystack{width:100%;padding:13px;background:linear-gradient(180deg,#00c3ff,#0076d4);color:#fff;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:12px;font-size:15px;transition:filter .2s;display:flex;align-items:center;justify-content:center;gap:10px}
-  .btn-paystack:hover{filter:brightness(1.1)}
-  .btn-paystack:disabled{opacity:.45;cursor:not-allowed;filter:none}
   .note{background:rgba(212,175,55,.1);border-left:3px solid var(--gold);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
   .note-blue{background:rgba(59,130,246,.08);border-left:3px solid var(--blue);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
+  .note-green{background:rgba(74,222,128,.08);border-left:3px solid var(--green);padding:12px;margin:16px 0;border-radius:4px;font-size:13px;color:var(--muted)}
   .msg{border-radius:8px;padding:12px;margin:12px 0;font-size:13px;text-align:center;display:none}
   .msg.success{background:rgba(74,222,128,.1);border:1px solid var(--green);color:var(--green)}
   .msg.error{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
   .msg.info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.5);color:rgba(140,180,255,.9)}
   .msg.show{display:block}
 
-  /* ── Modal pricing mini-selector ── */
+  /* Modal pricing mini-selector */
   .modal-pricing{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
   @media(max-width:480px){.modal-pricing{grid-template-columns:repeat(3,1fr)}}
   .modal-price-opt{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s}
@@ -168,10 +175,6 @@
   .poll-status p{margin:4px 0;font-size:13px;color:var(--muted)}
   .poll-status b{color:#8cb4ff}
 
-  /* Paystack in-modal info */
-  .paystack-info{background:rgba(0,195,255,.06);border:1px solid rgba(0,195,255,.25);border-radius:10px;padding:14px 16px;margin:14px 0;font-size:13px}
-  .paystack-info p{margin:4px 0}
-
   /* Spinner */
   .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
   .spinner-gold{border-color:rgba(212,175,55,.3);border-top-color:var(--gold)}
@@ -179,10 +182,7 @@
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
   .pulse{animation:pulse 2s ease-in-out infinite}
 
-  /* Paystack logo SVG */
-  .paystack-logo{height:18px;filter:brightness(10)}
-
-  /* Admin portal */
+  /* Admin */
   #adminPortal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:var(--bg);overflow-y:auto}
   .admin-nav{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
   .admin-nav h3{margin:0;font-size:16px}
@@ -209,7 +209,6 @@
   .badge-status.active{background:rgba(74,222,128,.2);color:var(--green)}
   .badge-status.suspended{background:rgba(239,68,68,.2);color:var(--red)}
   .badge-status.expired{background:rgba(156,163,175,.2);color:#9ca3af}
-  .badge-status.paystack{background:rgba(0,195,255,.15);color:#00c3ff}
   .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
   @media(max-width:700px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
   .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
@@ -218,9 +217,6 @@
   .log-entry{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;display:flex;gap:12px;align-items:flex-start}
   .log-entry .log-time{color:var(--muted);font-family:monospace;font-size:11px;white-space:nowrap}
   select.admin-input option{background:var(--bg-2)}
-  .sql-notice{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:16px;margin-bottom:16px;font-size:13px}
-  .sql-notice h5{margin:0 0 8px;color:var(--red)}
-  .sql-notice code{background:rgba(0,0,0,.4);padding:2px 6px;border-radius:4px;font-size:12px;color:#fca5a5;display:block;margin:4px 0;word-break:break-all}
 </style>
 </head>
 <body>
@@ -238,26 +234,39 @@
 <!-- HERO -->
 <section class="hero" style="border-top:none">
   <div class="wrap">
-    <span class="eyebrow">Confidential Investor Proposal · 2026</span>
-    <h1 style="margin-top:18px">Institutional-Grade Gold Scalping Engine with Adaptive AI</h1>
-    <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V15</b> is a fully automated MetaTrader 5 Expert Advisor engineered for high-conviction gold scalping during London and New York sessions with three-timeframe alignment and adaptive AI confidence.</p>
+    <span class="eyebrow">Next-Gen Institutional Adaptive AI · 2026</span>
+    <h1 style="margin-top:18px">The Most Advanced XAUUSD Scalping Engine Ever Built</h1>
+    <p class="lead">XAUUSD <b style="color:#fff">ScalpingAI&nbsp;V19</b> is a fully automated MetaTrader 5 Expert Advisor fusing three-timeframe institutional alignment with five Smart Money Concept filters — Trend Exhaustion, Liquidity Sweep Detection, Change of Character, Volume Profile POC, and Anchored VWAP.</p>
     <div class="cta-row" style="justify-content:flex-start">
       <a class="cta" href="#contact" onclick="openPaymentModal();return false">Get Started</a>
       <a class="cta ghost" href="#advantages">See the Edge</a>
     </div>
     <div class="badges">
-      <span class="badge"><b>Version</b> · 15</span>
+      <span class="badge"><b>Version</b> · 19</span>
       <span class="badge">XAUUSD</span>
       <span class="badge">MetaTrader 5</span>
       <span class="badge">H4 + M15 + M5</span>
+      <span class="badge">Smart Money Concepts</span>
       <span class="badge">Fully Automated</span>
     </div>
     <div class="stat-grid">
       <div class="stat"><div class="v">H4</div><div class="l">Trend Director</div></div>
       <div class="stat"><div class="v">3-TF</div><div class="l">Strict Alignment</div></div>
-      <div class="stat"><div class="v">100</div><div class="l">Momentum Score</div></div>
+      <div class="stat"><div class="v">5 SMC</div><div class="l">Smart Money Filters</div></div>
       <div class="stat"><div class="v">AI</div><div class="l">Self-Learning</div></div>
       <div class="stat"><div class="v">1%</div><div class="l">Risk Per Trade</div></div>
+    </div>
+
+    <div class="smc-banner">
+      <h3>⚡ V19 Smart Money Filter Engine — New in this Version</h3>
+      <p>Five institutional-grade filters are now layered on top of every entry — the EA only fires when all five agree the market structure supports the trade.</p>
+      <div class="smc-pills">
+        <span class="smc-pill">Trend Exhaustion Z-Score</span>
+        <span class="smc-pill">Liquidity Sweep (BSL/SSL)</span>
+        <span class="smc-pill">CHOCH Detection</span>
+        <span class="smc-pill">Volume Profile POC</span>
+        <span class="smc-pill">Anchored VWAP</span>
+      </div>
     </div>
   </div>
 </section>
@@ -267,32 +276,69 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Executive Summary</span>
-      <h2 style="margin-top:14px">A paradigm shift from V14</h2>
-      <p>The trend-directing timeframe has been elevated from H1 to H4, and entry alignment has been hardened from a relaxed "M15 OR M5" to a strict "<b style="color:#fff">H4 + M15 + M5 all agree</b>" model. This drastically reduces false signals and keeps you in high-conviction setups only.</p>
+      <h2 style="margin-top:14px">What makes V19 different</h2>
+      <p>V19 retains the battle-tested three-timeframe engine from V18 and adds a complete Smart Money Concepts (SMC) filter layer that runs independently on M15. Every potential entry must pass both the classical momentum gate <em>and</em> the SMC gate — entries blocked by exhaustion, sweep context, POC distance or VWAP placement are rejected before the order is ever sent to the broker.</p>
     </div>
   </div>
 </section>
 
-<!-- ADVANTAGES -->
+<!-- V19 SMC FEATURES -->
 <section id="advantages" style="padding-top:0;border-top:none">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Core Advantages</span>
-      <h2 style="margin-top:14px">Four edges that compound</h2>
+      <span class="eyebrow">V19 Smart Money Filters</span>
+      <h2 style="margin-top:14px">Five new institutional guards</h2>
     </div>
     <div class="grid cols-2">
-      <div class="card"><div class="num">ADVANTAGE 01</div><h3>Three-Timeframe Institutional Alignment</h3><p>Most EAs trade off one or two timeframes. V15 demands all three agree before firing a single order — filtering out an estimated <b style="color:var(--gold-2)">70–80% of false entries</b>.</p></div>
-      <div class="card"><div class="num">ADVANTAGE 02</div><h3>Adaptive Three-Tier Bias Detection</h3><p>Price-action override → EMA21/55 cross → EMA slope fallback. The system is never blind: it always has a directional read and adapts to market regime.</p></div>
-      <div class="card"><div class="num">ADVANTAGE 03</div><h3>AI Self-Learning Confidence Engine</h3><p>A 0–100% confidence score continuously evaluates win-rate, directional win-rate, consecutive-loss penalty and ATR regime — self-regulating risk no static system can match.</p></div>
-      <div class="card"><div class="num">ADVANTAGE 04</div><h3>Comprehensive Momentum Scoring</h3><p>Every potential entry is scored on a 100-point scale. A minimum score must be met (55 standard / 48 pullback) — quantitative discipline, zero discretion.</p></div>
+      <div class="card smc">
+        <div class="num">SMC 01</div>
+        <h3>Trend Exhaustion — Z-Score</h3>
+        <p>Tracks the length of every completed bull and bear streak on M15. When the current streak's Z-score exceeds 2.0 standard deviations above the historical mean, the trend is flagged as <b style="color:#c084fc">statistically stretched</b> and new entries are blocked. Prevents chasing parabolic moves about to reverse.</p>
+      </div>
+      <div class="card smc">
+        <div class="num">SMC 02</div>
+        <h3>Liquidity Sweep Detection (BSL / SSL)</h3>
+        <p>On every new M15 bar, the EA scans for <b style="color:#c084fc">buy-side (BSL)</b> and <b style="color:#c084fc">sell-side (SSL)</b> liquidity grabs using a configurable lookback window. A BSL sweep blocks long entries; an SSL sweep blocks short entries — keeping you out of traps where retail stops have just been hunted.</p>
+      </div>
+      <div class="card smc">
+        <div class="num">SMC 03</div>
+        <h3>CHOCH — Change of Character</h3>
+        <p>A sweep followed by an opposite entry signal = CHOCH. When detected, the EA <b style="color:#c084fc">resets the Anchored VWAP</b> to the current bar, resets the H4 cycle tracking, and emits a Telegram alert. This forces a clean re-evaluation of market structure instead of clinging to the previous directional bias.</p>
+      </div>
+      <div class="card smc">
+        <div class="num">SMC 04</div>
+        <h3>Volume Profile POC</h3>
+        <p>Accumulates tick volume across ATR-sized price buckets on M15 (up to 100-bar window) to identify the <b style="color:#c084fc">Point of Control</b> — the most-traded price level. Entries are blocked when price is more than 3× ATR away from the POC, ensuring you trade near institutional value rather than in thin air.</p>
+      </div>
+      <div class="card smc" style="grid-column:1/-1">
+        <div class="num">SMC 05</div>
+        <h3>Anchored VWAP</h3>
+        <p>A VWAP accumulator anchored to the most recent CHOCH event. In a <b style="color:#c084fc">BUY trend</b>, buys are blocked when price is below AVWAP — buying below institutional value. In a <b style="color:#c084fc">SELL trend</b>, sells are blocked when price is above AVWAP. The anchor resets automatically on every new CHOCH.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE ADVANTAGES -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Core Architecture</span>
+      <h2 style="margin-top:14px">The engine underneath</h2>
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="num">ADVANTAGE 01</div><h3>Three-Timeframe Institutional Alignment</h3><p>H4 sets the trend, M15 confirms structure, M5 triggers the entry. All three must agree before any order is opened — filtering an estimated <b style="color:var(--gold-2)">70–80% of false entries</b>.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 02</div><h3>Adaptive Three-Tier Bias Detection</h3><p>Price-action override → EMA21/55 cross → EMA slope fallback. The system always has a directional read and adapts to changing market regimes in real-time.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 03</div><h3>AI Self-Learning Confidence Engine</h3><p>A 0–100% confidence score evaluates win-rate, directional win-rate, session win-rate, consecutive-loss penalty and ATR regime — self-regulating risk no static system can match.</p></div>
+      <div class="card"><div class="num">ADVANTAGE 04</div><h3>Generational Re-Entry System</h3><p>After a partial close locks profit and SL moves to breakeven, the EA may fire up to <b style="color:var(--gold-2)">2 re-entries</b> in the same direction cycle — compounding wins while Gen-0 risk is already eliminated.</p></div>
     </div>
     <h3 style="margin-top:48px;color:#fff;font-family:inherit;font-size:14px;letter-spacing:.18em;text-transform:uppercase">Timeframe Roles &amp; Scoring Weights</h3>
     <table class="tbl">
-      <thead><tr><th>Timeframe</th><th>Role</th><th>Weight</th><th>Indicator</th></tr></thead>
+      <thead><tr><th>Timeframe</th><th>Role</th><th>Weight</th><th>Indicators</th></tr></thead>
       <tbody>
-        <tr><td><b>H4</b></td><td>Trend Director — institutional bias</td><td>25 pts</td><td>EMA 21 / 55</td></tr>
-        <tr><td><b>M15</b></td><td>Confirmation — mid-frame structure</td><td>20 pts</td><td>EMA 20 / 50</td></tr>
-        <tr><td><b>M5</b></td><td>Entry Trigger — execution timing</td><td>15 pts</td><td>EMA 13 / 34</td></tr>
+        <tr><td><b>H4</b></td><td>Trend Director — institutional bias</td><td>25 pts</td><td>EMA 21 / 55 · ATR 14</td></tr>
+        <tr><td><b>M15</b></td><td>Confirmation — mid-frame structure + SMC filters</td><td>20 pts</td><td>EMA 20 / 50 · ATR 14 · Volume</td></tr>
+        <tr><td><b>M5</b></td><td>Entry Trigger — execution timing</td><td>15 pts</td><td>EMA 13 / 34 · RSI 14 · ATR 14</td></tr>
       </tbody>
     </table>
   </div>
@@ -304,19 +350,21 @@
     <div class="section-head">
       <span class="eyebrow">Momentum Scoring</span>
       <h2 style="margin-top:14px">100-point quantitative gate</h2>
+      <p>Every potential entry is scored before the SMC gate is even consulted. A minimum of 55 points must be achieved, or the trade is skipped regardless of alignment.</p>
     </div>
     <table class="tbl">
       <thead><tr><th>Factor</th><th>Points</th><th>Purpose</th></tr></thead>
       <tbody>
-        <tr><td>H4 alignment + slope</td><td>25</td><td>Institutional trend conviction</td></tr>
-        <tr><td>M15 alignment + slope</td><td>20</td><td>Mid-frame structure confirmation</td></tr>
-        <tr><td>M5 alignment + slope</td><td>15</td><td>Micro-level entry timing</td></tr>
-        <tr><td>RSI momentum</td><td>12</td><td>Momentum direction validation</td></tr>
-        <tr><td>M5 impulse candle</td><td>13</td><td>Volatility burst detection</td></tr>
+        <tr><td>H4 EMA alignment + slope</td><td>25</td><td>Institutional trend conviction</td></tr>
+        <tr><td>M15 EMA alignment + slope</td><td>20</td><td>Mid-frame structure confirmation</td></tr>
+        <tr><td>M5 EMA alignment + slope</td><td>15</td><td>Micro-level entry timing</td></tr>
+        <tr><td>RSI momentum direction</td><td>12</td><td>Momentum validation on M5</td></tr>
+        <tr><td>M5 impulse candle (body &gt; 55% ATR)</td><td>13</td><td>Volatility burst detection</td></tr>
         <tr><td>ATR sanity check</td><td>8</td><td>Volatility regime filter</td></tr>
         <tr><td>Spread quality</td><td>5</td><td>Execution quality gate</td></tr>
         <tr><td>Entry distance from M15 EMA</td><td>+7 / −15</td><td>Late-entry penalty</td></tr>
-        <tr><td><b>Maximum Total</b></td><td><b>100</b></td><td><b>Min required: 55 standard · 48 pullback</b></td></tr>
+        <tr><td>Market structure (BOS +1 / CHOCH +2)</td><td>up to +20</td><td>Structure confirmation bonus</td></tr>
+        <tr><td><b>Maximum Total</b></td><td><b>100</b></td><td><b>Minimum required: 55</b></td></tr>
       </tbody>
     </table>
   </div>
@@ -330,12 +378,14 @@
       <h2 style="margin-top:14px">Capital preservation layers</h2>
     </div>
     <ul class="checks">
-      <li><div><b>Session Filter</b><span>Trades only London (07:00–16:00) and New York (12:00–21:00) — peak institutional liquidity.</span></div></li>
-      <li><div><b>Daily Profit Target</b><span>Pauses trading once daily target is hit (default $600). Locks gains before the market reclaims them.</span></div></li>
-      <li><div><b>Daily Loss Limit</b><span>Same mechanism on the downside (default −$600) — no catastrophic drawdown days.</span></div></li>
-      <li><div><b>Consecutive Loss Block</b><span>After 3 consecutive losses, trading halts. Combined with 600s cooldown — prevents revenge trading.</span></div></li>
-      <li><div><b>Spread Filter</b><span>Rejects entries when spread exceeds 35 points. Protects against news spikes and thin liquidity.</span></div></li>
-      <li><div><b>Broker Stop-Level Compliance</b><span>SL is always above broker minimum + 10pt buffer — orders are never silently rejected.</span></div></li>
+      <li><div><b>Session Filter</b><span>Trades only London (07:00–16:00) and New York (12:00–21:00) — peak institutional liquidity windows only.</span></div></li>
+      <li><div><b>Daily Profit Target</b><span>Pauses trading once the daily target is hit (default $600). Locks gains before the market reclaims them, and optionally closes all open positions.</span></div></li>
+      <li><div><b>Daily Loss Limit</b><span>Same mechanism on the downside (default −$600) — no catastrophic drawdown days. All positions are closed and the EA pauses until tomorrow.</span></div></li>
+      <li><div><b>Consecutive Loss Block</b><span>After 5 consecutive losses, trading halts. Combined with a 1,200s (20-min) cooldown — prevents revenge trading and emotional over-trading.</span></div></li>
+      <li><div><b>Spread Filter</b><span>Rejects entries when spread exceeds 65 points. Protects against news spikes and thin liquidity environments.</span></div></li>
+      <li><div><b>Exhaustion Guard (V19)</b><span>Z-score of streak length automatically blocks entries when the trend is statistically over-extended — no more chasing a move that's already run.</span></div></li>
+      <li><div><b>Liquidity Sweep Guard (V19)</b><span>Prevents trading with the sweep direction after a BSL or SSL grab — keeps you out of the most dangerous reversal traps in institutional price action.</span></div></li>
+      <li><div><b>Max Trades Per Session</b><span>Hard cap of 22 trades per session day prevents over-trading even when the EA is on a signal run.</span></div></li>
     </ul>
   </div>
 </section>
@@ -350,11 +400,13 @@
     <table class="tbl">
       <thead><tr><th>Mechanism</th><th>Trigger</th><th>Action</th></tr></thead>
       <tbody>
-        <tr><td><b>Break-Even</b></td><td>+50 pips profit</td><td>Moves SL to entry +2 pips — eliminates risk</td></tr>
-        <tr><td><b>Partial Close</b></td><td>+100 pips profit</td><td>Closes 2 of 3 positions — locks profit, runners stay</td></tr>
-        <tr><td><b>ATR Trailing Stop</b></td><td>After partial close</td><td>Trails at 1.5× ATR with 700-pip cap</td></tr>
-        <tr><td><b>Re-entry Cooldown</b></td><td>Same direction</td><td>90s minimum between same-direction entries</td></tr>
-        <tr><td><b>Fresh Momentum</b></td><td>Post-close</td><td>Requires new impulse before re-entering</td></tr>
+        <tr><td><b>Break-Even</b></td><td>+50 pips profit</td><td>Moves SL to entry +2 pips — eliminates risk on running positions</td></tr>
+        <tr><td><b>Partial Close (Gen-0)</b></td><td>+100 pips profit</td><td>Closes 50% of position — locks profit, runner stays open</td></tr>
+        <tr><td><b>ATR Trailing Stop</b></td><td>After partial close on runners</td><td>Trails at 4.5× ATR(M5) with 300-pip cap</td></tr>
+        <tr><td><b>Re-Entry #1 &amp; #2</b></td><td>Gen-0 partial ✓ + breakeven ✓</td><td>Opens fresh positions in the same direction at current signal</td></tr>
+        <tr><td><b>Child Close on BE Stopout</b></td><td>Parent Gen-0 stopped at breakeven</td><td>All child (re-entry) positions are automatically closed</td></tr>
+        <tr><td><b>H4 Flip — Instant Reversal</b></td><td>H4 EMA bias flips direction</td><td>Closes all opposing positions, hunts new direction immediately</td></tr>
+        <tr><td><b>CHOCH Reset</b></td><td>Sweep + opposite signal</td><td>Resets AVWAP anchor, clears cycle state, re-evaluates H4 bias</td></tr>
       </tbody>
     </table>
   </div>
@@ -371,15 +423,19 @@
       <tbody>
         <tr><td><b>Platform</b></td><td>MetaTrader 5 (MT5) — native .ex5 compiled Expert Advisor</td></tr>
         <tr><td><b>Symbol</b></td><td>XAUUSD (Gold) — optimised for all broker digit formats</td></tr>
-        <tr><td><b>Timeframes</b></td><td>H4 (trend) · M15 (confirmation) · M5 (execution)</td></tr>
-        <tr><td><b>Indicators</b></td><td>EMA 21/55 (H4) · EMA 20/50 (M15) · EMA 13/34 (M5) · RSI 14 · ATR 14</td></tr>
-        <tr><td><b>Risk Model</b></td><td>% of account balance per signal batch (dynamic lot sizing)</td></tr>
-        <tr><td><b>Default SL</b></td><td>60 pips from entry (1 pip = $0.10 on XAUUSD)</td></tr>
+        <tr><td><b>Timeframes</b></td><td>H4 (trend) · M15 (confirmation + SMC) · M5 (execution)</td></tr>
+        <tr><td><b>Indicators</b></td><td>EMA 21/55 (H4) · EMA 20/50 (M15) · EMA 13/34 (M5) · RSI 14 · ATR 14 (all TFs) · Volume Profile (M15)</td></tr>
+        <tr><td><b>Risk Model</b></td><td>% of account balance per signal batch (dynamic lot sizing) or fixed lot</td></tr>
+        <tr><td><b>SL Model</b></td><td>ATR-adaptive: default 2.5× ATR(M15) · TP1 = 1.5× ATR · TP2 = 3.0× ATR</td></tr>
+        <tr><td><b>Positions Per Signal</b></td><td>Up to 3 per signal · up to 9 open simultaneously (configurable)</td></tr>
+        <tr><td><b>Re-Entries</b></td><td>Up to 2 generational re-entries per cycle</td></tr>
         <tr><td><b>Min Account</b></td><td>$500 minimum · $1,000+ recommended</td></tr>
         <tr><td><b>Leverage</b></td><td>1:100 or higher recommended</td></tr>
         <tr><td><b>Sessions</b></td><td>London 07:00–16:00 · New York 12:00–21:00 (server time)</td></tr>
-        <tr><td><b>Notifications</b></td><td>Telegram Bot API — entry, close, daily events, H4 flips</td></tr>
+        <tr><td><b>Notifications</b></td><td>Telegram Bot API — entries, closes, sweeps, CHOCH events, daily P/L</td></tr>
+        <tr><td><b>AI Learning</b></td><td>CSV trade log · 30-trade lookback · session-specific win-rate weighting</td></tr>
         <tr><td><b>VPS Compatible</b></td><td>Yes — runs 24/5 on any Windows VPS with MT5 installed</td></tr>
+        <tr><td><b>License</b></td><td>LiquidGold AI license key required · validated at startup and hourly</td></tr>
       </tbody>
     </table>
   </div>
@@ -390,34 +446,40 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Competitive Analysis</span>
-      <h2 style="margin-top:14px">V15 vs typical commercial EAs</h2>
+      <h2 style="margin-top:14px">V19 vs typical commercial EAs</h2>
     </div>
     <table class="tbl">
-      <thead><tr><th>Feature</th><th style="color:var(--gold-2)">V15 ScalpingAI</th><th>Typical Commercial EA</th></tr></thead>
+      <thead><tr><th>Feature</th><th style="color:var(--gold-2)">V19 ScalpingAI</th><th>Typical Commercial EA</th></tr></thead>
       <tbody>
         <tr><td>Timeframe alignment</td><td><b>3-TF strict (H4+M15+M5)</b></td><td>1–2 TF, often relaxed</td></tr>
-        <tr><td>AI confidence</td><td><b>Self-learning, adaptive</b></td><td>Static rules only</td></tr>
-        <tr><td>Momentum scoring</td><td><b>100-point quantitative gate</b></td><td>Single-indicator triggers</td></tr>
-        <tr><td>Risk layers</td><td><b>Daily target, loss limit, loss block, spread, cooldown</b></td><td>Basic SL/TP only</td></tr>
-        <tr><td>Transparency</td><td><b>Live on-chart dashboard + Telegram</b></td><td>Black box</td></tr>
-        <tr><td>H4 reversal handling</td><td><b>Auto-close + instant re-hunt</b></td><td>Holds losing positions</td></tr>
+        <tr><td>Smart Money filters</td><td><b>5 SMC filters (Exhaustion, Sweep, CHOCH, POC, AVWAP)</b></td><td>None</td></tr>
+        <tr><td>AI confidence</td><td><b>Self-learning, session-weighted, adaptive</b></td><td>Static rules only</td></tr>
+        <tr><td>Momentum scoring</td><td><b>100-point quantitative gate + structure bonus</b></td><td>Single-indicator triggers</td></tr>
+        <tr><td>Liquidity sweep awareness</td><td><b>Detects BSL &amp; SSL grabs, blocks counter-sweep entries</b></td><td>No sweep awareness</td></tr>
+        <tr><td>VWAP integration</td><td><b>Anchored VWAP resets on CHOCH — dynamic value area</b></td><td>Static or none</td></tr>
+        <tr><td>Risk layers</td><td><b>Daily target, loss limit, loss streak, spread, cooldown, exhaustion</b></td><td>Basic SL/TP only</td></tr>
+        <tr><td>Transparency</td><td><b>Live on-chart dashboard (37 rows) + Telegram</b></td><td>Black box</td></tr>
+        <tr><td>H4 reversal handling</td><td><b>Auto-close + instant re-hunt in new direction</b></td><td>Holds losing positions</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- ROADMAP -->
+<!-- DASHBOARD -->
 <section>
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Product Roadmap</span>
-      <h2 style="margin-top:14px">Where V15 is heading</h2>
+      <span class="eyebrow">Live Dashboard</span>
+      <h2 style="margin-top:14px">Full transparency, always on-screen</h2>
+      <p>The V19 dashboard shows 37 rows of real-time data directly on the MT5 chart — no need to dig through logs. Every filter state, score, P/L figure, and SMC reading is visible at a glance.</p>
     </div>
-    <div class="grid cols-2">
-      <div class="card"><div class="num">V16</div><h3>ML Bias Weighting</h3><p>Replace fixed 25/20/15 weights with dynamic weights based on recent per-TF accuracy.</p></div>
-      <div class="card"><div class="num">V17</div><h3>News Filter Integration</h3><p>Auto-pause around high-impact economic releases via calendar API.</p></div>
-      <div class="card"><div class="num">V18</div><h3>Web Dashboard</h3><p>Real-time portfolio monitoring via browser — no MT5 required for oversight.</p></div>
-      <div class="card"><div class="num">V19</div><h3>Drawdown-Based Sizing</h3><p>Risk automatically decreases as drawdown increases — adaptive position sizing.</p></div>
+    <div class="grid cols-3">
+      <div class="card"><h3>Trend &amp; Alignment</h3><p>H4 / M15 / M5 bias with colour-coded bull/bear/neutral status and a ✓ ALL 3 TF ALIGNED indicator.</p></div>
+      <div class="card"><h3>Momentum &amp; AI</h3><p>Live momentum score (0–100) and AI confidence percentage with session-specific learning adjustments.</p></div>
+      <div class="card"><h3>Cycle &amp; Re-Entry</h3><p>Active generation count, re-entries used vs allowed, partial close status, and breakeven confirmation per position.</p></div>
+      <div class="card smc"><h3>Exhaustion Filter</h3><p>Current streak length, Z-score vs historical mean, and EXHAUSTED / OK status in real-time.</p></div>
+      <div class="card smc"><h3>Liquidity Sweep</h3><p>BSL / SSL sweep state with the swept price level displayed and bear/bull context flag.</p></div>
+      <div class="card smc"><h3>CHOCH · POC · AVWAP</h3><p>CHOCH direction and timestamp · POC price and distance in pips · AVWAP value and price relationship.</p></div>
     </div>
   </div>
 </section>
@@ -462,18 +524,18 @@
       <div class="card">
         <div class="num">INCLUDES</div>
         <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
-          <li>✓ Protected .ex5 compiled file</li>
+          <li>✓ Protected .ex5 file (V19)</li>
           <li>✓ Telegram signal access</li>
           <li>✓ VPS setup guide</li>
-          <li>✓ Email support</li>
+          <li>✓ Email + WhatsApp support</li>
         </ul>
       </div>
       <div class="card">
         <div class="num">PAYMENT</div>
         <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
-          <li>⚡ Paystack — instant &amp; automatic</li>
-          <li>💎 USDT TRC20 — manual approval</li>
-          <li>🔒 License issued immediately on Paystack</li>
+          <li>📲 M-Pesa — manual approval (1–2 hrs)</li>
+          <li>💎 USDT TRC20 — manual approval (1–2 hrs)</li>
+          <li>🔒 License key issued after verification</li>
           <li>✓ No recurring charges</li>
         </ul>
       </div>
@@ -486,7 +548,7 @@
   </div>
 </section>
 
-<footer>© 2026 LiquidGold AI · XAUUSD ScalpingAI V15 · All rights reserved</footer>
+<footer>© 2026 LiquidGold AI · XAUUSD ScalpingAI V19 · All rights reserved</footer>
 
 <!-- ═══════════════════ PAYMENT MODAL ═══════════════════ -->
 <div id="paymentModal" class="modal">
@@ -494,7 +556,6 @@
     <span class="modal-close" onclick="closePaymentModal()">&times;</span>
     <h2>🔒 Secure Purchase</h2>
 
-    <!-- Step indicator -->
     <div class="step-indicator">
       <div class="step-dot active" id="sd1">1</div>
       <div class="step-line" id="sl1"></div>
@@ -530,39 +591,43 @@
       </div>
 
       <div class="note" id="selectedPlanNote">
-        <b id="planLabel">XAUUSD Scalping AI V15 · 1 Month</b><br/>
+        <b id="planLabel">XAUUSD Scalping AI V19 · 1 Month</b><br/>
         Amount due: <b id="planPrice">$15 USD</b>
       </div>
 
       <h3 style="margin-top:20px;margin-bottom:4px;font-size:15px">Select Payment Method</h3>
 
-      <!-- ── PAYSTACK ── -->
-      <div class="payment-method" id="pmPaystack" onclick="selectPayment('paystack',event)">
-        <h4>⚡ Paystack — Card / Bank / Mobile Money</h4>
-        <p>Instant license delivery · Automatic · Recommended</p>
+      <!-- M-Pesa -->
+      <div class="payment-method" id="pmMpesa" onclick="selectPayment('mpesa',event)">
+        <h4>📲 M-Pesa (Kenya)</h4>
+        <p>Send via Till / Send Money · Manual approval within 1–2 hours</p>
       </div>
-      <div id="paystackDetails" style="display:none">
-        <div class="paystack-info">
-          <p>✅ <b style="color:#fff">Fully automatic</b> — your license key is generated and emailed to you the moment payment is confirmed by Paystack.</p>
-          <p style="margin-top:8px">Amount charged: <b style="color:#fff" id="paystackKesAmount">KES 1,930</b> · Supports M-Pesa, Visa, Mastercard, bank transfer &amp; USSD.</p>
+      <div id="mpesaDetails" style="display:none">
+        <div class="note-green" style="margin-top:8px">
+          <p style="margin:0 0 6px">Send <b id="mpesaAmount" style="color:#fff">KES 1,930</b> to:</p>
+          <div class="payment-addr" style="padding-right:60px;font-size:15px"><b>+254 701 540 201</b><button class="copy-btn" onclick="copyAddr('+254701540201')">Copy</button></div>
+          <p style="font-size:12px;margin:4px 0">Send via <b>M-Pesa → Send Money</b> to the number above, or use <b>Paybill / Buy Goods</b> if your broker supports it.</p>
+        </div>
+        <div class="form-group">
+          <label>📋 M-Pesa Transaction Code *</label>
+          <input type="text" id="mpesaTxId" placeholder="e.g. QK4T2XABCD" />
         </div>
         <div class="form-group">
           <label>👤 Your Full Name *</label>
-          <input type="text" id="psName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
+          <input type="text" id="mpesaName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
         </div>
         <div class="form-group">
           <label>📧 Your Email *</label>
-          <input type="email" id="psEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
+          <input type="email" id="mpesaEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
         </div>
-        <div id="paystackMsg" class="msg"></div>
-        <button class="btn-paystack" id="paystackBtn" onclick="initiatePaystack()">
-          <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg>
-          Pay with Paystack
-        </button>
-        <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">🔐 Secured by Paystack — your card details are never stored here</p>
+        <div class="note-blue">
+          ⏱️ M-Pesa payments are verified manually. Expect approval within <b>1–2 hours</b> during business hours. You'll receive your license key by email once approved.
+        </div>
+        <div id="mpesaMsg" class="msg"></div>
+        <button class="btn-main" id="mpesaBtn" onclick="submitMpesaPurchase()">Submit M-Pesa Payment</button>
       </div>
 
-      <!-- ── USDT ── -->
+      <!-- USDT -->
       <div class="payment-method" id="pmUsdt" onclick="selectPayment('usdt',event)" style="margin-top:8px">
         <h4>💎 USDT (TRC20)</h4>
         <p>Manual verification · Admin approves within 1–2 hours</p>
@@ -584,21 +649,20 @@
           <input type="email" id="buyerEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
         </div>
         <div class="note-blue" style="margin-top:12px">
-          ⏱️ USDT payments are verified manually by the admin. Expect approval within <b>1–2 hours</b> during business hours. You'll receive your license key by email once approved.
+          ⏱️ USDT payments are verified manually. Expect approval within <b>1–2 hours</b> during business hours. You'll receive your license key by email once approved.
         </div>
         <div id="step1Msg" class="msg"></div>
         <button class="btn-main" id="step1Btn" onclick="submitUsdtPurchase()">Submit USDT Payment</button>
       </div>
-
     </div>
 
-    <!-- STEP 2: USDT Waiting / Approved -->
+    <!-- STEP 2: Waiting / Approved -->
     <div class="step" id="step2">
       <div id="waitingState">
         <div class="poll-status">
           <div class="poll-icon pulse">⏳</div>
-          <b style="color:#8cb4ff;font-size:15px">Awaiting USDT Verification</b>
-          <p>Your payment details have been submitted. The admin is reviewing your transaction on-chain.</p>
+          <b style="color:#8cb4ff;font-size:15px">Awaiting Payment Verification</b>
+          <p>Your payment details have been submitted. The admin is reviewing your transaction.</p>
           <p style="margin-top:8px;font-size:12px">This page updates automatically. <span class="spinner spinner-gold" style="width:12px;height:12px"></span></p>
         </div>
         <div id="pollInfo" style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:16px 0;font-size:13px">
@@ -623,28 +687,9 @@
           <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">📋 Copy Key</button>
         </div>
         <div class="note" style="margin-top:16px"><b>⚠️ Important:</b> Save this license key. You need it to activate your EA in MetaTrader 5.</div>
-        <div id="step2Msg" class="msg"></div>
-        <a class="download-btn" href="https://www.udrop.com/Oz0J/XAUUSD_AI_v3.ex5" target="_blank" rel="noopener">📥 Download XAUUSD_AI_v3.ex5</a>
+        <a class="download-btn" href="https://www.udrop.com/OAFZ/LIQUID_XAUUSD_AI.ex5" target="_blank" rel="noopener">📥 Download LIQUID_XAUUSD_AI.ex5</a>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
       </div>
-    </div>
-
-    <!-- STEP 3: Paystack success (instant) -->
-    <div class="step" id="step3">
-      <div style="text-align:center;margin-bottom:20px">
-        <div style="font-size:48px">🎉</div>
-        <h3 style="color:var(--green);margin:8px 0">Payment Confirmed!</h3>
-        <p style="font-size:14px;margin:0">Paystack has confirmed your payment. Your license is now active.</p>
-      </div>
-      <div class="license-box">
-        <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
-        <div class="license-key" id="instantLicenseKey">—</div>
-        <div class="license-info" id="instantLicenseInfo"></div>
-        <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyText(document.getElementById('instantLicenseKey').textContent)">📋 Copy Key</button>
-      </div>
-      <div class="note"><b>⚠️ Important:</b> Save this key — it's been emailed to you as well.</div>
-      <a class="download-btn" href="https://www.udrop.com/Oz0J/XAUUSD_AI_v3.ex5" target="_blank" rel="noopener">📥 Download XAUUSD_AI_v3.ex5</a>
-      <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
     </div>
 
   </div>
@@ -687,7 +732,7 @@
       <button class="admin-tab active" onclick="switchAdminTab('licenses',this)">Licenses</button>
       <button class="admin-tab" onclick="switchAdminTab('create',this)">Create License</button>
       <button class="admin-tab" onclick="switchAdminTab('logs',this)">Access Logs</button>
-      <button class="admin-tab" onclick="switchAdminTab('pending',this)">Pending (USDT)</button>
+      <button class="admin-tab" onclick="switchAdminTab('pending',this)">Pending</button>
     </div>
 
     <!-- Tab: Licenses -->
@@ -722,7 +767,7 @@
         <div class="grid cols-2">
           <div class="form-group"><label>Customer Name *</label><input type="text" class="admin-input" id="newName" placeholder="John Smith" /></div>
           <div class="form-group"><label>Customer Email *</label><input type="email" class="admin-input" id="newEmail" placeholder="john@example.com" /></div>
-          <div class="form-group"><label>Product</label><input type="text" class="admin-input" id="newProduct" value="XAUUSD Scalping AI V15" /></div>
+          <div class="form-group"><label>Product</label><input type="text" class="admin-input" id="newProduct" value="XAUUSD Scalping AI V19" /></div>
           <div class="form-group"><label>Subscription Duration</label>
             <select class="admin-input" id="newDuration">
               <option value="30">1 Month (30 days) — $15</option>
@@ -732,7 +777,7 @@
               <option value="3650">Lifetime (10yr) — $499</option>
             </select>
           </div>
-          <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="newNotes" placeholder="Transaction ID, etc." /></div>
+          <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="newNotes" placeholder="Transaction ID, payment method, etc." /></div>
         </div>
         <div id="createMsg" class="msg"></div>
         <button class="admin-btn primary" onclick="createLicense()" style="margin-top:8px">Generate License Key</button>
@@ -747,20 +792,6 @@
     <!-- Tab: Logs -->
     <div class="admin-panel" id="tabLogs">
       <div class="admin-card">
-        <div class="sql-notice" id="logsFixNotice">
-          <h5>⚠️ If Access Logs Are Empty — Run This SQL in Supabase</h5>
-          <p style="color:var(--muted);margin:0 0 8px;font-size:12px">The EA inserts rows via the <code>anon</code> key. Without RLS INSERT permission, all log writes silently fail.</p>
-          <code>ALTER TABLE access_logs ENABLE ROW LEVEL SECURITY;</code>
-          <code>DROP POLICY IF EXISTS "allow_anon_insert_logs" ON access_logs;</code>
-          <code>CREATE POLICY "allow_anon_insert_logs" ON access_logs FOR INSERT TO anon WITH CHECK (true);</code>
-          <code>DROP POLICY IF EXISTS "allow_anon_select_licenses" ON licenses;</code>
-          <code>CREATE POLICY "allow_anon_select_licenses" ON licenses FOR SELECT TO anon USING (true);</code>
-          <code>DROP POLICY IF EXISTS "allow_anon_update_licenses" ON licenses;</code>
-          <code>CREATE POLICY "allow_anon_update_licenses" ON licenses FOR UPDATE TO anon USING (true);</code>
-          <code>ALTER TABLE access_logs ADD COLUMN IF NOT EXISTS terminal_name text;</code>
-          <code>ALTER TABLE access_logs ADD COLUMN IF NOT EXISTS ip_address text;</code>
-          <button class="admin-btn primary" style="margin-top:10px;font-size:11px;padding:6px 14px" onclick="document.getElementById('logsFixNotice').style.display='none'">Dismiss</button>
-        </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
           <h4 style="margin:0">Recent EA Access Logs</h4>
           <button class="admin-btn primary" onclick="loadLogs()">↻ Refresh</button>
@@ -769,14 +800,14 @@
       </div>
     </div>
 
-    <!-- Tab: Pending USDT -->
+    <!-- Tab: Pending -->
     <div class="admin-panel" id="tabPending">
       <div class="admin-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <h4 style="margin:0">⏳ Pending USDT Payments</h4>
+          <h4 style="margin:0">⏳ Pending Payments (M-Pesa &amp; USDT)</h4>
           <button class="admin-btn primary" onclick="loadPending()">↻ Refresh</button>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">USDT customers awaiting manual on-chain verification. Paystack orders are processed automatically and do not appear here.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">All payments require manual verification before a license is issued. Review each submission and approve or reject below.</p>
         <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading…</p></div>
       </div>
     </div>
@@ -818,27 +849,25 @@
 const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzaXZhbWFpZGhkamNydHplZG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0ODQxNzUsImV4cCI6MjA5MzA2MDE3NX0.D_TyOobiyXtxX9rX0GgVksU-wWZKdOm4Vfe4eC0sVCU';
 const ADMIN_PASSWORD = 'EuniceTwela1@';
-const DOWNLOAD_URL   = 'https://www.udrop.com/Oz0J/XAUUSD_AI_v3.ex5';
+const DOWNLOAD_URL   = 'https://www.udrop.com/OAFZ/LIQUID_XAUUSD_AI.ex5';
 
 const EMAILJS_PUBLIC_KEY  = 'ehkRhmWH5ltLrAJlt';
 const EMAILJS_TEMPLATE_ID = 'template_8adw61b';
 const EMAILJS_SERVICE_ID  = 'service_6znqqnq';
 
-// Paystack
-const PAYSTACK_PUBLIC_KEY = 'pk_live_a9968885c72fc50bf6c9f09eaf0c098fb89ea7bb';
-
 const POLL_INTERVAL_MS = 15000;
 
+// KES exchange rates for M-Pesa display
 const PRICE_TIERS = [
-  { label: '1 Month',   days: 30,   price: 15,  kes: 1930,  kes_cents: 193000  },
-  { label: '3 Months',  days: 90,   price: 50,  kes: 6450,  kes_cents: 645000  },
-  { label: '6 Months',  days: 180,  price: 100, kes: 12900, kes_cents: 1290000 },
-  { label: '12 Months', days: 365,  price: 249, kes: 32100, kes_cents: 3210000 },
-  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350, kes_cents: 6435000 }
+  { label: '1 Month',   days: 30,   price: 15,  kes: 1930  },
+  { label: '3 Months',  days: 90,   price: 50,  kes: 6450  },
+  { label: '6 Months',  days: 180,  price: 100, kes: 12900 },
+  { label: '12 Months', days: 365,  price: 249, kes: 32100 },
+  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350 }
 ];
 
 let selectedTierIndex = 0;
-let activePaymentMethod = null; // 'paystack' | 'usdt'
+let activePaymentMethod = null;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -949,11 +978,10 @@ function syncModalPlanUI() {
     el.classList.toggle('selected', i === selectedTierIndex);
   });
   const tier = PRICE_TIERS[selectedTierIndex];
-  document.getElementById('planLabel').textContent  = `XAUUSD Scalping AI V15 · ${tier.label}`;
-  document.getElementById('planPrice').textContent  = `KES ${tier.kes.toLocaleString()} (~$${tier.price} USD)`;
+  document.getElementById('planLabel').textContent  = `XAUUSD Scalping AI V19 · ${tier.label}`;
+  document.getElementById('planPrice').textContent  = `$${tier.price} USD  (~KES ${tier.kes.toLocaleString()})`;
   document.getElementById('usdtAmount').textContent = `$${tier.price} USDT`;
-  const kesEl = document.getElementById('paystackKesAmount');
-  if (kesEl) kesEl.textContent = `KES ${tier.kes.toLocaleString()}`;
+  document.getElementById('mpesaAmount').textContent = `KES ${tier.kes.toLocaleString()}`;
 }
 
 function selectModalPlan(index, el) {
@@ -969,8 +997,7 @@ function closePaymentModal() {
 }
 
 function resetPaymentModal() {
-  // Show only step 1
-  ['step1','step2','step3'].forEach((id,i) => {
+  ['step1','step2'].forEach((id,i) => {
     document.getElementById(id).classList.toggle('active', i===0);
   });
   document.querySelectorAll('.step-dot').forEach((d,i) => {
@@ -978,21 +1005,21 @@ function resetPaymentModal() {
     d.classList.remove('done');
   });
   document.querySelectorAll('.step-line').forEach(l => l.classList.remove('done'));
-  ['txId','buyerName','buyerEmail','psName','psEmail'].forEach(id => {
+  ['txId','buyerName','buyerEmail','mpesaTxId','mpesaName','mpesaEmail'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
   setMsg('step1Msg','','');
-  setMsg('paystackMsg','','');
-  const btn = document.getElementById('step1Btn');
-  if (btn) { btn.disabled = false; btn.textContent = 'Submit USDT Payment'; }
-  const psBtn = document.getElementById('paystackBtn');
-  if (psBtn) { psBtn.disabled = false; psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Pay with Paystack'; }
+  setMsg('mpesaMsg','','');
+  ['step1Btn','mpesaBtn'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) { btn.disabled = false; btn.textContent = id === 'mpesaBtn' ? 'Submit M-Pesa Payment' : 'Submit USDT Payment'; }
+  });
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.getElementById('paystackDetails').style.display = 'none';
-  document.getElementById('usdtDetails').style.display     = 'none';
-  document.getElementById('waitingState').style.display    = 'block';
-  document.getElementById('approvedState').style.display   = 'none';
+  document.getElementById('mpesaDetails').style.display = 'none';
+  document.getElementById('usdtDetails').style.display  = 'none';
+  document.getElementById('waitingState').style.display  = 'block';
+  document.getElementById('approvedState').style.display = 'none';
   activePaymentMethod = null;
   currentOrderId = currentTxId = currentBuyerName = currentBuyerEmail = null;
   syncModalPlanUI();
@@ -1001,8 +1028,8 @@ function resetPaymentModal() {
 function selectPayment(method, event) {
   activePaymentMethod = method;
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-  document.getElementById('paystackDetails').style.display = method === 'paystack' ? 'block' : 'none';
-  document.getElementById('usdtDetails').style.display     = method === 'usdt'     ? 'block' : 'none';
+  document.getElementById('mpesaDetails').style.display = method === 'mpesa' ? 'block' : 'none';
+  document.getElementById('usdtDetails').style.display  = method === 'usdt'  ? 'block' : 'none';
   if (event && event.currentTarget) event.currentTarget.classList.add('selected');
 }
 
@@ -1015,7 +1042,7 @@ function setMsg(id, type, text) {
 }
 
 function goStep(n) {
-  ['step1','step2','step3'].forEach((id,i) => {
+  ['step1','step2'].forEach((id,i) => {
     document.getElementById(id).classList.toggle('active', i === n-1);
   });
   for (let i = 1; i <= 3; i++) {
@@ -1027,115 +1054,68 @@ function goStep(n) {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  PAYSTACK FLOW — instant license on success
+//  M-PESA FLOW
 // ═══════════════════════════════════════════════════════════
-function initiatePaystack() {
-  const name  = document.getElementById('psName').value.trim();
-  const email = document.getElementById('psEmail').value.trim();
+async function submitMpesaPurchase() {
+  const txId  = document.getElementById('mpesaTxId').value.trim();
+  const name  = document.getElementById('mpesaName').value.trim();
+  const email = document.getElementById('mpesaEmail').value.trim();
+  const tier  = PRICE_TIERS[selectedTierIndex];
 
-  if (!name || !email) {
-    setMsg('paystackMsg','error','❌ Please enter your name and email first.');
+  if (!txId || !name || !email) {
+    setMsg('mpesaMsg','error','❌ Please fill in all fields.');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    setMsg('paystackMsg','error','❌ Please enter a valid email address.');
+    setMsg('mpesaMsg','error','❌ Please enter a valid email address.');
     return;
   }
 
-  const tier = PRICE_TIERS[selectedTierIndex];
-  const psBtn = document.getElementById('paystackBtn');
-  psBtn.disabled = true;
-  psBtn.innerHTML = '<span class="spinner"></span> Opening Paystack…';
-  setMsg('paystackMsg','','');
-
-  const handler = PaystackPop.setup({
-    key      : PAYSTACK_PUBLIC_KEY,
-    email    : email,
-    amount   : tier.kes_cents,  // amount in KES cents (KES × 100)
-    currency : 'KES',
-    ref      : 'LGAI-' + Date.now() + '-' + Math.random().toString(36).substr(2,6).toUpperCase(),
-    metadata : {
-      custom_fields: [
-        { display_name: 'Customer Name', variable_name: 'customer_name', value: name },
-        { display_name: 'Plan',          variable_name: 'plan_label',    value: tier.label },
-        { display_name: 'Plan Days',     variable_name: 'plan_days',     value: String(tier.days) }
-      ]
-    },
-    callback : function(response) {
-      // Payment confirmed by Paystack popup
-      onPaystackSuccess(response, name, email, tier);
-    },
-    onClose  : function() {
-      psBtn.disabled = false;
-      psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Pay with Paystack';
-      setMsg('paystackMsg','info','ℹ️ Payment window closed. Try again when ready.');
-    }
-  });
-
-  handler.openIframe();
-}
-
-async function onPaystackSuccess(response, name, email, tier) {
-  const psBtn = document.getElementById('paystackBtn');
-  psBtn.innerHTML = '<span class="spinner"></span> Generating License…';
+  const btn = document.getElementById('mpesaBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Registering…';
+  setMsg('mpesaMsg','','');
 
   try {
-    // Generate license key
-    let licenseKey;
-    try { licenseKey = await sbRpc('generate_license_key', {}); }
-    catch { licenseKey = generateLicenseKey(); }
+    const existing = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}`);
+    if (existing && existing.length > 0) {
+      setMsg('mpesaMsg','error','❌ This transaction code has already been submitted.');
+      btn.disabled = false; btn.textContent = 'Submit M-Pesa Payment';
+      return;
+    }
 
-    const expiry = addDays(tier.days);
-
-    // Save license to Supabase
-    const inserted = await sbInsert('licenses', {
-      license_key    : licenseKey,
+    const inserted = await sbInsert('pending_orders', {
+      transaction_id : txId,
       customer_name  : name,
       customer_email : email,
-      product_name   : 'XAUUSD Scalping AI V15',
-      status         : 'active',
-      expiry_date    : expiry,
-      notes          : `Paystack · ref:${response.reference} · ${tier.label}`
+      amount_usd     : tier.price,
+      plan_label     : tier.label,
+      plan_days      : tier.days,
+      status         : 'pending',
+      submitted_at   : new Date().toISOString()
     });
 
-    const licenseId = inserted[0]?.id || response.reference;
+    currentOrderId    = inserted[0]?.id || null;
+    currentTxId       = txId;
+    currentBuyerName  = name;
+    currentBuyerEmail = email;
 
-    // Also log the order in pending_orders as approved
-    try {
-      await sbInsert('pending_orders', {
-        transaction_id : response.reference,
-        customer_name  : name,
-        customer_email : email,
-        amount_usd     : tier.price,
-        plan_label     : tier.label,
-        plan_days      : tier.days,
-        status         : 'approved',
-        submitted_at   : new Date().toISOString()
-      });
-    } catch(e) { /* best effort */ }
+    document.getElementById('pollName').textContent  = '👤 ' + name;
+    document.getElementById('pollEmail').textContent = '📧 ' + email;
+    document.getElementById('pollTx').textContent    = '📲 M-Pesa TX: ' + txId;
+    document.getElementById('pollPlan').textContent  = '💳 Plan: ' + tier.label + ' — $' + tier.price;
 
-    // Send email
-    await sendLicenseEmail(name, email, licenseKey, licenseId, tier.label);
+    goStep(2);
+    startPolling(txId, name, email);
 
-    // Show success step
-    document.getElementById('instantLicenseKey').textContent = licenseKey;
-    document.getElementById('instantLicenseInfo').innerHTML = `
-      <div class="license-info-item"><div class="li-label">Name</div><div class="li-value">${name}</div></div>
-      <div class="license-info-item"><div class="li-label">Email</div><div class="li-value">${email}</div></div>
-      <div class="license-info-item"><div class="li-label">Plan</div><div class="li-value">${tier.label}</div></div>
-      <div class="license-info-item"><div class="li-label">Expires</div><div class="li-value">${formatDate(expiry)}</div></div>
-    `;
-    goStep(3);
-
-  } catch(e) {
-    psBtn.disabled = false;
-    psBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="20" fill="#00c3ff"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Georgia,serif" font-weight="bold">P</text></svg> Retry';
-    setMsg('paystackMsg','error','❌ Payment was confirmed but license generation failed: ' + e.message + ' — email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your Paystack ref: <b>' + response.reference + '</b>');
+  } catch (e) {
+    setMsg('mpesaMsg','error','❌ Error submitting: ' + e.message + '<br><small>Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your M-Pesa code.</small>');
+    btn.disabled = false; btn.textContent = 'Submit M-Pesa Payment';
   }
 }
 
 // ═══════════════════════════════════════════════════════════
-//  USDT FLOW — manual admin approval
+//  USDT FLOW
 // ═══════════════════════════════════════════════════════════
 async function submitUsdtPurchase() {
   const txId  = document.getElementById('txId').value.trim();
@@ -1161,33 +1141,20 @@ async function submitUsdtPurchase() {
     const existing = await sbSelect('pending_orders', `?transaction_id=eq.${encodeURIComponent(txId)}`);
     if (existing && existing.length > 0) {
       setMsg('step1Msg','error','❌ This transaction hash has already been submitted.');
-      btn.disabled = false;
-      btn.textContent = 'Submit USDT Payment';
+      btn.disabled = false; btn.textContent = 'Submit USDT Payment';
       return;
     }
 
-    let inserted;
-    try {
-      inserted = await sbInsert('pending_orders', {
-        transaction_id : txId,
-        customer_name  : name,
-        customer_email : email,
-        amount_usd     : tier.price,
-        plan_label     : tier.label,
-        plan_days      : tier.days,
-        status         : 'pending',
-        submitted_at   : new Date().toISOString()
-      });
-    } catch {
-      inserted = await sbInsert('pending_orders', {
-        transaction_id : txId,
-        customer_name  : name,
-        customer_email : email,
-        amount_usd     : tier.price,
-        status         : 'pending',
-        submitted_at   : new Date().toISOString()
-      });
-    }
+    const inserted = await sbInsert('pending_orders', {
+      transaction_id : txId,
+      customer_name  : name,
+      customer_email : email,
+      amount_usd     : tier.price,
+      plan_label     : tier.label,
+      plan_days      : tier.days,
+      status         : 'pending',
+      submitted_at   : new Date().toISOString()
+    });
 
     currentOrderId    = inserted[0]?.id || null;
     currentTxId       = txId;
@@ -1204,12 +1171,11 @@ async function submitUsdtPurchase() {
 
   } catch (e) {
     setMsg('step1Msg','error','❌ Error submitting: ' + e.message + '<br><small>Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your TX hash.</small>');
-    btn.disabled = false;
-    btn.textContent = 'Submit USDT Payment';
+    btn.disabled = false; btn.textContent = 'Submit USDT Payment';
   }
 }
 
-// ── Polling for USDT approval ─────────────────────────────
+// ── Polling ───────────────────────────────────────────────
 function startPolling(txId, name, email) {
   stopPolling();
   pollTimer = setInterval(() => checkApprovalStatus(txId, name, email), POLL_INTERVAL_MS);
@@ -1242,11 +1208,10 @@ function showApprovedState(license, name, email) {
     <div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:var(--green)">✅ Active</div></div>
     <div class="license-info-item"><div class="li-label">Expires</div><div class="li-value">${formatDate(license.expiry_date)}</div></div>
   `;
-  setMsg('step2Msg','success','✅ License activated! Check your inbox for the email with your key and download link.');
 }
 
 // ── Utility ───────────────────────────────────────────────
-function copyAddr(addr) { navigator.clipboard.writeText(addr).then(() => alert('Address copied!')); }
+function copyAddr(addr) { navigator.clipboard.writeText(addr).then(() => alert('Copied!')); }
 function copyLicenseKey() { copyText(document.getElementById('displayLicenseKey').textContent); }
 function copyText(t) { navigator.clipboard.writeText(t).then(() => alert('Copied!')); }
 
@@ -1289,14 +1254,10 @@ function switchAdminTab(tab, btn) {
 async function loadAdminStats() {
   try {
     const licenses = await sbSelect('licenses', '?select=status,expiry_date');
-    const total     = licenses.length;
-    const active    = licenses.filter(l => l.status === 'active' && !isExpired(l.expiry_date)).length;
-    const suspended = licenses.filter(l => l.status === 'suspended').length;
-    const expired   = licenses.filter(l => l.status !== 'suspended' && isExpired(l.expiry_date)).length;
-    document.getElementById('statTotal').textContent     = total;
-    document.getElementById('statActive').textContent    = active;
-    document.getElementById('statSuspended').textContent = suspended;
-    document.getElementById('statExpired').textContent   = expired;
+    document.getElementById('statTotal').textContent     = licenses.length;
+    document.getElementById('statActive').textContent    = licenses.filter(l => l.status === 'active' && !isExpired(l.expiry_date)).length;
+    document.getElementById('statSuspended').textContent = licenses.filter(l => l.status === 'suspended').length;
+    document.getElementById('statExpired').textContent   = licenses.filter(l => l.status !== 'suspended' && isExpired(l.expiry_date)).length;
   } catch(e) { console.error(e); }
 }
 
@@ -1322,10 +1283,9 @@ function renderLicenses(list) {
   tbody.innerHTML = list.map(l => {
     const expired = isExpired(l.expiry_date);
     const statusDisplay = expired && l.status === 'active' ? 'expired' : l.status;
-    // detect source from notes
-    const isPaystack = l.notes && l.notes.toLowerCase().includes('paystack');
-    const sourceLabel = isPaystack
-      ? '<span class="badge-status paystack">Paystack</span>'
+    const isMpesa = l.notes && l.notes.toLowerCase().includes('mpesa');
+    const sourceLabel = isMpesa
+      ? '<span class="badge-status" style="background:rgba(74,222,128,.15);color:#4ade80">M-Pesa</span>'
       : '<span class="badge-status" style="background:rgba(212,175,55,.15);color:var(--gold-2)">USDT</span>';
     return `<tr>
       <td style="font-family:monospace;font-size:12px;color:var(--gold-2)">${l.license_key || '—'}</td>
@@ -1378,7 +1338,7 @@ async function createLicense() {
       license_key    : licenseKey,
       customer_name  : name,
       customer_email : email,
-      product_name   : product || 'XAUUSD Scalping AI V15',
+      product_name   : product || 'XAUUSD Scalping AI V19',
       status         : 'active',
       expiry_date    : expiry,
       notes          : notes
@@ -1446,7 +1406,7 @@ async function loadLogs() {
   try {
     const logs = await sbSelect('access_logs', '?order=login_time.desc&limit=100');
     if (!logs.length) {
-      document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs found. See the SQL fix notice above.</p>';
+      document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No access logs found.</p>';
       return;
     }
     document.getElementById('logsContainer').innerHTML = logs.map(l => `
@@ -1467,20 +1427,18 @@ async function loadLogs() {
 async function loadPending() {
   document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading…</p>';
   try {
-    // Show only USDT (non-Paystack) pending orders
     const orders = await sbSelect('pending_orders', '?order=submitted_at.desc');
-    const usdtOrders = orders.filter(o => !o.transaction_id || !o.transaction_id.startsWith('LGAI-'));
-    if (!usdtOrders.length) {
-      document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending USDT orders. ✅</p>';
+    if (!orders.length) {
+      document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">No pending orders. ✅</p>';
       return;
     }
     document.getElementById('pendingContainer').innerHTML = `
       <table class="license-table">
         <thead><tr>
-          <th>Name</th><th>Email</th><th>TX Hash</th>
+          <th>Name</th><th>Email</th><th>TX / Code</th>
           <th>Plan</th><th>Amount</th><th>Submitted</th><th>Status</th><th>Actions</th>
         </tr></thead>
-        <tbody>${usdtOrders.map(o => `<tr>
+        <tbody>${orders.map(o => `<tr>
           <td>${o.customer_name}</td>
           <td style="font-size:12px">${o.customer_email}</td>
           <td style="font-family:monospace;font-size:11px;color:var(--gold-2);max-width:160px;word-break:break-all">${o.transaction_id}</td>
@@ -1521,10 +1479,10 @@ async function approveOrder(orderId, name, email, planDays, planLabel) {
       license_key    : licenseKey,
       customer_name  : name,
       customer_email : email,
-      product_name   : 'XAUUSD Scalping AI V15',
+      product_name   : 'XAUUSD Scalping AI V19',
       status         : 'active',
       expiry_date    : expiry,
-      notes          : `USDT approved · order ${orderId} · ${label}`
+      notes          : `Approved · order ${orderId} · ${label}`
     });
 
     const licenseId = inserted[0]?.id || orderId;
