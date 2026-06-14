@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LiquidGold AI — Live Trading Dashboard</title>
+<meta name="description" content="Live XAUUSD trading performance dashboard powered by LiquidGold AI ScalpingAI V19"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0d12;--bg-2:#11141b;--panel:#151924;--line:#222838;--text:#e8ecf3;--muted:#9aa3b2;--gold:#d4af37;--gold-2:#f5d77a;--green:#4ade80;--red:#ef4444;--blue:#3b82f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--gold-2);text-decoration:none}
+h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spacing:-.01em}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(11,13,18,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.16em;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.live-badge{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);padding:5px 10px;border-radius:999px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.hero{padding:44px 0 32px;background:radial-gradient(800px 300px at 80% -20%,rgba(212,175,55,.14),transparent 60%)}
+.hero-meta{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding:5px 11px;border:1px solid rgba(212,175,55,.3);border-radius:999px;background:rgba(212,175,55,.08)}
+.hero h1{font-size:clamp(26px,4vw,42px);background:linear-gradient(170deg,#fff 30%,#d4af37 100%);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1;margin-bottom:6px}
+.hero p{color:var(--muted);font-size:14px;max-width:620px}
+#accountDisplay{font-family:monospace;color:var(--gold-2);background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.2);padding:3px 9px;border-radius:5px;font-size:12px}
+.lookup-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 32px;margin:28px 0;max-width:560px}
+.lookup-box h2{font-size:18px;color:#fff;margin-bottom:6px}
+.lookup-box p{font-size:13px;color:var(--muted);margin-bottom:18px}
+.input-row{display:flex;gap:10px}
+.input-row input{flex:1;padding:11px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;font-family:monospace}
+.input-row input:focus{outline:none;border-color:var(--gold)}
+.btn-gold{padding:11px 20px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:14px;white-space:nowrap;transition:filter .2s}
+.btn-gold:hover{filter:brightness(1.08)}
+.stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:28px 0}
+@media(max-width:960px){.stat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 14px;text-align:center}
+.stat-card .sv{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--gold-2);line-height:1}
+.stat-card .sv.green{color:var(--green)}
+.stat-card .sv.red{color:var(--red)}
+.stat-card .sl{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin-top:6px}
+.stat-card .ss{font-size:11px;color:var(--muted);margin-top:4px}
+.chart-wrap{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+.chart-wrap h3{font-size:15px;color:var(--gold-2);margin-bottom:4px;font-family:inherit;font-weight:600;letter-spacing:.04em}
+.chart-wrap p{font-size:12px;color:var(--muted);margin-bottom:18px}
+.chart-inner{position:relative;height:220px}
+.section-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px}
+.trades-table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
+.trades-table th{background:#0f1320;color:var(--gold-2);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:1px solid var(--line)}
+.trades-table td{padding:11px 16px;border-bottom:1px solid rgba(34,40,56,.6);color:var(--muted)}
+.trades-table tr:last-child td{border-bottom:none}
+.trades-table tr:hover td{background:rgba(255,255,255,.02)}
+.td-dir{font-weight:700;font-size:12px;letter-spacing:.1em}
+.td-dir.buy{color:var(--green)}
+.td-dir.sell{color:var(--red)}
+.td-profit.pos{color:var(--green);font-weight:600}
+.td-profit.neg{color:var(--red);font-weight:600}
+.td-mono{font-family:monospace;color:var(--text)}
+.dash-footer{border-top:1px solid var(--line);padding:28px 0 44px;margin-top:40px;text-align:center;font-size:12px;color:var(--muted)}
+.disclaimer{max-width:680px;margin:10px auto 0;font-size:11px;color:#6b7280;line-height:1.5}
+#mainDash{display:none}
+#loadingState,#errorState,#noDataState{display:none;text-align:center;padding:60px 20px}
+#lookupPanel{display:block}
+.state-icon{font-size:40px;margin-bottom:14px}
+.state-title{font-size:18px;font-family:Georgia,serif;color:#fff;margin-bottom:8px}
+.state-sub{font-size:14px;color:var(--muted)}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid rgba(212,175,55,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.info-banner{background:rgba(212,175,55,.07);border:1px solid rgba(212,175,55,.2);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--muted)}
+.info-banner b{color:var(--gold-2)}
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:720px){.charts-row{grid-template-columns:1fr}}
+.share-row{display:flex;gap:10px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.share-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);transition:all .2s;letter-spacing:.06em}
+.share-btn:hover{border-color:var(--gold);color:var(--gold-2)}
+.share-btn.primary{background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;border-color:transparent}
+.share-label{font-size:12px;color:var(--muted)}
+.copied{display:none;color:var(--green);font-size:12px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand"><span class="dot"></span> LIQUIDGOLD AI</div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span class="live-badge"><span class="live-dot"></span> Live Dashboard</span>
+    <a href="XAUUSD_V19_Landing.html" style="font-size:12px;color:var(--muted)">← Back to Site</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- LOOKUP PANEL -->
+  <section id="lookupPanel" class="hero">
+    <div class="hero-meta"><span class="eyebrow">Investor Dashboard</span></div>
+    <h1>Live Trading Performance</h1>
+    <p>Enter an MT5 account number to view live performance stats, equity curve, and full trade history for that account.</p>
+
+    <div class="lookup-box">
+      <h2>View Account Performance</h2>
+      <p>Enter the MT5 account number linked to a LiquidGold AI license.</p>
+      <div class="input-row">
+        <input id="accountInput" type="text" placeholder="e.g. 5034928171" inputmode="numeric"/>
+        <button class="btn-gold" onclick="loadAccount()">View Stats</button>
+      </div>
+      <p style="margin-top:14px;font-size:12px">This link can be shared directly with investors. No login required.</p>
+    </div>
+  </section>
+
+  <!-- LOADING -->
+  <div id="loadingState"><div class="spinner"></div><div class="state-sub" style="margin-top:14px">Loading account data…</div></div>
+
+  <!-- NO DATA -->
+  <div id="noDataState">
+    <div class="state-icon">⚠️</div>
+    <div class="state-title">No Data Found</div>
+    <div class="state-sub">No trading data found for that account number.</div>
+    <button class="btn-gold" style="margin-top:20px" onclick="resetView()">Try Another Account</button>
+  </div>
+
+  <!-- MAIN DASHBOARD -->
+  <section id="mainDash">
+    <div class="hero">
+      <div class="hero-meta">
+        <span class="eyebrow">XAUUSD ScalpingAI V19</span>
+        <span id="accountDisplay">—</span>
+      </div>
+      <h1>Account Performance</h1>
+      <p>Live data from the EA running on MT5 — updated after every trade close.</p>
+    </div>
+
+    <div class="share-row">
+      <span class="share-label">Share this dashboard:</span>
+      <button class="share-btn primary" onclick="copyShareLink()">📋 Copy Shareable Link</button>
+      <span class="copied" id="copiedMsg">✓ Copied!</span>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="sv" id="growth">—</div><div class="sl">% Growth</div><div class="ss">of starting balance</div></div>
+      <div class="stat-card"><div class="sv" id="totalPL">—</div><div class="sl">Total P/L</div><div class="ss">closed trades</div></div>
+      <div class="stat-card"><div class="sv" id="winRate">—</div><div class="sl">Win Rate</div><div class="ss" id="winRateSub">—</div></div>
+      <div class="stat-card"><div class="sv" id="totalTrades">—</div><div class="sl">Total Trades</div><div class="ss" id="totalTradesSub">—</div></div>
+      <div class="stat-card"><div class="sv" id="bestTrade">—</div><div class="sl">Best Trade</div><div class="ss">single close</div></div>
+      <div class="stat-card"><div class="sv" id="avgPL">—</div><div class="sl">Avg P/L</div><div class="ss">per closed trade</div></div>
+    </div>
+
+    <div class="info-banner">
+      📊 Data synced from MetaTrader 5 via LiquidGold AI V19. Starting balance: <b id="startBal">—</b>  ·  Last trade closed: <b id="lastClose">—</b>  ·  Worst trade: <b id="worstTrade">—</b>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-wrap">
+        <h3>Equity Curve</h3>
+        <p>Account balance after each closed trade</p>
+        <div class="chart-inner"><canvas id="equityChart"></canvas></div>
+      </div>
+      <div class="chart-wrap">
+        <h3>Win / Loss</h3>
+        <p>Distribution of trade outcomes</p>
+        <div class="chart-inner"><canvas id="wlChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <h3>Daily P/L</h3>
+      <p>Profit and loss grouped by trading day</p>
+      <div class="chart-inner"><canvas id="dailyChart"></canvas></div>
+    </div>
+
+    <div class="section-label">Recent Trade History</div>
+    <div style="overflow-x:auto">
+      <table class="trades-table">
+        <thead><tr><th>Date</th><th>Dir</th><th>Open</th><th>Close</th><th>Pips</th><th>P/L (USD)</th><th>Lot</th><th>Balance After</th></tr></thead>
+        <tbody id="tradeRows"><tr><td colspan="8" style="text-align:center;padding:24px">Loading…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="dash-footer">
+      <div>© 2026 LiquidGold AI · XAUUSD ScalpingAI V19</div>
+      <div class="disclaimer">Risk disclaimer: Trading leveraged instruments such as XAUUSD carries substantial risk. Past performance shown here is not indicative of future results. This dashboard displays real historical trades for transparency only and does not constitute investment advice.</div>
+    </div>
+  </section>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzaXZhbWFpZGhkamNydHplZG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0ODQxNzUsImV4cCI6MjA5MzA2MDE3NX0.D_TyOobiyXtxX9rX0GgVksU-wWZKdOm4Vfe4eC0sVCU';
+const HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+
+let equityChart, wlChart, dailyChart;
+
+function show(id){ ['lookupPanel','loadingState','noDataState','mainDash'].forEach(x=>document.getElementById(x).style.display = (x===id?'block':'none')); }
+function resetView(){ show('lookupPanel'); history.replaceState({},'',location.pathname); }
+function fmtUSD(n){ const s=n>=0?'+':'-'; return s+'$'+Math.abs(n).toFixed(2); }
+function fmtDate(s){ const d=new Date(s); return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}); }
+
+async function fetchTrades(account){
+  const url = `${SUPABASE_URL}/rest/v1/trades?account_number=eq.${encodeURIComponent(account)}&order=close_time.asc&limit=2000`;
+  const r = await fetch(url,{headers:HEADERS});
+  if(!r.ok) throw new Error('Fetch failed');
+  return r.json();
+}
+
+function copyShareLink(){
+  navigator.clipboard.writeText(location.href).then(()=>{
+    const m=document.getElementById('copiedMsg'); m.style.display='inline'; setTimeout(()=>m.style.display='none',1800);
+  });
+}
+
+async function loadAccount(acc){
+  const account = acc || document.getElementById('accountInput').value.trim();
+  if(!account){ alert('Enter an account number'); return; }
+  show('loadingState');
+  try{
+    const trades = await fetchTrades(account);
+    if(!trades || !trades.length){ show('noDataState'); return; }
+    history.replaceState({},'',location.pathname+'?account='+encodeURIComponent(account));
+    render(account, trades);
+    show('mainDash');
+  }catch(e){ console.error(e); show('noDataState'); }
+}
+
+function render(account, trades){
+  document.getElementById('accountDisplay').textContent = 'Account #'+account;
+
+  const totalPL = trades.reduce((s,t)=>s+Number(t.profit||0),0);
+  const wins = trades.filter(t=>Number(t.profit)>0).length;
+  const losses = trades.filter(t=>Number(t.profit)<=0).length;
+  const wr = trades.length ? (wins/trades.length*100) : 0;
+  const profits = trades.map(t=>Number(t.profit||0));
+  const best = Math.max(...profits);
+  const worst = Math.min(...profits);
+  const avg = totalPL/trades.length;
+
+  // starting balance = balance_after of first trade - profit of first trade
+  const first = trades[0];
+  const startBal = Number(first.balance_after||0) - Number(first.profit||0);
+  const growth = startBal>0 ? (totalPL/startBal*100) : 0;
+
+  const setVal=(id,v,cls)=>{ const el=document.getElementById(id); el.textContent=v; el.classList.remove('green','red'); if(cls) el.classList.add(cls); };
+  setVal('growth', (growth>=0?'+':'')+growth.toFixed(2)+'%', growth>=0?'green':'red');
+  setVal('totalPL', fmtUSD(totalPL), totalPL>=0?'green':'red');
+  setVal('winRate', wr.toFixed(1)+'%');
+  document.getElementById('winRateSub').textContent = wins+'W / '+losses+'L';
+  setVal('totalTrades', trades.length);
+  document.getElementById('totalTradesSub').textContent = 'since '+new Date(first.close_time).toLocaleDateString();
+  setVal('bestTrade', fmtUSD(best), 'green');
+  setVal('avgPL', fmtUSD(avg), avg>=0?'green':'red');
+
+  document.getElementById('startBal').textContent = '$'+startBal.toFixed(2);
+  document.getElementById('lastClose').textContent = fmtDate(trades[trades.length-1].close_time);
+  document.getElementById('worstTrade').textContent = fmtUSD(worst);
+
+  // charts
+  if(equityChart) equityChart.destroy();
+  if(wlChart) wlChart.destroy();
+  if(dailyChart) dailyChart.destroy();
+
+  const eqLabels = trades.map((t,i)=>'#'+(i+1));
+  const eqData = trades.map(t=>Number(t.balance_after||0));
+  equityChart = new Chart(document.getElementById('equityChart'),{
+    type:'line',
+    data:{labels:eqLabels,datasets:[{data:eqData,borderColor:'#d4af37',backgroundColor:'rgba(212,175,55,.12)',fill:true,tension:.25,pointRadius:0,borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7280',maxTicksLimit:8},grid:{color:'rgba(34,40,56,.4)'}},y:{ticks:{color:'#6b7280',callback:v=>'$'+v},grid:{color:'rgba(34,40,56,.4)'}}}}
+  });
+
+  wlChart = new Chart(document.getElementById('wlChart'),{
+    type:'doughnut',
+    data:{labels:['Wins','Losses'],datasets:[{data:[wins,losses],backgroundColor:['#4ade80','#ef4444'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:'#9aa3b2',font:{size:11}}}}}
+  });
+
+  const daily = {};
+  trades.forEach(t=>{ const d=new Date(t.close_time).toISOString().slice(0,10); daily[d]=(daily[d]||0)+Number(t.profit||0); });
+  const dLabels = Object.keys(daily);
+  const dData = Object.values(daily);
+  dailyChart = new Chart(document.getElementById('dailyChart'),{
+    type:'bar',
+    data:{labels:dLabels,datasets:[{data:dData,backgroundColor:dData.map(v=>v>=0?'#4ade80':'#ef4444'),borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7280',maxTicksLimit:10},grid:{display:false}},y:{ticks:{color:'#6b7280',callback:v=>'$'+v},grid:{color:'rgba(34,40,56,.4)'}}}}
+  });
+
+  // recent trades (last 25, newest first)
+  const recent = trades.slice(-25).reverse();
+  document.getElementById('tradeRows').innerHTML = recent.map(t=>{
+    const p = Number(t.profit||0);
+    const dir = (t.direction||'').toUpperCase();
+    return `<tr>
+      <td>${fmtDate(t.close_time)}</td>
+      <td class="td-dir ${dir==='BUY'?'buy':'sell'}">${dir}</td>
+      <td class="td-mono">${Number(t.open_price||0).toFixed(2)}</td>
+      <td class="td-mono">${Number(t.close_price||0).toFixed(2)}</td>
+      <td class="td-mono">${Number(t.pips||0).toFixed(1)}</td>
+      <td class="td-profit ${p>=0?'pos':'neg'}">${fmtUSD(p)}</td>
+      <td class="td-mono">${Number(t.lot_size||0).toFixed(2)}</td>
+      <td class="td-mono">$${Number(t.balance_after||0).toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// Auto-load from URL ?account=...
+(function(){
+  const p = new URLSearchParams(location.search);
+  const acc = p.get('account');
+  if(acc){ document.getElementById('accountInput').value=acc; loadAccount(acc); }
+})();
+
+document.getElementById('accountInput').addEventListener('keydown',e=>{ if(e.key==='Enter') loadAccount(); });
+</script>
+</body>
+</html>
