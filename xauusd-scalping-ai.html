@@ -25,7 +25,7 @@
     --purple:#a855f7;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:var(--gold-2);text-decoration:none}
   a:hover{text-decoration:underline}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
@@ -35,15 +35,42 @@
   h2{font-size:clamp(28px,3.6vw,40px);color:#fff}
   h3{font-size:20px;color:var(--gold-2);margin-bottom:8px}
   p{color:var(--muted)}
+
+  /* ═══════════════ HEADER / NAV — FIXED FOR MOBILE ═══════════════ */
   header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1080px;margin:0 auto}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.18em;font-size:13px}
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px;
+    max-width:1080px;
+    margin:0 auto;
+    gap:10px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.18em;font-size:13px;flex-shrink:0}
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
-  .cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2)}
+  .nav-actions{display:flex;gap:8px;align-items:center;flex-wrap:nowrap}
+  .cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2);white-space:nowrap}
   .cta:hover{filter:brightness(1.08);text-decoration:none}
   .cta.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(212,175,55,.4)}
   .cta.telegram{background:linear-gradient(180deg,#2aabee,#229ed9);color:#fff;border:1px solid rgba(34,158,217,.4)}
   .cta.telegram:hover{filter:brightness(1.08);text-decoration:none}
+
+  /* On mobile: hide the Telegram nav button and the Admin link's text label collapses;
+     the Dashboard + Purchase buttons remain since those are the primary actions. */
+  .nav-telegram{ }
+  @media(max-width:640px){
+    .nav{padding:12px 14px;gap:6px}
+    .brand{font-size:11px;letter-spacing:.12em}
+    .nav-actions{gap:6px}
+    .cta{padding:8px 12px;font-size:12px}
+    .nav-telegram{display:none}
+    .nav-admin-label{display:none}
+  }
+  @media(max-width:400px){
+    .cta{padding:7px 10px;font-size:11px}
+  }
+
   .hero{padding:90px 0 60px;background:radial-gradient(900px 400px at 80% -10%,rgba(212,175,55,.18),transparent 60%),radial-gradient(700px 300px at 10% 10%,rgba(212,175,55,.08),transparent 60%)}
   .hero p.lead{font-size:18px;max-width:720px;margin:18px 0 28px;color:#c9d0dc}
   .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
@@ -226,11 +253,10 @@
 <header>
   <div class="nav">
     <div class="brand"><span class="dot"></span>LIQUIDGOLD&nbsp;AI</div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <a class="cta ghost" href="XAUUSD_V19_Dashboard.html" style="font-size:12px;padding:7px 14px">📊 Live Dashboard</a>
-      <a class="cta ghost" href="#" onclick="showAdminLogin();return false" style="font-size:12px;padding:7px 14px">Admin</a>
-      <a class="cta telegram" href="https://t.me/PropTraderSignals" target="_blank" style="font-size:12px;padding:7px 14px">📢 Join Telegram</a>
-      <a class="cta" href="#contact" onclick="openPaymentModal();return false">Purchase Access</a>
+    <div class="nav-actions">
+      <a class="cta ghost" href="XAUUSD_V19_Dashboard.html" style="font-size:12px;padding:7px 14px">📊 Dashboard</a>
+      <a class="cta ghost" href="#" onclick="showAdminLogin();return false" style="font-size:12px;padding:7px 14px"><span class="nav-admin-label">Admin</span><span style="display:none">⚙️</span></a>
+      <a class="cta" href="#contact" onclick="openPaymentModal();return false">Purchase</a>
     </div>
   </div>
 </header>
@@ -1075,6 +1101,17 @@ function goStep(n) {
 
 // ═══════════════════════════════════════════════════════════
 //  M-PESA FLOW
+//
+//  FIX: removed `plan_days` from the sbInsert payload below.
+//  The Supabase 'pending_orders' table does NOT have a
+//  'plan_days' column, which caused every submission (both
+//  M-Pesa and USDT) to fail with:
+//    "Could not find the 'plan_days' column of 'pending_orders'
+//     in the schema cache"
+//  plan_days is now derived locally from PRICE_TIERS via the
+//  plan_label whenever it's needed (see approveOrder), so we
+//  don't need to store it in the DB at all unless the table is
+//  altered (see SQL note below the script).
 // ═══════════════════════════════════════════════════════════
 async function submitMpesaPurchase() {
   const txId  = document.getElementById('mpesaTxId').value.trim();
@@ -1110,7 +1147,6 @@ async function submitMpesaPurchase() {
       customer_email : email,
       amount_usd     : tier.price,
       plan_label     : tier.label,
-      plan_days      : tier.days,
       status         : 'pending',
       submitted_at   : new Date().toISOString()
     });
@@ -1136,6 +1172,7 @@ async function submitMpesaPurchase() {
 
 // ═══════════════════════════════════════════════════════════
 //  USDT FLOW
+//  FIX: same as above — `plan_days` removed from sbInsert.
 // ═══════════════════════════════════════════════════════════
 async function submitUsdtPurchase() {
   const txId  = document.getElementById('txId').value.trim();
@@ -1171,7 +1208,6 @@ async function submitUsdtPurchase() {
       customer_email : email,
       amount_usd     : tier.price,
       plan_label     : tier.label,
-      plan_days      : tier.days,
       status         : 'pending',
       submitted_at   : new Date().toISOString()
     });
@@ -1469,7 +1505,7 @@ async function loadPending() {
           <td>
             ${o.status === 'pending'
               ? `<button class="admin-btn success" style="padding:5px 10px;font-size:11px"
-                   onclick="approveOrder('${o.id}','${o.customer_name.replace(/'/g,"\\'")}','${o.customer_email}','${o.plan_days||365}','${(o.plan_label||'').replace(/'/g,"\\'")}')">✓ Approve</button>
+                   onclick="approveOrder('${o.id}','${o.customer_name.replace(/'/g,"\\'")}','${o.customer_email}','${(o.plan_label||'').replace(/'/g,"\\'")}')">✓ Approve</button>
                  <button class="admin-btn danger" style="padding:5px 10px;font-size:11px;margin-left:4px"
                    onclick="rejectOrder('${o.id}')">✗ Reject</button>`
               : '—'}
@@ -1481,8 +1517,14 @@ async function loadPending() {
   }
 }
 
-async function approveOrder(orderId, name, email, planDays, planLabel) {
-  let duration = planDays && parseInt(planDays) > 0 ? planDays : null;
+// FIX: approveOrder no longer receives planDays from the row (since
+// plan_days is never stored). It now resolves the day-count purely
+// from plan_label by matching against PRICE_TIERS, with a manual
+// prompt as the final fallback.
+async function approveOrder(orderId, name, email, planLabel) {
+  const matchedTier = PRICE_TIERS.find(t => t.label === planLabel);
+  let duration = matchedTier ? matchedTier.days : null;
+
   if (!duration) {
     duration = prompt('License duration in days? (30=1mo, 90=3mo, 180=6mo, 365=12mo, 3650=lifetime)', '365');
     if (!duration) return;
