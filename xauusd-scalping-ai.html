@@ -1102,16 +1102,11 @@ function goStep(n) {
 // ═══════════════════════════════════════════════════════════
 //  M-PESA FLOW
 //
-//  FIX: removed `plan_days` from the sbInsert payload below.
-//  The Supabase 'pending_orders' table does NOT have a
-//  'plan_days' column, which caused every submission (both
-//  M-Pesa and USDT) to fail with:
-//    "Could not find the 'plan_days' column of 'pending_orders'
-//     in the schema cache"
-//  plan_days is now derived locally from PRICE_TIERS via the
-//  plan_label whenever it's needed (see approveOrder), so we
-//  don't need to store it in the DB at all unless the table is
-//  altered (see SQL note below the script).
+//  The 'pending_orders' table now has a 'plan_days' column
+//  (added via: ALTER TABLE pending_orders ADD COLUMN plan_days INT;)
+//  so plan_days is stored directly at submission time and read
+//  back as-is during admin approval — no more deriving it from
+//  plan_label matching.
 // ═══════════════════════════════════════════════════════════
 async function submitMpesaPurchase() {
   const txId  = document.getElementById('mpesaTxId').value.trim();
@@ -1147,6 +1142,7 @@ async function submitMpesaPurchase() {
       customer_email : email,
       amount_usd     : tier.price,
       plan_label     : tier.label,
+      plan_days      : tier.days,
       status         : 'pending',
       submitted_at   : new Date().toISOString()
     });
@@ -1172,7 +1168,7 @@ async function submitMpesaPurchase() {
 
 // ═══════════════════════════════════════════════════════════
 //  USDT FLOW
-//  FIX: same as above — `plan_days` removed from sbInsert.
+//  Stores plan_days directly, same as the M-Pesa flow above.
 // ═══════════════════════════════════════════════════════════
 async function submitUsdtPurchase() {
   const txId  = document.getElementById('txId').value.trim();
@@ -1208,6 +1204,7 @@ async function submitUsdtPurchase() {
       customer_email : email,
       amount_usd     : tier.price,
       plan_label     : tier.label,
+      plan_days      : tier.days,
       status         : 'pending',
       submitted_at   : new Date().toISOString()
     });
@@ -1505,7 +1502,7 @@ async function loadPending() {
           <td>
             ${o.status === 'pending'
               ? `<button class="admin-btn success" style="padding:5px 10px;font-size:11px"
-                   onclick="approveOrder('${o.id}','${o.customer_name.replace(/'/g,"\\'")}','${o.customer_email}','${(o.plan_label||'').replace(/'/g,"\\'")}')">✓ Approve</button>
+                   onclick="approveOrder('${o.id}','${o.customer_name.replace(/'/g,"\\'")}','${o.customer_email}','${(o.plan_label||'').replace(/'/g,"\\'")}','${o.plan_days||''}')">✓ Approve</button>
                  <button class="admin-btn danger" style="padding:5px 10px;font-size:11px;margin-left:4px"
                    onclick="rejectOrder('${o.id}')">✗ Reject</button>`
               : '—'}
@@ -1517,13 +1514,18 @@ async function loadPending() {
   }
 }
 
-// FIX: approveOrder no longer receives planDays from the row (since
-// plan_days is never stored). It now resolves the day-count purely
-// from plan_label by matching against PRICE_TIERS, with a manual
-// prompt as the final fallback.
-async function approveOrder(orderId, name, email, planLabel) {
-  const matchedTier = PRICE_TIERS.find(t => t.label === planLabel);
-  let duration = matchedTier ? matchedTier.days : null;
+// approveOrder now reads plan_days directly from the pending_orders
+// row (restored after adding the plan_days column to the table).
+// Falls back to matching plan_label against PRICE_TIERS for any
+// older rows submitted before the column existed, and finally to
+// a manual prompt if neither is available.
+async function approveOrder(orderId, name, email, planLabel, planDays) {
+  let duration = planDays && parseInt(planDays) > 0 ? parseInt(planDays) : null;
+
+  if (!duration) {
+    const matchedTier = PRICE_TIERS.find(t => t.label === planLabel);
+    duration = matchedTier ? matchedTier.days : null;
+  }
 
   if (!duration) {
     duration = prompt('License duration in days? (30=1mo, 90=3mo, 180=6mo, 365=12mo, 3650=lifetime)', '365');
