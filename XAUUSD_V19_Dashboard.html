@@ -283,7 +283,7 @@ function render(account, trades){
   });
 
   // recent trades (last 25, newest first)
-  const recent = trades.slice(-25).reverse();
+  const recent = [...trades].reverse();
   document.getElementById('tradeRows').innerHTML = recent.map(t=>{
     const p = Number(t.profit||0);
     const dir = (t.direction||'').toUpperCase();
