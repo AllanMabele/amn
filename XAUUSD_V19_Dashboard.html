@@ -591,5 +591,36 @@ function render(account, rawTrades){
 
 document.getElementById('accountInput').addEventListener('keydown', e => { if(e.key === 'Enter') loadAccount(); });
 </script>
+<script>
+(function(){
+  function refresh(){
+    try {
+      if (typeof loadAccount === 'function') {
+        var acc = (document.getElementById('accountInput') && document.getElementById('accountInput').value)
+               || window.currentAccount
+               || (document.getElementById('accountDisplay') && document.getElementById('accountDisplay').textContent);
+        if (acc) return loadAccount(String(acc).trim());
+      }
+      if (typeof loadAccountData === 'function') return loadAccountData();
+      if (typeof loadDashboard === 'function')   return loadDashboard();
+      if (typeof fetchTrades === 'function' && window.currentAccount) return fetchTrades(window.currentAccount);
+      if (typeof renderDashboard === 'function') return renderDashboard();
+      location.reload();
+    } catch(e){ console.warn('refresh failed', e); }
+  }
+  setInterval(function(){ if (!document.hidden) refresh(); }, 30000);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) refresh(); });
+  if (window.supabase && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+    try {
+      var sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      sb.channel('trades-live')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'trades' }, refresh)
+        .subscribe();
+    } catch(e){ console.warn('realtime init failed', e); }
+  }
+})();
+</script>
 </body>
 </html>
+XAUUSD_V19_Dashboard_2.html
+Displaying XAUUSD_V19_Dashboard_2.html.
