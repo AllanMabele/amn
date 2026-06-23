@@ -15,8 +15,22 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(11,13,18,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.16em;font-size:13px}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .live-badge{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);padding:5px 10px;border-radius:999px}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s ease-in-out infinite}
+
+/* ── Realtime status badge ── */
+#rtBadge{display:none;align-items:center;gap:5px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;font-weight:600;transition:all .3s}
+#rtBadge.connecting{color:#f59e0b;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3)}
+#rtBadge.connected{color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3)}
+#rtBadge.disconnected{color:var(--red);background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25)}
+#rtDot{width:6px;height:6px;border-radius:50%;background:currentColor}
+#rtDot.pulse{animation:pulse 1.2s ease-in-out infinite}
+
+/* ── Toast notification ── */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2030;border:1px solid var(--gold);color:var(--gold-2);padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 .hero{padding:44px 0 32px;background:radial-gradient(800px 300px at 80% -20%,rgba(212,175,55,.14),transparent 60%)}
@@ -36,7 +50,8 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 .stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:28px 0}
 @media(max-width:960px){.stat-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
-.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 14px;text-align:center}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 14px;text-align:center;transition:border-color .5s}
+.stat-card.updated{border-color:rgba(212,175,55,.7)}
 .stat-card .sv{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--gold-2);line-height:1}
 .stat-card .sv.green{color:var(--green)}
 .stat-card .sv.red{color:var(--red)}
@@ -52,6 +67,9 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 .trades-table td{padding:11px 16px;border-bottom:1px solid rgba(34,40,56,.6);color:var(--muted)}
 .trades-table tr:last-child td{border-bottom:none}
 .trades-table tr:hover td{background:rgba(255,255,255,.02)}
+/* New trade row highlight */
+.trades-table tr.new-trade td{animation:rowFade 3.5s ease-out forwards}
+@keyframes rowFade{0%{background:rgba(212,175,55,.18)}80%{background:rgba(212,175,55,.06)}100%{background:transparent}}
 .td-dir{font-weight:700;font-size:12px;letter-spacing:.1em}
 .td-dir.buy{color:var(--green)}
 .td-dir.sell{color:var(--red)}
@@ -70,7 +88,6 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 @keyframes spin{to{transform:rotate(360deg)}}
 .info-banner{background:rgba(212,175,55,.07);border:1px solid rgba(212,175,55,.2);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--muted)}
 .info-banner b{color:var(--gold-2)}
-/* ── NEW: data-source badge ── */
 .source-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;font-weight:700}
 .source-badge.mt5{color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3)}
 .source-badge.calc{color:#f5d77a;background:rgba(245,215,122,.08);border:1px solid rgba(245,215,122,.25)}
@@ -82,15 +99,17 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 .share-btn.primary{background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;border-color:transparent}
 .share-label{font-size:12px;color:var(--muted)}
 .copied{display:none;color:var(--green);font-size:12px;font-weight:600}
-/* warning banner for missing balance data */
 .warn-banner{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#fca5a5;display:none}
 </style>
 </head>
 <body>
 
+<div id="toast">⚡ New trade closed — dashboard updated</div>
+
 <nav class="nav">
   <div class="brand"><span class="dot"></span> LIQUIDGOLD AI</div>
-  <div style="display:flex;align-items:center;gap:14px">
+  <div class="nav-right">
+    <div id="rtBadge"><span id="rtDot"></span><span id="rtLabel">Connecting…</span></div>
     <span class="live-badge"><span class="live-dot"></span> Live Dashboard</span>
     <a href="XAUUSD_V19_Landing.html" style="font-size:12px;color:var(--muted)">← Back to Site</a>
   </div>
@@ -102,7 +121,7 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
   <section id="lookupPanel" class="hero">
     <div class="hero-meta"><span class="eyebrow">Investor Dashboard</span></div>
     <h1>Live Trading Performance</h1>
-    <p>Enter an MT5 account number to view live performance stats, equity curve, and full trade history for that account.</p>
+    <p>Enter an MT5 account number to view live performance stats, equity curve, and full trade history — updated instantly the moment each trade closes.</p>
     <div class="lookup-box">
       <h2>View Account Performance</h2>
       <p>Enter the MT5 account number linked to a LiquidGold AI license.</p>
@@ -133,7 +152,7 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
         <span id="accountDisplay">—</span>
       </div>
       <h1>Account Performance</h1>
-      <p>Live data from the EA running on MT5 — updated after every trade close.</p>
+      <p>Live data from the EA running on MT5 — updated the moment each trade closes.</p>
     </div>
 
     <div class="share-row">
@@ -142,38 +161,37 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
       <span class="copied" id="copiedMsg">✓ Copied!</span>
     </div>
 
-    <!-- Warning: shown if some trades have no balance_after -->
     <div class="warn-banner" id="warnBanner">
       ⚠️ <b>Some historical trades have no balance data</b> — these are backfill records sent before V20. P/L and Growth use the latest confirmed MT5 balance. Re-run the EA to sync missing data automatically.
     </div>
 
     <div class="stat-grid">
-      <div class="stat-card">
+      <div class="stat-card" id="card-balance">
         <div class="sv" id="currentBalance">—</div>
         <div class="sl">Current Balance</div>
         <div class="ss" id="balSource">from MT5</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="card-growth">
         <div class="sv" id="growth">—</div>
         <div class="sl">% Growth</div>
         <div class="ss">vs starting balance</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="card-pl">
         <div class="sv" id="totalPL">—</div>
         <div class="sl">Total P/L</div>
         <div class="ss" id="totalPLsource">current − starting</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="card-wr">
         <div class="sv" id="winRate">—</div>
         <div class="sl">Win Rate</div>
         <div class="ss" id="winRateSub">—</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="card-trades">
         <div class="sv" id="totalTrades">—</div>
         <div class="sl">Total Trades</div>
         <div class="ss" id="totalTradesSub">—</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="card-best">
         <div class="sv" id="bestTrade">—</div>
         <div class="sl">Best Trade</div>
         <div class="ss">single close</div>
@@ -191,7 +209,7 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
     <div class="charts-row">
       <div class="chart-wrap">
         <h3>Equity Curve</h3>
-        <p>MT5 account balance after each closed trade — trades with no balance data are shown as interpolated (dashed)</p>
+        <p>MT5 account balance after each closed trade — interpolated segments shown dashed</p>
         <div class="chart-inner"><canvas id="equityChart"></canvas></div>
       </div>
       <div class="chart-wrap">
@@ -212,14 +230,8 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
       <table class="trades-table">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Dir</th>
-            <th>Open</th>
-            <th>Close</th>
-            <th>Pips</th>
-            <th>P/L (USD)</th>
-            <th>Lot</th>
-            <th>Balance After</th>
+            <th>Date</th><th>Dir</th><th>Open</th><th>Close</th>
+            <th>Pips</th><th>P/L (USD)</th><th>Lot</th><th>Balance After</th>
           </tr>
         </thead>
         <tbody id="tradeRows"><tr><td colspan="8" style="text-align:center;padding:24px">Loading…</td></tr></tbody>
@@ -236,9 +248,8 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
         <b style="color:var(--gold-2)">Balance methodology:</b> Current balance and % growth are
         derived from the MT5-reported <code>balance_after</code> field of the most recent trade record.
         This reflects the actual MT5 account balance at that point, independent of which trades
-        were synced to the dashboard. If any trades were missed, total P/L is computed as
-        <em>current_balance − starting_balance</em> rather than summing individual trade profits,
-        ensuring the figure always matches MT5.
+        were synced. If trades were missed, total P/L is computed as
+        <em>current_balance − starting_balance</em> rather than summing individual trade profits.
       </div>
     </div>
   </section>
@@ -246,55 +257,117 @@ h1,h2,h3{font-family:Georgia,"Playfair Display",serif;font-weight:700;letter-spa
 
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
-// LIQUIDGOLD AI — Live Dashboard V2
+// LIQUIDGOLD AI — Live Dashboard V3
 //
-// KEY FIX (vs V1):
+// REALTIME ARCHITECTURE (zero-latency):
 //
-// PROBLEM: The old dashboard computed:
-//   totalPL  = trades.reduce((s,t) => s + t.profit, 0)   ← sums all rows
-//   growth   = (totalPL / startBal) * 100
-//   startBal = first.balance_after - first.profit
+//   Uses Supabase Realtime over a native WebSocket — no JS SDK library needed.
+//   When MT5 closes a trade and the EA POSTs to Supabase, Postgres fires a
+//   CDC event → Supabase Realtime pushes it over the WebSocket → dashboard
+//   silently re-fetches and re-renders within ~200ms.
 //
-// This breaks when ANY trades are missing from Supabase (partial backfill,
-// missed real-time syncs, backfill rows with balance_after=0).
+//   Connection flow:
+//     1. loadAccount()         → fetch all trades, initial render, show dashboard
+//     2. connectRealtime()     → open WSS to Supabase Realtime endpoint
+//     3. phx_join              → subscribe to INSERT on trades for this account
+//     4. INSERT event received → silentRefresh(true) → re-render with animations
+//     5. New trade row gets gold highlight, stat cards flash, toast pops up
+//     6. Auto-reconnect with exponential backoff (2s → 4s → … → 30s max)
+//     7. 60s polling as belt-and-suspenders fallback for missed events
 //
-// FIX: Use balance_after as the authoritative MT5 balance.
-//   currentBalance = last trade's balance_after      (set by MT5 EA in real time)
-//   startingBalance = deposit/credit amount          (from first trade's balance_after - profit)
-//   totalPL  = currentBalance - startingBalance      (immune to missing rows)
-//   growth   = (totalPL / startingBalance) * 100
-//
-// The equity curve shows balance_after per trade. If a trade has
-// balance_after=0 (old backfill), we interpolate between surrounding
-// known values so the curve is still useful.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzaXZhbWFpZGhkamNydHplZG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0ODQxNzUsImV4cCI6MjA5MzA2MDE3NX0.D_TyOobiyXtxX9rX0GgVksU-wWZKdOm4Vfe4eC0sVCU';
-const HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+const HEADERS     = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
 
 let equityChart, wlChart, dailyChart;
+let currentAccount   = null;
+let realtimeWS       = null;
+let wsReconnectTimer = null;
+let wsRetryDelay     = 2000;   // backoff start
+let pollTimer        = null;
+let lastTradeCount   = 0;
+let isRendering      = false;  // guard against overlapping fetches
 
+// ── Utilities ─────────────────────────────────────────────────────────────────
 function show(id){
   ['lookupPanel','loadingState','noDataState','mainDash'].forEach(x => {
-    document.getElementById(x).style.display = (x === id ? 'block' : 'none');
+    document.getElementById(x).style.display = x === id ? 'block' : 'none';
   });
 }
-function resetView(){ show('lookupPanel'); history.replaceState({}, '', location.pathname); }
-function fmtUSD(n){ const s = n >= 0 ? '+' : '-'; return s + '$' + Math.abs(n).toFixed(2); }
-function fmtDate(s){
+function resetView(){
+  disconnectRealtime();
+  clearInterval(pollTimer);
+  currentAccount = null;
+  show('lookupPanel');
+  setRtStatus('off');
+  history.replaceState({}, '', location.pathname);
+}
+const fmtUSD  = n  => (n >= 0 ? '+' : '-') + '$' + Math.abs(n).toFixed(2);
+const fmtDate = s  => {
   const d = new Date(s);
   return d.toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' ' +
          d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+};
+
+// ── Realtime connection status badge ─────────────────────────────────────────
+function setRtStatus(state){
+  const badge = document.getElementById('rtBadge');
+  const dot   = document.getElementById('rtDot');
+  const label = document.getElementById('rtLabel');
+  if(state === 'off'){ badge.style.display = 'none'; return; }
+  badge.style.display = 'flex';
+  badge.className = state;            // CSS class drives colors
+  dot.className   = state === 'connecting' ? 'pulse' : '';
+  label.textContent = { connecting:'Connecting…', connected:'Live ⚡', disconnected:'Reconnecting…' }[state] || state;
 }
 
+// ── Toast notification ────────────────────────────────────────────────────────
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 3800);
+}
+
+// ── Stat card flash on update ─────────────────────────────────────────────────
+function flashCards(){
+  ['card-balance','card-growth','card-pl','card-trades'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('updated');
+    void el.offsetWidth;          // force reflow to restart transition
+    el.classList.add('updated');
+    setTimeout(() => el.classList.remove('updated'), 1200);
+  });
+}
+
+// ── Data fetch ────────────────────────────────────────────────────────────────
 async function fetchTrades(account){
   const url = `${SUPABASE_URL}/rest/v1/trades?account_number=eq.${encodeURIComponent(account)}&order=close_time.asc&limit=5000`;
   const r = await fetch(url, { headers: HEADERS });
-  if(!r.ok) throw new Error('Fetch failed: ' + r.status);
+  if(!r.ok) throw new Error('Fetch failed ' + r.status);
   return r.json();
 }
 
+// ── Silent refresh (no spinner, keeps charts alive) ───────────────────────────
+async function silentRefresh(isNewTrade){
+  if(!currentAccount || isRendering) return;
+  isRendering = true;
+  try{
+    const trades = await fetchTrades(currentAccount);
+    if(!trades || !trades.length){ isRendering = false; return; }
+    const newCount = trades.length;
+    render(currentAccount, trades, isNewTrade && newCount > lastTradeCount);
+    lastTradeCount = newCount;
+  } catch(e){
+    console.warn('Silent refresh failed:', e);
+  }
+  isRendering = false;
+}
+
+// ── Share link ────────────────────────────────────────────────────────────────
 function copyShareLink(){
   navigator.clipboard.writeText(location.href).then(() => {
     const m = document.getElementById('copiedMsg');
@@ -303,6 +376,7 @@ function copyShareLink(){
   });
 }
 
+// ── Initial account load ──────────────────────────────────────────────────────
 async function loadAccount(acc){
   const account = acc || document.getElementById('accountInput').value.trim();
   if(!account){ alert('Enter an account number'); return; }
@@ -310,9 +384,13 @@ async function loadAccount(acc){
   try{
     const trades = await fetchTrades(account);
     if(!trades || !trades.length){ show('noDataState'); return; }
+    currentAccount = account;
+    lastTradeCount = trades.length;
     history.replaceState({}, '', location.pathname + '?account=' + encodeURIComponent(account));
-    render(account, trades);
+    render(account, trades, false);
     show('mainDash');
+    connectRealtime(account);
+    startPolling();
   } catch(e){
     console.error(e);
     show('noDataState');
@@ -320,220 +398,249 @@ async function loadAccount(acc){
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Interpolate balance_after for rows where it is 0 or missing.
-// Strategy:
-//   - Walk through trades in chronological order
-//   - Track running balance using first known balance_after as anchor
-//   - For rows with balance_after=0, fill with previous_known_balance + profit
-//   - This won't be exactly right for all rows but is far better than 0
+// SUPABASE REALTIME — native WebSocket
+//
+// Endpoint:  wss://<project>.supabase.co/realtime/v1/websocket?apikey=<anon>&vsn=1.0.0
+// Protocol:  Phoenix channels (JSON frames)
+//   join  → { topic, event:"phx_join", payload:{config:{postgres_changes:[…]}}, ref }
+//   hbeat → { topic:"phoenix", event:"heartbeat", payload:{}, ref }
+//   data  → { event:"postgres_changes", payload:{ data:{ type:"INSERT", record:{…} } } }
+//
+// Filter: account_number=eq.<account>  so we only wake up for THIS account.
 // ─────────────────────────────────────────────────────────────────────────────
+function connectRealtime(account){
+  disconnectRealtime();
+  setRtStatus('connecting');
+
+  const wsUrl = `wss://gsivamaidhdjcrtzedmp.supabase.co/realtime/v1/websocket?apikey=${SUPABASE_KEY}&vsn=1.0.0`;
+  let ws;
+  try { ws = new WebSocket(wsUrl); }
+  catch(e){ scheduleReconnect(account); return; }
+  realtimeWS = ws;
+
+  let hbInterval = null;
+  let msgRef     = 1;
+  const topic    = 'realtime:public:trades';
+
+  ws.onopen = () => {
+    wsRetryDelay = 2000;          // reset backoff on clean connect
+    setRtStatus('connected');
+
+    // ── Subscribe to INSERTs on trades, filtered to this account ──
+    ws.send(JSON.stringify({
+      topic,
+      event  : 'phx_join',
+      payload: {
+        config: {
+          broadcast       : { self: false },
+          postgres_changes: [{
+            event : 'INSERT',
+            schema: 'public',
+            table : 'trades',
+            filter: `account_number=eq.${account}`
+          }]
+        }
+      },
+      ref: String(msgRef++)
+    }));
+
+    // ── Heartbeat every 25 s to keep Supabase from closing idle connection ──
+    hbInterval = setInterval(() => {
+      if(ws.readyState === WebSocket.OPEN){
+        ws.send(JSON.stringify({ topic:'phoenix', event:'heartbeat', payload:{}, ref: String(msgRef++) }));
+      }
+    }, 25000);
+  };
+
+  ws.onmessage = evt => {
+    let msg;
+    try { msg = JSON.parse(evt.data); } catch(e){ return; }
+
+    // Supabase Realtime wraps the CDC payload under msg.payload.data
+    const data = msg.payload && msg.payload.data;
+    const isInsert =
+      (msg.event === 'postgres_changes' && data && data.type === 'INSERT') ||
+      msg.event === 'INSERT';
+
+    if(isInsert){
+      // Trade closed in MT5 — refresh immediately with highlight
+      silentRefresh(true);
+      const rec    = data && data.record;
+      const profit = rec ? Number(rec.profit || 0) : 0;
+      const dir    = rec ? (rec.direction || '').toUpperCase() : '';
+      const emoji  = profit >= 0 ? '🟢' : '🔴';
+      showToast(`${emoji} New ${dir} closed ${profit >= 0 ? '+' : ''}$${profit.toFixed(2)}`);
+    }
+  };
+
+  ws.onerror = () => {};          // onclose handles everything
+
+  ws.onclose = () => {
+    clearInterval(hbInterval);
+    if(currentAccount){           // don't reconnect if user navigated away
+      setRtStatus('disconnected');
+      scheduleReconnect(account);
+    }
+  };
+}
+
+function disconnectRealtime(){
+  clearTimeout(wsReconnectTimer);
+  if(realtimeWS){
+    realtimeWS.onclose = null;    // prevent auto-reconnect on manual close
+    realtimeWS.close();
+    realtimeWS = null;
+  }
+}
+
+function scheduleReconnect(account){
+  if(!currentAccount) return;
+  wsReconnectTimer = setTimeout(() => connectRealtime(account), wsRetryDelay);
+  wsRetryDelay = Math.min(wsRetryDelay * 2, 30000);   // exponential backoff, max 30s
+}
+
+// ── Polling fallback (60 s) ───────────────────────────────────────────────────
+// Catches any trade that slipped through while WS was reconnecting.
+function startPolling(){
+  clearInterval(pollTimer);
+  pollTimer = setInterval(() => {
+    if(currentAccount && !document.hidden) silentRefresh(false);
+  }, 60000);
+}
+
+// ── Balance interpolation ─────────────────────────────────────────────────────
+// Fills in balance_after for backfill rows that have it as 0.
 function interpolateBalances(trades){
   const result = trades.map(t => ({...t, _balanceOK: Number(t.balance_after||0) > 0}));
+  const anchorIdx = result.findIndex(t => t._balanceOK);
+  if(anchorIdx === -1) return result;
 
-  // Find first trade with a valid balance_after (real-time trade, not backfill)
-  let anchorIdx = result.findIndex(t => t._balanceOK);
-
-  if(anchorIdx === -1){
-    // No real-time trades at all — fall back to summing profits from deposit
-    // We can't determine starting balance reliably, so just return as-is
-    return result;
-  }
-
-  // Fill forward from anchor using profit chain
-  let runningBalance = Number(result[anchorIdx].balance_after);
+  // Fill forward from anchor
+  let rb = Number(result[anchorIdx].balance_after);
   for(let i = anchorIdx + 1; i < result.length; i++){
-    if(result[i]._balanceOK){
-      runningBalance = Number(result[i].balance_after);
-    } else {
-      runningBalance += Number(result[i].profit || 0);
-      result[i].balance_after = runningBalance;
-      result[i]._interpolated = true;
-    }
+    if(result[i]._balanceOK){ rb = Number(result[i].balance_after); }
+    else { rb += Number(result[i].profit||0); result[i].balance_after = rb; result[i]._interpolated = true; }
   }
-
-  // Fill backward from anchor for trades before it
-  let backBalance = Number(result[anchorIdx].balance_after) - Number(result[anchorIdx].profit || 0);
+  // Fill backward from anchor
+  let bb = Number(result[anchorIdx].balance_after) - Number(result[anchorIdx].profit||0);
   for(let i = anchorIdx - 1; i >= 0; i--){
-    if(result[i]._balanceOK){
-      backBalance = Number(result[i].balance_after) - Number(result[i].profit || 0);
-    } else {
-      result[i].balance_after = backBalance + Number(result[i].profit || 0);
-      result[i]._interpolated = true;
-      backBalance -= Number(result[i].profit || 0);
-    }
+    if(result[i]._balanceOK){ bb = Number(result[i].balance_after) - Number(result[i].profit||0); }
+    else { result[i].balance_after = bb + Number(result[i].profit||0); result[i]._interpolated = true; bb -= Number(result[i].profit||0); }
   }
-
   return result;
 }
 
-function render(account, rawTrades){
+// ── Main render ───────────────────────────────────────────────────────────────
+// Called on initial load AND on every realtime/poll update.
+// highlightNew=true → animate stat cards + highlight newest row.
+function render(account, rawTrades, highlightNew){
   document.getElementById('accountDisplay').textContent = 'Account #' + account;
 
-  // ── Interpolate missing balances ─────────────────────────────────
-  const trades = interpolateBalances(rawTrades);
-  const hasInterpolated = trades.some(t => t._interpolated);
-  if(hasInterpolated){
-    document.getElementById('warnBanner').style.display = 'block';
-  }
+  const trades         = interpolateBalances(rawTrades);
+  const hasInterp      = trades.some(t => t._interpolated);
+  document.getElementById('warnBanner').style.display = hasInterp ? 'block' : 'none';
 
-  // ── AUTHORITATIVE BALANCE: use last trade's balance_after ─────────
-  // This is set by the MT5 EA from AccountInfoDouble(ACCOUNT_BALANCE)
-  // and reflects the ACTUAL MT5 balance, regardless of which trades are in Supabase.
-  const lastTrade = trades[trades.length - 1];
-  const firstTrade = trades[0];
+  const lastTrade      = trades[trades.length - 1];
+  const firstTrade     = trades[0];
+  const curBal         = Number(lastTrade.balance_after || 0);
+  const firstBalAfter  = Number(firstTrade.balance_after || 0);
+  const firstProfit    = Number(firstTrade.profit || 0);
+  const startBal       = firstBalAfter - firstProfit;
 
-  const currentMT5Balance = Number(lastTrade.balance_after || 0);
+  const totalPL = curBal > 0 && startBal > 0
+    ? curBal - startBal
+    : trades.reduce((s,t) => s + Number(t.profit||0), 0);
+  const growth  = startBal > 0 && curBal > 0 ? totalPL / startBal * 100 : 0;
+  const balOK   = curBal > 0 && startBal > 0 && !lastTrade._interpolated;
 
-  // Starting balance = balance of account before the first trade
-  // = first trade's balance_after minus first trade's profit
-  const firstBalanceAfter = Number(firstTrade.balance_after || 0);
-  const firstProfit = Number(firstTrade.profit || 0);
-  const startingBalance = firstBalanceAfter - firstProfit;
-
-  // ── AUTHORITATIVE P/L AND GROWTH ─────────────────────────────────
-  // Computed from MT5 balance, NOT from summing trade profits.
-  // This is immune to missing trades — if MT5 balance is $349.80 and
-  // start was $200.00, totalPL = $149.80 regardless of what's in Supabase.
-  const totalPL = currentMT5Balance > 0 && startingBalance > 0
-                ? currentMT5Balance - startingBalance
-                : trades.reduce((s,t) => s + Number(t.profit||0), 0); // fallback
-
-  const growth = (startingBalance > 0 && currentMT5Balance > 0)
-               ? (totalPL / startingBalance * 100)
-               : 0;
-
-  const balanceSourceOK = currentMT5Balance > 0 && startingBalance > 0 && !lastTrade._interpolated;
-
-  // ── Trade stats ───────────────────────────────────────────────────
-  const wins   = trades.filter(t => Number(t.profit) > 0).length;
-  const losses = trades.filter(t => Number(t.profit) <= 0).length;
-  const wr     = trades.length ? (wins / trades.length * 100) : 0;
+  const wins    = trades.filter(t => Number(t.profit) > 0).length;
+  const losses  = trades.filter(t => Number(t.profit) <= 0).length;
+  const wr      = trades.length ? wins / trades.length * 100 : 0;
   const profits = trades.map(t => Number(t.profit||0));
-  const best   = Math.max(...profits);
-  const worst  = Math.min(...profits);
+  const best    = Math.max(...profits);
+  const worst   = Math.min(...profits);
 
-  // ── Populate stat cards ───────────────────────────────────────────
   const setVal = (id, v, cls) => {
     const el = document.getElementById(id);
     el.textContent = v;
-    el.classList.remove('green', 'red');
+    el.classList.remove('green','red');
     if(cls) el.classList.add(cls);
   };
 
-  // Current balance card
-  if(currentMT5Balance > 0){
-    setVal('currentBalance', '$' + currentMT5Balance.toFixed(2), currentMT5Balance >= startingBalance ? 'green' : 'red');
-    document.getElementById('balSource').innerHTML =
-      '<span class="source-badge mt5">● MT5 live</span>';
+  // Balance
+  if(curBal > 0){
+    setVal('currentBalance', '$' + curBal.toFixed(2), curBal >= startBal ? 'green' : 'red');
+    document.getElementById('balSource').innerHTML = '<span class="source-badge mt5">● MT5 live</span>';
   } else {
     setVal('currentBalance', '—', '');
     document.getElementById('balSource').textContent = 'No balance data';
   }
 
-  // Growth
-  setVal('growth',
-    (growth >= 0 ? '+' : '') + growth.toFixed(2) + '%',
-    growth >= 0 ? 'green' : 'red');
-
-  // Total P/L — from MT5 balance diff, not trade sum
-  setVal('totalPL', fmtUSD(totalPL), totalPL >= 0 ? 'green' : 'red');
-  document.getElementById('totalPLsource').innerHTML = balanceSourceOK
+  setVal('growth',   (growth >= 0 ? '+' : '') + growth.toFixed(2) + '%',  growth >= 0 ? 'green' : 'red');
+  setVal('totalPL',  fmtUSD(totalPL),                                      totalPL >= 0 ? 'green' : 'red');
+  document.getElementById('totalPLsource').innerHTML = balOK
     ? '<span class="source-badge mt5">● MT5 balance diff</span>'
     : '<span class="source-badge calc">● trade sum (est.)</span>';
-
-  // Win rate
-  setVal('winRate', wr.toFixed(1) + '%');
-  document.getElementById('winRateSub').textContent = wins + 'W / ' + losses + 'L';
-
-  // Total trades
+  setVal('winRate',     wr.toFixed(1) + '%');
+  document.getElementById('winRateSub').textContent  = wins + 'W / ' + losses + 'L';
   setVal('totalTrades', trades.length);
-  document.getElementById('totalTradesSub').textContent =
-    'since ' + new Date(firstTrade.close_time).toLocaleDateString();
+  document.getElementById('totalTradesSub').textContent = 'since ' + new Date(firstTrade.close_time).toLocaleDateString();
+  setVal('bestTrade',   fmtUSD(best), 'green');
 
-  // Best trade
-  setVal('bestTrade', fmtUSD(best), 'green');
-
-  // Info banner
-  document.getElementById('startBal').textContent = '$' + startingBalance.toFixed(2);
-  document.getElementById('mt5Balance').textContent = currentMT5Balance > 0
-    ? '$' + currentMT5Balance.toFixed(2) + (lastTrade._interpolated ? ' (est.)' : '')
-    : 'unknown';
-  document.getElementById('lastClose').textContent = fmtDate(lastTrade.close_time);
+  document.getElementById('startBal').textContent  = '$' + startBal.toFixed(2);
+  document.getElementById('mt5Balance').textContent = curBal > 0
+    ? '$' + curBal.toFixed(2) + (lastTrade._interpolated ? ' (est.)' : '') : 'unknown';
+  document.getElementById('lastClose').textContent  = fmtDate(lastTrade.close_time);
   document.getElementById('worstTrade').textContent = fmtUSD(worst);
 
-  // ── Charts ────────────────────────────────────────────────────────
+  if(highlightNew) flashCards();
+
+  // ── Charts ────────────────────────────────────────────────────────────────
   if(equityChart) equityChart.destroy();
   if(wlChart)     wlChart.destroy();
   if(dailyChart)  dailyChart.destroy();
 
-  // Equity curve — use interpolated balances, mark interpolated points
-  const eqLabels  = trades.map((t, i) => '#' + (i + 1));
-  const eqData    = trades.map(t => Number(t.balance_after || 0));
-  const pointColors = trades.map(t => t._interpolated ? 'rgba(245,215,122,0.4)' : 'rgba(212,175,55,0.9)');
-  const pointRadii  = trades.map(t => t._interpolated ? 0 : 0);
-
-  // Create two datasets: solid for real data, dashed for interpolated
-  // Simple approach: one line, full data, dashed border for interpolated segments
   equityChart = new Chart(document.getElementById('equityChart'), {
     type: 'line',
     data: {
-      labels: eqLabels,
+      labels  : trades.map((_, i) => '#' + (i + 1)),
       datasets: [{
-        label: 'MT5 Balance',
-        data: eqData,
-        borderColor: '#d4af37',
+        label          : 'MT5 Balance',
+        data           : trades.map(t => Number(t.balance_after || 0)),
+        borderColor    : '#d4af37',
         backgroundColor: 'rgba(212,175,55,.12)',
-        fill: true,
-        tension: .25,
-        pointRadius: pointRadii,
-        borderWidth: 2,
-        segment: {
-          borderDash: ctx => {
-            // Dashed line for interpolated segments
-            const t = trades[ctx.p1DataIndex];
-            return t && t._interpolated ? [4, 4] : undefined;
-          },
-          borderColor: ctx => {
-            const t = trades[ctx.p1DataIndex];
-            return t && t._interpolated ? 'rgba(212,175,55,0.4)' : '#d4af37';
-          }
+        fill           : true,
+        tension        : .25,
+        pointRadius    : trades.map(() => 0),
+        borderWidth    : 2,
+        segment        : {
+          borderDash : ctx => trades[ctx.p1DataIndex]?._interpolated ? [4,4] : undefined,
+          borderColor: ctx => trades[ctx.p1DataIndex]?._interpolated ? 'rgba(212,175,55,0.4)' : '#d4af37'
         }
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              const t = trades[ctx.dataIndex];
-              const tag = t && t._interpolated ? ' (estimated)' : ' (MT5)';
-              return '$' + ctx.parsed.y.toFixed(2) + tag;
-            }
-          }
-        }
+      responsive: true, maintainAspectRatio: false,
+      animation : { duration: highlightNew ? 600 : 0 },
+      plugins   : {
+        legend : { display: false },
+        tooltip: { callbacks: { label: ctx => {
+          const t = trades[ctx.dataIndex];
+          return '$' + ctx.parsed.y.toFixed(2) + (t?._interpolated ? ' (estimated)' : ' (MT5)');
+        }}}
       },
       scales: {
-        x: { ticks: { color: '#6b7280', maxTicksLimit: 8 }, grid: { color: 'rgba(34,40,56,.4)' } },
-        y: { ticks: { color: '#6b7280', callback: v => '$' + v }, grid: { color: 'rgba(34,40,56,.4)' } }
+        x: { ticks:{ color:'#6b7280', maxTicksLimit:8 }, grid:{ color:'rgba(34,40,56,.4)' } },
+        y: { ticks:{ color:'#6b7280', callback: v => '$' + v }, grid:{ color:'rgba(34,40,56,.4)' } }
       }
     }
   });
 
   wlChart = new Chart(document.getElementById('wlChart'), {
     type: 'doughnut',
-    data: {
-      labels: ['Wins', 'Losses'],
-      datasets: [{ data: [wins, losses], backgroundColor: ['#4ade80', '#ef4444'], borderWidth: 0 }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '65%',
-      plugins: { legend: { position: 'bottom', labels: { color: '#9aa3b2', font: { size: 11 } } } }
-    }
+    data: { labels:['Wins','Losses'], datasets:[{ data:[wins, losses], backgroundColor:['#4ade80','#ef4444'], borderWidth:0 }] },
+    options: { responsive:true, maintainAspectRatio:false, cutout:'65%',
+      plugins:{ legend:{ position:'bottom', labels:{ color:'#9aa3b2', font:{ size:11 } } } } }
   });
 
   const daily = {};
@@ -541,35 +648,31 @@ function render(account, rawTrades){
     const d = new Date(t.close_time).toISOString().slice(0, 10);
     daily[d] = (daily[d] || 0) + Number(t.profit || 0);
   });
-  const dLabels = Object.keys(daily);
-  const dData   = Object.values(daily);
+  const dVals = Object.values(daily);
   dailyChart = new Chart(document.getElementById('dailyChart'), {
     type: 'bar',
-    data: {
-      labels: dLabels,
-      datasets: [{ data: dData, backgroundColor: dData.map(v => v >= 0 ? '#4ade80' : '#ef4444'), borderRadius: 4 }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#6b7280', maxTicksLimit: 10 }, grid: { display: false } },
-        y: { ticks: { color: '#6b7280', callback: v => '$' + v }, grid: { color: 'rgba(34,40,56,.4)' } }
+    data: { labels: Object.keys(daily),
+      datasets:[{ data: dVals, backgroundColor: dVals.map(v => v >= 0 ? '#4ade80' : '#ef4444'), borderRadius:4 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ ticks:{ color:'#6b7280', maxTicksLimit:10 }, grid:{ display:false } },
+        y:{ ticks:{ color:'#6b7280', callback: v => '$' + v }, grid:{ color:'rgba(34,40,56,.4)' } }
       }
     }
   });
 
-  // ── Trade table (newest first) ────────────────────────────────────
-  const recent = [...trades].reverse();
-  document.getElementById('tradeRows').innerHTML = recent.map(t => {
-    const p   = Number(t.profit || 0);
-    const dir = (t.direction || '').toUpperCase();
-    const bal = Number(t.balance_after || 0);
+  // ── Trade table (newest first) ────────────────────────────────────────────
+  const prevCount = lastTradeCount;
+  const recent    = [...trades].reverse();
+  document.getElementById('tradeRows').innerHTML = recent.map((t, i) => {
+    const p      = Number(t.profit || 0);
+    const dir    = (t.direction || '').toUpperCase();
+    const bal    = Number(t.balance_after || 0);
     const balStr = bal > 0
       ? '$' + bal.toFixed(2) + (t._interpolated ? ' <span style="color:#6b7280;font-size:10px">(est)</span>' : '')
       : '<span style="color:#6b7280">—</span>';
-    return `<tr>
+    const isNew = highlightNew && i < (trades.length - prevCount);
+    return `<tr class="${isNew ? 'new-trade' : ''}">
       <td>${fmtDate(t.close_time)}</td>
       <td class="td-dir ${dir === 'BUY' ? 'buy' : 'sell'}">${dir}</td>
       <td class="td-mono">${Number(t.open_price||0).toFixed(2)}</td>
@@ -582,45 +685,16 @@ function render(account, rawTrades){
   }).join('');
 }
 
-// Auto-load from URL ?account=...
+// ── Auto-load from URL ?account= ─────────────────────────────────────────────
 (function(){
-  const p = new URLSearchParams(location.search);
-  const acc = p.get('account');
+  const acc = new URLSearchParams(location.search).get('account');
   if(acc){ document.getElementById('accountInput').value = acc; loadAccount(acc); }
 })();
 
 document.getElementById('accountInput').addEventListener('keydown', e => { if(e.key === 'Enter') loadAccount(); });
-</script>
-<script>
-(function(){
-  function refresh(){
-    try {
-      if (typeof loadAccount === 'function') {
-        var acc = (document.getElementById('accountInput') && document.getElementById('accountInput').value)
-               || window.currentAccount
-               || (document.getElementById('accountDisplay') && document.getElementById('accountDisplay').textContent);
-        if (acc) return loadAccount(String(acc).trim());
-      }
-      if (typeof loadAccountData === 'function') return loadAccountData();
-      if (typeof loadDashboard === 'function')   return loadDashboard();
-      if (typeof fetchTrades === 'function' && window.currentAccount) return fetchTrades(window.currentAccount);
-      if (typeof renderDashboard === 'function') return renderDashboard();
-      location.reload();
-    } catch(e){ console.warn('refresh failed', e); }
-  }
-  setInterval(function(){ if (!document.hidden) refresh(); }, 30000);
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) refresh(); });
-  if (window.supabase && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
-    try {
-      var sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-      sb.channel('trades-live')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'trades' }, refresh)
-        .subscribe();
-    } catch(e){ console.warn('realtime init failed', e); }
-  }
-})();
+
+// Clean disconnect when tab is closed
+window.addEventListener('beforeunload', () => { disconnectRealtime(); clearInterval(pollTimer); });
 </script>
 </body>
 </html>
-XAUUSD_V19_Dashboard_2.html
-Displaying XAUUSD_V19_Dashboard_2.html.
