@@ -564,7 +564,7 @@
     <div class="pricing-grid" id="pricingGrid">
       <div class="price-card" onclick="selectPriceTier(0,this)">
         <div class="pc-duration">1 Month</div>
-        <div class="pc-price">$15<span> USD</span></div>
+        <div class="pc-price">$30<span> USD</span></div>
         <div class="pc-note">Try it out</div>
       </div>
       <div class="price-card" onclick="selectPriceTier(1,this)">
@@ -575,12 +575,12 @@
       <div class="price-card popular" onclick="selectPriceTier(2,this)">
         <div class="popular-badge">Most Popular</div>
         <div class="pc-duration">6 Months</div>
-        <div class="pc-price">$100<span> USD</span></div>
-        <div class="pc-note">$17/mo</div>
+        <div class="pc-price">$150<span> USD</span></div>
+        <div class="pc-note">$25/mo</div>
       </div>
       <div class="price-card" onclick="selectPriceTier(3,this)">
         <div class="pc-duration">12 Months</div>
-        <div class="pc-price">$249<span> USD</span></div>
+        <div class="pc-price">$250<span> USD</span></div>
         <div class="pc-note">$21/mo</div>
       </div>
       <div class="price-card" onclick="selectPriceTier(4,this)">
@@ -603,6 +603,7 @@
       <div class="card">
         <div class="num">PAYMENT</div>
         <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
+          <li>⚡ Whop Checkout — instant automated delivery</li>
           <li>📲 M-Pesa — manual approval (1–2 hrs)</li>
           <li>💎 USDT TRC20 — manual approval (1–2 hrs)</li>
           <li>🔒 License key issued after verification</li>
@@ -640,7 +641,7 @@
       <div class="modal-pricing" id="modalPricing">
         <div class="modal-price-opt selected" onclick="selectModalPlan(0,this)">
           <div class="mpo-dur">1 Month</div>
-          <div class="mpo-price">$15</div>
+          <div class="mpo-price">$30</div>
         </div>
         <div class="modal-price-opt" onclick="selectModalPlan(1,this)">
           <div class="mpo-dur">3 Months</div>
@@ -648,11 +649,11 @@
         </div>
         <div class="modal-price-opt" onclick="selectModalPlan(2,this)">
           <div class="mpo-dur">6 Months</div>
-          <div class="mpo-price">$100</div>
+          <div class="mpo-price">$150</div>
         </div>
         <div class="modal-price-opt" onclick="selectModalPlan(3,this)">
           <div class="mpo-dur">12 Months</div>
-          <div class="mpo-price">$249</div>
+          <div class="mpo-price">$250</div>
         </div>
         <div class="modal-price-opt" onclick="selectModalPlan(4,this)">
           <div class="mpo-dur">Lifetime</div>
@@ -662,19 +663,35 @@
 
       <div class="note" id="selectedPlanNote">
         <b id="planLabel">XAUUSD Scalping AI V19 · 1 Month</b><br/>
-        Amount due: <b id="planPrice">$15 USD</b>
+        Amount due: <b id="planPrice">$30 USD</b>
       </div>
 
       <h3 style="margin-top:20px;margin-bottom:4px;font-size:15px">Select Payment Method</h3>
 
+      <!-- Whop (Automated) -->
+      <div class="payment-method" id="pmWhop" onclick="selectPayment('whop',event)" style="border-color:rgba(74,222,128,.5)">
+        <h4>⚡ Whop Checkout <span style="background:linear-gradient(90deg,#4ade80,#22c55e);color:#052e16;font-size:10px;font-weight:800;letter-spacing:.12em;padding:2px 8px;border-radius:999px;margin-left:6px">INSTANT</span></h4>
+        <p>Card, Apple Pay, Google Pay, or Crypto · License key delivered automatically by email in seconds</p>
+      </div>
+      <div id="whopDetails" style="display:none">
+        <div class="note-green" style="margin-top:8px">
+          <p style="margin:0 0 6px;font-size:13px">You will be redirected to Whop's secure checkout for <b id="whopPlanLabel">1 Month</b> — <b id="whopAmount">$30 USD</b>.</p>
+          <p style="margin:0;font-size:12px">After payment, your license key is generated and emailed to you <b>instantly</b> — no manual approval needed. Product page: <a href="https://whop.com/allan-mabele/xauusd-ai/" target="_blank" rel="noopener" style="color:var(--gold-2)">whop.com/allan-mabele/xauusd-ai</a></p>
+        </div>
+        <div class="note-blue" style="margin-top:12px;font-size:12px">
+          💡 Use the same email on Whop that you want your license delivered to. Whop supports Visa/Mastercard, Apple Pay, Google Pay, and crypto (BTC, ETH, USDC, USDT).
+        </div>
+        <button class="btn-main" id="whopBtn" onclick="submitWhopPurchase()">Continue to Whop Checkout →</button>
+      </div>
+
       <!-- M-Pesa -->
-      <div class="payment-method" id="pmMpesa" onclick="selectPayment('mpesa',event)">
+      <div class="payment-method" id="pmMpesa" onclick="selectPayment('mpesa',event)" style="margin-top:8px">
         <h4>📲 M-Pesa (Kenya)</h4>
         <p>Send via Till / Send Money · Manual approval within 1–2 hours</p>
       </div>
       <div id="mpesaDetails" style="display:none">
         <div class="note-green" style="margin-top:8px">
-          <p style="margin:0 0 6px">Send <b id="mpesaAmount" style="color:#fff">KES 1,930</b> to:</p>
+          <p style="margin:0 0 6px">Send <b id="mpesaAmount" style="color:#fff">KES 3,900</b> to:</p>
           <div class="payment-addr" style="padding-right:60px;font-size:15px"><b>+254 701 540 201</b><button class="copy-btn" onclick="copyAddr('+254701540201')">Copy</button></div>
           <p style="font-size:12px;margin:4px 0">Send via <b>M-Pesa → Send Money</b> to the number above, or use <b>Paybill / Buy Goods</b> if your broker supports it.</p>
         </div>
@@ -703,7 +720,7 @@
         <p>Manual verification · Admin approves within 1–2 hours</p>
       </div>
       <div id="usdtDetails" style="display:none">
-        <p style="font-size:13px;margin:8px 0">Send exactly <b id="usdtAmount">$15 USDT</b> to:</p>
+        <p style="font-size:13px;margin:8px 0">Send exactly <b id="usdtAmount">$30 USDT</b> to:</p>
         <div class="payment-addr" style="padding-right:60px">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz<button class="copy-btn" onclick="copyAddr('TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz')">Copy</button></div>
         <p style="font-size:12px;color:var(--muted);margin:4px 0">⚠️ Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
         <div class="form-group" style="margin-top:16px">
@@ -840,10 +857,10 @@
           <div class="form-group"><label>Product</label><input type="text" class="admin-input" id="newProduct" value="XAUUSD Scalping AI V19" /></div>
           <div class="form-group"><label>Subscription Duration</label>
             <select class="admin-input" id="newDuration">
-              <option value="30">1 Month (30 days) — $15</option>
+              <option value="30">1 Month (30 days) — $30</option>
               <option value="90">3 Months (90 days) — $50</option>
-              <option value="180">6 Months (180 days) — $100</option>
-              <option value="365">12 Months (365 days) — $249</option>
+              <option value="180">6 Months (180 days) — $150</option>
+              <option value="365">12 Months (365 days) — $250</option>
               <option value="3650">Lifetime (10yr) — $499</option>
             </select>
           </div>
@@ -929,11 +946,11 @@ const POLL_INTERVAL_MS = 15000;
 
 // KES exchange rates for M-Pesa display
 const PRICE_TIERS = [
-  { label: '1 Month',   days: 30,   price: 15,  kes: 1930  },
-  { label: '3 Months',  days: 90,   price: 50,  kes: 6450  },
-  { label: '6 Months',  days: 180,  price: 100, kes: 12900 },
-  { label: '12 Months', days: 365,  price: 249, kes: 32100 },
-  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350 }
+  { label: '1 Month',   days: 30,   price: 30,  kes: 3900,  whop: 'https://whop.com/checkout/plan_AA4HQViOe4OWm' },
+  { label: '3 Months',  days: 90,   price: 50,  kes: 6450,  whop: 'https://whop.com/checkout/plan_zhKoc4tCUceoO' },
+  { label: '6 Months',  days: 180,  price: 150, kes: 19350, whop: 'https://whop.com/checkout/plan_L9CbWXCycMfur' },
+  { label: '12 Months', days: 365,  price: 250, kes: 32250, whop: 'https://whop.com/checkout/plan_YNGfvIlXpat5S' },
+  { label: 'Lifetime',  days: 3650, price: 499, kes: 64350, whop: 'https://whop.com/checkout/plan_xCkMKfD6SjgBT' }
 ];
 
 let selectedTierIndex = 0;
@@ -1052,6 +1069,10 @@ function syncModalPlanUI() {
   document.getElementById('planPrice').textContent  = `$${tier.price} USD  (~KES ${tier.kes.toLocaleString()})`;
   document.getElementById('usdtAmount').textContent = `$${tier.price} USDT`;
   document.getElementById('mpesaAmount').textContent = `KES ${tier.kes.toLocaleString()}`;
+  const wpl = document.getElementById('whopPlanLabel');
+  const wam = document.getElementById('whopAmount');
+  if (wpl) wpl.textContent = tier.label;
+  if (wam) wam.textContent = `$${tier.price} USD`;
 }
 
 function selectModalPlan(index, el) {
@@ -1086,6 +1107,7 @@ function resetPaymentModal() {
     if (btn) { btn.disabled = false; btn.textContent = id === 'mpesaBtn' ? 'Submit M-Pesa Payment' : 'Submit USDT Payment'; }
   });
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+  document.getElementById('whopDetails').style.display  = 'none';
   document.getElementById('mpesaDetails').style.display = 'none';
   document.getElementById('usdtDetails').style.display  = 'none';
   document.getElementById('waitingState').style.display  = 'block';
@@ -1098,9 +1120,19 @@ function resetPaymentModal() {
 function selectPayment(method, event) {
   activePaymentMethod = method;
   document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+  document.getElementById('whopDetails').style.display  = method === 'whop'  ? 'block' : 'none';
   document.getElementById('mpesaDetails').style.display = method === 'mpesa' ? 'block' : 'none';
   document.getElementById('usdtDetails').style.display  = method === 'usdt'  ? 'block' : 'none';
   if (event && event.currentTarget) event.currentTarget.classList.add('selected');
+}
+
+function submitWhopPurchase() {
+  const tier = PRICE_TIERS[selectedTierIndex];
+  if (!tier || !tier.whop) return;
+  // Open Whop checkout in a new tab. On successful payment, Whop's webhook
+  // (handled by the /whop-webhook Supabase Edge Function) creates the license
+  // and EmailJS sends the key to the buyer's email automatically.
+  window.open(tier.whop, '_blank', 'noopener');
 }
 
 function setMsg(id, type, text) {
