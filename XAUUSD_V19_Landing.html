@@ -38,14 +38,73 @@ header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-f
 .cta.telegram{background:linear-gradient(180deg,#2aabee,#229ed9);color:#fff;border:1px solid rgba(34,158,217,.4)}
 .cta.telegram:hover{filter:brightness(1.08);text-decoration:none}
 
-@media(max-width:640px){
- .nav{padding:12px 14px;gap:6px}
- .brand{font-size:11px;letter-spacing:.12em}
- .nav-actions{gap:6px}
- .cta{padding:8px 12px;font-size:12px}
- .nav-links{display:none}
+/* Hamburger menu */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;z-index:20}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gold-2);margin:5px 0;transition:all .3s;border-radius:2px}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* Mobile nav overlay */
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,13,18,.97);z-index:15;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--text);font-size:20px;font-family:Georgia,serif;letter-spacing:.05em;padding:12px 24px;border-radius:8px;transition:all .2s}
+.mobile-menu a:hover{color:var(--gold-2);background:rgba(212,175,55,.1);text-decoration:none}
+.mobile-menu .cta{font-size:16px;margin-top:12px}
+
+@media(max-width:768px){
+  .hamburger{display:block}
+  .nav-links{display:none}
+  .nav-actions .cta.ghost{display:none}
+  .nav{padding:12px 16px}
+  .brand{font-size:11px;letter-spacing:.12em}
+  .nav-actions{gap:6px}
+  .cta{padding:8px 14px;font-size:12px}
+  .hero{padding:60px 0 40px}
+  .hero .wrap{padding:0 16px}
+  .wrap{padding:0 16px}
+  section{padding:48px 0}
+  .stat-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat{padding:14px 10px}
+  .stat .v{font-size:22px}
+  .grid.cols-3{grid-template-columns:1fr}
+  .grid.cols-2{grid-template-columns:1fr}
+  .product-card{padding:20px}
+  .product-card h3{font-size:20px}
+  .pricing-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .price-card{padding:14px 10px}
+  .price-card .pc-price{font-size:22px}
+  .contact-cards{grid-template-columns:1fr}
+  .modal-content{padding:24px;width:95%;max-height:95vh}
+  .modal-pricing{grid-template-columns:repeat(3,1fr);gap:6px}
+  .modal-price-opt{padding:8px 4px}
+  .modal-price-opt .mpo-price{font-size:14px}
+  .section-head{margin-bottom:24px}
+  .smc-banner{padding:20px;margin-top:24px}
+  .smc-banner h3{font-size:16px}
+  .ea-detail .grid.cols-2{gap:12px}
+  .ea-detail .card{padding:16px}
+  .tbl th,.tbl td{padding:10px 12px;font-size:13px}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  ul.checks li{padding:12px 14px}
+  footer{padding:20px 0 30px}
+  .disclaimer{font-size:11px;padding:0 8px}
+  .cta-row{gap:8px}
+  .back-link{font-size:12px}
 }
-@media(max-width:400px){.cta{padding:7px 10px;font-size:11px}}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .pricing-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .price-card .pc-price{font-size:20px}
+  .modal-pricing{grid-template-columns:repeat(2,1fr)}
+  .product-card .pc-highlights{font-size:13px}
+  .product-card .pc-sub{font-size:13px}
+  .product-card .pc-actions{flex-direction:column}
+  .product-card .pc-actions .cta{width:100%;text-align:center}
+  .ea-detail .card h3{font-size:16px}
+  .ea-detail .card p{font-size:13px}
+  .license-info{grid-template-columns:1fr}
+}
 
 .hero{padding:90px 0 60px;background:radial-gradient(900px 400px at 80% -10%,rgba(212,175,55,.18),transparent 60%),radial-gradient(700px 300px at 10% 10%,rgba(212,175,55,.08),transparent 60%)}
 .hero p.lead{font-size:18px;max-width:760px;margin:18px 0 28px;color:#c9d0dc}
@@ -56,13 +115,11 @@ header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-f
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
 .stat .v{font-family:Georgia,serif;font-size:28px;color:var(--gold-2);font-weight:700}
 .stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-top:6px}
-@media(max-width:780px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
 section{padding:72px 0;border-top:1px solid var(--line)}
 .section-head{max-width:760px;margin-bottom:36px}
 .grid{display:grid;gap:18px}
 .cols-2{grid-template-columns:repeat(2,1fr)}
 .cols-3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:780px){.cols-2,.cols-3{grid-template-columns:1fr}}
 .card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:24px;transition:border-color .2s,transform .2s}
 .card:hover{border-color:rgba(212,175,55,.35);transform:translateY(-2px)}
 .card .num{font-family:Georgia,serif;color:var(--gold);font-size:14px;letter-spacing:.2em}
@@ -77,13 +134,6 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .tbl th{background:#0f1320;color:var(--gold-2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
 .tbl tr:last-child td{border-bottom:none}
 .tbl td b{color:#fff}
-@media (max-width:720px){
- .tbl, .license-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;border-radius:12px}
- .tbl thead, .license-table thead{display:table-header-group}
- .tbl tbody, .license-table tbody{display:table-row-group}
- .tbl th,.tbl td{padding:10px 12px;font-size:13px}
- .license-table th,.license-table td{padding:8px 10px;font-size:12px}
-}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 .reveal-delay-1{transition-delay:.1s}
@@ -130,8 +180,7 @@ ul.checks li span{color:var(--muted);font-size:14px}
 .ea-detail .back-link{font-size:13px;color:var(--muted);margin-bottom:8px;display:inline-block}
 
 .pricing-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:28px 0 8px}
-@media(max-width:900px){.pricing-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:580px){.pricing-grid{grid-template-columns:repeat(2,1fr)}}
+
 .price-card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:2px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:border-color .2s,transform .2s,background .2s;position:relative}
 .price-card:hover{border-color:rgba(212,175,55,.5);transform:translateY(-3px)}
 .price-card.popular{border-color:var(--gold)}
@@ -145,7 +194,7 @@ ul.checks li span{color:var(--muted);font-size:14px}
 .price-card.selected .pc-price{color:#fff}
 
 .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto}
-@media(max-width:600px){.contact-cards{grid-template-columns:1fr}}
+
 .contact-cards .card{text-align:center}
 footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
 .disclaimer{max-width:760px;margin:24px auto 0;font-size:12px;color:#6b7280;line-height:1.5}
@@ -182,7 +231,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;co
 .msg.show{display:block}
 
 .modal-pricing{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
-@media(max-width:480px){.modal-pricing{grid-template-columns:repeat(3,1fr)}}
+
 .modal-price-opt{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s}
 .modal-price-opt:hover{border-color:rgba(212,175,55,.5)}
 .modal-price-opt.selected{border-color:var(--gold-2);background:rgba(212,175,55,.1)}
@@ -245,7 +294,7 @@ footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;co
 .badge-status.suspended{background:rgba(239,68,68,.2);color:var(--red)}
 .badge-status.expired{background:rgba(156,163,175,.2);color:#9ca3af}
 .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-@media(max-width:700px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
+
 .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:center}
 .stat-card .sc-v{font-size:28px;font-family:Georgia,serif;color:var(--gold-2);font-weight:700}
 .stat-card .sc-l{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:4px}
@@ -261,11 +310,18 @@ select.admin-input option{background:var(--bg-2)}
  <a href="XAUUSD_V19_Dashboard.html">Dashboard</a>
  </div>
  <div class="nav-actions">
- <a class="cta ghost" href="#" onclick="showAdminLogin;return false" style="font-size:12px;padding:7px 14px">Admin</a>
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal;return false">Purchase</a>
+ <a class="cta ghost" href="#" onclick="showAdminLogin();return false" style="font-size:12px;padding:7px 14px">Admin</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase</a>
+ <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
  </div>
  </div>
 </header>
+<div class="mobile-menu" id="mobileMenu">
+ <a href="#products" onclick="closeMobileMenu()">Products</a>
+ <a href="#dashboard" onclick="closeMobileMenu()">Live Results</a>
+ <a href="XAUUSD_V19_Dashboard.html">Dashboard</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();closeMobileMenu();return false">Purchase</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" style="border-top:none">
@@ -320,7 +376,7 @@ select.admin-input option{background:var(--bg-2)}
  </ul>
  <div class="pc-pricefrom">From <b>$30 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal;return false">Purchase</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase</a>
  <a class="cta ghost" href="#ea-institutional" onclick="showEADetail('institutional');return false">Read More</a>
  </div>
  </div>
@@ -339,7 +395,7 @@ select.admin-input option{background:var(--bg-2)}
  </ul>
  <div class="pc-pricefrom">From <b>$250 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal;return false">Purchase</a>
+ <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false">Purchase</a>
  <a class="cta ghost" href="#ea-lacma" onclick="showEADetail('lacma');return false">Read More</a>
  </div>
  </div>
@@ -358,7 +414,7 @@ select.admin-input option{background:var(--bg-2)}
  </ul>
  <div class="pc-pricefrom">From <b>$149 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal;return false">Purchase</a>
+ <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false">Purchase</a>
  <a class="cta ghost" href="#ea-m15" onclick="showEADetail('m15');return false">Read More</a>
  </div>
  </div>
@@ -416,7 +472,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div class="pricing-grid" id="pricing-institutional"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal;return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase Now</a>
  </div>
  </div>
 </section>
@@ -457,7 +513,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div class="pricing-grid" id="pricing-lacma"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal;return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false">Purchase Now</a>
  <a class="cta ghost" href="https://whop.com/liquidgold-ai/aligntrend-pro-mt5/" target="_blank">Buy on Whop</a>
  </div>
  </div>
@@ -534,7 +590,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div class="pricing-grid" id="pricing-m15"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal;return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false">Purchase Now</a>
  <a class="cta ghost" href="https://whop.com/liquidgold-ai/m15-persistent-scalper-ea" target="_blank">Buy on Whop</a>
  </div>
  </div>
@@ -582,7 +638,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  </div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal;return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase Now</a>
  <a class="cta ghost" href="mailto:allymabz@gmail.com">Email Support</a>
  </div>
  <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Always use proper risk management and never risk more than you can afford to lose.</p>
@@ -594,7 +650,7 @@ select.admin-input option{background:var(--bg-2)}
 <!-- PAYMENT MODAL -->
 <div id="paymentModal" class="modal">
  <div class="modal-content">
- <span class="modal-close" onclick="closePaymentModal">&times;</span>
+ <span class="modal-close" onclick="closePaymentModal()">&times;</span>
  <div class="modal-product-name" id="modalProductName">Institutional PropFirm EA</div>
  <h2> Secure Purchase</h2>
 
@@ -652,7 +708,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="note-blue" style="margin-top:12px;font-size:12px">
  Use the same email on Whop that you want your license delivered to. Whop supports Visa/Mastercard, Apple Pay, Google Pay, and crypto (BTC, ETH, USDC, USDT).
  </div>
- <button class="btn-main" id="whopBtn" onclick="submitWhopPurchase">Continue to Whop Checkout </button>
+ <button class="btn-main" id="whopBtn" onclick="submitWhopPurchase()">Continue to Whop Checkout </button>
  </div>
 
  <!-- M-Pesa -->
@@ -682,7 +738,7 @@ select.admin-input option{background:var(--bg-2)}
  M-Pesa payments are verified manually. Expect approval within <b>12 hours</b> during business hours. You'll receive your license key by email once approved.
  </div>
  <div id="mpesaMsg" class="msg"></div>
- <button class="btn-main" id="mpesaBtn" onclick="submitMpesaPurchase">Submit M-Pesa Payment</button>
+ <button class="btn-main" id="mpesaBtn" onclick="submitMpesaPurchase()">Submit M-Pesa Payment</button>
  </div>
 
  <!-- USDT -->
@@ -710,7 +766,7 @@ select.admin-input option{background:var(--bg-2)}
  USDT payments are verified manually. Expect approval within <b>12 hours</b> during business hours. You'll receive your license key by email once approved.
  </div>
  <div id="step1Msg" class="msg"></div>
- <button class="btn-main" id="step1Btn" onclick="submitUsdtPurchase">Submit USDT Payment</button>
+ <button class="btn-main" id="step1Btn" onclick="submitUsdtPurchase()">Submit USDT Payment</button>
  </div>
  </div>
 
@@ -742,7 +798,7 @@ select.admin-input option{background:var(--bg-2)}
  <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
  <div class="license-key" id="displayLicenseKey"></div>
  <div class="license-info" id="licenseInfoGrid"></div>
- <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey"> Copy Key</button>
+ <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()"> Copy Key</button>
  </div>
  <div class="note" style="margin-top:16px"><b> Important:</b> Save this license key. You need it to activate your EA in MetaTrader 5.</div>
  <a class="download-btn" id="downloadBtn" href="#" target="_blank" rel="noopener"> Download EA</a>
@@ -763,7 +819,7 @@ select.admin-input option{background:var(--bg-2)}
  <input type="password" id="adminPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin" />
  </div>
  <div id="adminLoginMsg" class="msg"></div>
- <button class="btn-main" onclick="adminLogin">Login</button>
+ <button class="btn-main" onclick="adminLogin()">Login</button>
  </div>
 </div>
 
@@ -775,7 +831,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div style="display:flex;gap:10px;align-items:center">
  <span style="font-size:12px;color:var(--muted)" id="adminEmailDisplay"></span>
- <button class="admin-btn danger" onclick="adminLogout">Logout</button>
+ <button class="admin-btn danger" onclick="adminLogout()">Logout</button>
  </div>
  </div>
  <div class="admin-content">
@@ -804,7 +860,7 @@ select.admin-input option{background:var(--bg-2)}
  <option value="suspended">Suspended</option>
  <option value="expired">Expired</option>
  </select>
- <button class="admin-btn primary" onclick="loadLicenses"> Refresh</button>
+ <button class="admin-btn primary" onclick="loadLicenses()"> Refresh</button>
  </div>
  <div style="overflow-x:auto">
  <table class="license-table">
@@ -844,7 +900,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="newNotes" placeholder="Transaction ID, payment method, etc." /></div>
  </div>
  <div id="createMsg" class="msg"></div>
- <button class="admin-btn primary" onclick="createLicense" style="margin-top:8px">Generate License Key</button>
+ <button class="admin-btn primary" onclick="createLicense()" style="margin-top:8px">Generate License Key</button>
  <div id="createdLicenseResult" style="display:none;margin-top:16px;background:rgba(74,222,128,.08);border:1px solid var(--green);border-radius:10px;padding:16px">
  <p style="margin:0 0 8px;color:var(--green);font-size:13px;font-weight:700"> License Created Successfully</p>
  <div style="font-family:monospace;font-size:18px;color:var(--gold-2);font-weight:700;word-break:break-all" id="createdKeyDisplay"></div>
@@ -858,7 +914,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="admin-card">
  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
  <h4 style="margin:0">Recent EA Access Logs</h4>
- <button class="admin-btn primary" onclick="loadLogs"> Refresh</button>
+ <button class="admin-btn primary" onclick="loadLogs()"> Refresh</button>
  </div>
  <div id="logsContainer"><p style="color:var(--muted);font-size:13px">Loading</p></div>
  </div>
@@ -869,7 +925,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="admin-card">
  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
  <h4 style="margin:0"> Pending Payments (M-Pesa & USDT)</h4>
- <button class="admin-btn primary" onclick="loadPending"> Refresh</button>
+ <button class="admin-btn primary" onclick="loadPending()"> Refresh</button>
  </div>
  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">All payments require manual verification before a license is issued. Review each submission and approve or reject below.</p>
  <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading</p></div>
@@ -902,7 +958,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div class="form-group"><label>Notes</label><input type="text" class="admin-input" id="editNotes" /></div>
  <div id="editMsg" class="msg"></div>
- <button class="btn-main" onclick="saveLicenseEdit">Save Changes</button>
+ <button class="btn-main" onclick="saveLicenseEdit()">Save Changes</button>
  </div>
 </div>
 <script>// 
@@ -1097,7 +1153,7 @@ function buildPricingGrids{
 function selectTierForProduct(id, idx, el){
  currentProductId = id;
  selectedTierIndex = idx;
- openPaymentModal;
+ openPaymentModal();
 }
 
 // 
@@ -1108,6 +1164,19 @@ let currentOrderId = null;
 let currentTxId = null;
 let currentBuyerName = null;
 let currentBuyerEmail = null;
+
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburgerBtn.addEventListener('click', function() {
+  this.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileMenu() {
+  hamburgerBtn.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 function openPaymentModal {
  syncModalPlanUI;
