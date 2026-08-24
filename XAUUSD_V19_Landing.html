@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>LiquidGold AI Institutional-Grade XAUUSD Expert Advisors</title><meta name="description" content="LiquidGold AI Three precision-engineered MetaTrader 5 Expert Advisors for XAUUSD (Gold)." /><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><style>:root{
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>LiquidGold AI — Institutional-Grade XAUUSD Expert Advisors</title><meta name="description" content="LiquidGold AI — Three precision-engineered MetaTrader 5 Expert Advisors for XAUUSD (Gold)." /><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><style>:root{
  --bg:#0b0d12;
  --bg-2:#11141b;
  --panel:#151924;
@@ -32,7 +32,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-f
 .nav-links{display:flex;gap:14px;align-items:center;margin-right:6px}
 .nav-links a{color:var(--muted);font-size:13px;letter-spacing:.04em}
 .nav-links a:hover{color:var(--gold-2);text-decoration:none}
-.cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2);white-space:nowrap}
+.cta{display:inline-block;padding:10px 18px;border-radius:8px;background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.2);white-space:nowrap;cursor:pointer}
 .cta:hover{filter:brightness(1.08);text-decoration:none}
 .cta.ghost{background:transparent;color:var(--gold-2);border:1px solid rgba(212,175,55,.4)}
 .cta.telegram{background:linear-gradient(180deg,#2aabee,#229ed9);color:#fff;border:1px solid rgba(34,158,217,.4)}
@@ -46,7 +46,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-f
 .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
 /* Mobile nav overlay */
-.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,13,18,.97);z-index:15;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,13,18,.97);z-index:9997;flex-direction:column;align-items:center;justify-content:center;gap:24px}
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:var(--text);font-size:20px;font-family:Georgia,serif;letter-spacing:.05em;padding:12px 24px;border-radius:8px;transition:all .2s}
 .mobile-menu a:hover{color:var(--gold-2);background:rgba(212,175,55,.1);text-decoration:none}
@@ -91,6 +91,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(11,13,18,.85);backdrop-f
   .disclaimer{font-size:11px;padding:0 8px}
   .cta-row{gap:8px}
   .back-link{font-size:12px}
+  .footer-links{flex-direction:column;gap:14px}
 }
 @media(max-width:480px){
   .stat-grid{grid-template-columns:1fr 1fr;gap:8px}
@@ -196,7 +197,20 @@ ul.checks li span{color:var(--muted);font-size:14px}
 .contact-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto}
 
 .contact-cards .card{text-align:center}
-footer{padding:30px 0 50px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
+footer{padding:48px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.footer-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.footer-brand{max-width:280px}
+.footer-brand .brand{margin-bottom:10px}
+.footer-brand p{font-size:13px;margin:0}
+.footer-links{display:flex;flex-wrap:wrap;gap:48px}
+.footer-col h4{color:#fff;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px}
+.footer-col ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.footer-col a{color:var(--muted);font-size:13px}
+.footer-col a:hover{color:var(--gold-2)}
+.footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px}
+.footer-social{display:flex;gap:10px}
+.footer-social a{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:12px}
+.footer-social a:hover{color:var(--gold-2);border-color:rgba(212,175,55,.4);text-decoration:none}
 .disclaimer{max-width:760px;margin:24px auto 0;font-size:12px;color:#6b7280;line-height:1.5}
 
 .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center}
@@ -308,31 +322,33 @@ select.admin-input option{background:var(--bg-2)}
  <a href="#products">Products</a>
  <a href="#dashboard">Live Results</a>
  <a href="XAUUSD_V19_Dashboard.html">Dashboard</a>
+ <a href="#contact">Contact</a>
  </div>
  <div class="nav-actions">
- <a class="cta ghost" href="#" onclick="showAdminLogin();return false" style="font-size:12px;padding:7px 14px">Admin</a>
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase</a>
- <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+ <a class="cta ghost" href="#" onclick="showAdminLogin();return false;">Admin</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false;">Purchase</a>
+ <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
  </div>
  </div>
 </header>
 <div class="mobile-menu" id="mobileMenu">
  <a href="#products" onclick="closeMobileMenu()">Products</a>
  <a href="#dashboard" onclick="closeMobileMenu()">Live Results</a>
- <a href="XAUUSD_V19_Dashboard.html">Dashboard</a>
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();closeMobileMenu();return false">Purchase</a>
+ <a href="XAUUSD_V19_Dashboard.html" onclick="closeMobileMenu()">Dashboard</a>
+ <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();closeMobileMenu();return false;">Purchase</a>
 </div>
 
 <!-- HERO -->
 <section class="hero" style="border-top:none">
  <div class="wrap">
- <span class="eyebrow">Institutional-Grade XAUUSD Expert Advisors 2026</span>
+ <span class="eyebrow">Institutional-Grade XAUUSD Expert Advisors — 2026</span>
  <h1 style="margin-top:18px">Precision-Built MT5 Expert Advisors for Gold</h1>
- <p class="lead">LiquidGold AI builds disciplined, systematic trading systems for XAUUSD (Gold) on MetaTrader 5. Choose the strategy that fits your style from prop-firm risk discipline to advanced multi-timeframe scalping and persistent basket trading.</p>
+ <p class="lead">LiquidGold AI builds disciplined, systematic trading systems for XAUUSD (Gold) on MetaTrader 5. Choose the strategy that fits your style — from prop-firm risk discipline to advanced multi-timeframe scalping and persistent basket trading.</p>
  <div class="cta-row" style="justify-content:flex-start">
- <a class="cta" href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false">View Products</a>
+ <a class="cta" href="#products" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'});return false;">View Products</a>
  <a class="cta ghost" href="#dashboard">Live Results</a>
- <a class="cta telegram" href="https://t.me/PropTraderSignals" target="_blank"> Join Telegram Channel</a>
+ <a class="cta telegram" href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">Join Telegram Channel</a>
  </div>
  <div class="badges">
  <span class="badge"><b>3 EAs</b></span>
@@ -357,27 +373,27 @@ select.admin-input option{background:var(--bg-2)}
  <div class="section-head">
  <span class="eyebrow">Our Products</span>
  <h2 style="margin-top:14px">Three Expert Advisors. One Standard of Quality.</h2>
- <p>Each EA is engineered for a distinct trading approach. Click <b style="color:#fff">Read More</b> to explore the full feature breakdown, live dashboard, and pricing and purchase directly from any view.</p>
+ <p>Each EA is engineered for a distinct trading approach. Click <b style="color:#fff">Read More</b> to explore the full feature breakdown, live dashboard, and pricing — and purchase directly from any view.</p>
  </div>
 
  <div class="grid cols-3">
 
  <!-- Institutional PropFirm EA -->
  <div class="product-card">
- <span class="pc-tag">Flagship Prop-Firm Discipline</span>
+ <span class="pc-tag">Flagship — Prop-Firm Discipline</span>
  <h3>Institutional PropFirm EA</h3>
  <p class="pc-sub">Rules-based MT5 EA for disciplined, systematic execution with prop-firm style risk management.</p>
  <ul class="pc-highlights">
  <li>H1 / M15 / M5 multi-timeframe alignment</li>
- <li>Early-entry engine no chasing late moves</li>
+ <li>Early-entry engine — no chasing late moves</li>
  <li>Structural & ATR-based Stop Loss</li>
  <li>Partial profit, breakeven & trailing</li>
  <li>Equity risk, basket exposure & daily limits</li>
  </ul>
  <div class="pc-pricefrom">From <b>$30 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase</a>
- <a class="cta ghost" href="#ea-institutional" onclick="showEADetail('institutional');return false">Read More</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false;">Purchase</a>
+ <a class="cta ghost" href="#ea-institutional" onclick="showEADetail('institutional');return false;">Read More</a>
  </div>
  </div>
 
@@ -395,8 +411,8 @@ select.admin-input option{background:var(--bg-2)}
  </ul>
  <div class="pc-pricefrom">From <b>$250 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false">Purchase</a>
- <a class="cta ghost" href="#ea-lacma" onclick="showEADetail('lacma');return false">Read More</a>
+ <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false;">Purchase</a>
+ <a class="cta ghost" href="#ea-lacma" onclick="showEADetail('lacma');return false;">Read More</a>
  </div>
  </div>
 
@@ -404,7 +420,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="product-card">
  <span class="pc-tag">Always-In-Market Basket</span>
  <h3>M15 Persistent Scalper EA</h3>
- <p class="pc-sub">An always-in-market gold system that trades the M15 trend directly no waiting, no missed moves.</p>
+ <p class="pc-sub">An always-in-market gold system that trades the M15 trend directly — no waiting, no missed moves.</p>
  <ul class="pc-highlights">
  <li>Immediate M15 entry every candle close</li>
  <li>Winner-only position stacking</li>
@@ -414,8 +430,8 @@ select.admin-input option{background:var(--bg-2)}
  </ul>
  <div class="pc-pricefrom">From <b>$149 USD</b></div>
  <div class="pc-actions">
- <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false">Purchase</a>
- <a class="cta ghost" href="#ea-m15" onclick="showEADetail('m15');return false">Read More</a>
+ <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false;">Purchase</a>
+ <a class="cta ghost" href="#ea-m15" onclick="showEADetail('m15');return false;">Read More</a>
  </div>
  </div>
 
@@ -426,7 +442,7 @@ select.admin-input option{background:var(--bg-2)}
 <!-- INSTITUTIONAL PROPFIRM EA DETAIL -->
 <section id="ea-institutional" class="ea-detail">
  <div class="wrap">
- <a class="back-link" href="#products" onclick="hideEADetail('institutional');return false"> Back to products</a>
+ <a class="back-link" href="#products" onclick="hideEADetail('institutional');return false;">&larr; Back to products</a>
  <span class="eyebrow">Institutional PropFirm EA</span>
  <h2 style="margin-top:14px">Rules-Based Discipline for Serious Traders</h2>
  <p>A rules-based MT5 Expert Advisor designed for traders who want disciplined, systematic execution while respecting prop-firm style risk management. The Institutional PropFirm EA combines multi-timeframe market analysis, structured entries, adaptive risk management, pullback filtering, and automated trade management to avoid emotional and impulsive trading.</p>
@@ -445,34 +461,34 @@ select.admin-input option{background:var(--bg-2)}
  </div>
 
  <div class="smc-banner">
- <h3> Built for Prop-Firm Discipline</h3>
+ <h3>Built for Prop-Firm Discipline</h3>
  <p>The objective isn't simply to trade more. It is to identify quality opportunities while controlling exposure. The system uses a defined risk budget, position limits, adaptive sizing, and automated profit management.</p>
  </div>
 
  <div class="smc-banner" style="border-color:rgba(212,175,55,.35);background:linear-gradient(135deg,rgba(212,175,55,.12),rgba(168,85,247,.06))">
- <h3 style="color:var(--gold-2)"> Designed for Trending Markets</h3>
+ <h3 style="color:var(--gold-2)">Designed for Trending Markets</h3>
  <p>When a strong trend develops, the EA can progressively participate in the move rather than relying on a single entry. The latest version includes an optional aggressive stacking mode, while retaining the underlying MTF entry logic and veto system.</p>
  </div>
 
  <div class="grid cols-3" style="margin-top:32px">
- <div class="card"><h3> The Philosophy</h3><p>No emotional entries. No random trades. No chasing every candle. The EA waits for its predefined conditions, calculates the trade according to its risk framework, and automatically manages the position after entry.</p></div>
- <div class="card"><h3> Live Results</h3><p>View the EA's real-time performance, equity, drawdown and trading statistics on our public dashboard.</p>
+ <div class="card"><h3>The Philosophy</h3><p>No emotional entries. No random trades. No chasing every candle. The EA waits for its predefined conditions, calculates the trade according to its risk framework, and automatically manages the position after entry.</p></div>
+ <div class="card"><h3>Live Results</h3><p>View the EA's real-time performance, equity, drawdown and trading statistics on our public dashboard.</p>
  <div class="cta-row" style="justify-content:flex-start;margin-top:12px">
  <a class="cta ghost" href="https://allanmabele.github.io/amn/XAUUSD_V19_Dashboard.html?account=52914740" style="font-size:12px;padding:7px 14px">View Sample Account</a>
  </div>
  </div>
- <div class="card"><h3> Veto System</h3><p>The EA rejects trades when conditions are unfavorable stop distance too large, price excessively extended, market ranging, or no adequate pullback.</p></div>
+ <div class="card"><h3>Veto System</h3><p>The EA rejects trades when conditions are unfavorable — stop distance too large, price excessively extended, market ranging, or no adequate pullback.</p></div>
  </div>
 
  <p class="disclaimer" style="margin-top:28px"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. The EA is a trading tool, not financial advice. Always test on a demo account and use appropriate risk management. No EA can guarantee profits or prevent losses. Always test the system and use risk parameters appropriate for your account and prop-firm rules.</p>
 
  <div class="section-head" style="margin-top:48px">
  <span class="eyebrow">Flexible Access Plans</span>
- <h2 style="margin-top:14px">Choose Your Plan Institutional PropFirm EA</h2>
+ <h2 style="margin-top:14px">Choose Your Plan — Institutional PropFirm EA</h2>
  </div>
  <div class="pricing-grid" id="pricing-institutional"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false;">Purchase Now</a>
  </div>
  </div>
 </section>
@@ -480,41 +496,41 @@ select.admin-input option{background:var(--bg-2)}
 <!-- LACMA GOLD SCALPING EA DETAIL -->
 <section id="ea-lacma" class="ea-detail">
  <div class="wrap">
- <a class="back-link" href="#products" onclick="hideEADetail('lacma');return false"> Back to products</a>
+ <a class="back-link" href="#products" onclick="hideEADetail('lacma');return false;">&larr; Back to products</a>
  <span class="eyebrow">LACMA GOLD SCALPING EA</span>
  <h2 style="margin-top:14px">Advanced Multi-Timeframe Scalping for Gold</h2>
  <p>LACMA GOLD SCALPING EA is an advanced multi-timeframe Expert Advisor designed specifically for XAUUSD (Gold), combining H1 market bias, M15 market structure, and M5 execution to identify high-quality continuation and reversal opportunities. The EA uses a layered decision system incorporating market structure, momentum, liquidity analysis, pullback quality, volatility, session conditions, and Smart Money Concepts to avoid low-quality and late entries.</p>
 
  <div class="grid cols-2">
- <div class="card"><div class="num">STRATEGY</div><h3> Advanced Multi-Timeframe Strategy</h3><p>LACMA operates across three timeframes: <b>H1</b> primary market bias and trend direction; <b>M15</b> market structure, pullbacks, liquidity and setup formation; <b>M5</b> precise trade execution. It enters during early continuation moves following valid M15 pullbacks, rather than chasing extended price movements, and includes an entry-location filter that rejects trades when too much of the impulse has already occurred.</p></div>
- <div class="card"><div class="num">ENGINE</div><h3> Trade Quality Engine</h3><p>The V24 Trade Quality Engine evaluates multiple market conditions before allowing marginal setups. Scoring considers H1 trend alignment, M15 market structure, pullback quality, liquidity position, trend maturity, momentum, ATR/volatility quality, spread conditions and trading session filtering weaker setups instead of treating every move as a trade.</p></div>
- <div class="card smc"><div class="num">SMC</div><h3> Smart Money & Market Structure Filters</h3><p>Incorporates BOS / Break of Structure, CHOCH / Change of Character, Liquidity Sweep Detection, Fair Value Gap (FVG) confirmation, Volume Profile POC, Anchored VWAP, trend exhaustion detection, SMT divergence, RSI divergence, session and liquidity-level analysis. Liquidity sweeps can act as a hard veto under the Trade Cycle State Machine.</p></div>
- <div class="card"><div class="num">ENTRY</div><h3> Early Entry Without Chasing</h3><p>The Early Entry Engine looks for the first valid M15 pullback followed by continuation in the H1 trend direction instead of waiting for multiple late confirmations. The entry-location filter measures the percentage of the impulse already consumed and can reject excessively late entries.</p></div>
- <div class="card"><div class="num">CYCLE</div><h3> Adaptive Trade Cycle & Re-Entries</h3><p>The trade-cycle logic monitors initial entries, re-entry generations, trend maturity, pullback depth, impulse extension, liquidity conditions and retracement requirements. When extended, the EA can switch into retracement mode and use pending BUY LIMIT / SELL LIMIT orders that expire automatically after a defined number of M15 bars.</p></div>
- <div class="card"><div class="num">RISK</div><h3> Adaptive Stop Loss & Risk Management</h3><p>Supports percentage-based risk, fixed-lot trading, ATR-based stop calculations, structure-based stop loss, maximum structural SL protection, total exposure limits, daily loss protection, maximum consecutive-loss protection, maximum position controls, margin safety checks and spread protection. Rejects trades when the structural stop is too wide.</p></div>
- <div class="card"><div class="num">EXIT</div><h3> Partial Profit & Adaptive Exit</h3><p>Active profit management: <b>+50 pips partial profit</b>, then remaining position protected around breakeven with a configurable buffer and managed using market structure. Adapts exit by structure breaks, momentum weakness, liquidity reversal, H1 bias changes, ATR-based trailing and profit-lock. V24 introduces an adaptive exit model with no fixed TP2 requirement.</p></div>
- <div class="card"><div class="num">SCALING</div><h3> Adaptive Position Scaling</h3><p>Re-entries automatically decrease in size as the trade cycle progresses via a configurable scaling factor, reducing exposure as a move becomes more mature.</p></div>
- <div class="card"><div class="num">EXEC</div><h3> Execution Protection</h3><p>Before sending an order, checks current spread, available margin, margin safety buffer, stop-loss validity, broker stop/freeze levels, tradeable volume and market availability. The spread check can retry briefly during temporary spread expansion.</p></div>
- <div class="card"><div class="num">UI</div><h3> Live Trading Dashboard</h3><p>Integrated dashboard displays H1/M15/M5 bias, trade quality score, AI confidence, market structure, liquidity sweep status, trend exhaustion, POC, anchored VWAP, trade status, risk status, trade-cycle state and entry rejection reasons. Completed trades are reported to a web dashboard.</p></div>
- <div class="card"><div class="num">ALERTS</div><h3> Telegram Notifications</h3><p>Optional Telegram integration for new entries, re-entries, closures, P/L, trade scores, AI confidence, SL info and daily performance. Network requests are handled asynchronously to avoid blocking execution.</p></div>
- <div class="card"><div class="num">CONFIG</div><h3> Fully Configurable</h3><p>Risk %, fixed lot, max positions, ATR, partial-close distance, breakeven buffer, re-entry settings, H1/M15/M5 EMA parameters, momentum, structure, session times, liquidity filters, CHOCH/FVG requirements, trade quality thresholds, max SL, daily risk, exposure limits, position scaling and Telegram.</p></div>
+ <div class="card"><div class="num">STRATEGY</div><h3>Advanced Multi-Timeframe Strategy</h3><p>LACMA operates across three timeframes: <b>H1</b> — primary market bias and trend direction; <b>M15</b> — market structure, pullbacks, liquidity and setup formation; <b>M5</b> — precise trade execution. It enters during early continuation moves following valid M15 pullbacks, rather than chasing extended price movements, and includes an entry-location filter that rejects trades when too much of the impulse has already occurred.</p></div>
+ <div class="card"><div class="num">ENGINE</div><h3>Trade Quality Engine</h3><p>The V24 Trade Quality Engine evaluates multiple market conditions before allowing marginal setups. Scoring considers H1 trend alignment, M15 market structure, pullback quality, liquidity position, trend maturity, momentum, ATR/volatility quality, spread conditions and trading session — filtering weaker setups instead of treating every move as a trade.</p></div>
+ <div class="card smc"><div class="num">SMC</div><h3>Smart Money & Market Structure Filters</h3><p>Incorporates BOS / Break of Structure, CHOCH / Change of Character, Liquidity Sweep Detection, Fair Value Gap (FVG) confirmation, Volume Profile POC, Anchored VWAP, trend exhaustion detection, SMT divergence, RSI divergence, session and liquidity-level analysis. Liquidity sweeps can act as a hard veto under the Trade Cycle State Machine.</p></div>
+ <div class="card"><div class="num">ENTRY</div><h3>Early Entry Without Chasing</h3><p>The Early Entry Engine looks for the first valid M15 pullback followed by continuation in the H1 trend direction instead of waiting for multiple late confirmations. The entry-location filter measures the percentage of the impulse already consumed and can reject excessively late entries.</p></div>
+ <div class="card"><div class="num">CYCLE</div><h3>Adaptive Trade Cycle & Re-Entries</h3><p>The trade-cycle logic monitors initial entries, re-entry generations, trend maturity, pullback depth, impulse extension, liquidity conditions and retracement requirements. When extended, the EA can switch into retracement mode and use pending BUY LIMIT / SELL LIMIT orders that expire automatically after a defined number of M15 bars.</p></div>
+ <div class="card"><div class="num">RISK</div><h3>Adaptive Stop Loss & Risk Management</h3><p>Supports percentage-based risk, fixed-lot trading, ATR-based stop calculations, structure-based stop loss, maximum structural SL protection, total exposure limits, daily loss protection, maximum consecutive-loss protection, maximum position controls, margin safety checks and spread protection. Rejects trades when the structural stop is too wide.</p></div>
+ <div class="card"><div class="num">EXIT</div><h3>Partial Profit & Adaptive Exit</h3><p>Active profit management: <b>+50 pips partial profit</b>, then remaining position protected around breakeven with a configurable buffer and managed using market structure. Adapts exit by structure breaks, momentum weakness, liquidity reversal, H1 bias changes, ATR-based trailing and profit-lock. V24 introduces an adaptive exit model with no fixed TP2 requirement.</p></div>
+ <div class="card"><div class="num">SCALING</div><h3>Adaptive Position Scaling</h3><p>Re-entries automatically decrease in size as the trade cycle progresses via a configurable scaling factor, reducing exposure as a move becomes more mature.</p></div>
+ <div class="card"><div class="num">EXEC</div><h3>Execution Protection</h3><p>Before sending an order, checks current spread, available margin, margin safety buffer, stop-loss validity, broker stop/freeze levels, tradeable volume and market availability. The spread check can retry briefly during temporary spread expansion.</p></div>
+ <div class="card"><div class="num">UI</div><h3>Live Trading Dashboard</h3><p>Integrated dashboard displays H1/M15/M5 bias, trade quality score, AI confidence, market structure, liquidity sweep status, trend exhaustion, POC, anchored VWAP, trade status, risk status, trade-cycle state and entry rejection reasons. Completed trades are reported to a web dashboard.</p></div>
+ <div class="card"><div class="num">ALERTS</div><h3>Telegram Notifications</h3><p>Optional Telegram integration for new entries, re-entries, closures, P/L, trade scores, AI confidence, SL info and daily performance. Network requests are handled asynchronously to avoid blocking execution.</p></div>
+ <div class="card"><div class="num">CONFIG</div><h3>Fully Configurable</h3><p>Risk %, fixed lot, max positions, ATR, partial-close distance, breakeven buffer, re-entry settings, H1/M15/M5 EMA parameters, momentum, structure, session times, liquidity filters, CHOCH/FVG requirements, trade quality thresholds, max SL, daily risk, exposure limits, position scaling and Telegram.</p></div>
  </div>
 
  <div class="smc-banner">
- <h3> Designed for Gold Trading</h3>
- <p>LACMA GOLD SCALPING EA is specifically tuned around the characteristics of XAUUSD its volatility, rapid momentum expansions, liquidity events, pullbacks and trend extensions. The system focuses on quality over indiscriminate trade frequency, combining technical structure with execution and risk controls.</p>
+ <h3>Designed for Gold Trading</h3>
+ <p>LACMA GOLD SCALPING EA is specifically tuned around the characteristics of XAUUSD — its volatility, rapid momentum expansions, liquidity events, pullbacks and trend extensions. The system focuses on quality over indiscriminate trade frequency, combining technical structure with execution and risk controls.</p>
  </div>
 
- <p class="disclaimer" style="margin-top:28px"><b>Important Risk Disclaimer:</b> Trading Forex, Gold and CFDs involves substantial risk and may not be suitable for all investors. Past performance, backtests, simulations and live results do not guarantee future results. The EA is a trading tool, not financial advice. Always test on a demo account and use appropriate risk management before trading with real capital. LACMA GOLD SCALPING EA Trade the Structure. Respect the Liquidity. Manage the Risk.</p>
+ <p class="disclaimer" style="margin-top:28px"><b>Important Risk Disclaimer:</b> Trading Forex, Gold and CFDs involves substantial risk and may not be suitable for all investors. Past performance, backtests, simulations and live results do not guarantee future results. The EA is a trading tool, not financial advice. Always test on a demo account and use appropriate risk management before trading with real capital. LACMA GOLD SCALPING EA — Trade the Structure. Respect the Liquidity. Manage the Risk.</p>
 
  <div class="section-head" style="margin-top:48px">
  <span class="eyebrow">Flexible Access Plans</span>
- <h2 style="margin-top:14px">Choose Your Plan LACMA GOLD SCALPING EA</h2>
+ <h2 style="margin-top:14px">Choose Your Plan — LACMA GOLD SCALPING EA</h2>
  </div>
  <div class="pricing-grid" id="pricing-lacma"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false">Purchase Now</a>
- <a class="cta ghost" href="https://whop.com/liquidgold-ai/aligntrend-pro-mt5/" target="_blank">Buy on Whop</a>
+ <a class="cta" href="#" onclick="selectProduct('lacma');openPaymentModal();return false;">Purchase Now</a>
+ <a class="cta ghost" href="https://whop.com/liquidgold-ai/aligntrend-pro-mt5/" target="_blank" rel="noopener">Buy on Whop</a>
  </div>
  </div>
 </section>
@@ -522,19 +538,19 @@ select.admin-input option{background:var(--bg-2)}
 <!-- M15 PERSISTENT SCALPER EA DETAIL -->
 <section id="ea-m15" class="ea-detail">
  <div class="wrap">
- <a class="back-link" href="#products" onclick="hideEADetail('m15');return false"> Back to products</a>
+ <a class="back-link" href="#products" onclick="hideEADetail('m15');return false;">&larr; Back to products</a>
  <span class="eyebrow">M15 Persistent Scalper EA</span>
  <h2 style="margin-top:14px">Always-In-Market Gold Trading System</h2>
- <p>An always-in-market gold trading system that trades the M15 trend directly no waiting, no multi-timeframe confirmation stack, no missed moves.</p>
+ <p>An always-in-market gold trading system that trades the M15 trend directly — no waiting, no multi-timeframe confirmation stack, no missed moves.</p>
 
  <div class="grid cols-3">
- <div class="card"><h3> Live Results</h3><p>View the EA's real-time performance, equity, drawdown and trading statistics.</p>
+ <div class="card"><h3>Live Results</h3><p>View the EA's real-time performance, equity, drawdown and trading statistics.</p>
  <div class="cta-row" style="justify-content:flex-start;margin-top:12px">
  <a class="cta ghost" href="https://allanmabele.github.io/amn/XAUUSD_V19_Dashboard.html?account=52914740" style="font-size:12px;padding:7px 14px">View Live Dashboard</a>
  </div>
  </div>
- <div class="card"><h3> The Core Idea</h3><p>Most trend EAs wait: H4, then M15, then a pullback. By the time all boxes are ticked, the move is gone. This engine flips that as soon as an M15 candle closes, its direction is the trade bias. The EA manages exposure as a live basket: adding into strength, protecting profit, and flipping only on real reversals.</p></div>
- <div class="card"><h3> Multi-Layer Risk</h3><p>Hard caps on positions and lot exposure, position compression to free margin, an emergency floating-drawdown circuit breaker, and built-in spread/margin pre-trade checks.</p></div>
+ <div class="card"><h3>The Core Idea</h3><p>Most trend EAs wait: H4, then M15, then a pullback. By the time all boxes are ticked, the move is gone. This engine flips that — as soon as an M15 candle closes, its direction is the trade bias. The EA manages exposure as a live basket: adding into strength, protecting profit, and flipping only on real reversals.</p></div>
+ <div class="card"><h3>Multi-Layer Risk</h3><p>Hard caps on positions and lot exposure, position compression to free margin, an emergency floating-drawdown circuit breaker, and built-in spread/margin pre-trade checks.</p></div>
  </div>
 
  <div class="section-head" style="margin-top:40px">
@@ -542,12 +558,12 @@ select.admin-input option{background:var(--bg-2)}
  <h2 style="margin-top:14px">How the Engine Works</h2>
  </div>
  <ul class="checks">
- <li><div><b> Immediate M15 Entry</b><span>Every 15 minutes the engine reads the just-closed candle. Bullish close long bias; bearish short bias. If the basket is flat, it enters immediately keeping the account working instead of sitting in cash.</span></div></li>
- <li><div><b> Winner-Only Position Stacking</b><span>As price moves in the basket's favor, the EA adds positions but only into a basket already net profitable, and only when the most recent entry is in profit. It never adds size to a losing position. Stacking distance adapts to gold volatility using ATR(M15).</span></div></li>
- <li><div><b> Dynamic Basket Profit Lock</b><span>Once floating profit clears a trigger level, a trailing lock arms and ratchets up as profits grow protecting an ever-increasing floor of profit.</span></div></li>
- <li><div><b> Basket Take-Profit + Instant Re-Cycle</b><span>When the basket hits its overall profit target, everything closes and a brand-new cycle opens immediately in the current M15 direction.</span></div></li>
- <li><div><b> Smart Reversal Engine</b><span>Won't flip on every opposite candle. A reversal only triggers on a strong-bodied, volume-confirmed candle, filtering out weak noisy candles that cause whipsaw.</span></div></li>
- <li><div><b> Live Basket Dashboard</b><span>On-chart panel shows M15 bias, basket direction, open position count and lots, floating P/L, profit-lock status, volatility regime, spread and drawdown.</span></div></li>
+ <li><div><b>Immediate M15 Entry</b><span>Every 15 minutes the engine reads the just-closed candle. Bullish close → long bias; bearish → short bias. If the basket is flat, it enters immediately — keeping the account working instead of sitting in cash.</span></div></li>
+ <li><div><b>Winner-Only Position Stacking</b><span>As price moves in the basket's favor, the EA adds positions — but only into a basket already net profitable, and only when the most recent entry is in profit. It never adds size to a losing position. Stacking distance adapts to gold volatility using ATR(M15).</span></div></li>
+ <li><div><b>Dynamic Basket Profit Lock</b><span>Once floating profit clears a trigger level, a trailing lock arms and ratchets up as profits grow — protecting an ever-increasing floor of profit.</span></div></li>
+ <li><div><b>Basket Take-Profit + Instant Re-Cycle</b><span>When the basket hits its overall profit target, everything closes and a brand-new cycle opens immediately in the current M15 direction.</span></div></li>
+ <li><div><b>Smart Reversal Engine</b><span>Won't flip on every opposite candle. A reversal only triggers on a strong-bodied, volume-confirmed candle, filtering out weak noisy candles that cause whipsaw.</span></div></li>
+ <li><div><b>Live Basket Dashboard</b><span>On-chart panel shows M15 bias, basket direction, open position count and lots, floating P/L, profit-lock status, volatility regime, spread and drawdown.</span></div></li>
  </ul>
 
  <div class="section-head" style="margin-top:40px">
@@ -555,13 +571,13 @@ select.admin-input option{background:var(--bg-2)}
  <h2 style="margin-top:14px">The Trade Lifecycle</h2>
  </div>
  <ul class="checks">
- <li><div><b>1 Read the trend</b><span>On every new M15 candle close, determine bias from candle direction.</span></div></li>
- <li><div><b>2 Stay engaged</b><span>If flat, open in that direction immediately.</span></div></li>
- <li><div><b>3 Scale into strength</b><span>Add positions as price extends in the basket's favor, spaced by an ATR-adaptive distance, but only while the basket and last entry are both in profit.</span></div></li>
- <li><div><b>4 Protect the gains</b><span>A trailing profit lock ratchets upward as the basket grows, converting open profit into a protected floor.</span></div></li>
- <li><div><b>5 Take the win</b><span>Hit the basket profit target close everything start the next cycle immediately.</span></div></li>
- <li><div><b>6 Flip on real reversals</b><span>A confirmed strong opposite M15 candle closes the current basket and opens fresh in the new direction. Weak reversal attempts are ignored.</span></div></li>
- <li><div><b>7 Circuit breaker</b><span>If floating drawdown breaches the configured limit, the whole basket closes and the cycle resets.</span></div></li>
+ <li><div><b>1 — Read the trend</b><span>On every new M15 candle close, determine bias from candle direction.</span></div></li>
+ <li><div><b>2 — Stay engaged</b><span>If flat, open in that direction immediately.</span></div></li>
+ <li><div><b>3 — Scale into strength</b><span>Add positions as price extends in the basket's favor, spaced by an ATR-adaptive distance, but only while the basket and last entry are both in profit.</span></div></li>
+ <li><div><b>4 — Protect the gains</b><span>A trailing profit lock ratchets upward as the basket grows, converting open profit into a protected floor.</span></div></li>
+ <li><div><b>5 — Take the win</b><span>Hit the basket profit target — close everything — start the next cycle immediately.</span></div></li>
+ <li><div><b>6 — Flip on real reversals</b><span>A confirmed strong opposite M15 candle closes the current basket and opens fresh in the new direction. Weak reversal attempts are ignored.</span></div></li>
+ <li><div><b>7 — Circuit breaker</b><span>If floating drawdown breaches the configured limit, the whole basket closes and the cycle resets.</span></div></li>
  </ul>
 
  <div class="section-head" style="margin-top:40px">
@@ -571,27 +587,27 @@ select.admin-input option{background:var(--bg-2)}
  <table class="tbl">
  <thead><tr><th>Setup</th><th>Suggested Minimum Balance</th><th>Notes</th></tr></thead>
  <tbody>
- <tr><td><b>Conservative</b> (default 0.2 lot, standard caps)</td><td>$2,000$15,000</td><td>Comfortable margin buffer during a full stack-up on 1:100+ leverage</td></tr>
+ <tr><td><b>Conservative</b> (default 0.2 lot, standard caps)</td><td>$2,000–$15,000</td><td>Comfortable margin buffer during a full stack-up on 1:100+ leverage</td></tr>
  <tr><td><b>Standard</b></td><td>$25,000+</td><td>Recommended for default settings with room to withstand a full drawdown cycle</td></tr>
  <tr><td><b>Aggressive</b> / higher lot or lower leverage</td><td>$50,000+</td><td>If increasing base lot, raising max-lot cap, or trading below 1:100</td></tr>
  </tbody>
  </table>
 
  <div class="smc-banner">
- <h3> Recommended Use</h3>
- <p>Run on a demo account first to observe a full cycle (entry stacking profit lock basket close) before going live. XAUUSD (Gold) only the ATR-based stacking distance and profit thresholds are calibrated to gold's price scale. A VPS with stable, low-latency broker connection is recommended since the engine manages positions continuously.</p>
+ <h3>Recommended Use</h3>
+ <p>Run on a demo account first to observe a full cycle (entry → stacking → profit lock → basket close) before going live. XAUUSD (Gold) only — the ATR-based stacking distance and profit thresholds are calibrated to gold's price scale. A VPS with stable, low-latency broker connection is recommended since the engine manages positions continuously.</p>
  </div>
 
  <p class="disclaimer" style="margin-top:28px">As with any basket/grid-style approach, this system trades more frequently and can hold multiple simultaneous positions in a trend; it is not a low-drawdown "set and forget" strategy, and results will vary with market conditions. Past or backtested performance does not guarantee future results.</p>
 
  <div class="section-head" style="margin-top:48px">
  <span class="eyebrow">Flexible Access Plans</span>
- <h2 style="margin-top:14px">Choose Your Plan M15 Persistent Scalper EA</h2>
+ <h2 style="margin-top:14px">Choose Your Plan — M15 Persistent Scalper EA</h2>
  </div>
  <div class="pricing-grid" id="pricing-m15"></div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false">Purchase Now</a>
- <a class="cta ghost" href="https://whop.com/liquidgold-ai/m15-persistent-scalper-ea" target="_blank">Buy on Whop</a>
+ <a class="cta" href="#" onclick="selectProduct('m15');openPaymentModal();return false;">Purchase Now</a>
+ <a class="cta ghost" href="https://whop.com/liquidgold-ai/m15-persistent-scalper-ea" target="_blank" rel="noopener">Buy on Whop</a>
  </div>
  </div>
 </section>
@@ -601,12 +617,12 @@ select.admin-input option{background:var(--bg-2)}
  <div class="wrap" style="text-align:center">
  <span class="eyebrow">Transparency &middot; Live Data</span>
  <h2 style="margin-top:14px">Live Trading Dashboard</h2>
- <p style="max-width:680px;margin:14px auto 0">Every closed trade from LiquidGold AI EAs is streamed directly into our public dashboard. Enter any MT5 account number to see real performance equity curve, win rate, daily P/L, and full trade history.</p>
+ <p style="max-width:680px;margin:14px auto 0">Every closed trade from LiquidGold AI EAs is streamed directly into our public dashboard. Enter any MT5 account number to see real performance — equity curve, win rate, daily P/L, and full trade history.</p>
  <div class="cta-row" style="margin-top:28px">
- <a class="cta" href="XAUUSD_V19_Dashboard.html"> Open Live Dashboard</a>
+ <a class="cta" href="XAUUSD_V19_Dashboard.html">Open Live Dashboard</a>
  <a class="cta ghost" href="https://allanmabele.github.io/amn/XAUUSD_V19_Dashboard.html?account=52914740">View Sample Account</a>
  </div>
- <p style="margin-top:18px;font-size:12px;color:var(--muted)">Powered by real-time MT5 Supabase integration. No login required.</p>
+ <p style="margin-top:18px;font-size:12px;color:var(--muted)">Powered by real-time MT5 → Supabase integration. No login required.</p>
  </div>
 </section>
 
@@ -620,39 +636,84 @@ select.admin-input option{background:var(--bg-2)}
  <div class="card">
  <div class="num">INCLUDES</div>
  <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
- <li> Protected .ex5 file</li>
- <li> Telegram signal access</li>
- <li> VPS setup guide</li>
- <li> Email + WhatsApp support</li>
+ <li>Protected .ex5 file</li>
+ <li>Telegram signal access</li>
+ <li>VPS setup guide</li>
+ <li>Email + WhatsApp support</li>
  </ul>
  </div>
  <div class="card">
  <div class="num">PAYMENT</div>
  <ul style="text-align:left;list-style:none;padding:0;margin:0;font-size:13px;color:var(--muted)">
- <li> Whop Checkout instant automated delivery</li>
- <li> M-Pesa manual approval (12 hrs)</li>
- <li> USDT TRC20 manual approval (12 hrs)</li>
- <li> License key issued after verification</li>
- <li> No recurring charges</li>
+ <li>Whop Checkout — instant automated delivery</li>
+ <li>M-Pesa — manual approval (12 hrs)</li>
+ <li>USDT TRC20 — manual approval (12 hrs)</li>
+ <li>License key issued after verification</li>
+ <li>No recurring charges</li>
  </ul>
  </div>
  </div>
  <div class="cta-row">
- <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false">Purchase Now</a>
+ <a class="cta" href="#" onclick="selectProduct('institutional');openPaymentModal();return false;">Purchase Now</a>
  <a class="cta ghost" href="mailto:allymabz@gmail.com">Email Support</a>
+ <a class="cta telegram" href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">Join Telegram</a>
  </div>
  <p class="disclaimer"><b>Risk disclaimer:</b> Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results. Always use proper risk management and never risk more than you can afford to lose.</p>
  </div>
 </section>
 
-<footer> 2026 LiquidGold AI Institutional-Grade XAUUSD Expert Advisors All rights reserved</footer>
+<footer>
+ <div class="wrap">
+ <div class="footer-top">
+ <div class="footer-brand">
+ <div class="brand"><span class="dot"></span>LIQUIDGOLD&nbsp;AI</div>
+ <p>Institutional-grade MetaTrader 5 Expert Advisors built for disciplined, systematic XAUUSD trading.</p>
+ </div>
+ <div class="footer-links">
+ <div class="footer-col">
+ <h4>Navigate</h4>
+ <ul>
+ <li><a href="#products">Products</a></li>
+ <li><a href="#dashboard">Live Results</a></li>
+ <li><a href="XAUUSD_V19_Dashboard.html">Dashboard</a></li>
+ <li><a href="#contact">Support &amp; Payment</a></li>
+ </ul>
+ </div>
+ <div class="footer-col">
+ <h4>Products</h4>
+ <ul>
+ <li><a href="#ea-institutional" onclick="showEADetail('institutional');return true;">Institutional PropFirm EA</a></li>
+ <li><a href="#ea-lacma" onclick="showEADetail('lacma');return true;">LACMA Gold Scalping EA</a></li>
+ <li><a href="#ea-m15" onclick="showEADetail('m15');return true;">M15 Persistent Scalper EA</a></li>
+ </ul>
+ </div>
+ <div class="footer-col">
+ <h4>Contact</h4>
+ <ul>
+ <li><a href="mailto:allymabz@gmail.com">allymabz@gmail.com</a></li>
+ <li><a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">Telegram Channel</a></li>
+ <li><a href="#" onclick="showAdminLogin();return false;">Admin Login</a></li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ <div class="footer-bottom">
+ <span>&copy; 2026 LiquidGold AI. All rights reserved.</span>
+ <div class="footer-social">
+ <a href="https://t.me/PropTraderSignals" target="_blank" rel="noopener">Telegram</a>
+ <a href="mailto:allymabz@gmail.com">Email</a>
+ </div>
+ </div>
+ <p class="disclaimer">Trading leveraged instruments such as XAUUSD carries substantial risk and is not suitable for every investor. Past performance is not indicative of future results.</p>
+ </div>
+</footer>
 
 <!-- PAYMENT MODAL -->
 <div id="paymentModal" class="modal">
  <div class="modal-content">
  <span class="modal-close" onclick="closePaymentModal()">&times;</span>
  <div class="modal-product-name" id="modalProductName">Institutional PropFirm EA</div>
- <h2> Secure Purchase</h2>
+ <h2>Secure Purchase</h2>
 
  <div class="step-indicator">
  <div class="step-dot active" id="sd1">1</div>
@@ -689,7 +750,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
 
  <div class="note" id="selectedPlanNote">
- <b id="planLabel">Institutional PropFirm EA 1 Month</b><br/>
+ <b id="planLabel">Institutional PropFirm EA — 1 Month</b><br/>
  Amount due: <b id="planPrice">$30 USD</b>
  </div>
 
@@ -697,24 +758,24 @@ select.admin-input option{background:var(--bg-2)}
 
  <!-- Whop (Automated) -->
  <div class="payment-method" id="pmWhop" onclick="selectPayment('whop',event)" style="border-color:rgba(74,222,128,.5)">
- <h4> Whop Checkout <span style="background:linear-gradient(90deg,#4ade80,#22c55e);color:#052e16;font-size:10px;font-weight:800;letter-spacing:.12em;padding:2px 8px;border-radius:999px;margin-left:6px">INSTANT</span></h4>
- <p>Card, Apple Pay, Google Pay, or Crypto License key delivered automatically by email in seconds</p>
+ <h4>Whop Checkout <span style="background:linear-gradient(90deg,#4ade80,#22c55e);color:#052e16;font-size:10px;font-weight:800;letter-spacing:.12em;padding:2px 8px;border-radius:999px;margin-left:6px">INSTANT</span></h4>
+ <p>Card, Apple Pay, Google Pay, or Crypto — license key delivered automatically by email in seconds</p>
  </div>
  <div id="whopDetails" style="display:none">
  <div class="note-green" style="margin-top:8px">
- <p style="margin:0 0 6px;font-size:13px">You will be redirected to Whop's secure checkout for <b id="whopPlanLabel">1 Month</b> <b id="whopAmount">$30 USD</b>.</p>
- <p style="margin:0;font-size:12px">After payment, your license key is generated and emailed to you <b>instantly</b> no manual approval needed.</p>
+ <p style="margin:0 0 6px;font-size:13px">You will be redirected to Whop's secure checkout for <b id="whopPlanLabel">1 Month</b> — <b id="whopAmount">$30 USD</b>.</p>
+ <p style="margin:0;font-size:12px">After payment, your license key is generated and emailed to you <b>instantly</b> — no manual approval needed.</p>
  </div>
  <div class="note-blue" style="margin-top:12px;font-size:12px">
  Use the same email on Whop that you want your license delivered to. Whop supports Visa/Mastercard, Apple Pay, Google Pay, and crypto (BTC, ETH, USDC, USDT).
  </div>
- <button class="btn-main" id="whopBtn" onclick="submitWhopPurchase()">Continue to Whop Checkout </button>
+ <button class="btn-main" id="whopBtn" onclick="submitWhopPurchase()">Continue to Whop Checkout &rarr;</button>
  </div>
 
  <!-- M-Pesa -->
  <div class="payment-method" id="pmMpesa" onclick="selectPayment('mpesa',event)" style="margin-top:8px">
- <h4> M-Pesa (Kenya)</h4>
- <p>Send via Till / Send Money Manual approval within 12 hours</p>
+ <h4>M-Pesa (Kenya)</h4>
+ <p>Send via Till / Send Money — Manual approval within 12 hours</p>
  </div>
  <div id="mpesaDetails" style="display:none">
  <div class="note-green" style="margin-top:8px">
@@ -723,15 +784,15 @@ select.admin-input option{background:var(--bg-2)}
  <p style="font-size:12px;margin:4px 0">Send via <b>M-Pesa Send Money</b> to the number above, or use <b>Paybill / Buy Goods</b>.</p>
  </div>
  <div class="form-group">
- <label> M-Pesa Transaction Code *</label>
+ <label>M-Pesa Transaction Code *</label>
  <input type="text" id="mpesaTxId" placeholder="e.g. QK4T2XABCD" />
  </div>
  <div class="form-group">
- <label> Your Full Name *</label>
+ <label>Your Full Name *</label>
  <input type="text" id="mpesaName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
  </div>
  <div class="form-group">
- <label> Your Email *</label>
+ <label>Your Email *</label>
  <input type="email" id="mpesaEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
  </div>
  <div class="note-blue">
@@ -743,23 +804,23 @@ select.admin-input option{background:var(--bg-2)}
 
  <!-- USDT -->
  <div class="payment-method" id="pmUsdt" onclick="selectPayment('usdt',event)" style="margin-top:8px">
- <h4> USDT (TRC20)</h4>
- <p>Manual verification Admin approves within 12 hours</p>
+ <h4>USDT (TRC20)</h4>
+ <p>Manual verification — Admin approves within 12 hours</p>
  </div>
  <div id="usdtDetails" style="display:none">
  <p style="font-size:13px;margin:8px 0">Send exactly <b id="usdtAmount">$30 USDT</b> to:</p>
  <div class="payment-addr" style="padding-right:60px">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz<button class="copy-btn" onclick="copyAddr('TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz')">Copy</button></div>
- <p style="font-size:12px;color:var(--muted);margin:4px 0"> Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
+ <p style="font-size:12px;color:var(--muted);margin:4px 0">Use <b>TRC20 network only</b>. Other networks = funds lost!</p>
  <div class="form-group" style="margin-top:16px">
- <label> Transaction Hash *</label>
+ <label>Transaction Hash *</label>
  <input type="text" id="txId" placeholder="Paste your TRC20 transaction hash" />
  </div>
  <div class="form-group">
- <label> Your Full Name *</label>
+ <label>Your Full Name *</label>
  <input type="text" id="buyerName" placeholder="John Smith" style="font-family:-apple-system,sans-serif" />
  </div>
  <div class="form-group">
- <label> Your Email *</label>
+ <label>Your Email *</label>
  <input type="email" id="buyerEmail" placeholder="you@example.com" style="font-family:-apple-system,sans-serif" />
  </div>
  <div class="note-blue" style="margin-top:12px">
@@ -774,7 +835,7 @@ select.admin-input option{background:var(--bg-2)}
  <div class="step" id="step2">
  <div id="waitingState">
  <div class="poll-status">
- <div class="poll-icon pulse"></div>
+ <div class="poll-icon pulse">⏳</div>
  <b style="color:#8cb4ff;font-size:15px">Awaiting Payment Verification</b>
  <p>Your payment details have been submitted. The admin is reviewing your transaction.</p>
  <p style="margin-top:8px;font-size:12px">This page updates automatically. <span class="spinner spinner-gold" style="width:12px;height:12px"></span></p>
@@ -790,7 +851,7 @@ select.admin-input option{background:var(--bg-2)}
  </div>
  <div id="approvedState" style="display:none">
  <div style="text-align:center;margin-bottom:16px">
- <div style="font-size:40px"></div>
+ <div style="font-size:40px">✅</div>
  <h3 style="color:var(--green);margin:8px 0">Payment Approved!</h3>
  <p style="margin:0;font-size:14px">Your license has been activated. Check your email for a copy.</p>
  </div>
@@ -798,10 +859,10 @@ select.admin-input option{background:var(--bg-2)}
  <p style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px">Your License Key</p>
  <div class="license-key" id="displayLicenseKey"></div>
  <div class="license-info" id="licenseInfoGrid"></div>
- <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()"> Copy Key</button>
+ <button class="copy-btn" style="position:static;margin-top:12px;padding:8px 16px;font-size:13px" onclick="copyLicenseKey()">Copy Key</button>
  </div>
- <div class="note" style="margin-top:16px"><b> Important:</b> Save this license key. You need it to activate your EA in MetaTrader 5.</div>
- <a class="download-btn" id="downloadBtn" href="#" target="_blank" rel="noopener"> Download EA</a>
+ <div class="note" style="margin-top:16px"><b>Important:</b> Save this license key. You need it to activate your EA in MetaTrader 5.</div>
+ <a class="download-btn" id="downloadBtn" href="#" target="_blank" rel="noopener">Download EA</a>
  <p style="font-size:11px;color:var(--muted);margin-top:12px;text-align:center">Your license is locked to the MT5 account number you activate it with.</p>
  </div>
  </div>
@@ -813,10 +874,10 @@ select.admin-input option{background:var(--bg-2)}
 <div id="adminLoginModal" class="modal">
  <div class="modal-content" style="max-width:380px">
  <span class="modal-close" onclick="document.getElementById('adminLoginModal').classList.remove('show')">&times;</span>
- <h2> Admin Login</h2>
+ <h2>Admin Login</h2>
  <div class="form-group">
  <label>Admin Password</label>
- <input type="password" id="adminPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin" />
+ <input type="password" id="adminPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')adminLogin();" />
  </div>
  <div id="adminLoginMsg" class="msg"></div>
  <button class="btn-main" onclick="adminLogin()">Login</button>
@@ -853,14 +914,14 @@ select.admin-input option{background:var(--bg-2)}
  <div class="admin-panel active" id="tabLicenses">
  <div class="admin-card">
  <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center">
- <input type="text" class="admin-input" id="searchLicenses" placeholder="Search by key, name, email" style="margin:0;flex:1" oninput="filterLicenses" />
- <select class="admin-input" id="filterStatus" style="margin:0;width:140px" onchange="filterLicenses">
+ <input type="text" class="admin-input" id="searchLicenses" placeholder="Search by key, name, email" style="margin:0;flex:1" oninput="filterLicenses()" />
+ <select class="admin-input" id="filterStatus" style="margin:0;width:140px" onchange="filterLicenses()">
  <option value="">All statuses</option>
  <option value="active">Active</option>
  <option value="suspended">Suspended</option>
  <option value="expired">Expired</option>
  </select>
- <button class="admin-btn primary" onclick="loadLicenses()"> Refresh</button>
+ <button class="admin-btn primary" onclick="loadLicenses()">Refresh</button>
  </div>
  <div style="overflow-x:auto">
  <table class="license-table">
@@ -868,7 +929,7 @@ select.admin-input option{background:var(--bg-2)}
  <th>License Key</th><th>Name</th><th>Email</th><th>MT5 Account</th>
  <th>Product</th><th>Status</th><th>Source</th><th>Expiry</th><th>Actions</th>
  </tr></thead>
- <tbody id="licensesBody"><tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">Loading</td></tr></tbody>
+ <tbody id="licensesBody"><tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">Loading...</td></tr></tbody>
  </table>
  </div>
  </div>
@@ -877,7 +938,7 @@ select.admin-input option{background:var(--bg-2)}
  <!-- Tab: Create -->
  <div class="admin-panel" id="tabCreate">
  <div class="admin-card">
- <h4> Create New License</h4>
+ <h4>Create New License</h4>
  <div class="grid cols-2">
  <div class="form-group"><label>Customer Name *</label><input type="text" class="admin-input" id="newName" placeholder="John Smith" /></div>
  <div class="form-group"><label>Customer Email *</label><input type="email" class="admin-input" id="newEmail" placeholder="john@example.com" /></div>
@@ -902,7 +963,7 @@ select.admin-input option{background:var(--bg-2)}
  <div id="createMsg" class="msg"></div>
  <button class="admin-btn primary" onclick="createLicense()" style="margin-top:8px">Generate License Key</button>
  <div id="createdLicenseResult" style="display:none;margin-top:16px;background:rgba(74,222,128,.08);border:1px solid var(--green);border-radius:10px;padding:16px">
- <p style="margin:0 0 8px;color:var(--green);font-size:13px;font-weight:700"> License Created Successfully</p>
+ <p style="margin:0 0 8px;color:var(--green);font-size:13px;font-weight:700">License Created Successfully</p>
  <div style="font-family:monospace;font-size:18px;color:var(--gold-2);font-weight:700;word-break:break-all" id="createdKeyDisplay"></div>
  <button class="copy-btn" style="position:static;margin-top:10px;padding:6px 14px;font-size:12px" onclick="copyText(document.getElementById('createdKeyDisplay').textContent)">Copy Key</button>
  </div>
@@ -914,9 +975,9 @@ select.admin-input option{background:var(--bg-2)}
  <div class="admin-card">
  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
  <h4 style="margin:0">Recent EA Access Logs</h4>
- <button class="admin-btn primary" onclick="loadLogs()"> Refresh</button>
+ <button class="admin-btn primary" onclick="loadLogs()">Refresh</button>
  </div>
- <div id="logsContainer"><p style="color:var(--muted);font-size:13px">Loading</p></div>
+ <div id="logsContainer"><p style="color:var(--muted);font-size:13px">Loading...</p></div>
  </div>
  </div>
 
@@ -924,11 +985,11 @@ select.admin-input option{background:var(--bg-2)}
  <div class="admin-panel" id="tabPending">
  <div class="admin-card">
  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
- <h4 style="margin:0"> Pending Payments (M-Pesa & USDT)</h4>
- <button class="admin-btn primary" onclick="loadPending()"> Refresh</button>
+ <h4 style="margin:0">Pending Payments (M-Pesa & USDT)</h4>
+ <button class="admin-btn primary" onclick="loadPending()">Refresh</button>
  </div>
  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">All payments require manual verification before a license is issued. Review each submission and approve or reject below.</p>
- <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading</p></div>
+ <div id="pendingContainer"><p style="color:var(--muted);font-size:13px">Loading...</p></div>
  </div>
  </div>
  </div>
@@ -961,13 +1022,13 @@ select.admin-input option{background:var(--bg-2)}
  <button class="btn-main" onclick="saveLicenseEdit()">Save Changes</button>
  </div>
 </div>
-<script>// 
-// CONFIG PRODUCTS
+<script>
+// ===== CONFIG: PRODUCTS =====
 // Each EA has its own name, Whop link, download URL, EmailJS
 // template id and price tiers. Institutional keeps the original
 // $30/$50/$150/$250/$499 tiers. LACMA & M15 are scaled from their
 // Whop monthly price ($250 & $149 respectively).
-// 
+// =============================
 const SUPABASE_URL = 'https://gsivamaidhdjcrtzedmp.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzaXZhbWFpZGhkamNydHplZG1wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0ODQxNzUsImV4cCI6MjA5MzA2MDE3NX0.D_TyOobiyXtxX9rX0GgVksU-wWZKdOm4Vfe4eC0sVCU';
 const ADMIN_PASSWORD = 'EuniceTwela1@';
@@ -1029,8 +1090,8 @@ let selectedTierIndex = 0;
 let activePaymentMethod = null;
 let purchasedProductId = 'institutional';
 
-function product{ return PRODUCTS[currentProductId]; }
-function tier{ return product.priceTiers[selectedTierIndex]; }
+function product(){ return PRODUCTS[currentProductId]; }
+function tier(){ return product().priceTiers[selectedTierIndex]; }
 
 function getProductTemplate(name){
  for (const k in PRODUCTS){ if (PRODUCTS[k].name === name) return PRODUCTS[k].emailTemplate; }
@@ -1043,11 +1104,12 @@ const headers = {
  'Authorization': 'Bearer ' + SUPABASE_KEY
 };
 
-// Supabase helpers 
-async function sbSelect(table, query = '') {
- const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + query, { headers });
- if (!r.ok) throw new Error(await r.text);
- return r.json;
+// ---- Supabase helpers ----
+async function sbSelect(table, query) {
+ query = query || '';
+ const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + query, { headers: headers });
+ if (!r.ok) throw new Error(await r.text());
+ return r.json();
 }
 async function sbInsert(table, data) {
  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
@@ -1055,8 +1117,8 @@ async function sbInsert(table, data) {
  headers: Object.assign({}, headers, { 'Prefer': 'return=representation' }),
  body: JSON.stringify(data)
  });
- if (!r.ok) throw new Error(await r.text);
- return r.json;
+ if (!r.ok) throw new Error(await r.text());
+ return r.json();
 }
 async function sbUpdate(table, id, data) {
  const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?id=eq.' + id, {
@@ -1064,28 +1126,28 @@ async function sbUpdate(table, id, data) {
  headers: Object.assign({}, headers, { 'Prefer': 'return=representation' }),
  body: JSON.stringify(data)
  });
- if (!r.ok) throw new Error(await r.text);
- return r.json;
+ if (!r.ok) throw new Error(await r.text());
+ return r.json();
 }
 async function sbRpc(fn, params) {
  const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
  method: 'POST', headers: headers, body: JSON.stringify(params)
  });
- if (!r.ok) throw new Error(await r.text);
- return r.json;
+ if (!r.ok) throw new Error(await r.text());
+ return r.json();
 }
 
 function generateLicenseKey() {
  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
  let key = 'LGAI-XAU-';
- for (let i = 0; i < 8; i++) key += chars[Math.floor(Math.random * chars.length)];
+ for (let i = 0; i < 8; i++) key += chars[Math.floor(Math.random() * chars.length)];
  return key;
 }
 
 function addDays(days) {
  const d = new Date();
- d.setDate(d.getDate + parseInt(days));
- return d.toISOString;
+ d.setDate(d.getDate() + parseInt(days));
+ return d.toISOString();
 }
 function formatDate(iso) {
  if (!iso) return '';
@@ -1106,7 +1168,7 @@ async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId
  license_key : licenseKey,
  order_id : orderId || 'N/A',
  plan : planLabel || 'N/A',
- download_url : product.downloadUrl
+ download_url : product().downloadUrl
  });
  console.log('EmailJS success:', result.status);
  return true;
@@ -1116,9 +1178,9 @@ async function sendLicenseEmail(customerName, customerEmail, licenseKey, orderId
  }
 }
 
-// 
+// ===================
 // PRODUCT SELECTION
-// 
+// ===================
 function selectProduct(id){ currentProductId = id; }
 
 function showEADetail(id){
@@ -1130,10 +1192,10 @@ function hideEADetail(id){
  if (el){ el.classList.remove('open'); document.getElementById('products').scrollIntoView({behavior:'smooth'}); }
 }
 
-// 
+// ===================
 // PRICING GRIDS (per product)
-// 
-function buildPricingGrids{
+// ===================
+function buildPricingGrids(){
  for (const id in PRODUCTS){
  const container = document.getElementById('pricing-' + id);
  if (!container) continue;
@@ -1156,9 +1218,9 @@ function selectTierForProduct(id, idx, el){
  openPaymentModal();
 }
 
-// 
+// ===================
 // PAYMENT MODAL
-// 
+// ===================
 let pollTimer = null;
 let currentOrderId = null;
 let currentTxId = null;
@@ -1178,15 +1240,15 @@ function closeMobileMenu() {
   document.body.style.overflow = '';
 }
 
-function openPaymentModal {
- syncModalPlanUI;
+function openPaymentModal() {
+  syncModalPlanUI();
  document.getElementById('paymentModal').classList.add('show');
  document.body.style.overflow = 'hidden';
 }
 
-function syncModalPlanUI {
- const t = tier;
- const p = product;
+function syncModalPlanUI() {
+ const t = tier();
+ const p = product();
  document.getElementById('modalProductName').textContent = p.name;
  document.querySelectorAll('.modal-price-opt').forEach(function(el, i) {
  el.classList.toggle('selected', i === selectedTierIndex);
@@ -1195,10 +1257,10 @@ function syncModalPlanUI {
  if (priceEl) priceEl.textContent = '$' + p.priceTiers[i].price;
  if (durEl) durEl.textContent = p.priceTiers[i].label;
  });
- document.getElementById('planLabel').textContent = p.name + ' ' + t.label;
- document.getElementById('planPrice').textContent = '$' + t.price + ' USD (~KES ' + toKES(t.price).toLocaleString + ')';
+ document.getElementById('planLabel').textContent = p.name + ' - ' + t.label;
+ document.getElementById('planPrice').textContent = '$' + t.price + ' USD (~KES ' + toKES(t.price).toLocaleString() + ')';
  document.getElementById('usdtAmount').textContent = '$' + t.price + ' USDT';
- document.getElementById('mpesaAmount').textContent = 'KES ' + toKES(t.price).toLocaleString;
+ document.getElementById('mpesaAmount').textContent = 'KES ' + toKES(t.price).toLocaleString();
  const wpl = document.getElementById('whopPlanLabel');
  const wam = document.getElementById('whopAmount');
  if (wpl) wpl.textContent = t.label;
@@ -1207,17 +1269,17 @@ function syncModalPlanUI {
 
 function selectModalPlan(index, el) {
  selectedTierIndex = index;
- syncModalPlanUI;
+  syncModalPlanUI();
 }
 
-function closePaymentModal {
+function closePaymentModal() {
  document.getElementById('paymentModal').classList.remove('show');
  document.body.style.overflow = '';
- stopPolling;
- resetPaymentModal;
+  stopPolling();
+  resetPaymentModal();
 }
 
-function resetPaymentModal {
+function resetPaymentModal() {
  ['step1','step2'].forEach(function(id, i) {
  document.getElementById(id).classList.toggle('active', i===0);
  });
@@ -1244,7 +1306,7 @@ function resetPaymentModal {
  document.getElementById('approvedState').style.display = 'none';
  activePaymentMethod = null;
  currentOrderId = currentTxId = currentBuyerName = currentBuyerEmail = null;
- syncModalPlanUI;
+  syncModalPlanUI();
 }
 
 function selectPayment(method, event) {
@@ -1256,15 +1318,9 @@ function selectPayment(method, event) {
  if (event && event.currentTarget) event.currentTarget.classList.add('selected');
 }
 
-function submitWhopPurchase {
- const p = product;
+function submitWhopPurchase() {
+ const p = product();
  if (!p.whopUrl) return;
- // Opens the EA's Whop product page. On successful payment, Whop's webhook
- // (Supabase Edge Function) creates the license and emails the key automatically.
- // IMPORTANT: ensure that webhook maps each product to its EmailJS template:
- // Institutional -> template_8adw61b
- // LACMA -> template_rmt9s85
- // M15 -> template_m8cvf45
  window.open(p.whopUrl, '_blank', 'noopener');
 }
 
@@ -1288,33 +1344,31 @@ function goStep(n) {
  }
 }
 
-// 
-// M-PESA FLOW
-// 
-async function submitMpesaPurchase {
- const txId = document.getElementById('mpesaTxId').value.trim;
- const name = document.getElementById('mpesaName').value.trim;
- const email = document.getElementById('mpesaEmail').value.trim;
- const t = tier;
+// ---- M-PESA FLOW ----
+async function submitMpesaPurchase() {
+ const txId = document.getElementById('mpesaTxId').value.trim();
+ const name = document.getElementById('mpesaName').value.trim();
+ const email = document.getElementById('mpesaEmail').value.trim();
+ const t = tier();
 
  if (!txId || !name || !email) {
- setMsg('mpesaMsg','error',' Please fill in all fields.');
+ setMsg('mpesaMsg','error','Please fill in all fields.');
  return;
  }
  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
- setMsg('mpesaMsg','error',' Please enter a valid email address.');
+ setMsg('mpesaMsg','error','Please enter a valid email address.');
  return;
  }
 
  const btn = document.getElementById('mpesaBtn');
  btn.disabled = true;
- btn.innerHTML = '<span class="spinner"></span>Registering';
+ btn.innerHTML = '<span class="spinner"></span>Registering...';
  setMsg('mpesaMsg','','');
 
  try {
  const existing = await sbSelect('pending_orders', '?transaction_id=eq.' + encodeURIComponent(txId));
  if (existing && existing.length > 0) {
- setMsg('mpesaMsg','error',' This transaction code has already been submitted.');
+ setMsg('mpesaMsg','error','This transaction code has already been submitted.');
  btn.disabled = false; btn.textContent = 'Submit M-Pesa Payment';
  return;
  }
@@ -1349,35 +1403,32 @@ async function submitMpesaPurchase {
     btn.disabled = false; btn.textContent = 'Submit M-Pesa Payment';
   }
 }
-}
 
-// 
-// USDT FLOW
-// 
-async function submitUsdtPurchase {
- const txId = document.getElementById('txId').value.trim;
- const name = document.getElementById('buyerName').value.trim;
- const email = document.getElementById('buyerEmail').value.trim;
- const t = tier;
+// ---- USDT FLOW ----
+async function submitUsdtPurchase() {
+ const txId = document.getElementById('txId').value.trim();
+ const name = document.getElementById('buyerName').value.trim();
+ const email = document.getElementById('buyerEmail').value.trim();
+ const t = tier();
 
  if (!txId || !name || !email) {
- setMsg('step1Msg','error',' Please fill in all fields.');
+ setMsg('step1Msg','error','Please fill in all fields.');
  return;
  }
  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
- setMsg('step1Msg','error',' Please enter a valid email address.');
+ setMsg('step1Msg','error','Please enter a valid email address.');
  return;
  }
 
  const btn = document.getElementById('step1Btn');
  btn.disabled = true;
- btn.innerHTML = '<span class="spinner"></span>Registering';
+ btn.innerHTML = '<span class="spinner"></span>Registering...';
  setMsg('step1Msg','','');
 
  try {
  const existing = await sbSelect('pending_orders', '?transaction_id=eq.' + encodeURIComponent(txId));
  if (existing && existing.length > 0) {
- setMsg('step1Msg','error',' This transaction hash has already been submitted.');
+ setMsg('step1Msg','error','This transaction hash has already been submitted.');
  btn.disabled = false; btn.textContent = 'Submit USDT Payment';
  return;
  }
@@ -1399,27 +1450,27 @@ async function submitUsdtPurchase {
  currentBuyerEmail = email;
  purchasedProductId = currentProductId;
 
- document.getElementById('pollName').textContent = ' ' + name;
- document.getElementById('pollEmail').textContent = ' ' + email;
- document.getElementById('pollTx').textContent = ' TX: ' + txId;
- document.getElementById('pollPlan').textContent = ' Plan: ' + product.name + ' ' + t.label + ' ($' + t.price + ')';
+ document.getElementById('pollName').textContent = name;
+ document.getElementById('pollEmail').textContent = email;
+ document.getElementById('pollTx').textContent = 'TX: ' + txId;
+ document.getElementById('pollPlan').textContent = 'Plan: ' + product().name + ' - ' + t.label + ' ($' + t.price + ')';
 
  goStep(2);
  startPolling(txId, name, email);
 
  } catch (e) {
- setMsg('step1Msg','error',' Error submitting: ' + e.message + '<br><small>Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your TX hash.</small>');
+ setMsg('step1Msg','error','Error submitting: ' + e.message + '<br><small>Email <a href="mailto:allymabz@gmail.com" style="color:var(--gold-2)">allymabz@gmail.com</a> with your TX hash.</small>');
  btn.disabled = false; btn.textContent = 'Submit USDT Payment';
  }
 }
 
-// Polling 
+// ---- Polling ----
 function startPolling(txId, name, email) {
- stopPolling;
- pollTimer = setInterval(function{ checkApprovalStatus(txId, name, email); }, POLL_INTERVAL_MS);
- setTimeout(function{ checkApprovalStatus(txId, name, email); }, 3000);
+  stopPolling();
+ pollTimer = setInterval(function(){ checkApprovalStatus(txId, name, email); }, POLL_INTERVAL_MS);
+ setTimeout(function(){ checkApprovalStatus(txId, name, email); }, 3000);
 }
-function stopPolling {
+function stopPolling() {
  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
 }
 async function checkApprovalStatus(txId, name, email) {
@@ -1429,7 +1480,7 @@ async function checkApprovalStatus(txId, name, email) {
  if (orders[0].status === 'approved') {
  const licenses = await sbSelect('licenses', '?customer_email=eq.' + encodeURIComponent(email) + '&order=created_at.desc&limit=1');
  if (licenses && licenses.length > 0) {
- stopPolling;
+  stopPolling();
  showApprovedState(licenses[0], name, email);
  }
  }
@@ -1444,40 +1495,40 @@ function showApprovedState(license, name, email) {
  '<div class="license-info-item"><div class="li-label">Name</div><div class="li-value">' + name + '</div></div>' +
  '<div class="license-info-item"><div class="li-label">Email</div><div class="li-value">' + email + '</div></div>' +
  '<div class="license-info-item"><div class="li-label">Product</div><div class="li-value">' + (PRODUCTS[purchasedProductId] ? PRODUCTS[purchasedProductId].name : '') + '</div></div>' +
- '<div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:var(--green)"> Active</div></div>' +
+ '<div class="license-info-item"><div class="li-label">Status</div><div class="li-value" style="color:var(--green)">Active</div></div>' +
  '<div class="license-info-item"><div class="li-label">Expires</div><div class="li-value">' + formatDate(license.expiry_date) + '</div></div>';
  const dl = document.getElementById('downloadBtn');
  dl.href = (PRODUCTS[purchasedProductId] ? PRODUCTS[purchasedProductId].downloadUrl : '#');
 }
 
-// Utility 
-function copyAddr(addr) { navigator.clipboard.writeText(addr).then(function{ alert('Copied!'); }); }
-function copyLicenseKey { copyText(document.getElementById('displayLicenseKey').textContent); }
-function copyText(t) { navigator.clipboard.writeText(t).then(function{ alert('Copied!'); }); }
+// ---- Utility ----
+function copyAddr(addr) { navigator.clipboard.writeText(addr).then(function(){ alert('Copied!'); }); }
+function copyLicenseKey() { copyText(document.getElementById('displayLicenseKey').textContent); }
+function copyText(t) { navigator.clipboard.writeText(t).then(function(){ alert('Copied!'); }); }
 
-document.getElementById('paymentModal').addEventListener('click', function(e){ if (e.target===this) closePaymentModal; });
+document.getElementById('paymentModal').addEventListener('click', function(e){ if (e.target===this) closePaymentModal(); });
 document.getElementById('adminLoginModal').addEventListener('click', function(e){ if (e.target===this) this.classList.remove('show'); });
 document.getElementById('editModal').addEventListener('click', function(e){ if (e.target===this) this.classList.remove('show'); });
 
-// 
+// ===================
 // ADMIN
-// 
-function showAdminLogin { document.getElementById('adminLoginModal').classList.add('show'); }
+// ===================
+function showAdminLogin() { document.getElementById('adminLoginModal').classList.add('show'); }
 
-function adminLogin {
+function adminLogin() {
  const pw = document.getElementById('adminPassword').value;
  if (pw === ADMIN_PASSWORD) {
  document.getElementById('adminLoginModal').classList.remove('show');
  document.getElementById('adminPortal').style.display = 'block';
  document.body.style.overflow = 'hidden';
  document.getElementById('adminEmailDisplay').textContent = 'allymabz@gmail.com';
- loadLicenses;
- loadAdminStats;
+  loadLicenses();
+  loadAdminStats();
  } else {
- setMsg('adminLoginMsg','error',' Incorrect password.');
+ setMsg('adminLoginMsg','error','Incorrect password.');
  }
 }
-function adminLogout {
+function adminLogout() {
  document.getElementById('adminPortal').style.display = 'none';
  document.body.style.overflow = '';
  document.getElementById('adminPassword').value = '';
@@ -1486,12 +1537,12 @@ function switchAdminTab(tab, btn) {
  document.querySelectorAll('.admin-tab').forEach(function(b){ b.classList.remove('active'); });
  document.querySelectorAll('.admin-panel').forEach(function(p){ p.classList.remove('active'); });
  btn.classList.add('active');
- document.getElementById('tab' + tab.charAt(0).toUpperCase + tab.slice(1)).classList.add('active');
- if (tab === 'logs') loadLogs;
- if (tab === 'pending') loadPending;
+ document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+ if (tab === 'logs') loadLogs();
+ if (tab === 'pending') loadPending();
 }
 
-async function loadAdminStats {
+async function loadAdminStats() {
  try {
  const licenses = await sbSelect('licenses', '?select=status,expiry_date');
  document.getElementById('statTotal').textContent = licenses.length;
@@ -1501,14 +1552,14 @@ async function loadAdminStats {
  } catch(e) { console.error(e); }
 }
 
-let allLicenses = ;
+let allLicenses = [];
 
-async function loadLicenses {
- document.getElementById('licensesBody').innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">Loading</td></tr>';
+async function loadLicenses() {
+ document.getElementById('licensesBody').innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">Loading...</td></tr>';
  try {
  allLicenses = await sbSelect('licenses', '?order=created_at.desc');
  renderLicenses(allLicenses);
- loadAdminStats;
+  loadAdminStats();
  } catch (e) {
  document.getElementById('licensesBody').innerHTML = '<tr><td colspan="9" style="color:var(--red);padding:20px">Error: ' + e.message + '</td></tr>';
  }
@@ -1523,7 +1574,7 @@ function renderLicenses(list) {
  tbody.innerHTML = list.map(function(l) {
  const expired = isExpired(l.expiry_date);
  const statusDisplay = (expired && l.status === 'active') ? 'expired' : l.status;
- const isMpesa = l.notes && l.notes.toLowerCase.indexOf('mpesa') !== -1;
+ const isMpesa = l.notes && l.notes.toLowerCase().indexOf('mpesa') !== -1;
  const sourceLabel = isMpesa
  ? '<span class="badge-status" style="background:rgba(74,222,128,.15);color:#4ade80">M-Pesa</span>'
  : '<span class="badge-status" style="background:rgba(212,175,55,.15);color:var(--gold-2)">USDT</span>';
@@ -1546,27 +1597,27 @@ function renderLicenses(list) {
  }).join('');
 }
 
-function filterLicenses {
- const q = document.getElementById('searchLicenses').value.toLowerCase;
+function filterLicenses() {
+ const q = document.getElementById('searchLicenses').value.toLowerCase();
  const st = document.getElementById('filterStatus').value;
  const filtered = allLicenses.filter(function(l) {
- const matchQ = !q || [l.license_key, l.customer_name, l.customer_email].some(function(v){ return v && v.toLowerCase.indexOf(q) !== -1; });
+ const matchQ = !q || [l.license_key, l.customer_name, l.customer_email].some(function(v){ return v && v.toLowerCase().indexOf(q) !== -1; });
  const matchSt = !st || l.status === st || (st === 'expired' && isExpired(l.expiry_date));
  return matchQ && matchSt;
  });
  renderLicenses(filtered);
 }
 
-async function createLicense {
- const name = document.getElementById('newName').value.trim;
- const email = document.getElementById('newEmail').value.trim;
- const product = document.getElementById('newProduct').value.trim;
+async function createLicense() {
+ const name = document.getElementById('newName').value.trim();
+ const email = document.getElementById('newEmail').value.trim();
+ const productName = document.getElementById('newProduct').value.trim();
  const duration = document.getElementById('newDuration').value;
- const notes = document.getElementById('newNotes').value.trim;
+ const notes = document.getElementById('newNotes').value.trim();
 
- if (!name || !email) { setMsg('createMsg','error',' Name and email are required.'); return; }
+ if (!name || !email) { setMsg('createMsg','error','Name and email are required.'); return; }
 
- setMsg('createMsg','info','<span class="spinner"></span>Generating license');
+ setMsg('createMsg','info','<span class="spinner"></span>Generating license...');
  document.getElementById('createdLicenseResult').style.display = 'none';
 
  try {
@@ -1579,24 +1630,24 @@ async function createLicense {
  license_key : licenseKey,
  customer_name : name,
  customer_email : email,
- product_name : product || 'Institutional PropFirm EA',
+ product_name : productName || 'Institutional PropFirm EA',
  status : 'active',
  expiry_date : expiry,
  notes : notes
  });
 
  const orderId = inserted[0] ? inserted[0].id : 'N/A';
- const tpl = getProductTemplate(product);
+ const tpl = getProductTemplate(productName);
  const emailSent = await sendLicenseEmail(name, email, licenseKey, orderId, duration + ' days', tpl);
- const emailNote = emailSent ? ' Email sent.' : ' (Email failed send manually.)';
+ const emailNote = emailSent ? ' Email sent.' : ' (Email failed - send manually.)';
 
- setMsg('createMsg','success',' License created!' + emailNote);
+ setMsg('createMsg','success','License created!' + emailNote);
  document.getElementById('createdKeyDisplay').textContent = licenseKey;
  document.getElementById('createdLicenseResult').style.display = 'block';
- loadLicenses;
+  loadLicenses();
  ['newName','newEmail','newNotes'].forEach(function(id){ document.getElementById(id).value = ''; });
  } catch (e) {
- setMsg('createMsg','error',' Error: ' + e.message);
+ setMsg('createMsg','error','Error: ' + e.message);
  }
 }
 
@@ -1609,41 +1660,41 @@ function openEditModal(id, status, notes) {
  document.getElementById('editModal').classList.add('show');
 }
 
-async function saveLicenseEdit {
+async function saveLicenseEdit() {
  const id = document.getElementById('editLicenseId').value;
  const status = document.getElementById('editStatus').value;
  const extend = parseInt(document.getElementById('editExtend').value);
  const notes = document.getElementById('editNotes').value;
- setMsg('editMsg','info','<span class="spinner"></span>Saving');
+ setMsg('editMsg','info','<span class="spinner"></span>Saving...');
  try {
  const updates = { status: status, notes: notes };
  if (extend > 0) {
  const lic = await sbSelect('licenses', '?id=eq.' + id + '&select=expiry_date');
- const base = (lic && lic[0] && lic[0].expiry_date && new Date(lic[0].expiry_date) > new Date)
+ const base = (lic && lic[0] && lic[0].expiry_date && new Date(lic[0].expiry_date) > new Date())
  ? new Date(lic[0].expiry_date) : new Date();
- base.setDate(base.getDate + extend);
- updates.expiry_date = base.toISOString;
+ base.setDate(base.getDate() + extend);
+ updates.expiry_date = base.toISOString();
  }
  await sbUpdate('licenses', id, updates);
- setMsg('editMsg','success',' Saved!');
- setTimeout(function{ document.getElementById('editModal').classList.remove('show'); loadLicenses; }, 800);
+ setMsg('editMsg','success','Saved!');
+ setTimeout(function(){ document.getElementById('editModal').classList.remove('show'); loadLicenses(); }, 800);
  } catch (e) {
- setMsg('editMsg','error',' ' + e.message);
+ setMsg('editMsg','error',e.message);
  }
 }
 
 async function quickSuspend(id) {
  if (!confirm('Suspend this license?')) return;
- try { await sbUpdate('licenses', id, { status: 'suspended' }); loadLicenses; }
+ try { await sbUpdate('licenses', id, { status: 'suspended' }); loadLicenses(); }
  catch (e) { alert('Error: ' + e.message); }
 }
 async function quickActivate(id) {
- try { await sbUpdate('licenses', id, { status: 'active' }); loadLicenses; }
+ try { await sbUpdate('licenses', id, { status: 'active' }); loadLicenses(); }
  catch (e) { alert('Error: ' + e.message); }
 }
 
-async function loadLogs {
- document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading</p>';
+async function loadLogs() {
+ document.getElementById('logsContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading...</p>';
  try {
  const logs = await sbSelect('access_logs', '?order=login_time.desc&limit=100');
  if (!logs.length) {
@@ -1665,7 +1716,7 @@ async function loadLogs {
 }
 
 async function loadPending() {
-  document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading</p>';
+  document.getElementById('pendingContainer').innerHTML = '<p style="color:var(--muted);font-size:13px">Loading...</p>';
   try {
   const orders = await sbSelect('pending_orders', '?order=submitted_at.desc');
   if (!orders.length) {
@@ -1713,7 +1764,7 @@ async function approveOrder(orderId, name, email, productName, planDays) {
  duration = prompt('License duration in days? (30=1mo, 90=3mo, 180=6mo, 365=12mo, 3650=lifetime)', '365');
  if (!duration) return;
  }
- const label = productName || ('License ' + duration + ' days');
+ const label = productName || ('License - ' + duration + ' days');
 
  try {
  let licenseKey;
@@ -1736,12 +1787,11 @@ async function approveOrder(orderId, name, email, productName, planDays) {
 
  const tpl = getProductTemplate(productName);
  const emailSent = await sendLicenseEmail(name, email, licenseKey, licenseId, label, tpl);
- const emailStatus = emailSent ? ' Email sent to customer.' : ' Email failed. Send key manually.';
+ const emailStatus = emailSent ? 'Email sent to customer.' : 'Email failed. Send key manually.';
 
- alert(' License Created!\n\nKey: ' + licenseKey + '\nProduct: ' + productName + '\nCustomer: ' + name + '\nEmail: ' + email + '\nExpires: ' + formatDate(expiry) + '\n\n' + emailStatus);
-
- loadPending;
- loadLicenses;
+ alert('License Created!\n\nKey: ' + licenseKey + '\nProduct: ' + productName + '\nCustomer: ' + name + '\nEmail: ' + email + '\nExpires: ' + formatDate(expiry) + '\n\n' + emailStatus);
+  loadPending();
+  loadLicenses();
  } catch (e) {
  alert('Error approving order: ' + e.message);
  }
@@ -1751,18 +1801,18 @@ async function rejectOrder(orderId) {
  if (!confirm('Mark this order as rejected?')) return;
  try {
  await sbUpdate('pending_orders', orderId, { status: 'rejected' });
- loadPending;
+  loadPending();
  } catch (e) { alert('Error: ' + e.message); }
 }
 
-// 
+// ===================
 // INIT
-// 
-buildPricingGrids;
-syncModalPlanUI;
+// ===================
+  buildPricingGrids();
+  syncModalPlanUI();
 
-(function{
- function init{
+(function(){
+ function init(){
  document.querySelectorAll('section, .card, .tbl, h2').forEach(function(el){
  if(!el.classList.contains('reveal')) el.classList.add('reveal');
  });
@@ -1778,6 +1828,6 @@ syncModalPlanUI;
  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
  }
  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
- else init;
-});
+ else init();
+})();
 </script></body></html>
