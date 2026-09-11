@@ -6,6 +6,7 @@
 <title>Invoice POS — USDT ERC20 FMV + 5% | LiquidGold AI</title>
 <meta name="description" content="LiquidGold AI USDT ERC20 invoicing POS at fair market value + 5% fee."/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://static.moonpay.com/web-sdk/v1/moonpay-web-sdk.min.js"></script>
 <style>
 :root{--bg:#0b0d12;--panel:#151924;--line:#222838;--text:#e8ecf3;--muted:#9aa3b2;--gold:#d4af37;--gold2:#f5d77a;--green:#4ade80;--red:#ef4444;--blue:#3b82f6}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 -apple-system,Segoe UI,Inter,Roboto,sans-serif}
@@ -85,6 +86,13 @@ a{color:var(--gold2)}
 <label>Receive wallet (ERC20 — fixed)</label>
 <div class="mono" id="walletFixed">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</div>
 
+<label>How will client pay?</label>
+<select id="payMethod" onchange="onMethodChange()">
+<option value="usdt">I already have USDT — send directly (fee 5%)</option>
+<option value="card">Pay with Card via MoonPay → you receive USDT (fee 9% to cover card)</option>
+</select>
+<div class="small" id="methodHint" style="margin-top:6px">Direct USDT: client sends from their wallet. Card: MoonPay KYC + card, USDT lands straight to your wallet.</div>
+
 <label>Memo (do not write investment/ROI)</label>
 <input id="memo" value="Digital goods/services"/>
 
@@ -118,6 +126,16 @@ a{color:var(--gold2)}
 <label>Wallet (ERC20 only)</label><div class="mono" id="walletOut">—</div>
 <label>Exact USDT amount</label><div class="mono" id="amtOut">—</div>
 <div class="note">⚠ <b style="color:#fff">Ethereum ERC20 only.</b> Client pays gas. TRC20/BSC to this address = lost funds. Verify TX on Etherscan before delivery.</div>
+
+<div class="card no-print" style="background:#0f1320;border-color:rgba(59,130,246,.4);margin-top:12px">
+<b style="font-size:14px;color:#8cb4ff">💳 Card → USDT (MoonPay — test mode)</b>
+<p class="small" style="margin:6px 0">Client pays card in USD, MoonPay sends USDT ERC20 straight to <span class="mono" style="display:inline">0x7944…1d06</span>. You don't handle card numbers. Client does KYC in widget.</p>
+<div class="row">
+<button class="btn btn-gold" onclick="payWithMoonPay()">Pay with Card via MoonPay →</button>
+<button class="btn btn-ghost" onclick="copyClientLink()">Copy client pay link</button>
+</div>
+<div class="small" id="mpMeta" style="margin-top:6px">Uses pk_test_8GUBVRmLR1fBFbQrBxZYehJUPbeDao7b — switch to pk_live_ for real money. <a href="#" onclick="openMoonPayDirect();return false">Open MoonPay directly</a></div>
+</div>
 <label>Client TX hash</label>
 <input id="txid" placeholder="0x..."/>
 <div class="row no-print">
@@ -163,8 +181,50 @@ a{color:var(--gold2)}
 <script>
 const MERCHANT='0x7944faf462e8536aaf9c0f97eeab1942c91f1d06';
 const TOKEN='0xdAC17F958D2ee523a2206206994597C13D831ec7';
+const MOONPAY_KEY='pk_test_8GUBVRmLR1fBFbQrBxZYehJUPbeDao7b';
+const POS_URL='https://allanmabele.github.io/amn/invoice-pos.html';
 let current=null,timerInt=null,expiryTotal=15*60,expirySec=15*60;
 const $=id=>document.getElementById(id);
+function onMethodChange(){
+  const m=$('payMethod').value;
+  if(m==='card'){ $('fee').value=9; $('methodHint').textContent='Card mode: fee auto-set to 9% (5% yours + ~4% MoonPay/card). You receive USDT, client pays card.'; }
+  else { $('fee').value=5; $('methodHint').textContent='Direct USDT: client sends from their wallet. Card: MoonPay KYC + card, USDT lands straight to your wallet.'; }
+  updatePreview();
+}
+function moonpayUrl(){
+  const c=current||calc();
+  const total=(c.total||c.usd*1.09).toFixed(2);
+  const p=new URLSearchParams({
+    apiKey:MOONPAY_KEY,
+    currencyCode:'usdt_ethereum',
+    baseCurrencyCode:'usd',
+    baseCurrencyAmount:String(total),
+    walletAddress:MERCHANT,
+    redirectURL:POS_URL,
+    lockAmount:'true',
+    showWalletAddressForm:'false'
+  });
+  return 'https://buy.moonpay.com?'+p.toString();
+}
+function payWithMoonPay(){
+  if(!current){ alert('Generate invoice first, then Pay with Card'); return; }
+  const url=moonpayUrl();
+  // Try embedded SDK, fallback to new tab
+  try{
+    if(window.MoonPayWebSdk){
+      const sdk=window.MoonPayWebSdk.init({flow:'buy',environment:'sandbox',variant:'overlay',params:{apiKey:MOONPAY_KEY,currencyCode:'usdt_ethereum',baseCurrencyCode:'usd',baseCurrencyAmount:String(current.total.toFixed(2)),walletAddress:MERCHANT,redirectURL:POS_URL,lockAmount:true,showWalletAddressForm:false}});
+      sdk.show(); return;
+    }
+  }catch(e){}
+  window.open(url,'_blank');
+  $('mpMeta').innerHTML='MoonPay opened in new tab for $'+current.total.toFixed(2)+' → USDT to 0x7944…1d06. Complete KYC/card there. <a href="'+url+'" target="_blank">Re-open</a>';
+}
+function openMoonPayDirect(){ window.open(moonpayUrl(),'_blank'); }
+function copyClientLink(){
+  const usd=$('usd').value||'100';
+  const link=POS_URL+'?client=1&usd='+encodeURIComponent(usd);
+  navigator.clipboard.writeText(link).then(()=>alert('Client link copied:\n'+link+'\n\nShare this — client enters amount and pays by card, USDT comes to you.'));
+}
 function showTab(t){['Create','List','Help'].forEach(k=>{$('panel'+k).style.display=k.toLowerCase()===t?'block':'none';$('tab'+k).classList.toggle('active',k.toLowerCase()===t);});if(t==='list')renderList();}
 function calc(){const usd=parseFloat($('usd').value)||0;const feePct=parseFloat($('fee').value)||5;const fmv=parseFloat($('fmv').value)||1;const feeAmt=usd*feePct/100;const total=usd+feeAmt;return{usd,feePct,fmv,feeAmt,total,usdt:total/fmv};}
 function updatePreview(){const c=calc();$('calcPreview').textContent=`$${c.usd.toFixed(2)} × ${(1+c.feePct/100).toFixed(3)} ÷ $${c.fmv.toFixed(4)} = ${c.usdt.toFixed(2)} USDT`;$('kUsd').textContent='$'+c.usd.toFixed(2);$('kFee').textContent='$'+c.feeAmt.toFixed(2);$('kTotal').textContent='$'+c.total.toFixed(2);$('kUsdt').textContent=c.usdt.toFixed(2);}
@@ -183,7 +243,22 @@ function renderList(){const a=getInv();$('invCount').textContent=a.length;$('inv
 function reloadInv(i){const r=getInv()[i];if(!r)return;current=r;$('invId').textContent=r.id;$('walletOut').textContent=r.wallet;$('amtOut').textContent=Number(r.usdt).toFixed(6)+' USDT (ERC20)';$('payUri').textContent=r.uri;$('qr').innerHTML='';try{new QRCode($('qr'),{text:r.uri,width:220,height:220});}catch(e){}$('invStatus').textContent=r.status.toUpperCase();$('invStatus').className='badge '+r.status;$('txid').value=r.txid||'';showTab('create');}
 function exportCSV(){const a=getInv();if(!a.length){alert('Nothing');return;}const rows=[['id','client','usd','feePct','feeAmt','totalUSD','fmv','usdt','wallet','txid','status','created'],...a.map(r=>[r.id,r.client,r.usd,r.feePct,r.feeAmt,r.total,r.fmv,r.usdt,r.wallet,r.txid,r.status,r.created])];const csv=rows.map(r=>r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\n');const el=document.createElement('a');el.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));el.download='invoices.csv';el.click();}
 function clearInvoices(){if(confirm('Delete all?')){localStorage.removeItem('pos_invoices');renderList();}}
-updatePreview();renderList();
+(function initClientMode(){
+  updatePreview();renderList();
+  try{
+    const q=new URLSearchParams(location.search);
+    if(q.get('usd')){ $('usd').value=q.get('usd'); }
+    if(q.get('client')==='1'){
+      // client-safe view: hide invoice history, default to card
+      $('payMethod').value='card'; onMethodChange();
+      document.querySelector('.tabs').style.display='none';
+      $('panelList').style.display='none'; $('panelHelp').style.display='none';
+      const h=document.createElement('div');
+      h.className='note'; h.innerHTML='Client checkout: enter USD amount → Generate → <b style="color:#fff">Pay with Card via MoonPay</b> or send USDT directly to <b style="color:#fff">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</b> (ERC20). USDT lands straight to merchant.';
+      document.querySelector('.wrap').prepend(h);
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
