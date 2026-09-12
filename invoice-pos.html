@@ -3,10 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Invoice POS — USDT ERC20 FMV + 5% | LiquidGold AI</title>
-<meta name="description" content="LiquidGold AI USDT ERC20 invoicing POS at fair market value + 5% fee."/>
+<title>Invoice POS — USDT FMV + 5% | LiquidGold AI</title>
+<meta name="description" content="LiquidGold AI USDT invoicing POS at fair market value + 5% fee. TRC20 default, ERC20 option."/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://static.moonpay.com/web-sdk/v1/moonpay-web-sdk.min.js"></script>
 <style>
 :root{--bg:#0b0d12;--panel:#151924;--line:#222838;--text:#e8ecf3;--muted:#9aa3b2;--gold:#d4af37;--gold2:#f5d77a;--green:#4ade80;--red:#ef4444;--blue:#3b82f6}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 -apple-system,Segoe UI,Inter,Roboto,sans-serif}
@@ -34,11 +33,14 @@ input:focus,select:focus{outline:none;border-color:var(--gold)}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--gold2);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
 .badge{padding:3px 8px;border-radius:99px;font-size:11px;font-weight:800}.pending{background:rgba(245,215,122,.15);color:var(--gold2);border:1px solid rgba(212,175,55,.4)}.paid{background:rgba(74,222,128,.15);color:var(--green);border:1px solid rgba(74,222,128,.4)}.expired{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.4)}
 .note{border-left:3px solid var(--gold);background:rgba(212,175,55,.08);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13px;color:var(--muted);margin:12px 0}
+.note-blue{border-left:3px solid var(--blue);background:rgba(59,130,246,.08);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13px;color:var(--muted);margin:12px 0}
+.note-green{border-left:3px solid var(--green);background:rgba(74,222,128,.08);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13px;color:var(--muted);margin:12px 0}
 .tabs{display:flex;gap:6px;background:var(--panel);padding:5px;border-radius:10px;border:1px solid var(--line);margin-bottom:16px}
 .tabs button{flex:1;padding:10px;border:none;background:none;color:var(--muted);font-weight:700;cursor:pointer;border-radius:8px}
 .tabs button.active{background:linear-gradient(180deg,#f5d77a,#b8902a);color:#1b1408}
 .small{font-size:12px;color:var(--muted)}
 a{color:var(--gold2)}
+ol.guide{color:var(--muted);font-size:14px;padding-left:20px}ol.guide b,ul.guide b{color:#fff}
 @media print{.no-print{display:none!important}body{background:#fff;color:#000}.card{border-color:#ccc}}
 </style>
 </head>
@@ -52,24 +54,29 @@ a{color:var(--gold2)}
 <div class="tabs no-print">
 <button id="tabCreate" class="active" onclick="showTab('create')">1. Create Invoice</button>
 <button id="tabList" onclick="showTab('list')">2. Invoices (<span id="invCount">0</span>)</button>
-<button id="tabHelp" onclick="showTab('help')">3. How to operate</button>
+<button id="tabHelp" onclick="showTab('help')">3. Client guide + Fiat</button>
 </div>
 
 <div id="panelCreate">
 <div class="grid2">
 <div class="card">
-<h3 style="margin:0 0 4px;color:var(--gold2)">New Invoice — USDT ERC20</h3>
-<p class="small" style="margin-top:0">No Cash App. No prepaid cards. Invoice in USD, collect USDT ERC20 at FMV + 5%.</p>
+<h3 style="margin:0 0 4px;color:var(--gold2)">New Invoice — USDT</h3>
+<p class="small" style="margin-top:0">Invoice in USD, collect USDT at FMV + 5%. No prepaid cards, no on-ramp KYC needed.</p>
 
 <label>Client name / email</label>
 <input id="client" placeholder="John Doe — john@email.com"/>
 
 <div class="row">
 <div><label>USD Amount (base)</label><input id="usd" type="number" value="100" min="1" step="0.01"/></div>
-<div><label>Fee % (locked at 5)</label><input id="fee" type="number" value="5" min="0" max="30" step="0.1"/></div>
+<div><label>Fee % (default 5)</label><input id="fee" type="number" value="5" min="0" max="30" step="0.1"/></div>
 </div>
 
 <div class="row">
+<div><label>Network (default TRC20 — cheap)</label>
+<select id="network" onchange="onNetworkChange()">
+<option value="TRC20" selected>USDT TRC20 — Tron (~$1 fee) ★ default</option>
+<option value="ERC20">USDT ERC20 — Ethereum ($3–8 gas)</option>
+</select></div>
 <div><label>FMV Source</label>
 <select id="src">
 <option value="coinbase">Coinbase Spot</option>
@@ -78,20 +85,16 @@ a{color:var(--gold2)}
 <option value="coingecko">CoinGecko</option>
 <option value="manual">Manual</option>
 </select></div>
-<div><label>USDT FMV (USD)</label><input id="fmv" type="number" value="1.00" step="0.0001"/></div>
 </div>
-<button class="btn btn-ghost no-print" onclick="fetchFMV()" style="margin-top:10px;width:100%">↻ Refresh live FMV</button>
+<div class="row">
+<div><label>USDT FMV (USD)</label><input id="fmv" type="number" value="1.00" step="0.0001"/></div>
+<div><label>&nbsp;</label><button class="btn btn-ghost no-print" onclick="fetchFMV()" style="width:100%">↻ Refresh FMV</button></div>
+</div>
 <div class="small" id="fmvMeta" style="margin-top:6px">Default 1.00 — refresh for live price</div>
 
-<label>Receive wallet (ERC20 — fixed)</label>
-<div class="mono" id="walletFixed">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</div>
-
-<label>How will client pay?</label>
-<select id="payMethod" onchange="onMethodChange()">
-<option value="usdt">I already have USDT — send directly (fee 5%)</option>
-<option value="card">Pay with Card via MoonPay → you receive USDT (fee 9% to cover card)</option>
-</select>
-<div class="small" id="methodHint" style="margin-top:6px">Direct USDT: client sends from their wallet. Card: MoonPay KYC + card, USDT lands straight to your wallet.</div>
+<label>Receive wallet (<span id="walletNetLabel">TRC20</span> — auto)</label>
+<div class="mono" id="walletFixed">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz</div>
+<div class="small" id="netHint" style="margin-top:6px">TRC20: fast + cheap. Use for Kenya / Binance P2P / Yellow Card. ERC20 only if client insists.</div>
 
 <label>Memo (do not write investment/ROI)</label>
 <input id="memo" value="Digital goods/services"/>
@@ -100,15 +103,18 @@ a{color:var(--gold2)}
 <button class="btn btn-gold" onclick="createInvoice()">Generate Invoice + QR</button>
 <button class="btn btn-ghost" onclick="window.print()">Print</button>
 </div>
-<div class="note">Formula: <b style="color:#fff">USDT Due = (USD × 1.05) ÷ FMV</b><br/><span id="calcPreview"></span></div>
+<div class="row no-print" style="margin-top:8px">
+<button class="btn btn-ghost" onclick="copyClientLink()">Copy client pay link</button>
+</div>
+<div class="note">Formula: <b style="color:#fff">USDT Due = (USD × (1+Fee%)) ÷ FMV</b><br/><span id="calcPreview"></span></div>
 </div>
 
 <div class="card">
-<h3 style="margin:0;color:var(--gold2)">Payable Now</h3>
+<h3 style="margin:0;color:var(--gold2)">Payable Now — <span id="payNetLabel">TRC20</span></h3>
 <div class="small">Invoice <b id="invId" style="color:#fff">—</b> • <span id="invStatus" class="badge pending">DRAFT</span></div>
 <div class="kpi">
 <div><b id="kUsd">$0</b><span>Base USD</span></div>
-<div><b id="kFee">$0</b><span>Fee 5%</span></div>
+<div><b id="kFee">$0</b><span>Fee</span></div>
 <div><b id="kTotal">$0</b><span>Total USD</span></div>
 <div><b id="kUsdt">0</b><span>USDT due</span></div>
 </div>
@@ -116,31 +122,22 @@ a{color:var(--gold2)}
 <div class="expiry-bar"><i id="expBar" style="width:100%"></i></div>
 <div class="small" style="text-align:center" id="expLabel">Generate to lock FMV + start 15-min timer</div>
 <div id="qr"><span class="small">QR appears after Generate</span></div>
-<label>Payment URI (EIP-681 — scan with MetaMask / Trust / Coinbase Wallet)</label>
+<label>Wallet (<span id="walletOutLabel">TRC20</span>) — client must use same network</label>
+<div class="mono" id="walletOut">—</div>
+<label>Exact USDT amount</label><div class="mono" id="amtOut">—</div>
+<label>Payment data (QR content — copy if scan fails)</label>
 <div class="mono" id="payUri">—</div>
 <div class="row no-print" style="margin-top:8px">
-<button class="btn btn-ghost" onclick="copyText('payUri')">Copy URI</button>
+<button class="btn btn-ghost" onclick="copyText('payUri')">Copy data</button>
 <button class="btn btn-ghost" onclick="copyWallet()">Copy Wallet</button>
 <button class="btn btn-ghost" onclick="copyText('amtOut')">Copy Amount</button>
 </div>
-<label>Wallet (ERC20 only)</label><div class="mono" id="walletOut">—</div>
-<label>Exact USDT amount</label><div class="mono" id="amtOut">—</div>
-<div class="note">⚠ <b style="color:#fff">Ethereum ERC20 only.</b> Client pays gas. TRC20/BSC to this address = lost funds. Verify TX on Etherscan before delivery.</div>
-
-<div class="card no-print" style="background:#0f1320;border-color:rgba(59,130,246,.4);margin-top:12px">
-<b style="font-size:14px;color:#8cb4ff">💳 Card → USDT (MoonPay — test mode)</b>
-<p class="small" style="margin:6px 0">Client pays card in USD, MoonPay sends USDT ERC20 straight to <span class="mono" style="display:inline">0x7944…1d06</span>. You don't handle card numbers. Client does KYC in widget.</p>
-<div class="row">
-<button class="btn btn-gold" onclick="payWithMoonPay()">Pay with Card via MoonPay →</button>
-<button class="btn btn-ghost" onclick="copyClientLink()">Copy client pay link</button>
-</div>
-<div class="small" id="mpMeta" style="margin-top:6px">Uses pk_test_8GUBVRmLR1fBFbQrBxZYehJUPbeDao7b — switch to pk_live_ for real money. <a href="#" onclick="openMoonPayDirect();return false">Open MoonPay directly</a></div>
-</div>
-<label>Client TX hash</label>
-<input id="txid" placeholder="0x..."/>
+<div class="note" id="netWarn">⚠ <b style="color:#fff">TRC20 (Tron) only.</b> Sending ERC20/BSC to a Tron address = lost funds. Fee ~$1.</div>
+<label>Client TX hash / ID</label>
+<input id="txid" placeholder="TRC20: 64 hex chars — ERC20: 0x..."/>
 <div class="row no-print">
 <button class="btn btn-gold" onclick="markPaid()">Mark Paid / Verify →</button>
-<a class="btn btn-ghost" id="ethLink" target="_blank" href="https://etherscan.io/address/0x7944faf462e8536aaf9c0f97eeab1942c91f1d06" style="text-decoration:none">Etherscan</a>
+<a class="btn btn-ghost" id="ethLink" target="_blank" href="https://tronscan.org/#/address/TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz" style="text-decoration:none">Explorer</a>
 </div>
 <div class="card" style="margin-top:12px;background:#0f1320">
 <b style="font-size:13px">Message to send client (copy/paste):</b>
@@ -149,6 +146,34 @@ a{color:var(--gold2)}
 </div>
 </div>
 </div>
+
+<!-- CLIENT GUIDE + FIAT BOXES (visible to operator + client) -->
+<div class="card">
+<h3 style="margin:0 0 8px;color:var(--gold2)">📖 Client guide: how to buy USDT and send</h3>
+<ol class="guide">
+<li><b>Create account</b> on Binance / Bybit / Coinbase / Yellow Card. Verify ID + selfie (10 min, their KYC — you need none).</li>
+<li><b>Buy USDT:</b> Buy Crypto → USDT → card for $ amount. If card fails (prepaid often does): use <b>P2P</b> → Buy USDT → pay merchant via bank/Wise → USDT releases from escrow. Try Binance P2P, Bybit P2P, OKX P2P, CoinCola.</li>
+<li><b>Withdraw:</b> Withdraw → USDT → <b>Network must match invoice</b> (TRC20 default = Tron, cheap; ERC20 = Ethereum). Address = wallet above. Amount = exact USDT due.</li>
+<li><b>Send TX hash</b> back to you. You verify on Tronscan/Etherscan → deliver.</li>
+</ol>
+<div class="small">Kenya tip: Yellow Card (M-Pesa → USDT) and Binance P2P KES/M-Pesa settle in minutes. TRC20 fee &lt;$1, confirms in seconds. ERC20 gas $3–8 — avoid for small amounts.</div>
+<div class="row no-print" style="margin-top:8px">
+<button class="btn btn-ghost" onclick="copyText('guideShort')">Copy short guide for client</button>
+</div>
+<div class="mono" id="guideShort" style="margin-top:8px">To pay: 1) Binance/Bybit/Coinbase → buy USDT for $X. If card fails use P2P Buy USDT. 2) Withdraw USDT via TRC20 (default, cheap) to TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz — exact amount on invoice. For ERC20 use 0x7944faf462e8536aaf9c0f97eeab1942c91f1d06. 3) Send TX hash. I deliver after explorer confirms.</div>
+</div>
+
+<div class="card" style="border-color:rgba(74,222,128,.4)">
+<h3 style="margin:0 0 8px;color:var(--green)">💵 Can't buy crypto? Pay fiat via Whop / M-Pesa instead</h3>
+<p class="small" style="margin-top:0">No crypto? Pay fiat on rails I'm already approved for. I convert to USDT myself via Yellow Card / Binance P2P. Fiat = 9–10% fee (covers processing), USDT direct = 5%.</p>
+<ul class="guide" style="list-style:none;padding:0;display:grid;gap:8px">
+<li><div><b>Whop Checkout (card / Apple Pay)</b><span class="small" style="display:block">Instant delivery flow on main site — choose product → Purchase → Whop. License emailed automatically.</span></div><div class="row no-print" style="margin-top:6px"><a class="btn btn-gold" href="index.html">Open main site Purchase →</a></div></li>
+<li><div><b>M-Pesa Kenya</b><span class="small" style="display:block">Send to +254 701 540 201 via Send Money. Send TX code + name + email. Manual approval ~12 hrs.</span></div><div class="mono">+254 701 540 201</div></li>
+<li><div><b>USDT TRC20 direct (cheap)</b><span class="small" style="display:block">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz — Tron network only.</span></div><div class="mono">TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz</div></li>
+<li><div><b>USDT ERC20 direct</b><span class="small" style="display:block">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06 — Ethereum only.</span></div><div class="mono">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</div></li>
+</ul>
+</div>
+
 </div>
 
 <div id="panelList" style="display:none">
@@ -156,8 +181,8 @@ a{color:var(--gold2)}
 <h3 style="margin:0 0 8px;color:var(--gold2)">Saved Invoices (this browser)</h3>
 <div class="row no-print"><button class="btn btn-ghost" onclick="exportCSV()">Export CSV</button>
 <button class="btn btn-danger" onclick="clearInvoices()">Clear all</button></div>
-<div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>ID / Client</th><th>USD</th><th>USDT</th><th>FMV</th><th>Status</th><th>Action</th></tr></thead><tbody id="invBody"></tbody></table></div>
-<p class="small">To operate from GitHub Pages: push both <span class="mono" style="display:inline">index.html</span> and <span class="mono" style="display:inline">invoice-pos.html</span> to same repo folder. Open <span class="mono" style="display:inline">https://YOUR-USER.github.io/YOUR-REPO/invoice-pos.html</span> on phone/laptop. Works offline except live price + QR lib.</p>
+<div style="overflow-x:auto;margin-top:12px"><table><thead><tr><th>ID / Client</th><th>USD</th><th>USDT</th><th>Net</th><th>FMV</th><th>Status</th><th>Action</th></tr></thead><tbody id="invBody"></tbody></table></div>
+<p class="small">Push both <span class="mono" style="display:inline">index.html</span> and <span class="mono" style="display:inline">invoice-pos.html</span> to AllanMabele/amn root. Live at <span class="mono" style="display:inline">https://allanmabele.github.io/amn/invoice-pos.html</span>. Client link: <span class="mono" style="display:inline">.../invoice-pos.html?client=1&usd=100&net=TRC20</span></p>
 </div>
 </div>
 
@@ -165,97 +190,96 @@ a{color:var(--gold2)}
 <div class="card">
 <h3 style="color:var(--gold2);margin-top:0">How to operate (GitHub Pages)</h3>
 <ol style="color:var(--muted);font-size:14px">
-<li><b style="color:#fff">Deploy:</b> upload <b style="color:#fff">index.html</b> + <b style="color:#fff">invoice-pos.html</b> to same GitHub repo → Settings → Pages → Deploy from branch → <span class="mono">main / root</span>.</li>
-<li><b style="color:#fff">Open POS:</b> <span class="mono">https://YOUR-USER.github.io/YOUR-REPO/invoice-pos.html</span> — bookmark on phone.</li>
-<li><b style="color:#fff">Create:</b> enter client + USD → Refresh FMV → Generate → show QR to client.</li>
-<li><b style="color:#fff">Collect:</b> client sends exact USDT ERC20 to <span class="mono">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</span>. Timer 15 min — if expired, regenerate.</li>
-<li><b style="color:#fff">Verify:</b> paste TX hash → check on Etherscan → Mark Paid → deliver EA / license.</li>
-<li><b style="color:#fff">Books:</b> Export CSV monthly. Log FMV + fee. KYC: keep client ID + wallet.</li>
+<li><b style="color:#fff">Deploy:</b> upload <b style="color:#fff">index.html</b> + <b style="color:#fff">invoice-pos.html</b> to AllanMabele/amn → Settings → Pages → main / root.</li>
+<li><b style="color:#fff">Open POS:</b> <span class="mono">https://allanmabele.github.io/amn/invoice-pos.html</span> — bookmark.</li>
+<li><b style="color:#fff">Create:</b> client + USD → network TRC20 default → Refresh FMV → Generate → QR.</li>
+<li><b style="color:#fff">Share:</b> Copy client pay link <span class="mono">?client=1&usd=100&net=TRC20</span> or send Client guide + wallet + amount.</li>
+<li><b style="color:#fff">No crypto client?</b> Send to Whop / M-Pesa box above. You convert via Yellow Card / Binance P2P.</li>
+<li><b style="color:#fff">Verify:</b> TX on Tronscan (TRC20) / Etherscan (ERC20) → Mark Paid → deliver EA.</li>
 </ol>
-<div class="note">Prepaid USD cards are blocked by processors for fraud/chargebacks — do not try to force them. This USDT flow replaces it. No Cash App needed.</div>
+<div class="note">Prepaid USD cards are blocked everywhere for fraud/chargebacks. Never take card numbers directly. Let client buy USDT on their own exchange/P2P (their KYC), or take fiat only via Whop/M-Pesa.</div>
 </div>
 </div>
 
-<p class="small">USDT ERC20: 0x7944faf462e8536aaf9c0f97eeab1942c91f1d06 • Token contract: 0xdAC17F958D2ee523a2206206994597C13D831ec7 • <a target="_blank" href="https://etherscan.io/address/0x7944faf462e8536aaf9c0f97eeab1942c91f1d06">View on Etherscan</a></p>
+<p class="small">TRC20: TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz (<a target="_blank" href="https://tronscan.org/#/address/TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz">Tronscan</a>) • ERC20: 0x7944faf462e8536aaf9c0f97eeab1942c91f1d06 (<a target="_blank" href="https://etherscan.io/address/0x7944faf462e8536aaf9c0f97eeab1942c91f1d06">Etherscan</a>) • Token: 0xdAC17F958D2ee523a2206206994597C13D831ec7</p>
 </div>
 <script>
-const MERCHANT='0x7944faf462e8536aaf9c0f97eeab1942c91f1d06';
+const WALLETS={TRC20:'TBr4ZsJky3ufBaA6WMFVJ7hX36Wtf29NRz',ERC20:'0x7944faf462e8536aaf9c0f97eeab1942c91f1d06'};
 const TOKEN='0xdAC17F958D2ee523a2206206994597C13D831ec7';
-const MOONPAY_KEY='pk_test_8GUBVRmLR1fBFbQrBxZYehJUPbeDao7b';
 const POS_URL='https://allanmabele.github.io/amn/invoice-pos.html';
 let current=null,timerInt=null,expiryTotal=15*60,expirySec=15*60;
 const $=id=>document.getElementById(id);
-function onMethodChange(){
-  const m=$('payMethod').value;
-  if(m==='card'){ $('fee').value=9; $('methodHint').textContent='Card mode: fee auto-set to 9% (5% yours + ~4% MoonPay/card). You receive USDT, client pays card.'; }
-  else { $('fee').value=5; $('methodHint').textContent='Direct USDT: client sends from their wallet. Card: MoonPay KYC + card, USDT lands straight to your wallet.'; }
+function net(){return $('network').value||'TRC20';}
+function walletFor(n){return WALLETS[n]||WALLETS.TRC20;}
+function onNetworkChange(){
+  const n=net();
+  $('walletFixed').textContent=walletFor(n);
+  $('walletNetLabel').textContent=n;
+  $('payNetLabel').textContent=n;
+  $('walletOutLabel').textContent=n;
+  $('netHint').textContent=n==='TRC20'?'TRC20: fast + cheap. Use for Kenya / Binance P2P / Yellow Card. ERC20 only if client insists.':'ERC20: Ethereum, gas $3-8. Only if client insists. Prefer TRC20 for small amounts.';
+  $('netWarn').innerHTML=n==='TRC20'?'⚠ <b style="color:#fff">TRC20 (Tron) only.</b> Sending ERC20/BSC to a Tron address = lost funds. Fee ~$1.':'⚠ <b style="color:#fff">Ethereum ERC20 only.</b> Client pays gas ($3-8). TRC20/BSC to this address = lost funds.';
+  $('ethLink').href=n==='TRC20'?'https://tronscan.org/#/address/'+WALLETS.TRC20:'https://etherscan.io/address/'+WALLETS.ERC20;
   updatePreview();
-}
-function moonpayUrl(){
-  const c=current||calc();
-  const total=(c.total||c.usd*1.09).toFixed(2);
-  const p=new URLSearchParams({
-    apiKey:MOONPAY_KEY,
-    currencyCode:'usdt_ethereum',
-    baseCurrencyCode:'usd',
-    baseCurrencyAmount:String(total),
-    walletAddress:MERCHANT,
-    redirectURL:POS_URL,
-    lockAmount:'true',
-    showWalletAddressForm:'false'
-  });
-  return 'https://buy.moonpay.com?'+p.toString();
-}
-function payWithMoonPay(){
-  if(!current){ alert('Generate invoice first, then Pay with Card'); return; }
-  const url=moonpayUrl();
-  // Try embedded SDK, fallback to new tab
-  try{
-    if(window.MoonPayWebSdk){
-      const sdk=window.MoonPayWebSdk.init({flow:'buy',environment:'sandbox',variant:'overlay',params:{apiKey:MOONPAY_KEY,currencyCode:'usdt_ethereum',baseCurrencyCode:'usd',baseCurrencyAmount:String(current.total.toFixed(2)),walletAddress:MERCHANT,redirectURL:POS_URL,lockAmount:true,showWalletAddressForm:false}});
-      sdk.show(); return;
-    }
-  }catch(e){}
-  window.open(url,'_blank');
-  $('mpMeta').innerHTML='MoonPay opened in new tab for $'+current.total.toFixed(2)+' → USDT to 0x7944…1d06. Complete KYC/card there. <a href="'+url+'" target="_blank">Re-open</a>';
-}
-function openMoonPayDirect(){ window.open(moonpayUrl(),'_blank'); }
-function copyClientLink(){
-  const usd=$('usd').value||'100';
-  const link=POS_URL+'?client=1&usd='+encodeURIComponent(usd);
-  navigator.clipboard.writeText(link).then(()=>alert('Client link copied:\n'+link+'\n\nShare this — client enters amount and pays by card, USDT comes to you.'));
 }
 function showTab(t){['Create','List','Help'].forEach(k=>{$('panel'+k).style.display=k.toLowerCase()===t?'block':'none';$('tab'+k).classList.toggle('active',k.toLowerCase()===t);});if(t==='list')renderList();}
 function calc(){const usd=parseFloat($('usd').value)||0;const feePct=parseFloat($('fee').value)||5;const fmv=parseFloat($('fmv').value)||1;const feeAmt=usd*feePct/100;const total=usd+feeAmt;return{usd,feePct,fmv,feeAmt,total,usdt:total/fmv};}
-function updatePreview(){const c=calc();$('calcPreview').textContent=`$${c.usd.toFixed(2)} × ${(1+c.feePct/100).toFixed(3)} ÷ $${c.fmv.toFixed(4)} = ${c.usdt.toFixed(2)} USDT`;$('kUsd').textContent='$'+c.usd.toFixed(2);$('kFee').textContent='$'+c.feeAmt.toFixed(2);$('kTotal').textContent='$'+c.total.toFixed(2);$('kUsdt').textContent=c.usdt.toFixed(2);}
+function updatePreview(){const c=calc();const n=net();$('calcPreview').textContent=`$${c.usd.toFixed(2)} × ${(1+c.feePct/100).toFixed(3)} ÷ $${c.fmv.toFixed(4)} = ${c.usdt.toFixed(2)} USDT (${n})`;$('kUsd').textContent='$'+c.usd.toFixed(2);$('kFee').textContent='$'+c.feeAmt.toFixed(2);$('kTotal').textContent='$'+c.total.toFixed(2);$('kUsdt').textContent=c.usdt.toFixed(2);}
 ['usd','fee','fmv'].forEach(id=>$(id).addEventListener('input',updatePreview));
 async function fetchFMV(){const sel=$('src').value;$('fmvMeta').textContent='Fetching '+sel+'...';try{if(sel==='manual'){$('fmvMeta').textContent='Manual mode';updatePreview();return;}let price=null;if(sel==='coinbase'){const j=await fetch('https://api.coinbase.com/v2/prices/USDT-USD/spot').then(r=>r.json());price=parseFloat(j.data.amount);}else if(sel==='binance'){try{const j=await fetch('https://api.binance.com/api/v3/ticker/price?symbol=USDTUSDC').then(r=>r.json());price=parseFloat(j.price);}catch(e){const j2=await fetch('https://api.binance.com/api/v3/ticker/price?symbol=USDCUSDT').then(r=>r.json());price=1/parseFloat(j2.price);}}else if(sel==='kraken'){const j=await fetch('https://api.kraken.com/0/public/Ticker?pair=USDTZUSD').then(r=>r.json());price=parseFloat(j.result[Object.keys(j.result)[0]].c[0]);}else{const j=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd').then(r=>r.json());price=parseFloat(j.tether.usd);}if(!price||price<0.9||price>1.1)throw new Error('bad '+price);$('fmv').value=price.toFixed(4);$('fmvMeta').textContent='Live '+sel+' = $'+price.toFixed(4)+' @ '+new Date().toUTCString();updatePreview();}catch(e){$('fmvMeta').textContent='Fetch failed ('+e.message+') — enter manually.';}}
-function erc20Uri(to,base){return `ethereum:${TOKEN}/transfer?address=${to}&uint256=${base}`;}
-function createInvoice(){const c=calc();if(c.usd<=0){alert('Enter USD');return;}const id='INV-'+Date.now().toString(36).toUpperCase().slice(-6);const base=Math.round(c.usdt*1e6).toString();const uri=erc20Uri(MERCHANT,base);current={id,client:$('client').value.trim(),usd:c.usd,feePct:c.feePct,feeAmt:c.feeAmt,total:c.total,fmv:c.fmv,usdt:c.usdt,wallet:MERCHANT,uri,base,txid:'',status:'pending',created:new Date().toISOString(),memo:$('memo').value};$('invId').textContent=id;$('invStatus').textContent='PENDING';$('invStatus').className='badge pending';$('walletOut').textContent=MERCHANT;$('amtOut').textContent=c.usdt.toFixed(6)+' USDT (ERC20)';$('payUri').textContent=uri;$('ethLink').href='https://etherscan.io/address/'+MERCHANT;$('clientMsg').textContent=`Hello ${current.client||'there'}, my processor blocks prepaid USD cards. Please pay ${c.usdt.toFixed(2)} USDT on Ethereum ERC20 to ${MERCHANT} (Invoice ${id}, $${c.usd.toFixed(2)} + ${c.feePct}% fee, FMV $${c.fmv.toFixed(4)}). Send exact amount, you cover gas. Reply with TX hash. Verify: https://etherscan.io/address/${MERCHANT}`;$('qr').innerHTML='';try{new QRCode($('qr'),{text:uri,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});}catch(e){$('qr').innerHTML='QR blocked — copy URI';}const all=getInv();all.unshift(current);localStorage.setItem('pos_invoices',JSON.stringify(all));renderList();startTimer();updatePreview();}
+function payData(n,wallet,usdt){
+  if(n==='ERC20'){const base=Math.round(usdt*1e6).toString();return `ethereum:${TOKEN}/transfer?address=${wallet}&uint256=${base}`;}
+  return wallet;
+}
+function explorerFor(n,tx){
+  if(!tx) return n==='TRC20'?'https://tronscan.org/#/address/'+WALLETS.TRC20:'https://etherscan.io/address/'+WALLETS.ERC20;
+  return n==='TRC20'?'https://tronscan.org/#/transaction/'+tx.replace(/^0x/,''):'https://etherscan.io/tx/'+(tx.startsWith('0x')?tx:'0x'+tx);
+}
+function createInvoice(){
+  const c=calc();const n=net();const wallet=walletFor(n);
+  if(c.usd<=0){alert('Enter USD');return;}
+  const id='INV-'+Date.now().toString(36).toUpperCase().slice(-6);
+  const uri=payData(n,wallet,c.usdt);
+  current={id,client:$('client').value.trim(),usd:c.usd,feePct:c.feePct,feeAmt:c.feeAmt,total:c.total,fmv:c.fmv,usdt:c.usdt,network:n,wallet,uri,txid:'',status:'pending',created:new Date().toISOString(),memo:$('memo').value};
+  $('invId').textContent=id;$('invStatus').textContent='PENDING';$('invStatus').className='badge pending';
+  $('payNetLabel').textContent=n;$('walletOut').textContent=wallet;
+  $('amtOut').textContent=c.usdt.toFixed(6)+' USDT ('+n+')';$('payUri').textContent=uri;
+  $('ethLink').href=explorerFor(n,'');
+  const scan=n==='TRC20'?'https://tronscan.org/#/address/'+wallet:'https://etherscan.io/address/'+wallet;
+  $('clientMsg').textContent=`Hello ${current.client||'there'}, prepaid cards blocked. Please pay ${c.usdt.toFixed(2)} USDT via ${n} to ${wallet} (Invoice ${id}, $${c.usd.toFixed(2)} + ${c.feePct}% fee, FMV $${c.fmv.toFixed(4)}). Network must be ${n}. Reply with TX hash. Verify: ${scan} — No crypto? Pay via Whop/M-Pesa, see https://allanmabele.github.io/amn/invoice-pos.html`;
+  $('qr').innerHTML='';try{new QRCode($('qr'),{text:uri,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});}catch(e){$('qr').innerHTML='QR blocked — copy data';}
+  const all=getInv();all.unshift(current);localStorage.setItem('pos_invoices',JSON.stringify(all));renderList();startTimer();updatePreview();
+}
+function copyClientLink(){
+  const usd=$('usd').value||'100';const n=net();
+  const link=POS_URL+'?client=1&usd='+encodeURIComponent(usd)+'&net='+n;
+  navigator.clipboard.writeText(link).then(()=>alert('Client link copied:\n'+link));
+}
 function startTimer(){clearInterval(timerInt);expirySec=expiryTotal;tick();timerInt=setInterval(tick,1000);}
 function tick(){const m=Math.floor(expirySec/60),s=expirySec%60;$('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');$('expBar').style.width=(100*expirySec/expiryTotal)+'%';$('expLabel').textContent=expirySec>0?`FMV locked — expires in ${m}:${String(s).padStart(2,'0')}`:'EXPIRED — regenerate for fresh FMV';if(expirySec<=0){clearInterval(timerInt);if(current&&current.status==='pending'){current.status='expired';persist();$('invStatus').textContent='EXPIRED';$('invStatus').className='badge expired';renderList();}}else expirySec--;}
 function copyText(id){navigator.clipboard.writeText($(id).textContent).then(()=>alert('Copied'));}
-function copyWallet(){navigator.clipboard.writeText(MERCHANT).then(()=>alert('Wallet copied'));}
+function copyWallet(){navigator.clipboard.writeText(walletFor(net())).then(()=>alert('Wallet copied: '+walletFor(net())));}
 function getInv(){try{return JSON.parse(localStorage.getItem('pos_invoices')||'[]');}catch(e){return[];}}
 function persist(){if(!current)return;const a=getInv();const i=a.findIndex(x=>x.id===current.id);if(i>=0){a[i]=current;localStorage.setItem('pos_invoices',JSON.stringify(a));}}
-function markPaid(){if(!current){alert('Generate first');return;}const tx=$('txid').value.trim();if(!/^0x[a-fA-F0-9]{64}$/.test(tx)){if(!confirm('TX looks invalid. Mark paid anyway?'))return;}current.txid=tx;current.status='paid';persist();$('invStatus').textContent='PAID';$('invStatus').className='badge paid';if(tx)$('ethLink').href='https://etherscan.io/tx/'+tx;renderList();alert('Marked PAID. Verify on Etherscan before delivery.');}
-function renderList(){const a=getInv();$('invCount').textContent=a.length;$('invBody').innerHTML=a.map((r,i)=>`<tr><td class="mono">${r.id}<br/><span class="small">${(r.client||'').slice(0,24)}</span></td><td>$${Number(r.usd).toFixed(2)}</td><td>${Number(r.usdt).toFixed(2)}</td><td>$${Number(r.fmv).toFixed(4)}</td><td><span class="badge ${r.status}">${r.status.toUpperCase()}</span></td><td><button class="btn btn-ghost" style="padding:4px 8px" onclick="reloadInv(${i})">Load</button></td></tr>`).join('')||'<tr><td colspan="6" class="small">No invoices</td></tr>';}
-function reloadInv(i){const r=getInv()[i];if(!r)return;current=r;$('invId').textContent=r.id;$('walletOut').textContent=r.wallet;$('amtOut').textContent=Number(r.usdt).toFixed(6)+' USDT (ERC20)';$('payUri').textContent=r.uri;$('qr').innerHTML='';try{new QRCode($('qr'),{text:r.uri,width:220,height:220});}catch(e){}$('invStatus').textContent=r.status.toUpperCase();$('invStatus').className='badge '+r.status;$('txid').value=r.txid||'';showTab('create');}
-function exportCSV(){const a=getInv();if(!a.length){alert('Nothing');return;}const rows=[['id','client','usd','feePct','feeAmt','totalUSD','fmv','usdt','wallet','txid','status','created'],...a.map(r=>[r.id,r.client,r.usd,r.feePct,r.feeAmt,r.total,r.fmv,r.usdt,r.wallet,r.txid,r.status,r.created])];const csv=rows.map(r=>r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\n');const el=document.createElement('a');el.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));el.download='invoices.csv';el.click();}
+function validTx(tx){return /^(0x)?[0-9a-fA-F]{64}$/.test(tx.trim());}
+function markPaid(){if(!current){alert('Generate first');return;}const tx=$('txid').value.trim();if(!validTx(tx)){if(!confirm('TX looks invalid (expect 64 hex, 0x ok). Mark paid anyway?'))return;}current.txid=tx;current.status='paid';persist();$('invStatus').textContent='PAID';$('invStatus').className='badge paid';if(tx)$('ethLink').href=explorerFor(current.network,tx);renderList();alert('Marked PAID. Verify on explorer before delivery.');}
+function renderList(){const a=getInv();$('invCount').textContent=a.length;$('invBody').innerHTML=a.map((r,i)=>`<tr><td class="mono">${r.id}<br/><span class="small">${(r.client||'').slice(0,24)}</span></td><td>$${Number(r.usd).toFixed(2)}</td><td>${Number(r.usdt).toFixed(2)}</td><td>${r.network||''}</td><td>$${Number(r.fmv).toFixed(4)}</td><td><span class="badge ${r.status}">${r.status.toUpperCase()}</span></td><td><button class="btn btn-ghost" style="padding:4px 8px" onclick="reloadInv(${i})">Load</button></td></tr>`).join('')||'<tr><td colspan="7" class="small">No invoices</td></tr>';}
+function reloadInv(i){const r=getInv()[i];if(!r)return;current=r;if(r.network){$('network').value=r.network;onNetworkChange();}$('invId').textContent=r.id;$('walletOut').textContent=r.wallet;$('amtOut').textContent=Number(r.usdt).toFixed(6)+' USDT ('+(r.network||'')+')';$('payUri').textContent=r.uri;$('qr').innerHTML='';try{new QRCode($('qr'),{text:r.uri,width:220,height:220});}catch(e){}$('invStatus').textContent=r.status.toUpperCase();$('invStatus').className='badge '+r.status;$('txid').value=r.txid||'';$('ethLink').href=explorerFor(r.network||'TRC20',r.txid||'');showTab('create');}
+function exportCSV(){const a=getInv();if(!a.length){alert('Nothing');return;}const rows=[['id','client','usd','feePct','feeAmt','totalUSD','fmv','usdt','network','wallet','txid','status','created'],...a.map(r=>[r.id,r.client,r.usd,r.feePct,r.feeAmt,r.total,r.fmv,r.usdt,r.network,r.wallet,r.txid,r.status,r.created])];const csv=rows.map(r=>r.map(x=>`"${String(x??'').replace(/"/g,'""')}"`).join(',')).join('\n');const el=document.createElement('a');el.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));el.download='invoices.csv';el.click();}
 function clearInvoices(){if(confirm('Delete all?')){localStorage.removeItem('pos_invoices');renderList();}}
-(function initClientMode(){
-  updatePreview();renderList();
+(function init(){
+  onNetworkChange();updatePreview();renderList();
   try{
     const q=new URLSearchParams(location.search);
-    if(q.get('usd')){ $('usd').value=q.get('usd'); }
+    if(q.get('usd')) $('usd').value=q.get('usd');
+    if(q.get('net')&&(q.get('net')==='TRC20'||q.get('net')==='ERC20')){$('network').value=q.get('net');onNetworkChange();}
     if(q.get('client')==='1'){
-      // client-safe view: hide invoice history, default to card
-      $('payMethod').value='card'; onMethodChange();
       document.querySelector('.tabs').style.display='none';
-      $('panelList').style.display='none'; $('panelHelp').style.display='none';
-      const h=document.createElement('div');
-      h.className='note'; h.innerHTML='Client checkout: enter USD amount → Generate → <b style="color:#fff">Pay with Card via MoonPay</b> or send USDT directly to <b style="color:#fff">0x7944faf462e8536aaf9c0f97eeab1942c91f1d06</b> (ERC20). USDT lands straight to merchant.';
+      $('panelList').style.display='none';$('panelHelp').style.display='none';
+      const h=document.createElement('div');h.className='note';
+      h.innerHTML='Client checkout: enter USD → Generate → send exact USDT (<b style="color:#fff">TRC20 default</b>, ERC20 if shown) or use Whop / M-Pesa box below. USDT lands straight to merchant.';
       document.querySelector('.wrap').prepend(h);
+      updatePreview();
     }
   }catch(e){}
 })();
