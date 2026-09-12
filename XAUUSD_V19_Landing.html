@@ -331,10 +331,10 @@ select.admin-input option{background:var(--bg-2)}
  <span class="badge"><b>LIVE</b>&nbsp;Verified Results</span>
  </div>
  <div class="stat-grid">
- <div class="stat"><div class="v" id="heroGrowth">+12.5%</div><div class="l">AI Account Growth</div></div>
- <div class="stat"><div class="v" id="heroWR">59.5%</div><div class="l">AI Win Rate</div></div>
- <div class="stat"><div class="v" id="heroPF">1.14</div><div class="l">AI Profit Factor</div></div>
- <div class="stat"><div class="v" id="heroTrades">200</div><div class="l">AI Trades Tracked</div></div>
+ <div class="stat"><div class="v" id="heroGrowth">+545.6%</div><div class="l">AI Account Growth</div></div>
+ <div class="stat"><div class="v" id="heroWR">84.4%</div><div class="l">AI Win Rate</div></div>
+ <div class="stat"><div class="v" id="heroPF">3.99</div><div class="l">AI Profit Factor</div></div>
+ <div class="stat"><div class="v" id="heroTrades">64</div><div class="l">AI Trades Tracked</div></div>
  <div class="stat"><div class="v">24/5</div><div class="l">Automated</div></div>
  </div>
  </div>
@@ -483,15 +483,15 @@ select.admin-input option{background:var(--bg-2)}
  <h2 style="margin-top:14px">Real Account. Real Trades. <span id="aiLiveBadge" style="font-size:14px;color:var(--muted)">connecting…</span></h2>
  <p style="max-width:680px;margin:14px auto 0">Pulled live from the master AI account. No screenshots, no backtests — every number below is computed from closed MT5 trades and refreshes automatically.</p>
  <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
- <div class="stat"><div class="v" id="aiGrowth">+12.5%</div><div class="l">Account Growth</div></div>
- <div class="stat"><div class="v" id="aiWR">59.5%</div><div class="l">Win Rate (200 trades)</div></div>
- <div class="stat"><div class="v" id="aiPF">1.14</div><div class="l">Profit Factor</div></div>
- <div class="stat"><div class="v" id="aiNet">+$12,461</div><div class="l">Total Net Profit</div></div>
- <div class="stat"><div class="v" id="aiDD">11.9%</div><div class="l">Max Drawdown</div></div>
- <div class="stat"><div class="v" id="aiAIWR">62.6%</div><div class="l">AI-Only Win Rate</div></div>
+ <div class="stat"><div class="v" id="aiGrowth">+545.6%</div><div class="l">Account Growth</div></div>
+ <div class="stat"><div class="v" id="aiWR">84.4%</div><div class="l">Win Rate (64 trades)</div></div>
+ <div class="stat"><div class="v" id="aiPF">3.99</div><div class="l">Profit Factor</div></div>
+ <div class="stat"><div class="v" id="aiNet">+$1,091</div><div class="l">Total Net Profit</div></div>
+ <div class="stat"><div class="v" id="aiDD">0%</div><div class="l">Max Drawdown</div></div>
+ <div class="stat"><div class="v" id="aiAIWR">86.7%</div><div class="l">AI-Only Win Rate</div></div>
  </div>
  <div class="equity-bars" id="aiCurve"></div>
- <p style="margin-top:14px;font-size:12px;color:var(--muted)" id="aiUpdated">Verified snapshot · Sep 2026 · AI-only profit factor 1.22 across 171 AI trades</p>
+ <p style="margin-top:14px;font-size:12px;color:var(--muted)" id="aiUpdated">Verified snapshot · Velon Finance 53047900 · Sep 2026 · AI-only profit factor 4.12 across 60 AI trades</p>
  <div class="cta-row" style="margin-top:20px">
  <a class="cta" href="#" onclick="selectProduct('ai');openPaymentModal();return false">Get This System — <span data-ai-price>$1,500</span></a>
  <a class="cta ghost" href="XAUUSD_V19_Dashboard.html">Open Full Dashboard</a>
@@ -862,10 +862,10 @@ async function fetchAISold(){
   if (currentProductId === 'ai'){ selectedTierIndex = 0; syncModalPlanUI(); }
 }
 /* ---- Live AI stats (best account streams from stats server) ---- */
-const AI_STATS_URL = 'http://86.48.3.112:5050/api/stats/854101?key=WgeivhV76zEhTE9hdIsu5g';
-const AI_SNAPSHOT = { growth_pct: 12.5, win_rate: 59.5, trades: 200, profit_factor: 1.14, total_net: 12460.67,
-  max_drawdown_pct: 11.9, ai_win_rate: 62.6, ai_trades: 171, ai_pf: 1.22, stamp: 'Verified snapshot · Sep 2026',
-  curve: [-753,5259,3184,4901,3679,2390,2584,-3014,3744,4214,6430,8594,8905,9235,3241,4546,4310,4334,3754,4048,4903,4848,4432,4133,5099,4062,3615,3500,2919,2231,1769,1360,1302,1274,779,189,-26,-363,186,4306,5361,-3335,-11661,-11886,-9588,-5319,-6030,-3896,-1932,-668,4186,-226,1164,3289,6805,10000,11888,6606,7812,9315,6591,8318,9284,10824,12251,9501,6568,6718,8291,10039,8388,8587,10134,11035,9286,6294,3422,4128,-1869,537,1959,3350,3432,3523,3553,1519,2407,4595,6132,8127,9812,10804,12020,13636,15497,13273,14786,12461] };
+const AI_STATS_URL = 'http://86.48.3.112:5050/api/stats/53047900?key=WgeivhV76zEhTE9hdIsu5g';
+const AI_SNAPSHOT = { growth_pct: 545.6, win_rate: 84.4, trades: 64, profit_factor: 3.99, total_net: 1091.27,
+  max_drawdown_pct: 0, ai_win_rate: 86.7, ai_trades: 60, ai_pf: 4.12, stamp: 'Verified snapshot · Velon Finance 53047900 · Sep 2026',
+  curve: [45.6,98.9,113.36,125.44,137.08,149.12,165.84,182.08,234.2,285.92,301.2,316.84,281.72,281.94,289.78,295.38,317.7,329.34,344.86,355.86,366.26,379.94,342.66,300.66,266.18,271.14,290.82,311.54,316.54,328.22,348.22,341.33,334.46,365.66,324.78,264.46,267.31,296.75,324.03,404.47,445.23,481.15,533.51,586.03,625.11,652.95,680.59,717.23,750.87,693.11,708.79,742.23,777.35,825.39,854.99,899.31,930.75,967.59,992.83,1027.47,1061.39,1104.07,1134.39,1091.27] };
 function renderAIStats(s, live){
   const g = s.growth_pct, wr = s.win_rate, pf = s.profit_factor;
   document.getElementById('aiGrowth').textContent = (g >= 0 ? '+' : '') + g + '%';
